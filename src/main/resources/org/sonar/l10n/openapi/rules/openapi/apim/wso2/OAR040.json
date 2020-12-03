@@ -1,0 +1,15 @@
+{
+  "title": "OAR040 - StandardWso2ScopesName - WSO2 scope name is non compliant with the standard",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "api-manager",
+    "vulnerability",
+    "wso2"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

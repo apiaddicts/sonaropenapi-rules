@@ -1,0 +1,27 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+parameters:
+  x-api-key:
+    in: header
+    name: x-api-key
+    type: string
+    required: true
+  traceId:
+    in: header
+    name: traceId
+    type: string
+    required: true
+paths:
+  /pets:
+    get: # Noncompliant {{OAR033: Headers [x-api-key] are required}}
+      parameters:
+        - $ref: '#/parameters/traceId'
+        - in: header
+          name: dateTime
+          type: string
+          required: true
+      responses:
+        200:
+          description: Ok

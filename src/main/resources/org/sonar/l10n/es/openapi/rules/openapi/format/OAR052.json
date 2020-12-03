@@ -1,0 +1,13 @@
+{
+  "title": "OAR052 - UndefinedNumericFormat - Los tipos numéricos requieren un formato",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}

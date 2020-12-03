@@ -1,0 +1,13 @@
+{
+  "title": "OAR009 - DefaultRequestMediaType - Debe indicar el tipo de medio de solicitud predeterminado",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

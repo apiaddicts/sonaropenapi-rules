@@ -1,0 +1,13 @@
+{
+  "title": "OAR016 - NumericFormat - Los tipos numéricos requieren un formato válido",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

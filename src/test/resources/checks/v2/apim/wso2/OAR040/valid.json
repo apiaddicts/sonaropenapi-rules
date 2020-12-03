@@ -1,0 +1,19 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : { }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ {
+        "name" : "xfcn_sc_1"
+      }, {
+        "name" : "GENGA_SC_RE1"
+      } ]
+    }
+  }
+}

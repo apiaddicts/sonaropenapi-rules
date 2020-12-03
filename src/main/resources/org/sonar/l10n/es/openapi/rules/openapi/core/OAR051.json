@@ -1,0 +1,13 @@
+{
+  "title": "OAR051 - DescriptionDiffersSummary - La descripción debe ser diferente del resumen.",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10mn"
+  },
+  "tags": [
+    "core"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

@@ -1,0 +1,74 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/invoices" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "A invoice.",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "without" : {
+                  "type" : "string"
+                },
+                "date" : {
+                  "type" : "string",
+                  "format" : "date"
+                },
+                "date-time" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "password" : {
+                  "type" : "string",
+                  "format" : "password"
+                },
+                "byte" : {
+                  "type" : "string",
+                  "format" : "byte"
+                },
+                "binary" : {
+                  "type" : "string",
+                  "format" : "binary"
+                },
+                "email" : {
+                  "type" : "string",
+                  "format" : "email"
+                },
+                "uuid" : {
+                  "type" : "string",
+                  "format" : "uuid"
+                },
+                "uri" : {
+                  "type" : "string",
+                  "format" : "uri"
+                },
+                "hostname" : {
+                  "type" : "string",
+                  "format" : "hostname"
+                },
+                "ipv4" : {
+                  "type" : "string",
+                  "format" : "ipv4"
+                },
+                "ipv6" : {
+                  "type" : "string",
+                  "format" : "ipv6"
+                },
+                "other" : {
+                  "type" : "string", # Noncompliant {{OAR037: String types requires a valid format}}
+                  "format" : "YYYY-MM-DD"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

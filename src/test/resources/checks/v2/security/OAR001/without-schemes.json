@@ -1,0 +1,10 @@
+{ # Noncompliant {{OAR001: Define 'schemes' is mandatory}}
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : { }
+  }
+}

@@ -1,0 +1,20 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: query
+          name: other
+          type: array
+          items:
+            type: string
+        - in: query
+          name: $total
+          type: boolean
+          default: true # Noncompliant {{OAR026: The $total parameter default value should be false}}
+      responses:
+        206:
+          description: Ok

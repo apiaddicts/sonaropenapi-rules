@@ -1,0 +1,13 @@
+{
+  "title": "OAR026 - TotalParameterDefaultValue - El valor por defecto del parámetro $total debe ser false",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "CRITICAL"
+}

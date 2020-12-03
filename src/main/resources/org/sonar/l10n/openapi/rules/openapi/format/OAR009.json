@@ -1,0 +1,13 @@
+{
+  "title": "OAR009 - DefaultRequestMediaType - Should indicate the default request media type",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

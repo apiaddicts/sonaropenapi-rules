@@ -1,0 +1,15 @@
+{
+  "title": "OAR041 - UndefinedAuthTypeForWso2Scope - Use of WSO2 x-scope requires x-auth-type definition",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "api-manager",
+    "vulnerability",
+    "wso2"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

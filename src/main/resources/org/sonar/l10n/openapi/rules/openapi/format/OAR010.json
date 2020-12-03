@@ -1,0 +1,13 @@
+{
+  "title": "OAR010 - DefaultResponseMediaType - Should indicate the default response media type",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}

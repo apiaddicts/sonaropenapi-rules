@@ -1,0 +1,10 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get: # Noncompliant {{OAR009: Should indicate the default request media type}}
+      responses:
+        200:
+          description: Ok

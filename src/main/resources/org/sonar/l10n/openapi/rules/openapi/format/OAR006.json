@@ -1,0 +1,13 @@
+{
+  "title": "OAR006 - UndefinedRequestMediaType - APIs must define request media types supported by the API",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

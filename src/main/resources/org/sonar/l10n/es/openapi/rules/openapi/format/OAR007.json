@@ -1,0 +1,13 @@
+{
+  "title": "OAR007 - UndefinedResponseMediaType - Las API deben definir los tipos de medios de respuesta admitidos por la API",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

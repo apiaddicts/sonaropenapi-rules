@@ -1,0 +1,36 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : { }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ { # Noncompliant {{OAR002: WSO2 scope 'key' is required}}
+        "name" : "read",
+        "roles" : "ROLE_READ"
+      }, { # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+        "name" : "write",
+        "key" : "write"
+      }, { # Noncompliant {{OAR002: WSO2 scope 'name' is required}}
+        "key" : "view",
+        "roles" : "ROLE_VIEW"
+      }, {
+        "name" : "read2",
+        "roles" : "ROLE_READ_2",
+        "key" : null # Noncompliant {{OAR002: WSO2 scope 'key' is required}}
+      }, {
+        "name" : "write2",
+        "key" : "write2",
+        "roles" : null # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+      }, {
+        "key" : "view2",
+        "roles" : "ROLE_VIEW_2",
+        "name" : null # Noncompliant {{OAR002: WSO2 scope 'name' is required}}
+      } ]
+    }
+  }
+}

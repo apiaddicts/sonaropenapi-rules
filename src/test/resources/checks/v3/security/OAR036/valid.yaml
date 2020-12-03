@@ -1,0 +1,16 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: header
+          name: X-Authorization
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Ok

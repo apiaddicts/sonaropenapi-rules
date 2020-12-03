@@ -1,0 +1,15 @@
+{
+  "title": "OAR003 - DefinedWso2ScopesDescription - Se recomienda definir el apartado description",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "api-manager",
+    "vulnerability",
+    "wso2"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

@@ -1,0 +1,13 @@
+{
+  "title": "OAR001 - MandatoryHttpsProtocol - El protocolo https es obligatorio",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "CRITICAL"
+}

@@ -1,0 +1,13 @@
+{
+  "title": "OAR007 - UndefinedResponseMediaType - APIs must define response media types supported by the API",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

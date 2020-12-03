@@ -1,0 +1,87 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /:
+    get:
+      responses:
+        200:
+          description: Ok
+  /one:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /{one}: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/two: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/{two}:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/{two}/three:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/me:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/me/three:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/{two}/{three}: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/get:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/get/three/get: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/{two}/three/get:
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/{two}/three/{four}/get: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+    get:
+      responses:
+        200:
+          description: Ok
+
+  /one/{two}/three/{four}/five/get:
+    get:
+      responses:
+        200:
+          description: Ok

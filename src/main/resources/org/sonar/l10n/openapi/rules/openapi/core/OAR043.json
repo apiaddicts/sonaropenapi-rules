@@ -1,0 +1,13 @@
+{
+  "title": "OAR043 - ParsingError - OpenAPI file cannot be parsed",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "core"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

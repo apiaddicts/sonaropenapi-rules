@@ -1,0 +1,13 @@
+{
+  "title": "OAR036 - SessionMechanismCheck - El uso mecanismos de sesión está prohibido",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "3h"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

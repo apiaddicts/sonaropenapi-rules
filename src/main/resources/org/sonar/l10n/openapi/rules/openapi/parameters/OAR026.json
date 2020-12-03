@@ -1,0 +1,13 @@
+{
+  "title": "OAR026 - TotalParameterDefaultValue - The $total parameter default value should be false",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "CRITICAL"
+}

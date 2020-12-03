@@ -1,0 +1,19 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : { }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ { # Noncompliant {{OAR003: WSO2 scope 'description' is recommended}}
+        "name" : "read",
+        "key" : "read",
+        "roles" : "ROLE_READ"
+      } ]
+    }
+  }
+}
