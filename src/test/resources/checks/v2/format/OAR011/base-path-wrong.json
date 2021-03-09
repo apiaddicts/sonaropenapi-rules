@@ -1,0 +1,9 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "basePath": "/BASE/path", # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+  "paths": {}
+}

@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/Pets": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/PETS": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/pets/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/Pets/{id}": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/PETS/{id}": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/pets/{id}/external-info": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/Pets/{id}/EXternal_INFO": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/PETS/{id}/externalInfo": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  }
+}

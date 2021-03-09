@@ -1,0 +1,13 @@
+{
+  "title": "OAR006 - UndefinedConsumes - consumes section for OpenAPI 2 and requestBody.content section for OpenAPI 3 are mandatory",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

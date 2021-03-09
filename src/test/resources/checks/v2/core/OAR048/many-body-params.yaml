@@ -1,0 +1,34 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      parameters:
+      - in: body
+        name: aParam
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: the default response
+    post:             # Noncompliant {{OAR048: An operation can have at most one body parameter}}
+      parameters:
+      - $ref: "#/parameters/Used"
+      - in: body
+        name: otherParam
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: the default response
+parameters:
+  Used:
+    in: body
+    name: toto
+    required: true
+    schema:
+      type: string

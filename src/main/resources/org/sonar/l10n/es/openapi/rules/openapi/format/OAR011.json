@@ -1,0 +1,13 @@
+{
+  "title": "OAR011 - KebabCaseUrl - Las partes no variables de los paths deben estar en kebab-case",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

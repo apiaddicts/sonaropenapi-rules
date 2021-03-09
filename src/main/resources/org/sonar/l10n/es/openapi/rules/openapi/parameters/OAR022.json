@@ -1,0 +1,13 @@
+{
+  "title": "OAR022 - OrderbyParameter - El parámetro $orderby es obligatorio en esta operación",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MINOR"
+}

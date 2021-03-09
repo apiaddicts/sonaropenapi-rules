@@ -1,0 +1,61 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pet_id", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "petId", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+            "type": "integer"
+          },
+          {
+            "in": "path",
+            "name": "pet-id",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "expand_info", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "expandInfo", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "expand-info",
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "X-Request-ID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "fullName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  }
+}

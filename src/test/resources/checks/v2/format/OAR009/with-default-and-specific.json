@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/pets": {
+      "get": {
+        "consumes": [ # Noncompliant {{OAR009: Should consume a default mime type}}
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/owners": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  }
+}

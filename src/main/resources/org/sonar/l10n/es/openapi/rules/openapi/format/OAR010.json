@@ -1,0 +1,13 @@
+{
+  "title": "OAR010 - ProducesDefaultMimeType - Debe producir el mime type por defecto",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}

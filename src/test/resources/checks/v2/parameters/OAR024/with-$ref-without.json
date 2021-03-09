@@ -1,0 +1,39 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "parameters" : {
+    "other" : {
+      "in" : "query",
+      "name" : "other",
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "init" : {
+      "in" : "query",
+      "name" : "init",
+      "type" : "integer",
+      "format" : "int64"
+    }
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "parameters" : [ { # Noncompliant {{OAR024: $start parameter is required in this operation}}
+          "$ref" : "#/parameters/other"
+        }, {
+          "$ref" : "#/parameters/init"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}

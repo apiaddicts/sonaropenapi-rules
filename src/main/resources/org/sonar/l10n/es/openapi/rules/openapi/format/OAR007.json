@@ -1,0 +1,13 @@
+{
+  "title": "OAR007 - UndefinedProduces - La sección produces es obligatoria",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

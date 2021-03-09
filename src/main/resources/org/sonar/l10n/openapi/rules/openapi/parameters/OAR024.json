@@ -1,0 +1,13 @@
+{
+  "title": "OAR024 - StartParameter - $start parameter is required in this operation",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MAJOR"
+}

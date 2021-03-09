@@ -1,0 +1,8 @@
+target/
+.idea/
+*.iml
+.project
+.settings/
+# vim temp file
+*~
+.sonar/

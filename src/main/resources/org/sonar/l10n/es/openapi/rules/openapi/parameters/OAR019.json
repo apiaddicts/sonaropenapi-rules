@@ -1,0 +1,13 @@
+{
+  "title": "OAR019 - SelectParameter - El parámetro $select es obligatorio en esta operación",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MINOR"
+}

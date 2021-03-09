@@ -1,0 +1,22 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+
+paths:
+  /pets:
+    post:
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        200:
+          description: Ok
+  /owners:
+    post:
+      requestBody:
+        content: # Noncompliant {{OAR009: Should consume a default mime type}}
+          application/xml: {}
+      responses:
+        200:
+          description: Ok

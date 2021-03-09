@@ -1,0 +1,13 @@
+{
+  "title": "OAR039 - StandardResponseCodes - Responses must be compliant with the standard",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "2h"
+  },
+  "tags": [
+    "resources"
+  ],
+  "defaultSeverity": "MAJOR"
+}

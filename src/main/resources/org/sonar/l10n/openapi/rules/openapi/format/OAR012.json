@@ -1,0 +1,13 @@
+{
+  "title": "OAR012 - ParameterNamingConvention - Path parameters, query parameters and property names name must be in camelCase",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}

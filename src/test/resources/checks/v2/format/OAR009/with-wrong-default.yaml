@@ -1,0 +1,12 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+consumes:
+  - application/xml
+paths:
+  /pets:
+    get: # Noncompliant {{OAR009: Should consume a default mime type}}
+      responses:
+        200:
+          description: Ok

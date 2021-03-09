@@ -1,0 +1,13 @@
+{
+  "title": "OAR012 - ParameterNamingConvention - Parámetros de ruta, parámetros de consulta y nombres de propiedad. El nombre debe estar en camelCase",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}

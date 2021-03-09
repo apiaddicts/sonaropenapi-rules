@@ -1,0 +1,26 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+parameters:
+  other:
+    in: query
+    name: other
+    type: array
+    items:
+      type: string
+  exclude:
+    in: query
+    name: exclude
+    type: array
+    items:
+      type: string
+paths:
+  /pets:
+    get:
+      parameters: # Noncompliant {{OAR021: $exclude parameter is required in this operation}}
+        - $ref: '#/parameters/other'
+        - $ref: '#/parameters/exclude'
+      responses:
+        200:
+          description: Ok

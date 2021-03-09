@@ -1,0 +1,13 @@
+{
+  "title": "OAR031 - Examples - Debe proporcionarse un ejemplo",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "resources"
+  ],
+  "defaultSeverity": "MAJOR"
+}

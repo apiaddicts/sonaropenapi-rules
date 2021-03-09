@@ -1,0 +1,38 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "parameters" : {
+    "other" : {
+      "in" : "query",
+      "name" : "other",
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "total" : {
+      "in" : "query",
+      "name" : "$total",
+      "type" : "boolean"
+    }
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "parameters" : [ {
+          "$ref" : "#/parameters/other"
+        }, {
+          "$ref" : "#/parameters/total"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: path
+          name: pet_id
+          type: integer
+        - in: path
+          name: petId # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          type: integer
+        - in: path
+          name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          type: integer
+        - in: query
+          name: expand_info
+          type: integer
+        - in: query
+          name: expandInfo # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          type: integer
+        - in: query
+          name: EXPAND-INFO # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          type: integer
+        - in: header
+          name: X-Request-ID
+          type: string
+          required: true
+        - in: formData
+          name: fullName
+          type: string
+      responses:
+        200:
+          description: Ok

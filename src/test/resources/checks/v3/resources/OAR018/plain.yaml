@@ -1,0 +1,114 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /resources:
+    get:
+      responses:
+        200:
+          description: Ok
+    post:
+      responses:
+        200:
+          description: Ok
+    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources}}
+      responses:
+        200:
+          description: Ok
+    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources}}
+      responses:
+        200:
+          description: Ok
+    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources}}
+      responses:
+        200:
+          description: Ok
+
+  /resources/{r_id}:
+    get:
+      responses:
+        200:
+          description: Ok
+    post: # Noncompliant {{OAR018: Resource path not encouraged: POST /resources/{r_id}}}
+      responses:
+        200:
+          description: Ok
+    put:
+      responses:
+        200:
+          description: Ok
+    patch:
+      responses:
+        200:
+          description: Ok
+    delete:
+      responses:
+        200:
+          description: Ok
+
+  /resources/get:
+    get: # Noncompliant {{OAR018: Resource path not encouraged: GET /resources/get}}
+      responses:
+        200:
+          description: Ok
+    post:
+      responses:
+        200:
+          description: Ok
+    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources/get}}
+      responses:
+        200:
+          description: Ok
+    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources/get}}
+      responses:
+        200:
+          description: Ok
+    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources/get}}
+      responses:
+        200:
+          description: Ok
+
+  /resources/delete:
+    get: # Noncompliant {{OAR018: Resource path not encouraged: GET /resources/delete}}
+      responses:
+        200:
+          description: Ok
+    post:
+      responses:
+        200:
+          description: Ok
+    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources/delete}}
+      responses:
+        200:
+          description: Ok
+    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources/delete}}
+      responses:
+        200:
+          description: Ok
+    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources/delete}}
+      responses:
+        200:
+          description: Ok
+
+  /resources/{r_id}/other:
+    get:
+      responses:
+        200:
+          description: Ok
+    post:
+      responses:
+        200:
+          description: Ok
+    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources/{r_id}/other}}
+      responses:
+        200:
+          description: Ok
+    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources/{r_id}/other}}
+      responses:
+        200:
+          description: Ok
+    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources/{r_id}/other}}
+      responses:
+        200:
+          description: Ok

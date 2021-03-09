@@ -1,0 +1,30 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "parameters" : [ { # Noncompliant {{OAR023: $total parameter is required in this operation}}
+          "in" : "query",
+          "name" : "other",
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "total",
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "title": "OAR009 - ConsumesDefaultMimeType - Debe consumir el mime type por defecto",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

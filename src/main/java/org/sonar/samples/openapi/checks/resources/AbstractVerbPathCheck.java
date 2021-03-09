@@ -1,0 +1,56 @@
+package org.sonar.samples.openapi.checks.resources;
+
+import com.google.common.collect.ImmutableSet;
+import com.sonar.sslr.api.AstNodeType;
+import org.sonar.plugins.openapi.api.v2.OpenApi2Grammar;
+import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
+import org.sonar.samples.openapi.utils.VerbPathMatcher;
+import org.sonar.sslr.yaml.grammar.JsonNode;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
+
+    protected VerbPathMatcher matcher;
+
+    public AbstractVerbPathCheck(String key) {
+        super(key);
+    }
+
+    @Override
+    public Set<AstNodeType> subscribedKinds() {
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+    }
+
+    @Override
+    public void visitNode(JsonNode node) {
+        visitV2Node(node);
+    }
+
+    private void visitV2Node(JsonNode node) {
+        String path = node.key().getTokenValue();
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(this::isOperation).collect(Collectors.toList());
+        for (JsonNode operationNode : operationNodes) {
+            String verb = operationNode.key().getTokenValue();
+            Optional<VerbPathMatcher.PatternGroup> pg = matcher.matchesWithValues(verb, path);
+            if (pg.isPresent()) matchV2(node, operationNode, verb, path, pg.get());
+            else mismatchV2(node, operationNode, verb, path);
+        }
+    }
+
+    protected void matchV2(JsonNode node, JsonNode operationNode, String verb, String path, VerbPathMatcher.PatternGroup pg) {
+        // Intentional blank
+    }
+
+    protected void mismatchV2(JsonNode node, JsonNode operationNode, String verb, String path) {
+        // Intentional blank
+    }
+
+    private boolean isOperation(JsonNode node) {
+        AstNodeType type = node.getType();
+        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
+    }
+}

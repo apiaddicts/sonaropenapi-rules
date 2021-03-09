@@ -1,0 +1,120 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "responses": {
+          "206": { # Noncompliant {{OAR031: Response must have an examples definition}}
+            "description": "Pet list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pets"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/server_error_response"
+          }
+        }
+      }
+    },
+    "/pets/{id}": {
+      "parameters": [
+        {
+          "in": "query",
+          "name": "$start",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": { # Noncompliant {{OAR031: Response must have an examples definition}}
+            "description": "One pet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/server_error_response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id": {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "type": "integer",
+          "format": "int64",
+          "maxLength": 22
+        },
+        "description": "Identificador del tipo de centro a obtener, actualizar o eliminar.",
+        "required": true
+      }
+    },
+    "schemas": {
+      "pet": {
+        "type": "object",
+        "properties": {
+          "name": { # Noncompliant {{OAR031: Basic properties must have an example}}
+            "type": "string"
+          },
+          "type": { # Noncompliant {{OAR031: Basic properties must have an example}}
+            "type": "string"
+          }
+        }
+      },
+      "pets": {
+        "type": "object",
+        "properties": {
+          "size": { # Noncompliant {{OAR031: Basic properties must have an example}}
+            "type": "integer"
+          },
+          "pets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/pet"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "server_error_response": { # Noncompliant {{OAR031: Response must have an examples definition}}
+        "description": "Default error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { # Noncompliant {{OAR031: Basic properties must have an example}}
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

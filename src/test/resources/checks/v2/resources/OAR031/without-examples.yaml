@@ -1,0 +1,62 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        204:
+          description: No content
+        206: # Noncompliant {{OAR031: Response must have an examples definition}}
+          description: Pet list
+          schema:
+            $ref: '#/definitions/pets'
+        default:
+          $ref: "#/responses/server_error_response"
+  /pets/{id}:
+    get:
+      parameters:
+        - $ref: "#/parameters/id"
+      responses:
+        200: # Noncompliant {{OAR031: Response must have an examples definition}}
+          description: One pet
+          schema:
+            $ref: "#/definitions/pet"
+        default:
+          $ref: "#/responses/server_error_response"
+
+parameters:
+  id:
+    in: path
+    name: id
+    type: integer
+    format: int64
+    maxLength: 22
+    description: Identificador del tipo de centro a obtener, actualizar o eliminar.
+    required: true
+definitions:
+  pet:
+    type: object
+    properties:
+      name: # Noncompliant {{OAR031: Basic properties must have an example}}
+        type: string
+      type: # Noncompliant {{OAR031: Basic properties must have an example}}
+        type: string
+  pets:
+    type: object
+    properties:
+      size: # Noncompliant {{OAR031: Basic properties must have an example}}
+        type: integer
+      pets:
+        type: array
+        items:
+          $ref: '#/definitions/pet'
+responses:
+  server_error_response: # Noncompliant {{OAR031: Response must have an examples definition}}
+    description: Default error response
+    schema:
+      type: object
+      properties:
+        error: # Noncompliant {{OAR031: Basic properties must have an example}}
+          type: string

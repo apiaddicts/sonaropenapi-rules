@@ -1,0 +1,27 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    parameters:
+      - in: header
+        name: Cookie # Noncompliant {{OAR036: Cookie use is forbidden as a session mechanism}}
+        schema:
+          type: string
+        required: true
+    get:
+      parameters:
+        - in: header
+          name: Cookie # Noncompliant {{OAR036: Cookie use is forbidden as a session mechanism}}
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Ok
+          headers:
+            Set-Cookie: # Noncompliant {{OAR036: Cookie use is forbidden as a session mechanism}}
+              schema:
+                type: string
+              description: session

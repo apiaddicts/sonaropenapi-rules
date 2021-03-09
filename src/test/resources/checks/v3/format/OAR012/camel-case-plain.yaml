@@ -1,0 +1,78 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    parameters:
+      - in: path
+        name: pet_id # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        schema:
+          type: integer
+      - in: path
+        name: petId
+        schema:
+          type: integer
+      - in: path
+        name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        schema:
+          type: integer
+      - in: query
+        name: expand_info # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        schema:
+          type: integer
+      - in: query
+        name: expandInfo
+        schema:
+          type: integer
+      - in: query
+        name: EXPAND-INFO # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        schema:
+          type: integer
+      - in: query
+        name: expandInfo3 # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        schema:
+          type: integer
+      - in: header
+        name: X-Request-ID
+        schema:
+          type: string
+        required: true
+    get:
+      parameters:
+        - in: path
+          name: pet_id # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          schema:
+            type: integer
+        - in: path
+          name: petId
+          schema:
+            type: integer
+        - in: path
+          name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          schema:
+            type: integer
+        - in: query
+          name: expand_info # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          schema:
+            type: integer
+        - in: query
+          name: expandInfo
+          schema:
+            type: integer
+        - in: query
+          name: EXPAND-INFO # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          schema:
+            type: integer
+        - in: query
+          name: expandInfo3 # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          schema:
+            type: integer
+        - in: header
+          name: X-Request-ID
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Ok
