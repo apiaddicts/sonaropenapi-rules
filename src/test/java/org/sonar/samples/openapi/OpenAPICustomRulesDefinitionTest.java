@@ -7,16 +7,16 @@ import org.sonar.samples.openapi.checks.RulesLists;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OpenAPIRimacRulesDefinitionTest {
+public class OpenAPICustomRulesDefinitionTest {
 
 	@Test
 	public void testRepository() {
 		I18nContext.setLang("en");
-		OpenAPIRimacRulesDefinition rulesDefinition = new OpenAPIRimacRulesDefinition();
+		OpenAPICustomRulesDefinition rulesDefinition = new OpenAPICustomRulesDefinition();
 		RulesDefinition.Context context = new RulesDefinition.Context();
 		rulesDefinition.define(context);
-		Repository repository = context.repository(OpenAPIRimacRulesDefinition.REPOSITORY_KEY);
-		assertThat(repository.name()).isEqualTo("OpenAPI Rimac");
+		Repository repository = context.repository(OpenAPICustomRulesDefinition.REPOSITORY_KEY);
+		assertThat(repository.name()).isEqualTo("OpenAPI Custom");
 		assertThat(repository.language()).isEqualTo("openapi");
 		assertThat(repository.rules()).hasSize(RulesLists.getAllChecks().size());
 	}

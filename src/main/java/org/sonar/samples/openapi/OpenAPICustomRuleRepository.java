@@ -7,7 +7,7 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
 
 import java.util.List;
 
-import static org.sonar.samples.openapi.OpenAPIRimacRulesDefinition.REPOSITORY_KEY;
+import static org.sonar.samples.openapi.OpenAPICustomRulesDefinition.REPOSITORY_KEY;
 
 /**
  * Makes the rules visible to the OpenAPI scanner sensor,
@@ -17,7 +17,7 @@ import static org.sonar.samples.openapi.OpenAPIRimacRulesDefinition.REPOSITORY_K
  */
 @SonarLintSide
 @ScannerSide
-public class OpenAPIRimacCustomRuleRepository implements OpenApiCustomRuleRepository {
+public class OpenAPICustomRuleRepository implements OpenApiCustomRuleRepository {
 	@Override
 	public String repositoryKey() {
 		return REPOSITORY_KEY;

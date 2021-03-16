@@ -8,9 +8,9 @@ import org.sonarsource.analyzer.commons.RuleMetadataLoader;
  * Declare rule metadata in server repository of rules.
  * This allows to list the rules in the page "Rules".
  */
-public class OpenAPIRimacRulesDefinition implements RulesDefinition {
-	public static final String REPOSITORY_KEY = "openapi-rimac";
-	private static final String REPOSITORY_NAME = "OpenAPI Rimac";
+public class OpenAPICustomRulesDefinition implements RulesDefinition {
+	public static final String REPOSITORY_KEY = "openapi-custom";
+	private static final String REPOSITORY_NAME = "OpenAPI Custom";
 	private static final String ROOT_RESOURCE_FOLDER = "org/sonar/l10n/openapi/rules/openapi/";
 	private static final String SECURITY_GROUP = "security";
 	private static final String FORMAT_GROUP = "format";

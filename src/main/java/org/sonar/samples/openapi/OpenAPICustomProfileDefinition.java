@@ -15,22 +15,22 @@ import java.util.List;
  * This allows to create a built-in profile that extends the Sonar Way profile, and that includes your rules.
  * This profile will automatically inherit any new rule brought in by the core plugin.
  */
-public class OpenAPIRimacProfileDefinition implements BuiltInQualityProfilesDefinition {
-	public static final String MY_COMPANY_WAY = "Rimac";
+public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDefinition {
+	public static final String MY_COMPANY_WAY = "Custom";
 	private final OpenApiCustomRuleRepository[] repositories;
 
-	public OpenAPIRimacProfileDefinition() {
+	public OpenAPICustomProfileDefinition() {
 		this(null);
 	}
 
-	public OpenAPIRimacProfileDefinition(@Nullable OpenApiCustomRuleRepository[] repositories) {
+	public OpenAPICustomProfileDefinition(@Nullable OpenApiCustomRuleRepository[] repositories) {
 		this.repositories = repositories;
 	}
 
 	@Override
 	public void define(Context context) {
 		NewBuiltInQualityProfile profile = context.createBuiltInQualityProfile(MY_COMPANY_WAY, "openapi");
-		addRepositoryRules(profile, OpenAPIRimacRulesDefinition.REPOSITORY_KEY, RulesLists.getAllChecks());
+		addRepositoryRules(profile, OpenAPICustomRulesDefinition.REPOSITORY_KEY, RulesLists.getAllChecks());
 		profile.done();
 	}
 

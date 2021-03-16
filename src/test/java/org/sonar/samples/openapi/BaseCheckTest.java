@@ -59,10 +59,10 @@ public abstract class BaseCheckTest {
     public static void beforeClass() {
         I18nContext.setLang("en");
         if (repository != null) return;
-        OpenAPIRimacRulesDefinition rulesDefinition = new OpenAPIRimacRulesDefinition();
+        OpenAPICustomRulesDefinition rulesDefinition = new OpenAPICustomRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         rulesDefinition.define(context);
-        repository = context.repository(OpenAPIRimacRulesDefinition.REPOSITORY_KEY);
+        repository = context.repository(OpenAPICustomRulesDefinition.REPOSITORY_KEY);
     }
 
     @Test
