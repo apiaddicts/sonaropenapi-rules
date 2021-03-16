@@ -6,3 +6,6 @@ target/
 # vim temp file
 *~
 .sonar/
+.settings/
+.classpath
+settings.json
