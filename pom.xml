@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.sonar.samples.openapi</groupId>
-  <artifactId>sonar-openapi-rimac-plugin</artifactId>
+  <artifactId>sonar-openapi-custom-plugin</artifactId>
   <version>1.0</version>
   <packaging>sonar-plugin</packaging>
 
@@ -15,7 +15,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <sonar.version>6.7.4</sonar.version>
+    <sonar.version>8.7.0.41497</sonar.version>
     <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
     <sonaropenapi.version>1.2.3-SNAPSHOT</sonaropenapi.version>
     <sonaranalyzer.version>1.6.0.219</sonaranalyzer.version>
@@ -74,9 +74,9 @@
         <version>1.17</version>
         <extensions>true</extensions>
         <configuration>
-          <pluginKey>openapi-rimac</pluginKey>
-          <pluginName>OpenAPI Rimac</pluginName>
-          <pluginClass>org.sonar.samples.openapi.OpenAPIRimacPlugin</pluginClass>
+          <pluginKey>openapi-custom</pluginKey>
+          <pluginName>OpenAPI Custom</pluginName>
+          <pluginClass>org.sonar.samples.openapi.OpenAPICustomPlugin</pluginClass>
           <skipDependenciesPackaging>true</skipDependenciesPackaging>
           <sonarLintSupported>true</sonarLintSupported>
           <sonarQubeMinVersion>${sonarQubeMinVersion}</sonarQubeMinVersion>
