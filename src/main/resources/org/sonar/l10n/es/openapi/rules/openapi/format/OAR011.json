@@ -1,5 +1,5 @@
 {
-  "title": "OAR011 - KebabCaseUrl - Las partes no variables de los paths deben estar en kebab-case",
+  "title": "OAR011 - UrlNamingConvention - Las partes no variables de los paths deben estar en kebab-case",
   "type": "BUG",
   "status": "ready",
   "remediation": {

@@ -28,7 +28,7 @@ public final class RulesLists {
 				OAR007UndefinedProducesCheck.class,
 				OAR009ConsumesDefaultMimeTypeCheck.class,
 				OAR010ProducesDefaultMimeTypeCheck.class,
-				OAR011KebabCaseUrlCheck.class,
+				OAR011UrlNamingConventionCheck.class,
 				OAR012ParameterNamingConventionCheck.class,
 				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,

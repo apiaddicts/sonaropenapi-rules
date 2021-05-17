@@ -6,7 +6,6 @@ import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.sonar.plugins.openapi.api.v2.OpenApi2Grammar;
 import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
-import org.sonar.samples.openapi.checks.BaseCheck;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
@@ -17,28 +16,25 @@ import java.util.Set;
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 
 @Rule(key = OAR012ParameterNamingConventionCheck.KEY)
-public class OAR012ParameterNamingConventionCheck extends BaseCheck {
-	
-	private static final String CAMEL_REGEX = "[a-z]+([A-Z][a-z]+)*([A-Z])?";
-	private static final String SNAKE_REGEX = "^[a-z0-9_$]*$";
-	private static final String KEBAB_REGEX = "^[a-z0-9-]*$";
-
-	private static final String SNAKE_CASE = "snake_case";
-	private static final String KEBAB_CASE = "kebab-case";
-	private static final String CAMEL_CASE = "camelCase";
-
-	private static final String DEFAULT_NAMING_CONVENTION = SNAKE_CASE;
+public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventionCheck {
 
 	public static final String KEY = "OAR012";
 	private static final String MESSAGE = "OAR012.error";
 
+	private static Set<String> nameExceptions = new HashSet<>(Arrays.asList("$start", "$limit", "$total", "$expand", "$orderby", "$select", "$exclude"));
+
+	private static final String DEFAULT_NAMING_CONVENTION = SNAKE_CASE;
+	
 	@RuleProperty(
 			key = "default-naming-convention",
-			description = "Default naming convention (snake_case, kebab-case or camelCase).",
+			description = "Default naming convention (snake_case, kebab-case, camelCase or UpperCamelCase).",
 			defaultValue = DEFAULT_NAMING_CONVENTION)
-	public String defaultNamingConvention = DEFAULT_NAMING_CONVENTION;
+	private static String defaultNamingConvention = DEFAULT_NAMING_CONVENTION;
 
-	private Set<String> nameExceptions = new HashSet<>(Arrays.asList("$start", "$limit", "$total", "$expand", "$orderby", "$select", "$exclude"));
+	public OAR012ParameterNamingConventionCheck() {
+		super(KEY, MESSAGE, nameExceptions);
+		super.defaultNamingConvention = defaultNamingConvention;
+	}
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
@@ -86,37 +82,4 @@ public class OAR012ParameterNamingConventionCheck extends BaseCheck {
 		validateNamingConvention(name, nameNode);
 	}
 
-	private void validateNamingConvention(String name, JsonNode nameNode) {
-		if (nameExceptions.contains(name)) return;
-		switch (defaultNamingConvention) {
-			case CAMEL_CASE:
-				if (!isCamelCase(name)) {
-					addIssue(KEY, translate(MESSAGE, CAMEL_CASE), nameNode.key());
-				}
-				break;
-			case KEBAB_CASE:
-				if (!isKebabCase(name)) {
-					addIssue(KEY, translate(MESSAGE, KEBAB_CASE), nameNode.key());
-				}
-				break;
-			case SNAKE_CASE:
-			default:
-				if (!isSnakeCase(name)) {
-					addIssue(KEY, translate(MESSAGE, SNAKE_CASE), nameNode.key());
-				}
-				break;
-		}
-	}
-
-	private boolean isCamelCase(String name) {
-		return name.split("_").length == 1 && name.split("-").length == 1 && name.matches(CAMEL_REGEX);
-	}
-
-	private boolean isSnakeCase(String name) {
-		return name.matches(SNAKE_REGEX);
-	}
-
-	private boolean isKebabCase(String name) {
-		return name.matches(KEBAB_REGEX);
-	}
 }

@@ -4,14 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR011KebabCaseUrlCheckTest extends BaseCheckTest {
+public class OAR011UrlNamingConventionCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
         ruleName = "OAR011";
-        check = new OAR011KebabCaseUrlCheck();
+        check = new OAR011UrlNamingConventionCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
@@ -47,7 +48,13 @@ public class OAR011KebabCaseUrlCheckTest extends BaseCheckTest {
     }
 
     @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(1);
+        assertParameterProperties("default-naming-convention", "kebab-case", RuleParamType.STRING);
+    }
+
+    @Override
     public void verifyRule() {
-        assertRuleProperties("OAR011 - KebabCaseUrl - Non variable path parts must be in kebab-case", RuleType.BUG, Severity.MAJOR, tags("format"));
+        assertRuleProperties("OAR011 - UrlNamingConvention - Non variable path parts must be in kebab-case", RuleType.BUG, Severity.MAJOR, tags("format"));
     }
 }
