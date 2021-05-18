@@ -85,7 +85,7 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("resources-paths", ";get:^\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/\\{[^\\/{}]*\\}$", RuleParamType.STRING);
+        assertParameterProperties("resources-paths", ";get:^\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)$", RuleParamType.STRING);
         assertParameterProperties("resources-exclusions", "get:/status", RuleParamType.STRING);
     }
 }

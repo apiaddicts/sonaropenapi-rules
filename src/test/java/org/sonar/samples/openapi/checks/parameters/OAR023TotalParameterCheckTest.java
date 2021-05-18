@@ -85,7 +85,7 @@ public class OAR023TotalParameterCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("resources-paths", ";get:^\\/[^\\/{}]*$;post:^\\/[^\\/{}]*\\/get$;post:^\\/[^\\/{}]*\\/\\{[^\\/{}]*\\}\\/[^\\/{}]*\\/get$", RuleParamType.STRING);
+        assertParameterProperties("resources-paths", ";get:^\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*$;post:^\\/[^\\/{}]*\\/get$;post:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/get$;post:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/get$", RuleParamType.STRING);
         assertParameterProperties("resources-exclusions", "get:/status", RuleParamType.STRING);
     }
 }

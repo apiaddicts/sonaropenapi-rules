@@ -1,6 +1,7 @@
 package org.sonar.samples.openapi.utils;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,29 +14,59 @@ public class VerbPathMatcher {
 
     public static final String GET_WORD = "get";
     public static final String DELETE_WORD = "delete";
+    public static final String ME_WORD = "me";
 
     public static final String STATIC_PATH_PART_REGEX = "[^\\/{}]*";
     public static final String DYNAMIC_PATH_PART_REGEX = "\\{" + STATIC_PATH_PART_REGEX + "\\}";
+    public static final String DYNAMIC_OR_ME_PATH_PART_REGEX = "(" + DYNAMIC_PATH_PART_REGEX + "|\\bme\\b)";
+
+    public static final String ONLY_ONE_ME_REGEX = "(?!.*\\bme\\b.*\\bme\\b).*\\bme\\b.*";
+
     public static final String SLASH = "\\/";
 
     public static final String COLLECTION_PATH = SLASH + STATIC_PATH_PART_REGEX;
-    public static final String ELEMENT_PATH = COLLECTION_PATH + SLASH + DYNAMIC_PATH_PART_REGEX;
+    public static final String ELEMENT_PATH = COLLECTION_PATH + SLASH + DYNAMIC_OR_ME_PATH_PART_REGEX;
 
-    public static final String GET_ALL = ";get:^" + COLLECTION_PATH + "$";
-    public static final String GET_ONE = ";get:^" + ELEMENT_PATH + "$";
-    public static final String GET_ALL_SUB_RESOURCES = ";get:^" + ELEMENT_PATH + SLASH + STATIC_PATH_PART_REGEX + "$";
-    public static final String POST = ";post:^" + COLLECTION_PATH + "$";
-    public static final String POST_GET = ";post:^" + COLLECTION_PATH + SLASH + GET_WORD + "$";
-    public static final String POST_DELETE = ";post:^" + COLLECTION_PATH + SLASH + DELETE_WORD + "$";
-    public static final String POST_SUB_RESOURCE = ";post:^" + ELEMENT_PATH + SLASH + STATIC_PATH_PART_REGEX + "$";
-    public static final String POST_SUB_RESOURCE_GET = ";post:^" + ELEMENT_PATH + SLASH + STATIC_PATH_PART_REGEX + SLASH + GET_WORD + "$";
-    public static final String POST_SUB_RESOURCE_DELETE = ";post:^" + ELEMENT_PATH + SLASH + STATIC_PATH_PART_REGEX + SLASH + DELETE_WORD + "$";
-    public static final String PUT = ";put:^" + ELEMENT_PATH + "$";
-    public static final String PUT_SUB_RESOURCE = ";put:^" + ELEMENT_PATH + SLASH + ELEMENT_PATH + "$";
-    public static final String DELETE = ";delete:^" + ELEMENT_PATH + "$";
-    public static final String DELETE_SUB_RESOURCE = ";put:^" + ELEMENT_PATH + SLASH + ELEMENT_PATH + "$";
-    public static final String PATCH = ";patch:^" + ELEMENT_PATH + "$";
-    public static final String PATCH_SUB_RESOURCE = ";patch:^" + ELEMENT_PATH + SLASH + ELEMENT_PATH + "$";
+    public static final String COLLECTION_PATH_2ND = ELEMENT_PATH + COLLECTION_PATH;
+    public static final String COLLECTION_PATH_3RD = ELEMENT_PATH + ELEMENT_PATH + COLLECTION_PATH;
+    
+    public static final String ELEMENT_PATH_2ND = ELEMENT_PATH + ELEMENT_PATH;
+    public static final String ELEMENT_PATH_3RD = ELEMENT_PATH + ELEMENT_PATH + ELEMENT_PATH;
+
+    public static final String GET_WORD_PATH = SLASH + GET_WORD;
+    public static final String DELETE_WORD_PATH = SLASH + DELETE_WORD;
+
+    public static final String GET_ALL_1ST_LEVEL = ";get:^" + COLLECTION_PATH + "$";
+    public static final String GET_ALL_2ND_LEVEL = ";get:^" + COLLECTION_PATH_2ND + "$";
+    public static final String GET_ALL_3RD_LEVEL = ";get:^" + COLLECTION_PATH_3RD + "$";
+
+    public static final String GET_ONE_1ST_LEVEL = ";get:^" + ELEMENT_PATH + "$";
+    public static final String GET_ONE_2ND_LEVEL = ";get:^" + ELEMENT_PATH_2ND + "$";
+    public static final String GET_ONE_3RD_LEVEL = ";get:^" + ELEMENT_PATH_3RD + "$";
+
+    public static final String POST_1ST_LEVEL = ";post:^" + COLLECTION_PATH + "$";
+    public static final String POST_2ND_LEVEL = ";post:^" + COLLECTION_PATH_2ND + "$";
+    public static final String POST_3RD_LEVEL = ";post:^" + COLLECTION_PATH_3RD + "$";
+
+    public static final String POST_GET_1ST_LEVEL = ";post:^" + COLLECTION_PATH + GET_WORD_PATH + "$";
+    public static final String POST_GET_2ND_LEVEL = ";post:^" + COLLECTION_PATH_2ND + GET_WORD_PATH + "$";
+    public static final String POST_GET_3RD_LEVEL = ";post:^" + COLLECTION_PATH_2ND + GET_WORD_PATH + "$";
+
+    public static final String POST_DELETE_1ST_LEVEL = ";post:^" + COLLECTION_PATH + DELETE_WORD_PATH + "$";
+    public static final String POST_DELETE_2ND_LEVEL = ";post:^" + COLLECTION_PATH_2ND + DELETE_WORD_PATH + "$";
+    public static final String POST_DELETE_3RD_LEVEL = ";post:^" + COLLECTION_PATH_2ND + DELETE_WORD_PATH + "$";
+
+    public static final String PUT_1ST_LEVEL = ";put:^" + ELEMENT_PATH + "$";
+    public static final String PUT_2ND_LEVEL = ";put:^" + ELEMENT_PATH_2ND + "$";
+    public static final String PUT_3RD_LEVEL = ";put:^" + ELEMENT_PATH_3RD + "$";
+
+    public static final String PATCH_1ST_LEVEL = ";patch:^" + ELEMENT_PATH + "$";
+    public static final String PATCH_2ND_LEVEL = ";patch:^" + ELEMENT_PATH_2ND + "$";
+    public static final String PATCH_3RD_LEVEL = ";patch:^" + ELEMENT_PATH_3RD + "$";
+
+    public static final String DELETE_1ST_LEVEL = ";delete:^" + ELEMENT_PATH + "$";
+    public static final String DELETE_2ND_LEVEL = ";delete:^" + ELEMENT_PATH_2ND + "$";
+    public static final String DELETE_3RD_LEVEL = ";delete:^" + ELEMENT_PATH_3RD + "$";
 
     private Map<String, List<PatternGroup>> patternsByVerb;
     private Map<String, Set<String>> exclusionsByVerb;
@@ -43,6 +74,7 @@ public class VerbPathMatcher {
     public VerbPathMatcher(String expression) {
         this(expression, null);
     }
+
     public VerbPathMatcher(String expression, String exclusionExpression) {
         processPatterns(expression);
         processExclusions(exclusionExpression);
@@ -105,7 +137,13 @@ public class VerbPathMatcher {
         }
 
         public boolean matches(String path) {
-            return pattern.matcher(path).matches();
+            Pattern mePattern = Pattern.compile(ONLY_ONE_ME_REGEX);
+            Matcher meMatcher = mePattern.matcher(path);
+            if (meMatcher.find()) {
+                return pattern.matcher(path).matches() && meMatcher.matches();
+            } else {
+                return pattern.matcher(path).matches();
+            }
         }
 
         public Set<String> getValues() {
