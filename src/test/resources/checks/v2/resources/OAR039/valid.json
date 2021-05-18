@@ -17,8 +17,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       },
@@ -39,8 +39,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }
@@ -66,8 +66,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }
@@ -93,8 +93,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }
@@ -114,8 +114,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       },
@@ -139,8 +139,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       },
@@ -164,8 +164,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       },
@@ -183,8 +183,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }
@@ -210,8 +210,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }
@@ -237,8 +237,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }
@@ -264,8 +264,8 @@
           "500": {
             "description": "Internal server error"
           },
-          "504": {
-            "description": "Gateway timeout"
+          "501": {
+            "description": "Service unavailable"
           }
         }
       }

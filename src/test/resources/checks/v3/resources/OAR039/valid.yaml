@@ -12,8 +12,8 @@ paths:
           description: Bad request
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
     post:
       responses:
         201:
@@ -26,8 +26,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
 
   /pets/get:
     post:
@@ -44,8 +44,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
 
   /pets/delete:
     post:
@@ -62,8 +62,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
 
   /pets/{id}:
     get:
@@ -76,8 +76,8 @@ paths:
           description: Not found
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
     put:
       responses:
         200:
@@ -92,8 +92,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
     patch:
       responses:
         200:
@@ -108,8 +108,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
     delete:
       responses:
         200:
@@ -120,8 +120,8 @@ paths:
           description: Not found
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
 
   /pets/{id}/owner:
     post:
@@ -138,8 +138,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
           
   /pets/{id}/owner/get:
     post:
@@ -156,8 +156,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
           
   /pets/{id}/owner/delete:
     post:
@@ -174,8 +174,8 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        504:
-          description: Gateway timeout
+        501:
+          description: Service unavailable
 
   /status:
     get:

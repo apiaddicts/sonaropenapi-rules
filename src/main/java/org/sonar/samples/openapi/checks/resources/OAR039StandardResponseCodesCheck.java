@@ -30,10 +30,11 @@ public class OAR039StandardResponseCodesCheck extends AbstractVerbPathCheck {
     private static final String PAYLOAD_TOO_LARGE = "413";
     private static final String UNSUPPORTED_MEDIA_TYPE = "415";
     private static final String INTERNAL_SERVER_ERROR = "500";
+    private static final String SERVICE_UNAVAILABLE = "501";
     private static final String GATEWAY_TIMEOUT = "504";
 
-    private static final String COMMON_CODES = INTERNAL_SERVER_ERROR + VALUE_SEPARATOR + GATEWAY_TIMEOUT;
-    private static final String OPS_WITH_BODY_CODES = BAD_REQUEST_CODE + VALUE_SEPARATOR + PAYLOAD_TOO_LARGE + VALUE_SEPARATOR + UNSUPPORTED_MEDIA_TYPE;
+    private static final String COMMON_CODES = INTERNAL_SERVER_ERROR + VALUE_SEPARATOR + SERVICE_UNAVAILABLE;
+    private static final String OPS_WITH_BODY_CODES = BAD_REQUEST_CODE + VALUE_SEPARATOR + UNSUPPORTED_MEDIA_TYPE;
 
     private static final String GET_COLLECTION_CODES = OK_CODE + OR_OPERATOR + PARTIAL_CONTENT_CODE + VALUE_SEPARATOR + BAD_REQUEST_CODE + VALUE_SEPARATOR + COMMON_CODES;
     private static final String GET_SUBCOLLECTIONS_CODES = GET_COLLECTION_CODES + VALUE_SEPARATOR + NOT_FOUND_CODE;
@@ -42,7 +43,6 @@ public class OAR039StandardResponseCodesCheck extends AbstractVerbPathCheck {
     private static final String POST_SUBRESOURCES_CODES = POST_CODES + VALUE_SEPARATOR + NOT_FOUND_CODE;
     private static final String UPDATE_N_OTHER_POST_OPS_CODES = OK_CODE + VALUE_SEPARATOR + NOT_FOUND_CODE + VALUE_SEPARATOR + OPS_WITH_BODY_CODES + VALUE_SEPARATOR + COMMON_CODES;
     private static final String DELETE_CODES = GET_ONE_CODES;
-
 
     private static final String DEFAULT_CODES_BY_RESOURCES_AND_VERB =
             GET_ALL_1ST_LEVEL + PART_SEPARATOR + GET_COLLECTION_CODES +

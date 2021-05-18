@@ -7,14 +7,14 @@
   "paths": {
     "/pets": {
       "get": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 or 206 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 or 206 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
         }
       },
       "post": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 or 201 or 202 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 or 201 or 202 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
@@ -23,7 +23,7 @@
     },
     "/pets/get": {
       "post": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
@@ -32,7 +32,7 @@
     },
     "/pets/delete": {
       "post": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
@@ -41,28 +41,28 @@
     },
     "/pets/{id}": {
       "get": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
         }
       },
       "put": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
         }
       },
       "patch": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
         }
       },
       "delete": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
@@ -71,7 +71,7 @@
     },
     "/pets/{id}/owner": {
       "post": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 or 201 or 202 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 or 201 or 202 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
@@ -80,7 +80,7 @@
     },
     "/pets/{id}/owner/get": {
       "post": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
@@ -89,7 +89,7 @@
     },
     "/pets/{id}/owner/delete": {
       "post": {
-        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 413 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 504 must be defined}}
+        "responses": { # Noncompliant {{OAR039: Response code 200 must be defined}} {{OAR039: Response code 400 must be defined}} {{OAR039: Response code 404 must be defined}} {{OAR039: Response code 415 must be defined}} {{OAR039: Response code 500 must be defined}} {{OAR039: Response code 501 must be defined}}
           "default": {
             "description": "Unexpected error"
           }
