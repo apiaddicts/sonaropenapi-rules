@@ -17,6 +17,8 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 	public static final String KEY = "OAR017";
 	private static final String MESSAGE = "OAR017.error";
 
+	private int numberOfMe = 0;
+
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
 		return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
@@ -36,6 +38,7 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 		String[] parts = Stream.of(path.split("/")).filter(p -> !p.trim().isEmpty()).toArray(String[]::new);
 		if (parts.length == 0) return true;
 
+		numberOfMe = 0;
 		boolean previousIsVar = isVariable(parts[0]);
 		if (previousIsVar) return false;
 
@@ -49,6 +52,7 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 	}
 
 	private boolean isVariable(String part) {
-		return '{' == part.charAt(0) && '}' == part.charAt(part.length()-1);
+		if (part.equals("me")) numberOfMe++;
+		return '{' == part.charAt(0) && '}' == part.charAt(part.length()-1) || (part.equals("me") && numberOfMe <= 1);
 	}
 }
