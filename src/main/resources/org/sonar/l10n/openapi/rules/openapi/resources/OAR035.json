@@ -1,0 +1,13 @@
+{
+  "title": "OAR035 - AuthorizationResponses - Responses in a specification with security schemes defined, must define authorization response codes",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1h"
+  },
+  "tags": [
+    "resources"
+  ],
+  "defaultSeverity": "MAJOR"
+}

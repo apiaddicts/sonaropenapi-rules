@@ -48,6 +48,7 @@ public final class RulesLists {
 				OAR027PostResponseLocationHeaderCheck.class,
 				OAR031ExamplesCheck.class,
 				OAR032AmbiguousElementsPathCheck.class,
+				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
 				OAR039StandardResponseCodesCheck.class
 		);
