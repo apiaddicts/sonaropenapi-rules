@@ -18,6 +18,7 @@ public final class RulesLists {
 	public static List<Class> getSecurityChecks() {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
+				OAR033HttpHeadersCheck.class,
 				OAR036SessionMechanismsCheck.class
 		);
 	}

@@ -1,0 +1,13 @@
+{
+  "title": "OAR033 - HttpHeaders - Cabeceras permitidas y obligatorias",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "CRITICAL"
+}
