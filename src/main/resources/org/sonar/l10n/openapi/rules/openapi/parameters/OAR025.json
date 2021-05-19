@@ -1,5 +1,5 @@
 {
-  "title": "OAR025 - LimitParameter - $limit parameter is required in this operation",
+  "title": "OAR025 - LimitParameter - $limit must be defined as a parameter in this operation",
   "type": "BUG",
   "status": "ready",
   "remediation": {

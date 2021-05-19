@@ -1,5 +1,5 @@
 {
-  "title": "OAR022 - OrderbyParameter - El parámetro $orderby es obligatorio en esta operación",
+  "title": "OAR022 - OrderbyParameter - $orderby se debe definir como parámetro en esta operación",
   "type": "BUG",
   "status": "ready",
   "remediation": {

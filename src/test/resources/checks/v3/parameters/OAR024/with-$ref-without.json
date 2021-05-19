@@ -29,7 +29,7 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { # Noncompliant {{OAR024: $start parameter is required in this operation}}
+        "parameters" : [ { # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
           "$ref" : "#/components/parameters/other"
         }, {
           "$ref" : "#/components/parameters/init"

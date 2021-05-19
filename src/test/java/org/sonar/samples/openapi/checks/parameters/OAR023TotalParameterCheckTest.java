@@ -79,7 +79,7 @@ public class OAR023TotalParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR023 - TotalParameter - $total parameter is required in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
+        assertRuleProperties("OAR023 - TotalParameter - $total must be defined as a parameter in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
     }
 
     @Override

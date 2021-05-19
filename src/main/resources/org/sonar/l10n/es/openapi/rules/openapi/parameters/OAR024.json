@@ -1,5 +1,5 @@
 {
-  "title": "OAR024 - StartParameter - El parámetro $start es obligatorio en esta operación",
+  "title": "OAR024 - StartParameter - $start se debe definir como parámetro en esta operación",
   "type": "BUG",
   "status": "ready",
   "remediation": {

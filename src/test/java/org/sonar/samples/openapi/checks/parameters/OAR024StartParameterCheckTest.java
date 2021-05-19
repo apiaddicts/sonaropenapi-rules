@@ -80,7 +80,7 @@ public class OAR024StartParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR024 - StartParameter - $start parameter is required in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
+        assertRuleProperties("OAR024 - StartParameter - $start must be defined as a parameter in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
     }
 
     @Override

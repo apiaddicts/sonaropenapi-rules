@@ -25,7 +25,7 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { # Noncompliant {{OAR022: $orderby parameter is required in this operation}}
+        "parameters" : [ { # Noncompliant {{OAR022: $orderby must be defined as a parameter in this operation}}
           "$ref" : "#/parameters/other"
         }, {
           "$ref" : "#/parameters/orderby"

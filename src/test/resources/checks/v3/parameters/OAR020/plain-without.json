@@ -7,7 +7,7 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { # Noncompliant {{OAR020: $expand parameter is required in this operation}}
+        "parameters" : [ { # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
           "in" : "query",
           "name" : "other",
           "schema": {

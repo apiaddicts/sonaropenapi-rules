@@ -79,7 +79,7 @@ public class OAR022OrderbyParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR022 - OrderbyParameter - $orderby parameter is required in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
+        assertRuleProperties("OAR022 - OrderbyParameter - $orderby must be defined as a parameter in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
     }
 
     @Override

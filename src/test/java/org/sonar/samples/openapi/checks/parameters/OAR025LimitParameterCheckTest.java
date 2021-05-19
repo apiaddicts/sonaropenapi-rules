@@ -80,7 +80,7 @@ public class OAR025LimitParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR025 - LimitParameter - $limit parameter is required in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
+        assertRuleProperties("OAR025 - LimitParameter - $limit must be defined as a parameter in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
     }
 
     @Override

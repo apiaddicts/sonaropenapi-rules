@@ -79,7 +79,7 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR021 - ExcludeParameter - $exclude parameter is required in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
+        assertRuleProperties("OAR021 - ExcludeParameter - $exclude must be defined as a parameter in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
     }
 
     @Override

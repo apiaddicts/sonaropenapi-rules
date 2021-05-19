@@ -6,7 +6,7 @@
   },
   "paths" : {
     "/pets" : {
-      "get" : { # Noncompliant {{OAR020: $expand parameter is required in this operation}}
+      "get" : { # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
         "responses" : {
           "200" : {
             "description" : "Ok"

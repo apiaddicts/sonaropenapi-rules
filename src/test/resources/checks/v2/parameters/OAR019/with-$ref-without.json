@@ -25,7 +25,7 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { # Noncompliant {{OAR019: $select parameter is required in this operation}}
+        "parameters" : [ { # Noncompliant {{OAR019: $select must be defined as a parameter in this operation}}
           "$ref" : "#/parameters/other"
         }, {
           "$ref" : "#/parameters/select"

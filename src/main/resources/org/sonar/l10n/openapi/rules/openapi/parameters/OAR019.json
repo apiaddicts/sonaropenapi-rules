@@ -1,5 +1,5 @@
 {
-  "title": "OAR019 - SelectParameter - $select parameter is required in this operation",
+  "title": "OAR019 - SelectParameter - $select must be defined as a parameter in this operation",
   "type": "BUG",
   "status": "ready",
   "remediation": {

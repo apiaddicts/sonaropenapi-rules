@@ -79,7 +79,7 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR019 - SelectParameter - $select parameter is required in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
+        assertRuleProperties("OAR019 - SelectParameter - $select must be defined as a parameter in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
     }
 
     @Override

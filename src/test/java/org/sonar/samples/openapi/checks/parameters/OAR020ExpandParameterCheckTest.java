@@ -79,7 +79,7 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR020 - ExpandParameter - $expand parameter is required in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
+        assertRuleProperties("OAR020 - ExpandParameter - $expand must be defined as a parameter in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
     }
 
     @Override

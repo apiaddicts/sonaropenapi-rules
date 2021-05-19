@@ -16,7 +16,7 @@ parameters:
 paths:
   /pets:
     get:
-      parameters: # Noncompliant {{OAR023: $total parameter is required in this operation}}
+      parameters: # Noncompliant {{OAR023: $total must be defined as a parameter in this operation}}
         - $ref: '#/parameters/other'
         - $ref: '#/parameters/total'
       responses:

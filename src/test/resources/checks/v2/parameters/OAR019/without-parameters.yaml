@@ -4,7 +4,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    get: # Noncompliant {{OAR019: $select parameter is required in this operation}}
+    get: # Noncompliant {{OAR019: $select must be defined as a parameter in this operation}}
       responses:
         200:
           description: Ok

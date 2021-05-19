@@ -6,7 +6,7 @@
   },
   "paths" : {
     "/pets" : {
-      "get" : { # Noncompliant {{OAR024: $start parameter is required in this operation}}
+      "get" : { # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
         "responses" : {
           "200" : {
             "description" : "Ok"

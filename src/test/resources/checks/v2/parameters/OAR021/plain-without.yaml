@@ -5,7 +5,7 @@ info:
 paths:
   /pets:
     get:
-      parameters: # Noncompliant {{OAR021: $exclude parameter is required in this operation}}
+      parameters: # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
         - in: query
           name: other
           type: array
