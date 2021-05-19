@@ -16,8 +16,9 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
         v2Path = getV2Path("resources");
         v3Path = getV3Path("resources");
     }
-
-    /*@Test
+    
+    /* MD
+    @Test
     public void verifyInV2() {
         verifyV2("valid-md");
     }
@@ -57,6 +58,8 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
         verifyV2("without-required-fields-md");
     }*/
 
+    /* RIM
+    @Test
     public void verifyInV2() {
         verifyV2("valid-r");
     }
@@ -124,12 +127,97 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3WithoutRequiredFields() {
         verifyV3("without-required-fields-r");
+    }*/
+
+    @Test
+    public void verifyInV2() {
+        verifyV2("valid");
+    }
+
+    @Test
+    public void verifyInV2AllOf() {
+        verifyV2("valid-all-of");
+    }
+
+    @Test
+    public void verifyInV2WithoutData() {
+        verifyV2("without-data");
+    }
+
+    @Test
+    public void verifyInV2WithoutStatus() {
+        verifyV2("without-status");
+    }
+
+    @Test
+    public void verifyInV2WithStatusWrongType() {
+        verifyV2("with-status-wrong-type");
+    }
+
+    @Test
+    public void verifyInV2WithStatusWithoutProperties() {
+        verifyV2("with-status-without-properties");
+    }
+
+    @Test
+    public void verifyInV2WithStatusWithPropertiesWrongType() {
+        verifyV2("with-status-with-properties-wrong-type");
+    }
+
+    @Test
+    public void verifyInV2WithoutRequiredFields() {
+        verifyV2("without-required-fields");
+    }
+
+    @Test
+    public void verifyInV3() {
+        verifyV3("valid");
+    }
+
+    @Test
+    public void verifyInV3AllOf() {
+        verifyV3("valid-all-of");
+    }
+
+    @Test
+    public void verifyInV3WithoutData() {
+        verifyV3("without-data");
+    }
+
+    @Test
+    public void verifyInV3WithoutStatus() {
+        verifyV3("without-status");
+    }
+
+    @Test
+    public void verifyInV3WithStatusWrongType() {
+        verifyV3("with-status-wrong-type");
+    }
+
+    @Test
+    public void verifyInV3WithStatusWithoutProperties() {
+        verifyV3("with-status-without-properties");
+    }
+
+    @Test
+    public void verifyInV3WithStatusWithPropertiesWrongType() {
+        verifyV3("with-status-with-properties-wrong-type");
+    }
+
+    @Test
+    public void verifyInV3WithoutRequiredFields() {
+        verifyV3("without-required-fields");
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}", RuleParamType.STRING);
+        //MD
+        //assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"result\":{\"type\":\"object\",\"properties\":{\"http_code\":{\"type\":\"integer\"},\"status\":{\"type\":\"boolean\"},\"trace_id\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"status\",\"http_code\",\"trace_id\"]},\"data\":{\"type\":\"any\"}},\"requiredOnError\":[],\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"result\"],\"dataProperty\":\"data\"}", RuleParamType.STRING);
+        //RIM
+        //assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}", RuleParamType.STRING);
+        //Cloudappi
+        assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"status\":{\"type\":\"object\",\"properties\":{\"http_status\":{\"type\":\"string\"},\"code\":{\"type\":\"integer\"},\"description\":{\"type\":\"string\"},\"internal_code\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"nullable\":true,\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"}}}}},\"required\":[\"http_status\",\"code\",\"description\",\"errors\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"status\"],\"dataProperty\":\"data\"}", RuleParamType.STRING);
         assertParameterProperties("path-exclusions", "/status", RuleParamType.STRING);
     }
 
