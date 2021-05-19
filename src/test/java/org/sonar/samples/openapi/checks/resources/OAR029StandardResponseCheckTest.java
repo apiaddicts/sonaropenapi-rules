@@ -14,9 +14,10 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
         ruleName = "OAR029";
         check = new OAR029StandardResponseCheck();
         v2Path = getV2Path("resources");
+        v3Path = getV3Path("resources");
     }
 
-    @Test
+    /*@Test
     public void verifyInV2() {
         verifyV2("valid");
     }
@@ -54,12 +55,81 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV2WithoutRequiredFields() {
         verifyV2("without-required-fields");
+    }*/
+
+    public void verifyInV2() {
+        verifyV2("valid_r");
+    }
+
+    @Test
+    public void verifyInV2WithoutPayload() {
+        verifyV2("without-payload");
+    }
+
+    @Test
+    public void verifyInV2WithoutError() {
+        verifyV2("without-error");
+    }
+
+    @Test
+    public void verifyInV2WithErrorWrongType() {
+        verifyV2("with-error-wrong-type");
+    }
+
+    @Test
+    public void verifyInV2WithErrorWithoutProperties() {
+        verifyV2("with-error-without-properties");
+    }
+
+    @Test
+    public void verifyInV2WithErrorWithPropertiesWrongType() {
+        verifyV2("with-error-with-properties-wrong-type");
+    }
+
+    @Test
+    public void verifyInV2WithoutRequiredFields() {
+        verifyV2("without-required-fields_r");
+    }
+
+    @Test
+    public void verifyInV3() {
+        verifyV3("valid");
+    }
+
+    @Test
+    public void verifyInV3WithoutPayload() {
+        verifyV3("without-payload");
+    }
+
+    @Test
+    public void verifyInV3WithoutError() {
+        verifyV3("without-error");
+    }
+
+    @Test
+    public void verifyInV3WithErrorWrongType() {
+        verifyV3("with-error-wrong-type");
+    }
+
+    @Test
+    public void verifyInV3WithErrorWithoutProperties() {
+        verifyV3("with-error-without-properties");
+    }
+
+    @Test
+    public void verifyInV3WithErrorWithPropertiesWrongType() {
+        verifyV3("with-error-with-properties-wrong-type");
+    }
+
+    @Test
+    public void verifyInV3WithoutRequiredFields() {
+        verifyV3("without-required-fields");
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"result\":{\"type\":\"object\",\"properties\":{\"http_code\":{\"type\":\"integer\"},\"status\":{\"type\":\"boolean\"},\"trace_id\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"status\",\"http_code\",\"trace_id\"]},\"data\":{\"type\":\"any\"}},\"requiredOnError\":[],\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"result\"],\"dataProperty\":\"data\"}", RuleParamType.STRING);
+        assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}", RuleParamType.STRING);
         assertParameterProperties("path-exclusions", "/status", RuleParamType.STRING);
     }
 

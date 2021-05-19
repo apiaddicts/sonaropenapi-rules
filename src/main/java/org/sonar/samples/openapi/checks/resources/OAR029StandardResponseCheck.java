@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.sonar.plugins.openapi.api.v2.OpenApi2Grammar;
+import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
     public static final String KEY = "OAR029";
 
     //private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"status\":{\"type\":\"object\",\"properties\":{\"http_status\":{\"type\":\"string\"},\"code\":{\"type\":\"integer\"},\"description\":{\"type\":\"string\"},\"internal_code\":{\"type\":\"string\"},\"errors\":{\"type\":[\"array\",\"null\"],\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"http_status\",\"code\",\"description\"]},\"data\":{\"type\":[\"object\",\"array\",\"null\"]}},\"required\":[\"status\",\"data\"]}";
-    private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"result\":{\"type\":\"object\",\"properties\":{\"http_code\":{\"type\":\"integer\"},\"status\":{\"type\":\"boolean\"},\"trace_id\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"status\",\"http_code\",\"trace_id\"]},\"data\":{\"type\":\"any\"}},\"requiredOnError\":[],\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"result\"],\"dataProperty\":\"data\"}";
+    //private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"result\":{\"type\":\"object\",\"properties\":{\"http_code\":{\"type\":\"integer\"},\"status\":{\"type\":\"boolean\"},\"trace_id\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"status\",\"http_code\",\"trace_id\"]},\"data\":{\"type\":\"any\"}},\"requiredOnError\":[],\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"result\"],\"dataProperty\":\"data\"}";
+    private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}";
 
     @RuleProperty(
             key = "response-schema",
@@ -75,15 +77,15 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        visitV2Node(node);
+        visitPathNode(node);
     }
 
-    private void visitV2Node(JsonNode node) {
+    private void visitPathNode(JsonNode node) {
         String path = node.key().getTokenValue();
         if (exclusion.contains(path)) return;
         List<JsonNode> allResponses = node.properties().stream() // operations
@@ -94,40 +96,44 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
                 .collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
             String statusCode = responseNode.key().getTokenValue();
-            boolean successCode = false;
-            int code = 0;
-            if (!statusCode.equalsIgnoreCase("default")) {
-                code = Integer.parseInt(statusCode);
-                successCode = 200 <= code && 300 > code && code != 204;
+            responseNode = resolve(responseNode);
+
+            if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
+                visitSchemaNode(responseNode, statusCode);
+            } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                JsonNode content = responseNode.at("/content");
+                if (content.isMissing()) continue;
+
+                content.propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                    if (!mediaType.toLowerCase().contains("json")) return;
+                    visitSchemaNode(mediaTypeNode, statusCode);
+                });
             }
+        }
+    }
 
-            JsonNode schemaNode = responseNode.value().get("schema");
-            if (schemaNode.isMissing()) continue;
-            schemaNode = resolve(schemaNode);
+    private void visitSchemaNode(JsonNode responseNode, String statusCode) {
+        boolean successCode = false;
+        int code = 0;
+        if (!statusCode.equalsIgnoreCase("default")) {
+            code = Integer.parseInt(statusCode);
+            successCode = 200 <= code && 300 > code && code != 204;
+        }
 
-            Map<String, JsonNode> properties = getAllProperties(schemaNode);
+        JsonNode schemaNode = responseNode.value().get("schema");
+        if (schemaNode.isMissing()) return;
+        schemaNode = resolve(schemaNode);
 
-            if (successCode) {
-                validateRootProperties(requiredOnSuccess, properties, schemaNode);
-            } else {
-                /*if (requiredOnError != null && requiredOnError.length() > 0 && responseSchemaProperties != null) {
-                    JsonNode parentNode = schemaNode.key();
-                    requiredOnError.toList().forEach(property -> {
-                        String propertyName = (String) property;
-                        JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
-                        String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
-                        if (propertyType == null || propertyType.isBlank() || propertyType.equals("any")) propertyType = TYPE_ANY;
-                        validateProperty(properties, propertyName, propertyType, parentNode);
-                    });
-                }*/
-                validateRootProperties(requiredOnError, properties, schemaNode);
-            }
+        Map<String, JsonNode> properties = getAllProperties(schemaNode);
 
-            if (code != 204) {
-                //validateProperty(properties, "result", TYPE_OBJECT, schemaNode.key())
-                //        .ifPresent(this::validateResult);
-                validateRootProperties(requiredAlways, properties, schemaNode);
-            }
+        if (successCode) {
+            validateRootProperties(requiredOnSuccess, properties, schemaNode);
+        } else {
+            validateRootProperties(requiredOnError, properties, schemaNode);
+        }
+
+        if (code != 204) {
+            validateRootProperties(requiredAlways, properties, schemaNode);
         }
     }
 
@@ -151,7 +157,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
         if (propertyName.equals(dataProperty)) {
             Map<String, JsonNode> allProp = getAllProperties(parentNode);
             if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
-                addIssue(KEY, translate("OARE001.error-required-one-property", propertyName), parentNode.key());
+                addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), parentNode.key());
             }
         } else {
             JsonNode properties = getProperties(parentNode);
