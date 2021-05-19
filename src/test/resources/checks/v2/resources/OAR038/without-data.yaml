@@ -14,5 +14,5 @@ paths:
           description: No content
 
 definitions:
-  response: # Noncompliant {{OAR038: 'payload' property is missing}}
+  response: # Noncompliant {{OAR038: 'data' property is missing}}
     type: object

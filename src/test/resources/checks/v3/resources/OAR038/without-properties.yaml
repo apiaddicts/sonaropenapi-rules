@@ -21,7 +21,7 @@ components:
     post_response:
       type: object
       properties:
-        payload: # Noncompliant {{OAR038: At least you have to define the identifier property}}
+        data: # Noncompliant {{OAR038: At least you have to define the identifier property}}
           type: object
 
   responses:

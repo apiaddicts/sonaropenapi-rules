@@ -13,14 +13,14 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
 
     public static final String KEY = "OAR038";
 
-    private static final String DATA_NODE = "payload";
+    private static final String DATA_PROPERTY = "data";
 
     @RuleProperty(
-            key = "data-node",
-            description = "Data node name in standard response.",
-            defaultValue = DATA_NODE
+            key = "data-property",
+            description = "Data property in standard response.",
+            defaultValue = DATA_PROPERTY
     )
-    private String dataNode = DATA_NODE;
+    private String dataNode = DATA_PROPERTY;
 
     public OAR038StandardCreateResponseCheck() {
         super(KEY, "201");
@@ -44,7 +44,7 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
     private void validateData(JsonNode data) {
         JsonNode properties = getProperties(data);
         if (properties.properties().isEmpty()) {
-            addIssue(KEY, translate("OAR038.error-required-ope-property"), data.key());
+            addIssue(KEY, translate("OAR038.error-required-one-property"), data.key());
         }
     }
 }

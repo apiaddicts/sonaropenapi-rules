@@ -17,7 +17,7 @@ definitions:
   response:
     type: object
     properties:
-      payload:
+      data:
         type: object
         properties:
           id:

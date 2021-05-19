@@ -20,7 +20,7 @@ components:
     response:
       type: object
       properties:
-        payload:
+        data:
           type: object
           properties:
             id:

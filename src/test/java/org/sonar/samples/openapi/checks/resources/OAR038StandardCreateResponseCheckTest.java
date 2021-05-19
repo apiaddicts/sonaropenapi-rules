@@ -85,7 +85,7 @@ public class OAR038StandardCreateResponseCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("data-node", "payload", RuleParamType.STRING);
+        assertParameterProperties("data-property", "data", RuleParamType.STRING);
     }
 
 }
