@@ -46,6 +46,7 @@ public final class RulesLists {
 				OAR017ResourcePathCheck.class,
 				OAR018ResourcesByVerbCheck.class,
 				OAR027PostResponseLocationHeaderCheck.class,
+				OAR029StandardResponseCheck.class,
 				OAR031ExamplesCheck.class,
 				OAR032AmbiguousElementsPathCheck.class,
 				OAR035AuthorizationResponsesCheck.class,

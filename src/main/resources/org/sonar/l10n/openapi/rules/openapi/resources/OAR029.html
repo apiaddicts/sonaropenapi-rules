@@ -1,0 +1,72 @@
+<p>A response not compliant with the standard may cause application issues.</p>
+<h2>Normativa - Definición de APIs</h2>
+<ul>
+  <li><b>NORMA</b>: Definición API - Formatos.4</li>
+</ul>
+<h2>Noncompliant Code Example</h2>
+<pre>
+paths:
+  /endpoint:
+    get:
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/response'
+definitions:
+  response:
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          values:
+            type: array
+            items:
+              type: string
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+paths:
+  /endpoint:
+    get:
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/response'
+
+definitions:
+  response:
+    type: object
+    allOf:
+      - $ref: '#/definitions/standard_response'
+    properties:
+      data:
+        type: object
+        properties:
+          values:
+            type: array
+            items:
+              type: string
+  standard_response:
+    type: object
+    properties:
+      result:
+        type: object
+        properties:
+          status:
+            type: boolean
+          http_code:
+            type: integer
+          errors:
+            type: array
+            items:
+              type: object
+          trace_id:
+            type: string
+        required:
+          - status
+          - http_code
+          - trace_id
+</pre>

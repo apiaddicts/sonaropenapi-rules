@@ -1,0 +1,69 @@
+<h2><b>NORMA</b>: Definición API - Formatos.4</h2>
+<p>Es conveniente definir un formato único de respuesta que usarán todas las APIs de la organización.</p>
+<h2>Noncompliant</h2>
+<pre>
+paths:
+  /endpoint:
+    get:
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/response'
+definitions:
+  response:
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          values:
+            type: array
+            items:
+              type: string
+</pre>
+<h2>Compliant</h2>
+<pre>
+paths:
+  /endpoint:
+    get:
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/response'
+
+definitions:
+  response:
+    type: object
+    allOf:
+      - $ref: '#/definitions/standard_response'
+    properties:
+      data:
+        type: object
+        properties:
+          values:
+            type: array
+            items:
+              type: string
+  standard_response:
+    type: object
+    properties:
+      result:
+        type: object
+        properties:
+          status:
+            type: boolean
+          http_code:
+            type: integer
+          errors:
+            type: array
+            items:
+              type: object
+          trace_id:
+            type: string
+        required:
+          - status
+          - http_code
+          - trace_id
+</pre>
