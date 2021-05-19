@@ -9,5 +9,5 @@
   "tags": [
     "resources"
   ],
-  "defaultSeverity": "BLOCKER"
+  "defaultSeverity": "CRITICAL"
 }
