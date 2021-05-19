@@ -12,22 +12,33 @@ import org.sonar.sslr.yaml.grammar.JsonNode;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 
 public abstract class AbstractDefaultMimeCheck extends BaseCheck {
 
-	private static final String DEFAULT_MIME_TYPE_VALUE = "application/json";
+	private static final String DEFAULT_MEDIA_TYPE_VALUE = "application/json";
+	private static final String MEDIA_TYPE_EXCEPTIONS_VALUE = "-";
 
 	private String key;
 	private String section;
 	private String message;
 
 	@RuleProperty(
+			key = "media-type-exceptions",
+			description = "Media type exceptions.",
+			defaultValue = MEDIA_TYPE_EXCEPTIONS_VALUE)
+	public String mediaTypeExceptionsStr = MEDIA_TYPE_EXCEPTIONS_VALUE;
+
+    private Set<String> mediaTypeExceptions;
+
+	@RuleProperty(
 			key = "default-mime-type",
-			description = "Default mime type.",
-			defaultValue = DEFAULT_MIME_TYPE_VALUE)
-	public String defaultMimeType = DEFAULT_MIME_TYPE_VALUE;
+			description = "Default media type.",
+			defaultValue = DEFAULT_MEDIA_TYPE_VALUE)
+	public String defaultMediaType = DEFAULT_MEDIA_TYPE_VALUE;
 
 	private boolean globalSupportsDefaultMimeType = false;
 
@@ -44,6 +55,10 @@ public abstract class AbstractDefaultMimeCheck extends BaseCheck {
 
 	@Override
 	protected void visitFile(JsonNode root) {
+		mediaTypeExceptions = Stream.of(mediaTypeExceptionsStr.split(","))
+				.map(String::trim)
+				.map(String::toLowerCase)
+				.collect(Collectors.toSet());
 		globalSupportsDefaultMimeType = (root.getType() instanceof OpenApi2Grammar) ? supportsDefaultMimeTypeV2(root) : false;
 	}
 
@@ -111,12 +126,14 @@ public abstract class AbstractDefaultMimeCheck extends BaseCheck {
 		JsonNode consumes = node.get(section);
 		if (consumes.isMissing() || consumes.isNull()) return false;
 		List<JsonNode> mimeTypeNodes = consumes.elements();
-		return mimeTypeNodes.stream().map(AstNode::getTokenValue).anyMatch(defaultMimeType::equals);
+		if (mimeTypeNodes.stream().map(AstNode::getTokenValue).anyMatch(mediaTypeExceptions::contains)) return true;
+		return mimeTypeNodes.stream().map(AstNode::getTokenValue).anyMatch(defaultMediaType::equals);
 	}
 
 	private boolean supportsDefaultMimeTypeV3(JsonNode content) {
 		if (content.isMissing() || content.isNull()) return false;
 		Map<String, JsonNode> properties = content.propertyMap();
-		return properties.entrySet().stream().map(entry -> entry.getKey()).anyMatch(defaultMimeType::equals);
+		if (properties.entrySet().stream().map(entry -> entry.getKey()).anyMatch(mediaTypeExceptions::contains)) return true;
+		return properties.entrySet().stream().map(entry -> entry.getKey()).anyMatch(defaultMediaType::equals);
 	}
 }

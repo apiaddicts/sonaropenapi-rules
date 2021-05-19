@@ -89,7 +89,8 @@ public class OAR009ConsumesDefaultMimeTypeCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(1);
+        assertNumberOfParameters(2);
+        assertParameterProperties("media-type-exceptions", "-", RuleParamType.STRING);
         assertParameterProperties("default-mime-type", "application/json", RuleParamType.STRING);
     }
 }
