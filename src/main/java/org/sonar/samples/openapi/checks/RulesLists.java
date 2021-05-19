@@ -64,7 +64,8 @@ public final class RulesLists {
 				OAR023TotalParameterCheck.class,
 				OAR024StartParameterCheck.class,
 				OAR025LimitParameterCheck.class,
-				OAR026TotalParameterDefaultValueCheck.class
+				OAR026TotalParameterDefaultValueCheck.class,
+				OAR028FilterParameterCheck.class
 		);
 	}
 

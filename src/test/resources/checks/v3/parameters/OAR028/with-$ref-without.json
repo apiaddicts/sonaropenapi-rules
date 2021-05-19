@@ -1,0 +1,47 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "components": {
+    "parameters" : {
+      "other" : {
+        "in" : "query",
+        "name" : "other",
+        "schema": {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "orderby" : {
+        "in" : "query",
+        "name" : "orderby",
+        "schema": {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "parameters" : [ { # Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}
+          "$ref" : "#/components/parameters/other"
+        }, {
+          "$ref" : "#/components/parameters/orderby"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}
