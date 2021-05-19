@@ -44,10 +44,6 @@ paths:
           name: dateTime
           type: string
           required: true
-        - in: header
-          name: X-Amz-Security-Token
-          type: string
-          required: true
         - in: query
           name: Authorization
           type: string
@@ -101,11 +97,6 @@ paths:
         required: true
       - in: header
         name: dateTime
-        schema:
-          type: string
-        required: true
-      - in: header
-        name: X-Amz-Security-Token
         schema:
           type: string
         required: true
