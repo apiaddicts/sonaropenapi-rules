@@ -19,111 +19,111 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
 
     /*@Test
     public void verifyInV2() {
-        verifyV2("valid");
+        verifyV2("valid-md");
     }
 
     @Test
     public void verifyInV2AllOf() {
-        verifyV2("valid-all-of");
+        verifyV2("valid-all-of-md");
     }
 
     @Test
     public void verifyInV2WithoutData() {
-        verifyV2("without-data");
+        verifyV2("without-data-md");
     }
 
     @Test
     public void verifyInV2WithoutResult() {
-        verifyV2("without-result");
+        verifyV2("without-result-md");
     }
 
     @Test
     public void verifyInV2WithResultWrongType() {
-        verifyV2("with-result-wrong-type");
+        verifyV2("with-result-wrong-type-md");
     }
 
     @Test
     public void verifyInV2WithResultWithoutProperties() {
-        verifyV2("with-result-without-properties");
+        verifyV2("with-result-without-properties-md");
     }
 
     @Test
     public void verifyInV2WithResultWithPropertiesWrongType() {
-        verifyV2("with-result-with-properties-wrong-type");
+        verifyV2("with-result-with-properties-wrong-type-md");
     }
 
     @Test
     public void verifyInV2WithoutRequiredFields() {
-        verifyV2("without-required-fields");
+        verifyV2("without-required-fields-md");
     }*/
 
     public void verifyInV2() {
-        verifyV2("valid_r");
+        verifyV2("valid-r");
     }
 
     @Test
     public void verifyInV2WithoutPayload() {
-        verifyV2("without-payload");
+        verifyV2("without-payload-r");
     }
 
     @Test
     public void verifyInV2WithoutError() {
-        verifyV2("without-error");
+        verifyV2("without-error-r");
     }
 
     @Test
     public void verifyInV2WithErrorWrongType() {
-        verifyV2("with-error-wrong-type");
+        verifyV2("with-error-wrong-type-r");
     }
 
     @Test
     public void verifyInV2WithErrorWithoutProperties() {
-        verifyV2("with-error-without-properties");
+        verifyV2("with-error-without-properties-r");
     }
 
     @Test
     public void verifyInV2WithErrorWithPropertiesWrongType() {
-        verifyV2("with-error-with-properties-wrong-type");
+        verifyV2("with-error-with-properties-wrong-type-r");
     }
 
     @Test
     public void verifyInV2WithoutRequiredFields() {
-        verifyV2("without-required-fields_r");
+        verifyV2("without-required-fields-r");
     }
 
     @Test
     public void verifyInV3() {
-        verifyV3("valid");
+        verifyV3("valid-r");
     }
 
     @Test
     public void verifyInV3WithoutPayload() {
-        verifyV3("without-payload");
+        verifyV3("without-payload-r");
     }
 
     @Test
     public void verifyInV3WithoutError() {
-        verifyV3("without-error");
+        verifyV3("without-error-r");
     }
 
     @Test
     public void verifyInV3WithErrorWrongType() {
-        verifyV3("with-error-wrong-type");
+        verifyV3("with-error-wrong-type-r");
     }
 
     @Test
     public void verifyInV3WithErrorWithoutProperties() {
-        verifyV3("with-error-without-properties");
+        verifyV3("with-error-without-properties-r");
     }
 
     @Test
     public void verifyInV3WithErrorWithPropertiesWrongType() {
-        verifyV3("with-error-with-properties-wrong-type");
+        verifyV3("with-error-with-properties-wrong-type-r");
     }
 
     @Test
     public void verifyInV3WithoutRequiredFields() {
-        verifyV3("without-required-fields");
+        verifyV3("without-required-fields-r");
     }
 
     @Override
