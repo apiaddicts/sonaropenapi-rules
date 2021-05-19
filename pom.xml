@@ -19,6 +19,7 @@
     <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
     <sonaropenapi.version>1.2.3-SNAPSHOT</sonaropenapi.version>
     <sonaranalyzer.version>1.6.0.219</sonaranalyzer.version>
+    <orgjson.version>20160810</orgjson.version>
 
     <jacoco.maven.plugin.version>0.8.6</jacoco.maven.plugin.version>
     <sonar.maven.plugin.version>3.7.0.1746</sonar.maven.plugin.version>
@@ -44,6 +45,12 @@
       <groupId>org.sonarsource.analyzer-commons</groupId>
       <artifactId>sonar-analyzer-commons</artifactId>
       <version>${sonaranalyzer.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>${orgjson.version}</version>
     </dependency>
 
     <!-- test dependencies -->
