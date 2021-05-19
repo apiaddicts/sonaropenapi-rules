@@ -3,16 +3,30 @@ package org.sonar.samples.openapi.checks.resources;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
 import org.sonar.plugins.openapi.api.v2.OpenApi2Grammar;
 import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Rule(key = OAR035AuthorizationResponsesCheck.KEY)
 public class OAR035AuthorizationResponsesCheck extends BaseCheck {
     public static final String KEY = "OAR035";
+    public static final String MESSAGE = "OAR035.error";
+
+    private static final String RESPONSE_CODES_STR = "401, 403, 429";
+
+    @RuleProperty(
+        key = "expected-codes",
+        description = "Expected response codes.",
+        defaultValue = RESPONSE_CODES_STR
+    )
+    private String expectedCodesStr = RESPONSE_CODES_STR;
+    private Set<String> expectedCodes;
 
     private boolean hasGlobalSecurity = false;
 
@@ -23,7 +37,8 @@ public class OAR035AuthorizationResponsesCheck extends BaseCheck {
 
 	@Override
 	protected void visitFile(JsonNode root) {
-		hasGlobalSecurity = hasSecurity(root);
+        expectedCodes = Arrays.stream(expectedCodesStr.split(",")).map(String::trim).collect(Collectors.toSet());
+        hasGlobalSecurity = hasSecurity(root);
 	}
 
     @Override
@@ -32,17 +47,21 @@ public class OAR035AuthorizationResponsesCheck extends BaseCheck {
     }
 
     private void validateSecurityResponse(JsonNode node) {
-        JsonNode responses = node.get("responses");
-
-		if (hasSecurity(node)) {
-            if (responses.get("401").isMissing() || responses.get("403").isMissing() || responses.get("429").isMissing()) {
-                addIssue(KEY, translate("OAR035.error-security"), responses.key());
-            }
+        JsonNode responsesNode = node.get("responses");
+        Set<String> currentCodes = responsesNode.properties().stream().map(JsonNode::key).map(JsonNode::getTokenValue).collect(Collectors.toSet());
+		Set<String> copyExpectedCodes = expectedCodes.stream().collect(Collectors.toSet());
+        copyExpectedCodes.removeAll(currentCodes);
+        if (hasSecurity(node)) {
+            validateExpectedCodes(copyExpectedCodes, responsesNode);
 		} else if (hasGlobalSecurity) {
-            if (responses.get("401").isMissing() || responses.get("403").isMissing() || responses.get("429").isMissing()) {
-                addIssue(KEY, translate("OAR035.error-security"), responses.key());
-            }
+            validateExpectedCodes(copyExpectedCodes, responsesNode);
 		}
+    }
+
+    private void validateExpectedCodes(Set<String> copyExpectedCodes, JsonNode responsesNode) {
+        for (String missingCode : copyExpectedCodes.stream().sorted().collect(Collectors.toList())) {
+            addIssue(KEY, translate(MESSAGE, missingCode), responsesNode.key());
+        }
     }
 
 	private boolean hasSecurity(JsonNode node) {

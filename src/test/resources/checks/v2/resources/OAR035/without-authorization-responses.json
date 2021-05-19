@@ -46,7 +46,7 @@
             ]
           }
         ],
-        "responses": { # Noncompliant {{OAR035: Responses 401, 403 and 429 are required for operations with security schemes defined}}
+        "responses": { # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}} {{OAR035: Response code 429 must be defined for operations with security schemes defined}}
           "200": {
             "description": "Ok"
           }
