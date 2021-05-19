@@ -44,7 +44,6 @@ public class OAR001MandatoryHttpsProtocolCheck extends BaseCheck {
 
 	private void visitV3Node(JsonNode node) {
 		JsonNode serversNode = node.get("servers");
-		System.out.println(serversNode);
 		if (serversNode.isMissing() || serversNode.isNull()) {
 			addIssue(KEY, translate("OAR001.error-v3-servers"), node.key());
 		} else {
