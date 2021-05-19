@@ -17,7 +17,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -39,7 +39,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -66,7 +66,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -93,7 +93,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -114,7 +114,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -139,7 +139,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -164,7 +164,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -183,7 +183,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -210,7 +210,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -237,7 +237,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }
@@ -264,7 +264,7 @@
           "500": {
             "description": "Internal server error"
           },
-          "501": {
+          "503": {
             "description": "Service unavailable"
           }
         }

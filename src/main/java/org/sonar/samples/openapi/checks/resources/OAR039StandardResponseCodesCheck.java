@@ -30,7 +30,7 @@ public class OAR039StandardResponseCodesCheck extends AbstractVerbPathCheck {
     private static final String PAYLOAD_TOO_LARGE = "413";
     private static final String UNSUPPORTED_MEDIA_TYPE = "415";
     private static final String INTERNAL_SERVER_ERROR = "500";
-    private static final String SERVICE_UNAVAILABLE = "501";
+    private static final String SERVICE_UNAVAILABLE = "503";
     private static final String GATEWAY_TIMEOUT = "504";
 
     private static final String COMMON_CODES = INTERNAL_SERVER_ERROR + VALUE_SEPARATOR + SERVICE_UNAVAILABLE;

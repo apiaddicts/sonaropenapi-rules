@@ -12,7 +12,7 @@ paths:
           description: Bad request
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
     post:
       responses:
@@ -26,7 +26,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
 
   /pets/get:
@@ -44,7 +44,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
 
   /pets/delete:
@@ -62,7 +62,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
 
   /pets/{id}:
@@ -76,7 +76,7 @@ paths:
           description: Not found
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
     put:
       responses:
@@ -92,7 +92,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
     patch:
       responses:
@@ -108,7 +108,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
     delete:
       responses:
@@ -120,7 +120,7 @@ paths:
           description: Not found
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
 
   /pets/{id}/owner:
@@ -138,7 +138,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
           
   /pets/{id}/owner/get:
@@ -156,7 +156,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
           
   /pets/{id}/owner/delete:
@@ -174,7 +174,7 @@ paths:
           description: Unsupported media type
         500:
           description: Internal server error
-        501:
+        503:
           description: Service unavailable
 
   /status:
