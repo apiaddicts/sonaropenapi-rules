@@ -1,0 +1,13 @@
+{
+  "title": "OAR042 - BasePath - El valor de 'basePath' debe cumplir con el estandar",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "CRITICAL"
+}

@@ -33,6 +33,7 @@ public final class RulesLists {
 				OAR012ParameterNamingConventionCheck.class,
 				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,
+				OAR042BasePathCheck.class,
 				OAR052UndefinedNumericFormatCheck.class
 		);
 	}
