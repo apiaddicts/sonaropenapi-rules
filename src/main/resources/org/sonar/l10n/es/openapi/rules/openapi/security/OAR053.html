@@ -1,0 +1,89 @@
+<h2>Normativa - Definición de APIs</h2>
+<p>Algunas API deben devolver todos los encabezados de seguridad obligatorios.</p>
+<h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          description: OK
+</pre>
+<h2>Solución compatible (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers:
+            strinct-transport-security:
+              type: string
+            x-frame-options:
+              type: string
+            referrer-policy:
+              type: string
+            x-content-type-options:
+              type: string
+            x-xss-protection:
+              type: string
+</pre>
+<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<pre>
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  responses:
+    PetsResponse:
+      description: OK    
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          $ref: '#/components/responses/PetsResponse'
+</pre>
+<h2>Solución compatible (OpenAPI 3)</h2>
+<pre>
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  responses:
+    PetsResponse:
+      description: OK
+      headers:
+        strinct-transport-security:
+          schema:
+            type: string
+        x-frame-options:
+          schema:
+            type: string
+        referrer-policy:
+          schema:
+            type: string
+        x-content-type-options:
+          schema:
+            type: string
+        x-xss-protection:
+          schema:
+            type: string     
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          $ref: '#/components/responses/PetsResponse'
+</pre>

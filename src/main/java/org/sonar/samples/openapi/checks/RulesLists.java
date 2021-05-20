@@ -19,7 +19,8 @@ public final class RulesLists {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
-				OAR036SessionMechanismsCheck.class
+				OAR036SessionMechanismsCheck.class,
+				OAR053ResponseHeadersCheck.class
 		);
 	}
 
