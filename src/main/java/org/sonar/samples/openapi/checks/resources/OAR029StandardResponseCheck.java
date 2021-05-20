@@ -143,7 +143,6 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
     private void validateRootProperties(JSONArray requiredPropertiesJSONArray, Map<String, JsonNode> properties, JsonNode parentNode) {
         if (requiredPropertiesJSONArray != null && requiredPropertiesJSONArray.length() > 0) {
             Set<String> requiredProperties = requiredPropertiesJSONArray.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-            //System.out.println(requiredProperties);
             //validateRequiredProperties(parentNode, requiredProperties, String.join(", ", requiredProperties));
             requiredProperties.forEach(propertyName -> {
                 JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
@@ -167,7 +166,6 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
             JSONArray requiredPropertiesJSONArray = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
             if (requiredPropertiesJSONArray != null && requiredPropertiesJSONArray.length() > 0 ) {
                 Set<String> requiredProperties = requiredPropertiesJSONArray.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-                System.out.println(requiredProperties);
                 validateRequiredProperties(parentNode, requiredProperties, String.join(", ", requiredProperties));
             }
             Map<String, JsonNode> propertyMap = properties.propertyMap();
