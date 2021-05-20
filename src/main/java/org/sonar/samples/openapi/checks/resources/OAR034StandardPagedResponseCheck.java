@@ -8,7 +8,6 @@ import org.sonar.check.RuleProperty;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -58,36 +57,60 @@ public class OAR034StandardPagedResponseCheck extends AbstractExplicitResponseCh
 
     private void validateProperties(String propertyName, JSONObject propertySchema, JsonNode propertiesNode) {
         Map<String, JsonNode> propertyMap = getAllProperties(propertiesNode);
-        String schemaType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : null;
+        String schemaType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
+        if ((schemaType == null || schemaType.equals(TYPE_ANY) || schemaType.isBlank()) && propertySchema.has("properties")) schemaType = TYPE_OBJECT;
 
         if (schemaType != null && !schemaType.isBlank()) {
             if (schemaType.equals(TYPE_OBJECT)) {
-                JSONArray schemaRequired = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
-                JSONObject schemaProperties = (propertySchema != null && propertySchema.has("properties")) ? propertySchema.getJSONObject("properties") : null;
-
-                validateProperty(propertyMap, propertyName, TYPE_OBJECT, propertiesNode.key()).ifPresent(propertyNode -> {
-                    if (schemaRequired != null && schemaRequired.length() > 0 ) {
-                        Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-                        validateRequiredProperties(propertyNode, requiredProperties, String.join(", ", requiredProperties));
-                    }
-
-                    Map<String, JsonNode> propProperties = getAllProperties(propertyNode);
-                    if (propProperties == null || propProperties.isEmpty()) return;
-
-                    if (schemaProperties != null && !schemaProperties.keySet().isEmpty()) {
-                        List<String> sortedSchemaProperties = new ArrayList<>(schemaProperties.keySet());
-                        Collections.sort(sortedSchemaProperties);
-                        sortedSchemaProperties.forEach(childProperty -> {
-                            JSONObject childPropertySchema = (schemaProperties != null && schemaProperties.has(childProperty)) ? schemaProperties.getJSONObject(childProperty) : null;
-                            validateProperties(childProperty, childPropertySchema, propertyNode);
-                        });
-                    }
+                validateProperty(propertyMap, propertyName, TYPE_OBJECT, propertiesNode.key()).ifPresent(propertyNode -> {                    
+                    validateObject(propertySchema, propertyNode);
                 });
             } else if (schemaType.equals(TYPE_ARRAY)) {
-
+                validateProperty(propertyMap, propertyName, TYPE_ARRAY, propertiesNode.key()).ifPresent(propertyNode -> {
+                    validateArray(propertySchema, propertyNode);
+                });
             } else {
                 validateProperty(propertyMap, propertyName, schemaType, propertiesNode.key());
             }
+        }
+    }
+
+    private void validateObject(JSONObject propertySchema, JsonNode propertyNode) {
+        JSONArray schemaRequired = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
+        JSONObject schemaProperties = (propertySchema != null && propertySchema.has("properties")) ? propertySchema.getJSONObject("properties") : null;
+
+        Map<String, JsonNode> propProperties = getAllProperties(propertyNode);
+        if (propProperties == null || propProperties.isEmpty()) return;
+
+        if (schemaRequired != null && schemaRequired.length() > 0 ) {
+            Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+            validateRequiredProperties(propertyNode, requiredProperties, String.join(", ", requiredProperties));
+        }
+
+        if (schemaProperties != null && !schemaProperties.keySet().isEmpty()) {
+            List<String> sortedSchemaProperties = new ArrayList<>(schemaProperties.keySet());
+            Collections.sort(sortedSchemaProperties);
+            sortedSchemaProperties.forEach(childProperty -> {
+                JSONObject childPropertySchema = (schemaProperties != null && schemaProperties.has(childProperty)) ? schemaProperties.getJSONObject(childProperty) : null;
+                validateProperties(childProperty, childPropertySchema, propertyNode);
+            });
+        }
+    }
+
+    private void validateArray(JSONObject propertySchema, JsonNode propertyNode) {
+        JSONObject schemaItems = (propertySchema != null && propertySchema.has("items")) ? propertySchema.getJSONObject("items") : null;
+        String itemsType = (schemaItems != null && schemaItems.has("type")) ? schemaItems.getString("type") : TYPE_ANY;    
+        if ((itemsType == null || itemsType.equals(TYPE_ANY) || itemsType.isBlank()) && schemaItems.has("properties")) itemsType = TYPE_OBJECT;
+        if (itemsType.equals(TYPE_OBJECT)) {
+            validateItems(propertyNode, itemsType).ifPresent(itemNode -> {
+                validateObject(schemaItems, itemNode);
+            });
+        } else if (itemsType.equals(TYPE_ARRAY)) {
+            validateItems(propertyNode, itemsType).ifPresent(itemNode -> {
+                validateArray(schemaItems, itemNode);
+            });
+        } else {
+            validateItems(propertyNode, itemsType);
         }
     }
 }
