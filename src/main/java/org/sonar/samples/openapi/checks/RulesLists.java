@@ -49,6 +49,7 @@ public final class RulesLists {
 				OAR029StandardResponseCheck.class,
 				OAR031ExamplesCheck.class,
 				OAR032AmbiguousElementsPathCheck.class,
+				OAR034StandardPagedResponseCheck.class,
 				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
 				OAR039StandardResponseCodesCheck.class
