@@ -20,7 +20,8 @@ public final class RulesLists {
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
 				OAR036SessionMechanismsCheck.class,
-				OAR053ResponseHeadersCheck.class
+				OAR053ResponseHeadersCheck.class,
+				OAR054HostCheck.class
 		);
 	}
 

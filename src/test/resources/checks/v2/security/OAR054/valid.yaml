@@ -1,0 +1,6 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+host: api.cloudappi.net
+paths: {}
