@@ -72,9 +72,10 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
             if (!isType(type, propertyType)) {
                 JsonNode errorNode = (type.isMissing() ? prop : type.key());
                 addIssue(key, translate("generic.property-wrong-type", propertyName, propertyType), errorNode);
+                return Optional.empty();
             }
-            return Optional.of(prop);
         }
+        return Optional.of(prop);
     }
 
     protected void validateRequiredProperties(JsonNode schema, Set<String> requiredValues, String requiredStr) {
@@ -147,9 +148,6 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     private void validateObject(JSONObject propertySchema, JsonNode propertyNode) {
         JSONArray schemaRequired = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
         JSONObject schemaProperties = (propertySchema != null && propertySchema.has("properties")) ? propertySchema.getJSONObject("properties") : null;
-
-        Map<String, JsonNode> propProperties = getAllProperties(propertyNode);
-        if (propProperties == null || propProperties.isEmpty()) return;
 
         if (schemaRequired != null && schemaRequired.length() > 0 ) {
             Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));

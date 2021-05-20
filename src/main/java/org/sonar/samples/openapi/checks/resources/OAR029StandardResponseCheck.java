@@ -12,9 +12,7 @@ import org.sonar.plugins.openapi.api.v2.OpenApi2Grammar;
 import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -143,19 +141,31 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
     private void validateRootProperties(JSONArray requiredPropertiesJSONArray, Map<String, JsonNode> properties, JsonNode parentNode) {
         if (requiredPropertiesJSONArray != null && requiredPropertiesJSONArray.length() > 0) {
             Set<String> requiredProperties = requiredPropertiesJSONArray.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-            //validateRequiredProperties(parentNode, requiredProperties, String.join(", ", requiredProperties));
             requiredProperties.forEach(propertyName -> {
                 JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
+                if (propertyName.equals(dataProperty)) {
+                    String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
+                    if (propertyType == null || propertyType.isBlank() || propertyType.equals("any")) propertyType = TYPE_ANY;    
+                    validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
+                        Map<String, JsonNode> allProp = getAllProperties(parentNode);
+                        if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
+                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), parentNode.key());
+                        }
+                    });
+                } else {
+                    validateProperties(propertyName, propertySchema, parentNode);
+                }
+                /*JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
                 String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
                 if (propertyType == null || propertyType.isBlank() || propertyType.equals("any")) propertyType = TYPE_ANY;
                 validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
                     validateProperties(propertyName, propertySchema, node);
-                });
+                });*/
             });
         }
     }
 
-    private void validateProperties(String propertyName, JSONObject propertySchema, JsonNode parentNode) {
+    /*private void validateProperties(String propertyName, JSONObject propertySchema, JsonNode parentNode) {
         if (propertyName.equals(dataProperty)) {
             Map<String, JsonNode> allProp = getAllProperties(parentNode);
             if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
@@ -178,5 +188,5 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
                 validateProperty(propertyMap, subpropertyName, propertyType, properties.key());
             });
         }
-    }
+    }*/
 }

@@ -56,6 +56,11 @@ components:
               type: array
               items:
                 type: object
+                properties: 
+                  name:
+                    type: string
+                  value:
+                    type: string
             description:
               type: string
             internal_code:
