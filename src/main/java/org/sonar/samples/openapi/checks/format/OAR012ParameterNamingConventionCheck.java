@@ -21,7 +21,7 @@ public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventi
 	public static final String KEY = "OAR012";
 	private static final String MESSAGE = "OAR012.error";
 
-	private static Set<String> nameExceptions = new HashSet<>(Arrays.asList("$start", "$limit", "$total", "$expand", "$orderby", "$select", "$exclude"));
+	private static Set<String> nameExceptions = new HashSet<>(Arrays.asList("$start", "$limit", "$total", "$expand", "$orderby", "$select", "$exclude", "$filter"));
 
 	private static final String DEFAULT_NAMING_CONVENTION = SNAKE_CASE;
 	
