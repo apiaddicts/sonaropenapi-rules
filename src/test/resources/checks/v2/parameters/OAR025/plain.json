@@ -21,7 +21,7 @@
           "format" : "int64"
         } ],
         "responses" : {
-          "200" : {
+          "206" : {
             "description" : "Ok"
           }
         }

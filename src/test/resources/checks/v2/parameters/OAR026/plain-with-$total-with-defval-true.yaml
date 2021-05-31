@@ -16,5 +16,5 @@ paths:
           type: boolean
           default: true # Noncompliant {{OAR026: The $total parameter default value should be false}}
       responses:
-        200:
+        206:
           description: Ok

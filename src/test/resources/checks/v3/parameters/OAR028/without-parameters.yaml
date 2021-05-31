@@ -6,5 +6,5 @@ paths:
   /pets:
     get: # Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}
       responses:
-        200:
+        206:
           description: Ok

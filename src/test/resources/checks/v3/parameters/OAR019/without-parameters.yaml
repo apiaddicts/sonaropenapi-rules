@@ -6,5 +6,5 @@ paths:
   /pets:
     get: # Noncompliant {{OAR019: $select must be defined as a parameter in this operation}}
       responses:
-        200:
+        206:
           description: Ok

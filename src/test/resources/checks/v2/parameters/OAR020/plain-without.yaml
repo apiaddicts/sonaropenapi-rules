@@ -17,5 +17,5 @@ paths:
           items:
             type: string
       responses:
-        200:
+        206:
           description: Ok

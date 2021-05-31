@@ -9,10 +9,14 @@ import org.sonar.samples.openapi.utils.VerbPathMatcher;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.sonar.samples.openapi.utils.JsonNodeUtils.isOperation;
+import static org.sonar.samples.openapi.utils.JsonNodeUtils.resolve;
 
 public abstract class AbstractParameterCheck extends BaseCheck {
 
@@ -42,7 +46,26 @@ public abstract class AbstractParameterCheck extends BaseCheck {
 
 	@Override
 	public void visitNode(JsonNode node) {
-		visitPathNode(node);
+		if (Arrays.asList("OAR023", "OAR024", "OAR025").contains(key)) {
+			List<Integer> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+				.map(JsonNode::value)
+				.flatMap(n -> n.properties().stream()) // responses
+				.map(JsonNode::value)
+				.flatMap(n -> n.properties().stream()) // response
+				.filter(responseNode -> {
+					String statusCode = responseNode.key().getTokenValue();
+					responseNode = resolve(responseNode);
+					return (responseNode.getType().equals(OpenApi2Grammar.RESPONSE) || responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) && !statusCode.equalsIgnoreCase("default");
+				})
+				.map(responseNode -> Integer.parseInt(responseNode.key().getTokenValue()))
+				.collect(Collectors.toList());
+
+			if (allResponses.contains(206)) {
+				visitPathNode(node);
+			}
+		} else {
+			visitPathNode(node);
+		}
 	}
 
     private void visitPathNode(JsonNode node) {
@@ -52,7 +75,7 @@ public abstract class AbstractParameterCheck extends BaseCheck {
         if (node.getType() == OpenApi3Grammar.PATH) {
 			parameters.addAll( listParameterNames(parametersInPathNode) );
 		}
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(this::isOperation).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
 			String verb = operationNode.key().getTokenValue();
 			JsonNode verbNode = node.get(verb);
@@ -79,10 +102,5 @@ public abstract class AbstractParameterCheck extends BaseCheck {
         List<String> parameterNames = parametersNode.elements().stream()
 				.map(parameterNode -> parameterNode.resolve().get("name").getTokenValue()).collect(Collectors.toList());
         return parameterNames;
-    }
-
-    private boolean isOperation(JsonNode node) {
-        AstNodeType type = node.getType();
-        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
     }
 }

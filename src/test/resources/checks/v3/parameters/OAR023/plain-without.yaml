@@ -17,5 +17,5 @@ paths:
           schema:
             type: boolean
       responses:
-        200:
+        206:
           description: Ok

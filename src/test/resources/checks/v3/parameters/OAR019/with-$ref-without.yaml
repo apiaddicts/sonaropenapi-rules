@@ -25,5 +25,5 @@ paths:
         - $ref: '#/components/parameters/other'
         - $ref: '#/components/parameters/select'
       responses:
-        200:
+        206:
           description: Ok

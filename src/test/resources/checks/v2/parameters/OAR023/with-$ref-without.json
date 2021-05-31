@@ -28,7 +28,7 @@
           "$ref" : "#/parameters/total"
         } ],
         "responses" : {
-          "200" : {
+          "206" : {
             "description" : "Ok"
           }
         }

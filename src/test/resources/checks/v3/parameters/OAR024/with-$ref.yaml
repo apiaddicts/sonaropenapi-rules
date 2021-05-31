@@ -24,5 +24,5 @@ paths:
         - $ref: '#/components/parameters/other'
         - $ref: '#/components/parameters/init'
       responses:
-        200:
+        206:
           description: Ok
