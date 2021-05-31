@@ -30,7 +30,7 @@ public class OAR053ResponseHeadersCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("mandatory-headers", "x-trace-id", RuleParamType.STRING);
+        assertParameterProperties("mandatory-headers", "X-Trace-ID", RuleParamType.STRING);
     }
 
     @Override

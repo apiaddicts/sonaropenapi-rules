@@ -9,7 +9,6 @@ import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +21,7 @@ import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 public class OAR053ResponseHeadersCheck extends BaseCheck {
 
     public static final String KEY = "OAR053";
-    private static final String MANDATORY_HEADERS = "x-trace-id";
+    private static final String MANDATORY_HEADERS = "X-Trace-ID";
 
     @RuleProperty(
             key = "mandatory-headers",
@@ -51,7 +50,6 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
     private void visitResponsesNode(JsonNode node) {
         List<JsonNode> allResponses = node.properties().stream().collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
-            String statusCode = responseNode.key().getTokenValue();
             responseNode = resolve(responseNode);
             visitResponseNode(responseNode);
         }
@@ -59,7 +57,7 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
 
 	private void visitResponseNode(JsonNode node) {
         List<String> headerNames = node.get("headers").propertyMap().values()
-                .stream().map(headerNode -> headerNode.key().getTokenValue())
+                .stream().map(headerNode -> headerNode.key().getTokenValue().toLowerCase())
                 .collect(Collectors.toList());
         if (!headerNames.containsAll(mandatoryHeaders)) {
             addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), node.key());
