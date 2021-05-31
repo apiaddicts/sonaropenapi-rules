@@ -89,7 +89,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
     private void visitPathNode(JsonNode node) {
         String path = node.key().getTokenValue();
         if (exclusion.contains(path)) return;
-        List<JsonNode> allResponses = node.properties().stream() // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream()) // responses
                 .map(JsonNode::value)

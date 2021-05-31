@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.sonar.samples.openapi.utils.JsonNodeUtils.isOperation;
+
 public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
 
     protected VerbPathMatcher matcher;
@@ -32,7 +34,7 @@ public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
 
     private void visitV2Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(this::isOperation).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             String verb = operationNode.key().getTokenValue();
             Optional<VerbPathMatcher.PatternGroup> pg = matcher.matchesWithValues(verb, path);
@@ -47,10 +49,5 @@ public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
 
     protected void mismatchV2(JsonNode node, JsonNode operationNode, String verb, String path) {
         // Intentional blank
-    }
-
-    private boolean isOperation(JsonNode node) {
-        AstNodeType type = node.getType();
-        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
     }
 }

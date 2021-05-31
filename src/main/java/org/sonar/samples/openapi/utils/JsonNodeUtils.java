@@ -1,10 +1,14 @@
 package org.sonar.samples.openapi.utils;
 
+import org.sonar.plugins.openapi.api.v2.OpenApi2Grammar;
+import org.sonar.plugins.openapi.api.v3.OpenApi3Grammar;
 import org.sonar.sslr.yaml.grammar.JsonNode;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.sonar.sslr.api.AstNodeType;
 
 public class JsonNodeUtils {
 
@@ -74,5 +78,10 @@ public class JsonNodeUtils {
 
     public static boolean isType(JsonNode type, String name) {
         return TYPE_ANY.equals(name) || name.equals(type.getTokenValue());
+    }
+
+    public static boolean isOperation(JsonNode node) {
+        AstNodeType type = node.getType();
+        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
     }
 }

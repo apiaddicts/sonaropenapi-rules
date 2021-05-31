@@ -18,6 +18,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.sonar.samples.openapi.utils.JsonNodeUtils.isOperation;
+
 @Rule(key = OAR033HttpHeadersCheck.KEY)
 public class OAR033HttpHeadersCheck extends BaseCheck {
 
@@ -88,7 +90,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
     private void visitPathV2Node(JsonNode node) {
         String path = node.key().getTokenValue();
         if (exclusion.contains(path)) return;
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(this::isOperation).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             JsonNode parametersNode = operationNode.get("parameters");
             List<String> headerNames = listHeaderParameters(parametersNode);
@@ -103,7 +105,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
         if (exclusion.contains(path)) return;
         JsonNode parametersInPathNode = node.get("parameters");
         List<String> headerNamesInPath = listHeaderParameters(parametersInPathNode);
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(this::isOperation).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             JsonNode parametersInOperationNode = operationNode.get("parameters");
             List<String> headerNamesInOperation = listHeaderParameters(parametersInOperationNode);
@@ -138,11 +140,6 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
         if (!allowedHeaders.contains(headerName) || forbiddenHeaders.contains(headerName)) {
             addIssue(KEY, translate("OAR033.error-not-allowed-header"), nodeName.value());
         }
-    }
-
-    private boolean isOperation(JsonNode node) {
-        AstNodeType type = node.getType();
-        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
     }
 
     private boolean isHeaderParam(JsonNode n) {

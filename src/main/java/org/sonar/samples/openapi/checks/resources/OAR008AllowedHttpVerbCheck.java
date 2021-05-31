@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.sonar.samples.openapi.utils.JsonNodeUtils.isOperation;
+
 @Rule(key = OAR008AllowedHttpVerbCheck.KEY)
 public class OAR008AllowedHttpVerbCheck extends BaseCheck {
 
@@ -53,7 +55,7 @@ public class OAR008AllowedHttpVerbCheck extends BaseCheck {
 
 	private void visitV3PathNode(JsonNode node) {
 		node = node.resolve();
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(this::isOperation).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
 			visitOperationNode(operationNode);
         }
@@ -65,9 +67,4 @@ public class OAR008AllowedHttpVerbCheck extends BaseCheck {
 			addIssue(KEY, translate(MESSAGE, httpVerb), node.key());
 		}
 	}
-
-    private boolean isOperation(JsonNode node) {
-        AstNodeType type = node.getType();
-        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
-    }
 }
