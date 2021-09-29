@@ -44,7 +44,7 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
     private void validateData(JsonNode data) {
         Map<String, JsonNode> properties = getAllProperties(data);
         if (properties.isEmpty()) {
-            addIssue(KEY, translate("OAR038.error-required-ope-property"), data.key());
+            addIssue(KEY, translate("OAR038.error-required-one-property"), data.key());
         }
     }
 }
