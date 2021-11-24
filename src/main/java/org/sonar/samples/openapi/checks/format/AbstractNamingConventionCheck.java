@@ -25,14 +25,16 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
 	protected String defaultNamingConvention = SNAKE_CASE;
     protected Set<String> nameExceptions = new HashSet<>();
 
-	public AbstractNamingConventionCheck(String key, String message) {
+	public AbstractNamingConventionCheck(String key, String message, String defaultNamingConvention) {
 		this.key = key;
 		this.message = message;
+        this.defaultNamingConvention = defaultNamingConvention;
 	}
 
-	public AbstractNamingConventionCheck(String key, String message, Set<String> nameExceptions) {
+	public AbstractNamingConventionCheck(String key, String message, String defaultNamingConvention, Set<String> nameExceptions) {
 		this.key = key;
 		this.message = message;
+        this.defaultNamingConvention = defaultNamingConvention;
         this.nameExceptions = nameExceptions;
 	}
 

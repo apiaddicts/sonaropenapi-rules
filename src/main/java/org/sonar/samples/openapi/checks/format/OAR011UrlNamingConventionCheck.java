@@ -27,8 +27,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	private static String defaultNamingConvention = DEFAULT_NAMING_CONVENTION;
 
 	public OAR011UrlNamingConventionCheck() {
-		super(KEY, MESSAGE);
-		super.defaultNamingConvention = defaultNamingConvention;
+		super(KEY, MESSAGE, defaultNamingConvention);
 	}
 
 	@Override

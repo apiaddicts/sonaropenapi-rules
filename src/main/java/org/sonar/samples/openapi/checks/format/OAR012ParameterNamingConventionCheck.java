@@ -32,14 +32,12 @@ public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventi
 	private static String defaultNamingConvention = DEFAULT_NAMING_CONVENTION;
 
 	public OAR012ParameterNamingConventionCheck() {
-		super(KEY, MESSAGE, nameExceptions);
-		super.defaultNamingConvention = defaultNamingConvention;
+		super(KEY, MESSAGE, defaultNamingConvention, nameExceptions);
 	}
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi3Grammar.REQUEST_BODY,
-				OpenApi3Grammar.RESPONSE);
+		return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi2Grammar.SCHEMA, OpenApi3Grammar.PARAMETER, OpenApi3Grammar.SCHEMA);
 	}
 
 	@Override
@@ -47,30 +45,22 @@ public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventi
 		if (OpenApi2Grammar.PARAMETER.equals(node.getType()) || OpenApi3Grammar.PARAMETER.equals(node.getType())) {
 			visitParameterNode(node);
 		} else {
-			visitRequestBodyAndResponseNodeV3(node);
+			visitSchemaNode(node);
 		}
 	}
 
-	private void visitRequestBodyAndResponseNodeV3(JsonNode node) {
-		JsonNode contentNode = node.at("/content");
-		if (contentNode.isMissing() || contentNode.isNull()) return;
-		Map<String, JsonNode> mimeTypes = contentNode.propertyMap();
-		for (JsonNode mimeType : mimeTypes.values()) {
-			JsonNode schemaNode = mimeType.get("schema");
-			if (schemaNode.isMissing()) return;
-			if (schemaNode.getType().equals(OpenApi3Grammar.REF)) schemaNode = resolve(schemaNode);
-		
-			Map<String, JsonNode> properties = schemaNode.propertyMap();
-			if (properties.containsKey("properties")) {
-				Map<String, JsonNode> schemaProperties = schemaNode.get("properties").propertyMap();
-				for (JsonNode property : schemaProperties.values()) {
-					JsonNode nameNode = property.key();
-					String name = nameNode.getTokenValue();
-					validateNamingConvention(name, nameNode);
-				}
-			}
-
-		}
+	private void visitSchemaNode(JsonNode schemaNode) {
+        if (schemaNode.getType().equals(OpenApi3Grammar.REF)) schemaNode = resolve(schemaNode);
+    
+        Map<String, JsonNode> properties = schemaNode.propertyMap();
+        if (properties.containsKey("properties")) {
+            Map<String, JsonNode> schemaProperties = schemaNode.get("properties").propertyMap();
+            for (JsonNode property : schemaProperties.values()) {
+                JsonNode nameNode = property.key();
+                String name = nameNode.getTokenValue();
+                validateNamingConvention(name, nameNode);
+            }
+        }
 	}
 
 	private void visitParameterNode(JsonNode node) {

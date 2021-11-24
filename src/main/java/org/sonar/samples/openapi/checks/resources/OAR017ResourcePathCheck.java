@@ -18,6 +18,7 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 	private static final String MESSAGE = "OAR017.error";
 
 	private int numberOfMe = 0;
+	private boolean isSectionMeAllowed = true;
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
@@ -52,7 +53,7 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 	}
 
 	private boolean isVariable(String part) {
-		if (part.equals("me")) numberOfMe++;
-		return '{' == part.charAt(0) && '}' == part.charAt(part.length()-1) || (part.equals("me") && numberOfMe <= 1);
+		if (isSectionMeAllowed && part.equals("me")) numberOfMe++;
+		return '{' == part.charAt(0) && '}' == part.charAt(part.length()-1) || (isSectionMeAllowed && (part.equals("me") && numberOfMe <= 1));
 	}
 }

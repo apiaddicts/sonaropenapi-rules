@@ -29,7 +29,7 @@ public class OAR014ResourceLevelWithinNonSuggestedRangeCheckTest extends BaseChe
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR014 - ResourceLevel - Path level should be smaller than non-suggested range", RuleType.BUG, Severity.MINOR, tags("resources"));
+        assertRuleProperties("OAR014 - ResourceLevelWithinNonSuggestedRangeCheck - Path level should be below the non-suggested range", RuleType.BUG, Severity.MINOR, tags("resources"));
     }
 
     @Override
