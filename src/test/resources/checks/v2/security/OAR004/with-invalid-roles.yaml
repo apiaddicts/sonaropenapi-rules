@@ -1,0 +1,14 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets: {}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - name: read
+        key: read
+        roles: ROLE_READ, ROL€_V¡€U # Noncompliant {{OAR004: WSO2 scope roles value is not valid}}
+        description: Allows users to read records

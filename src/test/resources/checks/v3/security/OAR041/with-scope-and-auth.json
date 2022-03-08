@@ -1,0 +1,35 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        },
+        "x-scope" : "scope_two",
+        "x-auth-type" : "Application"
+      }
+    }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ {
+        "name" : "scope_one",
+        "description" : "scope_one",
+        "key" : "scope_one",
+        "roles" : "role_one"
+      }, {
+        "name" : "scope_two",
+        "description" : "scope_two",
+        "key" : "scope_two",
+        "roles" : "role_two"
+      } ]
+    }
+  }
+}

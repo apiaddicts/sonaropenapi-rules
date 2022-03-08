@@ -18,8 +18,14 @@ public final class RulesLists {
 	public static List<Class> getSecurityChecks() {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
+				OAR002ValidWso2ScopesCheck.class,
+				OAR003DefinedWso2ScopesDescriptionCheck.class,
+				OAR004ValidWso2ScopesRolesCheck.class,
+				OAR005UndefinedWso2ScopeUseCheck.class,
 				OAR033HttpHeadersCheck.class,
 				OAR036SessionMechanismsCheck.class,
+				OAR040StandardWso2ScopesNameCheck.class,
+				OAR041UndefinedAuthTypeForWso2ScopeCheck.class,
 				OAR053ResponseHeadersCheck.class,
 				OAR054HostCheck.class
 		);

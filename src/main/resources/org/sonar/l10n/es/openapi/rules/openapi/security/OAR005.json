@@ -1,0 +1,13 @@
+{
+  "title": "OAR005 - UndefinedWso2ScopeUse - Este scope no está definido",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "BLOCKER"
+}
