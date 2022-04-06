@@ -145,7 +145,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
                 JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
                 if (propertyName.equals(dataProperty)) {
                     String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
-                    if (propertyType == null || propertyType.isBlank() || propertyType.equals("any")) propertyType = TYPE_ANY;    
+                    if (propertyType == null || propertyType.trim().isEmpty() || propertyType.equals("any")) propertyType = TYPE_ANY;
                     validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
                         Map<String, JsonNode> allProp = getAllProperties(parentNode);
                         if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {

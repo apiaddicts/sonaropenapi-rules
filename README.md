@@ -12,10 +12,6 @@ In `pom.xml` configure:
         <sonar.language>openapi</sonar.language>
         <!-- Optional, Default value is src/main,pom.xml -->
         <sonar.sources>.</sonar.sources>
-        <!-- Optional, Path that contains the v2 files, Default is /openapi/v2/** -->
-        <sonar.openapi.path.v2>v2/*</sonar.openapi.path.v2>
-        <!-- Required, Path that contains the v3 files, Default is /openapi/v3/** -->
-        <sonar.openapi.path.v3>v3/*</sonar.openapi.path.v3>
     </properties>
 ````
 
@@ -48,10 +44,6 @@ sonar.sources=.
 sonar.sourceEncoding=UTF-8
 # Select the language to use for analysis
 sonar.language=openapi
-
-# OpenAPI-specific properties go here. Default is /openapi/v2/** and /openapi/v3/**
-sonar.openapi.path.v2=v2/*
-sonar.openapi.path.v3=v3/*
 ````
 
 #### Run scanner

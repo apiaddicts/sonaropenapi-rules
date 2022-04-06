@@ -64,7 +64,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        if (!mandatoryHeadersStr.isBlank()) mandatoryHeaders.addAll(Stream.of(mandatoryHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!mandatoryHeadersStr.trim().isEmpty()) mandatoryHeaders.addAll(Stream.of(mandatoryHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         allowedHeaders.addAll(Stream.of(allowedHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         forbiddenHeaders.addAll(Stream.of(forbiddenHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());

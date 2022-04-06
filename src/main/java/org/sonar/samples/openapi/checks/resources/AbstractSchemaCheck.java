@@ -127,10 +127,10 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     protected void validateProperties(String propertyName, JSONObject propertySchema, JsonNode propertiesNode) {
         Map<String, JsonNode> propertyMap = getAllProperties(propertiesNode);
         String schemaType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
-        if (schemaType == null || schemaType.isBlank() || schemaType.equals("any")) schemaType = TYPE_ANY;
+        if (schemaType == null || schemaType.trim().isEmpty() || schemaType.equals("any")) schemaType = TYPE_ANY;
         if (schemaType.equals(TYPE_ANY) && propertySchema.has("properties")) schemaType = TYPE_OBJECT;
 
-        if (schemaType != null && !schemaType.isBlank()) {
+        if (schemaType != null && !schemaType.trim().isEmpty()) {
             if (schemaType.equals(TYPE_OBJECT)) {
                 validateProperty(propertyMap, propertyName, TYPE_OBJECT, propertiesNode.key()).ifPresent(propertyNode -> {                    
                     validateObject(propertySchema, propertyNode);
@@ -167,7 +167,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     private void validateArray(JSONObject propertySchema, JsonNode propertyNode) {
         JSONObject schemaItems = (propertySchema != null && propertySchema.has("items")) ? propertySchema.getJSONObject("items") : null;
         String itemsType = (schemaItems != null && schemaItems.has("type")) ? schemaItems.getString("type") : TYPE_ANY;
-        if (itemsType == null || itemsType.isBlank() || itemsType.equals("any")) itemsType = TYPE_ANY;
+        if (itemsType == null || itemsType.trim().isEmpty() || itemsType.equals("any")) itemsType = TYPE_ANY;
         if (itemsType.equals(TYPE_ANY) && schemaItems.has("properties")) itemsType = TYPE_OBJECT;
         
         if (itemsType.equals(TYPE_OBJECT)) {
