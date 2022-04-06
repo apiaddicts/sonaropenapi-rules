@@ -17,7 +17,7 @@
 
     <sonar.version>8.7.0.41497</sonar.version>
     <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
-    <sonaropenapi.version>1.2.6-SNAPSHOT</sonaropenapi.version>
+    <sonaropenapi.version>1.0.0</sonaropenapi.version>
     <sonaranalyzer.version>1.6.0.219</sonaranalyzer.version>
     <orgjson.version>20160810</orgjson.version>
 
@@ -31,7 +31,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.societegenerale.sonar.openapi</groupId>
+      <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-front-end</artifactId>
       <version>${sonaropenapi.version}</version>
     </dependency>
@@ -55,7 +55,7 @@
 
     <!-- test dependencies -->
     <dependency>
-      <groupId>com.societegenerale.sonar.openapi</groupId>
+      <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-test-tools</artifactId>
       <version>${sonaropenapi.version}</version>
     </dependency>

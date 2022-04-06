@@ -4,7 +4,7 @@ import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.sonar.samples.openapi.I18nContext;
 import org.sonar.samples.openapi.utils.VerbPathMatcher;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
 import java.util.Collections;

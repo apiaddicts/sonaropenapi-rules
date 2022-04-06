@@ -20,11 +20,12 @@
 package org.sonar.samples.openapi.checks.core;
 
 import com.sonar.sslr.api.RecognitionException;
+
 import org.sonar.check.Rule;
-import org.sonar.plugins.openapi.api.OpenApiVisitorContext;
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiVisitorContext;
 import org.sonar.samples.openapi.checks.BaseCheck;
-import org.sonar.sslr.yaml.grammar.ValidationException;
-import org.sonar.sslr.yaml.grammar.ValidationIssue;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.ValidationException;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.ValidationIssue;
 
 import java.util.List;
 import java.util.regex.Matcher;

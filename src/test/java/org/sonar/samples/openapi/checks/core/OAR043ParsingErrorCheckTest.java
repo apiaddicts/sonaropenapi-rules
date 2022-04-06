@@ -21,9 +21,9 @@ package org.sonar.samples.openapi.checks.core;
 
 import com.sonar.sslr.api.RecognitionException;
 import org.junit.Test;
-import org.sonar.plugins.openapi.api.OpenApiFile;
-import org.sonar.plugins.openapi.api.OpenApiVisitorContext;
-import org.sonar.plugins.openapi.api.PreciseIssue;
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiFile;
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiVisitorContext;
+import org.apiaddicts.apitools.dosonarapi.api.PreciseIssue;
 
 import java.util.List;
 

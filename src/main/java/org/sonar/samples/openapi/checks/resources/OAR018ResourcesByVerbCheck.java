@@ -3,7 +3,7 @@ package org.sonar.samples.openapi.checks.resources;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.sonar.samples.openapi.utils.VerbPathMatcher;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import static org.sonar.samples.openapi.utils.VerbPathMatcher.*;
 

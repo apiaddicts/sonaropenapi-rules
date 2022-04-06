@@ -7,6 +7,7 @@ import org.sonar.samples.openapi.checks.resources.*;
 import org.sonar.samples.openapi.checks.security.*;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public final class RulesLists {
 	private RulesLists() {
 	}
 
-	public static List<Class> getSecurityChecks() {
+	public static List<Class<?>> getSecurityChecks() {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR002ValidWso2ScopesCheck.class,
@@ -31,7 +32,7 @@ public final class RulesLists {
 		);
 	}
 
-	public static List<Class> getFormatChecks() {
+	public static List<Class<?>> getFormatChecks() {
 		return Arrays.asList(
 				OAR006UndefinedConsumesCheck.class,
 				OAR007UndefinedProducesCheck.class,
@@ -46,7 +47,7 @@ public final class RulesLists {
 		);
 	}
 
-	public static List<Class> getResourcesChecks() {
+	public static List<Class<?>> getResourcesChecks() {
 		return Arrays.asList(
 				OAR008AllowedHttpVerbCheck.class,
 				OAR013DefaultResponseCheck.class,
@@ -66,7 +67,7 @@ public final class RulesLists {
 		);
 	}
 
-	public static List<Class> getParametersChecks() {
+	public static List<Class<?>> getParametersChecks() {
 		return Arrays.asList(
 				OAR019SelectParameterCheck.class,
 				OAR020ExpandParameterCheck.class,
@@ -80,7 +81,7 @@ public final class RulesLists {
 		);
 	}
 
-	public static List<Class> getCoreChecks() {
+	public static List<Class<?>> getCoreChecks() {
 		return Arrays.asList(
 				OAR043ParsingErrorCheck.class,
 				OAR044MediaTypeCheck.class,
@@ -94,8 +95,8 @@ public final class RulesLists {
 		);
 	}
 
-	public static List<Class> getAllChecks() {
-		List<Class> allChecks = new LinkedList<>();
+	public static List<Class<?>> getAllChecks() {
+		List<Class<?>> allChecks = new LinkedList<>();
 		allChecks.addAll(getSecurityChecks());
 		allChecks.addAll(getFormatChecks());
 		allChecks.addAll(getResourcesChecks());

@@ -1,9 +1,9 @@
 package org.sonar.samples.openapi;
 
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiCustomRuleRepository;
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.check.Rule;
-import org.sonar.plugins.openapi.api.OpenApiCustomRuleRepository;
 import org.sonar.samples.openapi.checks.RulesLists;
 
 import javax.annotation.Nullable;
@@ -34,8 +34,8 @@ public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDef
 		profile.done();
 	}
 
-	private void addRepositoryRules(NewBuiltInQualityProfile profile, String key, List<Class> checks) {
-		for (Class check : checks) {
+	private void addRepositoryRules(NewBuiltInQualityProfile profile, String key, List<Class<?>> checks) {
+		for (Class<?> check : checks) {
 			Rule annotation = AnnotationUtils.getAnnotation(check, Rule.class);
 			profile.activateRule(key, annotation.key());
 		}

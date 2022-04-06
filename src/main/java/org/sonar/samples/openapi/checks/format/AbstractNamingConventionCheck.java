@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.sonar.samples.openapi.checks.BaseCheck;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 public abstract class AbstractNamingConventionCheck extends BaseCheck {
 	

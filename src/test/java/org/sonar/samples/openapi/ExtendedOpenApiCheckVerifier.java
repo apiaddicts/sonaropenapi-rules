@@ -5,13 +5,14 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Ordering;
 import com.sonar.sslr.api.Token;
 import com.sonar.sslr.api.Trivia;
+
 import org.assertj.core.api.AbstractCharSequenceAssert;
 import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ListAssert;
 import org.junit.Assert;
-import org.sonar.openapi.TestIssue;
-import org.sonar.plugins.openapi.api.*;
+import org.apiaddicts.apitools.dosonarapi.TestIssue;
+import org.apiaddicts.apitools.dosonarapi.api.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
  * it validates multiple issues in the same line, the method modified is {@link org.sonar.openapi.OpenApiCheckVerifier#collectExpectedIssue(Trivia trivia)}
  */
 public class ExtendedOpenApiCheckVerifier {
-    private List<TestIssue> expectedIssues = new ArrayList();
+    private List<TestIssue> expectedIssues = new ArrayList<TestIssue>();
 
     public ExtendedOpenApiCheckVerifier() {
     }
@@ -51,7 +52,7 @@ public class ExtendedOpenApiCheckVerifier {
     }
 
     private void checkIssues(Iterator<PreciseIssue> actualIssues) {
-        Iterator var2 = this.expectedIssues.iterator();
+        Iterator<TestIssue> var2 = this.expectedIssues.iterator();
 
         while (var2.hasNext()) {
             TestIssue expected = (TestIssue) var2.next();

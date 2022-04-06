@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.sonar.samples.openapi.utils.JsonNodeUtils;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.ArrayList;
 import java.util.Collections;

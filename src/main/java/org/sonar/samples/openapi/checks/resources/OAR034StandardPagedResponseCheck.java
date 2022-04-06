@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 

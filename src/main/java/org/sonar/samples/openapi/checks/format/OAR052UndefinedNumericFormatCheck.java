@@ -1,7 +1,7 @@
 package org.sonar.samples.openapi.checks.format;
 
 import org.sonar.check.Rule;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 @Rule(key = OAR052UndefinedNumericFormatCheck.KEY)
 public class OAR052UndefinedNumericFormatCheck extends AbstractFormatCheck {

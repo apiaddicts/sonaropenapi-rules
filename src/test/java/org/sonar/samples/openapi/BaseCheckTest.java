@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
-import org.sonar.plugins.openapi.api.OpenApiCheck;
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiCheck;
 
 import java.util.Arrays;
 import java.util.HashSet;

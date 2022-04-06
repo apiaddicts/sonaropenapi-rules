@@ -1,9 +1,9 @@
 package org.sonar.samples.openapi.checks;
 
-import org.sonar.plugins.openapi.api.OpenApiCheck;
-import org.sonar.plugins.openapi.api.PreciseIssue;
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiCheck;
+import org.apiaddicts.apitools.dosonarapi.api.PreciseIssue;
 import org.sonar.samples.openapi.I18nContext;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.text.MessageFormat;
 import java.util.Locale;

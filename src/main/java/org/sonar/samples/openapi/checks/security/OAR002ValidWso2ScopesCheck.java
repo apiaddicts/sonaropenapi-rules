@@ -1,7 +1,7 @@
 package org.sonar.samples.openapi.checks.security;
 
 import org.sonar.check.Rule;
-import org.sonar.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.List;
 import java.util.Map;

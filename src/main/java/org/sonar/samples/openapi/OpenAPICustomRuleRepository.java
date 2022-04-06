@@ -1,7 +1,7 @@
 package org.sonar.samples.openapi;
 
 import org.sonar.api.batch.ScannerSide;
-import org.sonar.plugins.openapi.api.OpenApiCustomRuleRepository;
+import org.apiaddicts.apitools.dosonarapi.api.OpenApiCustomRuleRepository;
 import org.sonar.samples.openapi.checks.RulesLists;
 import org.sonarsource.api.sonarlint.SonarLintSide;
 
@@ -24,7 +24,7 @@ public class OpenAPICustomRuleRepository implements OpenApiCustomRuleRepository 
 	}
 
 	@Override
-	public List<Class> checkClasses() {
+    public List<Class<?>> checkClasses() {
 		return RulesLists.getAllChecks();
-	}
+    }
 }
