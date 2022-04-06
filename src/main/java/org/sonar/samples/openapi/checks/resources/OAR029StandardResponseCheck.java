@@ -155,38 +155,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
                 } else {
                     validateProperties(propertyName, propertySchema, parentNode);
                 }
-                /*JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
-                String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
-                if (propertyType == null || propertyType.isBlank() || propertyType.equals("any")) propertyType = TYPE_ANY;
-                validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
-                    validateProperties(propertyName, propertySchema, node);
-                });*/
             });
         }
     }
-
-    /*private void validateProperties(String propertyName, JSONObject propertySchema, JsonNode parentNode) {
-        if (propertyName.equals(dataProperty)) {
-            Map<String, JsonNode> allProp = getAllProperties(parentNode);
-            if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
-                addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), parentNode.key());
-            }
-        } else {
-            JsonNode properties = getProperties(parentNode);
-            JSONArray requiredPropertiesJSONArray = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
-            if (requiredPropertiesJSONArray != null && requiredPropertiesJSONArray.length() > 0 ) {
-                Set<String> requiredProperties = requiredPropertiesJSONArray.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-                validateRequiredProperties(parentNode, requiredProperties, String.join(", ", requiredProperties));
-            }
-            Map<String, JsonNode> propertyMap = properties.propertyMap();
-            JSONObject propertySchemaProperties = (propertySchema != null && propertySchema.has("properties")) ? propertySchema.getJSONObject("properties") : null;
-            List<String> sortedList = new ArrayList<>(propertySchemaProperties.keySet());
-            Collections.sort(sortedList);
-            sortedList.forEach(subpropertyName -> {
-                JSONObject subpropertySchema = (propertySchemaProperties != null && propertySchemaProperties.has(subpropertyName)) ? propertySchemaProperties.getJSONObject(subpropertyName) : null;
-                String propertyType = (subpropertySchema != null && subpropertySchema.has("type")) ? subpropertySchema.getString("type") : TYPE_ANY;
-                validateProperty(propertyMap, subpropertyName, propertyType, properties.key());
-            });
-        }
-    }*/
 }
