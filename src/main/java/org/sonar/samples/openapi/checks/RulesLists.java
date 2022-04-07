@@ -7,7 +7,6 @@ import org.sonar.samples.openapi.checks.resources.*;
 import org.sonar.samples.openapi.checks.security.*;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 

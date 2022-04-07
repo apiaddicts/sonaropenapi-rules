@@ -4,8 +4,6 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.samples.openapi.checks.RulesLists;
 import org.sonarsource.analyzer.commons.RuleMetadataLoader;
 
-import java.util.List;
-
 /**
  * Declare rule metadata in server repository of rules.
  * This allows to list the rules in the page "Rules".
