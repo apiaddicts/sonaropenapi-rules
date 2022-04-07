@@ -89,12 +89,12 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     private void visitPathV2Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        if (exclusion.contains(path)) return;
+        if (exclusion.contains(path) || mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
         Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             JsonNode parametersNode = operationNode.get("parameters");
             List<String> headerNames = listHeaderParameters(parametersNode);
-            if (mandatoryHeaders != null && !mandatoryHeaders.isEmpty() && !headerNames.containsAll(mandatoryHeaders)) {
+            if (!headerNames.containsAll(mandatoryHeaders)) {
                 addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), operationNode.key());
             }
         }
@@ -102,7 +102,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     private void visitPathV3Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        if (exclusion.contains(path)) return;
+        if (exclusion.contains(path) || mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
         JsonNode parametersInPathNode = node.get("parameters");
         List<String> headerNamesInPath = listHeaderParameters(parametersInPathNode);
         Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
@@ -110,7 +110,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
             JsonNode parametersInOperationNode = operationNode.get("parameters");
             List<String> headerNamesInOperation = listHeaderParameters(parametersInOperationNode);
             headerNamesInOperation.addAll(headerNamesInPath);
-            if (mandatoryHeaders != null && !mandatoryHeaders.isEmpty() && !headerNamesInOperation.containsAll(mandatoryHeaders)) {
+            if (!headerNamesInOperation.containsAll(mandatoryHeaders)) {
                 addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), operationNode.key());
             }
         }
