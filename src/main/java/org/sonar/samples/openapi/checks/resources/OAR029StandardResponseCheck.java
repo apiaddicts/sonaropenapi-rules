@@ -27,7 +27,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
     public static final String KEY = "OAR029";
 
     //MD
-    //private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"result\":{\"type\":\"object\",\"properties\":{\"http_code\":{\"type\":\"integer\"},\"status\":{\"type\":\"boolean\"},\"trace_id\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"status\",\"http_code\",\"trace_id\"]},\"data\":{\"type\":\"any\"}},\"requiredOnError\":[],\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"result\"],\"dataProperty\":\"data\"}";
+    //private static final String RESPONSE_SCHEMA = "{\"type\": \"object\",\"properties\": {\"result\": {\"type\": \"object\",\"properties\": {\"http_code\": {\"type\": \"integer\"},\"status\": {\"type\": \"boolean\"},\"trace_id\": {\"type\": \"string\"},\"errors\": {\"type\": \"array\",\"items\": {\"type\": \"object\",\"properties\": {\"code\": {\"type\": \"integer\"},\"message\": {\"type\": \"string\"}},\"required\": [\"code\",\"message\"]}}},\"required\": [\"status\",\"http_code\",\"trace_id\"]},\"data\": {\"type\": \"any\"}},\"requiredOnError\": [],\"requiredOnSuccess\": [\"data\"],\"requiredAlways\": [\"result\"],\"dataProperty\": \"data\"}";
     //RIM
     //private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}";
     //Cloudappi
@@ -46,6 +46,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
     private JSONArray requiredAlways = null;
     private JSONObject responseSchemaProperties = null;
     private String dataProperty = null;
+    private String rootProperty = null;
 
     private static final String DEFAULT_EXCLUSION = "/status";
     @RuleProperty(
@@ -71,6 +72,7 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
             requiredAlways = (responseSchema.has("requiredAlways")) ? responseSchema.getJSONArray("requiredAlways") : null;
             responseSchemaProperties = (responseSchema.has("properties")) ? responseSchema.getJSONObject("properties") : null;
             dataProperty = (responseSchema.has("dataProperty")) ? responseSchema.getString("dataProperty") : null;
+            rootProperty = (responseSchema.has("rootProperty")) ? responseSchema.getString("rootProperty") : null;
         } catch (JSONException err) {
 			addIssue(KEY, "Error parsing Standard Response Schemas", root.key());
         }
@@ -121,21 +123,35 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
             successCode = 200 <= code && 300 > code && code != 204;
         }
 
+        if (code == 204) return;
+
         JsonNode schemaNode = responseNode.value().get("schema");
         if (schemaNode.isMissing()) return;
         schemaNode = resolve(schemaNode);
-
         Map<String, JsonNode> properties = getAllProperties(schemaNode);
 
+        if (rootProperty != null) {
+            if (rootProperty.equals("*")) {
+                rootProperty = properties.entrySet().iterator().next().getKey();
+            }
+
+            validateProperty(properties, rootProperty, "object", schemaNode.key()).ifPresent(node -> {
+                Map<String, JsonNode> allProp = getAllProperties(node);
+                if (allProp.isEmpty()) {
+                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), node.key());
+                }
+            });
+
+            schemaNode = properties.get(rootProperty);
+            properties = getAllProperties(properties.get(rootProperty));
+        }
+        
         if (successCode) {
             validateRootProperties(requiredOnSuccess, properties, schemaNode);
         } else {
             validateRootProperties(requiredOnError, properties, schemaNode);
         }
-
-        if (code != 204) {
-            validateRootProperties(requiredAlways, properties, schemaNode);
-        }
+        validateRootProperties(requiredAlways, properties, schemaNode);
     }
 
     private void validateRootProperties(JSONArray requiredPropertiesJSONArray, Map<String, JsonNode> properties, JsonNode parentNode) {
@@ -147,9 +163,9 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
                     String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
                     if (propertyType == null || propertyType.trim().isEmpty() || propertyType.equals("any")) propertyType = TYPE_ANY;
                     validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
-                        Map<String, JsonNode> allProp = getAllProperties(parentNode);
+                        Map<String, JsonNode> allProp = getAllProperties(node);
                         if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
-                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), parentNode.key());
+                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), node.key());
                         }
                     });
                 } else {

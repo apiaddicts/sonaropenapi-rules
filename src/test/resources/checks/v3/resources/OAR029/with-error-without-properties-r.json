@@ -59,9 +59,9 @@
       "errorResponse": {
         "type": "object",
         "properties": {
-          "error": {
+          "error": { # Noncompliant {{OAR029: 'code' property is missing}} {{OAR029: 'details' property is missing}} {{OAR029: 'httpStatus' property is missing}} {{OAR029: 'message' property is missing}}
             "type": "object",
-            "properties": {}, # Noncompliant {{OAR029: 'code' property is missing}} {{OAR029: 'details' property is missing}} {{OAR029: 'httpStatus' property is missing}} {{OAR029: 'message' property is missing}}
+            "properties": {},
             "required": [
               "code",
               "message",

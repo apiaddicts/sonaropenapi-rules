@@ -29,8 +29,9 @@ public class OAR053ResponseHeadersCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(1);
+        assertNumberOfParameters(2);
         assertParameterProperties("mandatory-headers", "X-Trace-ID", RuleParamType.STRING);
+        assertParameterProperties("allowed-headers", "idCorrelacion, X-CorrelacionId, X-Global-Trasaction-Id, x-power-by, X-Trace-ID", RuleParamType.STRING);
     }
 
     @Override

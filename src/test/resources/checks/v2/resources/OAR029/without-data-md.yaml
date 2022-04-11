@@ -25,7 +25,7 @@ definitions:
     allOf:
       - $ref: '#/definitions/standard_response'
     properties:
-      value:
+      info:
         type: object
         properties:
           tipos:
@@ -46,6 +46,14 @@ definitions:
             type: array
             items:
               type: object
+              properties: 
+                code:
+                  type: integer
+                message:
+                  type: string
+              required:
+                - code
+                - message
           trace_id:
             type: string
         required:

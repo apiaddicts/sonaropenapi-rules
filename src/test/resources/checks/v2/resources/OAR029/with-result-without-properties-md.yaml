@@ -35,9 +35,9 @@ definitions:
   standard_response:
     type: object
     properties:
-      result:
+      result: # Noncompliant {{OAR029: 'errors' property is missing}} {{OAR029: 'http_code' property is missing}} {{OAR029: 'status' property is missing}} {{OAR029: 'trace_id' property is missing}}
         type: object
-        properties: {} # Noncompliant {{OAR029: 'errors' property is missing}} {{OAR029: 'http_code' property is missing}} {{OAR029: 'status' property is missing}} {{OAR029: 'trace_id' property is missing}}
+        properties: {}
         required:
           - status
           - http_code

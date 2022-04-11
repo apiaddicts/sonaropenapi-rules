@@ -65,9 +65,9 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
     @Override
     protected void visitFile(JsonNode root) {
         if (!mandatoryHeadersStr.trim().isEmpty()) mandatoryHeaders.addAll(Stream.of(mandatoryHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
-        allowedHeaders.addAll(Stream.of(allowedHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
-        forbiddenHeaders.addAll(Stream.of(forbiddenHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
-        exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
+        if (!allowedHeadersStr.trim().isEmpty()) allowedHeaders.addAll(Stream.of(allowedHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!forbiddenHeadersStr.trim().isEmpty()) forbiddenHeaders.addAll(Stream.of(forbiddenHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!exclusionStr.trim().isEmpty()) exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
     }
 
     @Override
@@ -122,7 +122,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
         if (headerParametersNodes.isEmpty()) return new ArrayList<String>();
         for (JsonNode headerParameterNode : headerParametersNodes) {
             JsonNode headerNameNode = headerParameterNode.resolve().get("name");
-            String headerName = headerNameNode.getTokenValue().toLowerCase();
+            String headerName = headerNameNode.getTokenValue().toLowerCase().trim();
             JsonNode requiredProperty = headerParameterNode.resolve().get("required");
             if (mandatoryHeaders != null && !mandatoryHeaders.isEmpty() && mandatoryHeaders.contains(headerName)
                 && ( requiredProperty.isMissing() || requiredProperty.isNull() || !Boolean.parseBoolean(requiredProperty.getTokenValue()) )
@@ -130,15 +130,15 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
                 addIssue(KEY, translate("OAR033.error-header-required", headerParameterNode.resolve().get("name").getTokenValue()), headerNameNode.value());
             }
         }
-        return headerParametersNodes.stream().map(headerNode -> headerNode.resolve().get("name").getTokenValue().toLowerCase()).collect(Collectors.toList());
+        return headerParametersNodes.stream().map(headerNode -> headerNode.resolve().get("name").getTokenValue().toLowerCase().trim()).collect(Collectors.toList());
     }
 
     private void visitParameterNode(JsonNode node) {
         if (!"header".equals(node.get("in").getTokenValue())) return;
         JsonNode nodeName = node.get("name");
-        String headerName = nodeName.getTokenValue().toLowerCase();
+        String headerName = nodeName.getTokenValue().toLowerCase().trim();
         if (!allowedHeaders.contains(headerName) || forbiddenHeaders.contains(headerName)) {
-            addIssue(KEY, translate("OAR033.error-not-allowed-header"), nodeName.value());
+            addIssue(KEY, translate("generic.not-allowed-header"), nodeName.value());
         }
     }
 

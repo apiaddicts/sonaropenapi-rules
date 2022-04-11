@@ -22,6 +22,7 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
 
     public static final String KEY = "OAR053";
     private static final String MANDATORY_HEADERS = "X-Trace-ID";
+    private static final String ALLOWED_HEADERS = "idCorrelacion, X-CorrelacionId, X-Global-Trasaction-Id, x-power-by, X-Trace-ID";
 
     @RuleProperty(
             key = "mandatory-headers",
@@ -29,12 +30,21 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
             defaultValue = MANDATORY_HEADERS
     )
     private String mandatoryHeadersStr = MANDATORY_HEADERS;
+
+    @RuleProperty(
+            key = "allowed-headers",
+            description = "List of allowed headers. Comma separated",
+            defaultValue = ALLOWED_HEADERS
+    )
+    private String allowedHeadersStr = ALLOWED_HEADERS;
     
     private Set<String> mandatoryHeaders = new HashSet<>();
+    private Set<String> allowedHeaders = new HashSet<>();
 
     @Override
     protected void visitFile(JsonNode root) {
-        mandatoryHeaders.addAll(Stream.of(mandatoryHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!mandatoryHeadersStr.trim().isEmpty()) mandatoryHeaders.addAll(Stream.of(mandatoryHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!allowedHeadersStr.trim().isEmpty()) allowedHeaders.addAll(Stream.of(allowedHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
     }
 
 	@Override
@@ -56,11 +66,18 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
     }
 
 	private void visitResponseNode(JsonNode node) {
-        List<String> headerNames = node.get("headers").propertyMap().values()
-                .stream().map(headerNode -> headerNode.key().getTokenValue().toLowerCase())
+        List<JsonNode> headerNameNodes = node.get("headers").propertyMap().values().stream().collect(Collectors.toList());
+        List<String> headerNames = headerNameNodes.stream().map(headerNode -> headerNode.key().getTokenValue().toLowerCase().trim())
                 .collect(Collectors.toList());
-        if (!headerNames.containsAll(mandatoryHeaders)) {
+        if (mandatoryHeaders != null && !mandatoryHeaders.isEmpty() && !headerNames.containsAll(mandatoryHeaders)) {
             addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), node.key());
+        }
+
+        for (JsonNode nodeName : headerNameNodes) {
+            String headerName = nodeName.key().getTokenValue().toLowerCase().trim();
+            if (allowedHeaders != null && !allowedHeaders.isEmpty() && !allowedHeaders.contains(headerName)) {
+                addIssue(KEY, translate("generic.not-allowed-header"), nodeName.value());
+            }
         }
 	}
 }
