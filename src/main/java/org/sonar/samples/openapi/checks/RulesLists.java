@@ -16,7 +16,7 @@ public final class RulesLists {
 	private RulesLists() {
 	}
 
-	public static List<Class> getWSO2Checks() {
+	public static List<Class<?>> getWSO2Checks() {
 		return Arrays.asList(
 				OAR002ValidWso2ScopesCheck.class,
 				OAR003DefinedWso2ScopesDescriptionCheck.class,
@@ -27,7 +27,7 @@ public final class RulesLists {
 		);
 	}
 
-	public static List<Class> getSecurityChecks() {
+	public static List<Class<?>> getSecurityChecks() {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
