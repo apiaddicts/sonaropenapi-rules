@@ -1,13 +1,13 @@
 {
   "title": "OAR053 - ResponseHeaders - Response headers required",
-  "type": "BUG",
+  "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",
     "constantCost": "30min"
   },
   "tags": [
-    "format"
+    "vulnerability"
   ],
   "defaultSeverity": "MAJOR"
 }

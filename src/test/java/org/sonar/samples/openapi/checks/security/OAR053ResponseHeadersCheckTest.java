@@ -36,6 +36,6 @@ public class OAR053ResponseHeadersCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR053 - ResponseHeaders - Response headers required", RuleType.BUG, Severity.MAJOR, tags("format"));
+        assertRuleProperties("OAR053 - ResponseHeaders - Response headers required", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
     }
 }
