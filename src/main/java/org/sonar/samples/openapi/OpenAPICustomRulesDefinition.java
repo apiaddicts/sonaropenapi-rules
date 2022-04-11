@@ -16,6 +16,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
 	private static final String FORMAT_GROUP = "format";
 	private static final String RESOURCES_GROUP = "resources";
 	private static final String PARAMETERS_GROUP = "parameters";
+	private static final String APIM_WSO2_GROUP = "apim/wso2";
 	private static final String CORE_GROUP = "core";
 
 	@Override
@@ -29,6 +30,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
 		new RuleMetadataLoader(getPath(RESOURCES_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getResourcesChecks());
 		new RuleMetadataLoader(getPath(PARAMETERS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getParametersChecks());
 		new RuleMetadataLoader(getPath(CORE_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getCoreChecks());
+		new RuleMetadataLoader(getPath(APIM_WSO2_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getWSO2Checks());
 		repository.done();
 	}
 

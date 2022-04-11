@@ -1,4 +1,4 @@
-package org.sonar.samples.openapi.checks.security;
+package org.sonar.samples.openapi.checks.apim.wso2;
 
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;

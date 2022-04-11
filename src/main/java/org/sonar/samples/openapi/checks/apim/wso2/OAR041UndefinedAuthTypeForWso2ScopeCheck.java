@@ -1,4 +1,4 @@
-package org.sonar.samples.openapi.checks.security;
+package org.sonar.samples.openapi.checks.apim.wso2;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;

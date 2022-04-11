@@ -1,5 +1,6 @@
 package org.sonar.samples.openapi.checks;
 
+import org.sonar.samples.openapi.checks.apim.wso2.*;
 import org.sonar.samples.openapi.checks.core.*;
 import org.sonar.samples.openapi.checks.format.*;
 import org.sonar.samples.openapi.checks.parameters.*;
@@ -15,17 +16,22 @@ public final class RulesLists {
 	private RulesLists() {
 	}
 
-	public static List<Class<?>> getSecurityChecks() {
+	public static List<Class> getWSO2Checks() {
 		return Arrays.asList(
-				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR002ValidWso2ScopesCheck.class,
 				OAR003DefinedWso2ScopesDescriptionCheck.class,
 				OAR004ValidWso2ScopesRolesCheck.class,
 				OAR005UndefinedWso2ScopeUseCheck.class,
+				OAR040StandardWso2ScopesNameCheck.class,
+				OAR041UndefinedAuthTypeForWso2ScopeCheck.class
+		);
+	}
+
+	public static List<Class> getSecurityChecks() {
+		return Arrays.asList(
+				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
 				OAR036SessionMechanismsCheck.class,
-				OAR040StandardWso2ScopesNameCheck.class,
-				OAR041UndefinedAuthTypeForWso2ScopeCheck.class,
 				OAR053ResponseHeadersCheck.class,
 				OAR054HostCheck.class
 		);
@@ -101,6 +107,7 @@ public final class RulesLists {
 		allChecks.addAll(getResourcesChecks());
 		allChecks.addAll(getParametersChecks());
 		allChecks.addAll(getCoreChecks());
+        allChecks.addAll(getWSO2Checks());
 		return allChecks;
 	}
 }

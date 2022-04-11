@@ -1,4 +1,4 @@
-package org.sonar.samples.openapi.checks.security;
+package org.sonar.samples.openapi.checks.apim.wso2;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +13,8 @@ public class OAR004ValidWso2ScopesRolesCheckTest extends BaseCheckTest {
     public void init() {
         ruleName = "OAR004";
         check = new OAR004ValidWso2ScopesRolesCheck();
-        v2Path = getV2Path("security");
-        v3Path = getV3Path("security");
+        v2Path = getV2Path("apim/wso2");
+        v3Path = getV3Path("apim/wso2");
     }
 
     @Test
