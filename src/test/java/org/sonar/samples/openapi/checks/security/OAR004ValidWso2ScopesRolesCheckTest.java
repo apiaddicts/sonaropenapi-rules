@@ -39,7 +39,7 @@ public class OAR004ValidWso2ScopesRolesCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR004 - ValidWso2ScopesRoles - WSO2 scope roles value is not valid", RuleType.BUG, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR004 - ValidWso2ScopesRoles - WSO2 scope roles value is not valid", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));
     }
 
     @Override

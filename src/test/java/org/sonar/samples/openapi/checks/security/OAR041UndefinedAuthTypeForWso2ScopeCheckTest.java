@@ -48,6 +48,6 @@ public class OAR041UndefinedAuthTypeForWso2ScopeCheckTest extends BaseCheckTest 
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR041 - UndefinedAuthTypeForWso2Scope - Use of WSO2 x-scope requires x-auth-type definition", RuleType.BUG, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR041 - UndefinedAuthTypeForWso2Scope - Use of WSO2 x-scope requires x-auth-type definition", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));
     }
 }

@@ -39,7 +39,7 @@ public class OAR040StandardWso2ScopesNameCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR040 - StandardWso2ScopesName - WSO2 scope name is non compliant with the standard", RuleType.BUG, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR040 - StandardWso2ScopesName - WSO2 scope name is non compliant with the standard", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));
     }
 
     @Override

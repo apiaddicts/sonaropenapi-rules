@@ -1,13 +1,15 @@
 {
   "title": "OAR002 - ValidWso2Scopes - WSO2 scope definition is wrong",
-  "type": "BUG",
+  "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",
     "constantCost": "30min"
   },
   "tags": [
-    "vulnerability"
+    "api-manager",
+    "vulnerability",
+    "wso2"
   ],
   "defaultSeverity": "BLOCKER"
 }

@@ -48,6 +48,6 @@ public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR003 - DefinedWso2ScopesDescription - WSO2 scope description is recommended", RuleType.BUG, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR003 - DefinedWso2ScopesDescription - WSO2 scope description is recommended", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));
     }
 }

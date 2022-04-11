@@ -1,13 +1,15 @@
 {
   "title": "OAR005 - UndefinedWso2ScopeUse - WSO2 scope definition does not exists",
-  "type": "BUG",
+  "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",
     "constantCost": "15min"
   },
   "tags": [
-    "vulnerability"
+    "api-manager",
+    "vulnerability",
+    "wso2"
   ],
   "defaultSeverity": "BLOCKER"
 }

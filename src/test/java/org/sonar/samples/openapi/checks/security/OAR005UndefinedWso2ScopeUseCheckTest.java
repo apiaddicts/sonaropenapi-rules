@@ -48,6 +48,6 @@ public class OAR005UndefinedWso2ScopeUseCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR005 - UndefinedWso2ScopeUse - WSO2 scope definition does not exists", RuleType.BUG, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR005 - UndefinedWso2ScopeUse - WSO2 scope definition does not exists", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));
     }
 }

@@ -1,13 +1,15 @@
 {
   "title": "OAR003 - DefinedWso2ScopesDescription - WSO2 scope description is recommended",
-  "type": "BUG",
+  "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",
     "constantCost": "10min"
   },
   "tags": [
-    "vulnerability"
+    "api-manager",
+    "vulnerability",
+    "wso2"
   ],
   "defaultSeverity": "BLOCKER"
 }
