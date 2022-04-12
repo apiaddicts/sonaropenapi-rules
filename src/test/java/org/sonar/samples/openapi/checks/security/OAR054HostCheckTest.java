@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
 public class OAR054HostCheckTest extends BaseCheckTest {
@@ -24,6 +25,12 @@ public class OAR054HostCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3() {
         verifyV3("valid");
+    }
+
+    @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(1);
+        assertParameterProperties("host-regex", "^((\\*|[\\w\\d]+(-[\\w\\d]+)*)\\.)*(cloudappi)(\\.net)$", RuleParamType.STRING);
     }
 
     @Override
