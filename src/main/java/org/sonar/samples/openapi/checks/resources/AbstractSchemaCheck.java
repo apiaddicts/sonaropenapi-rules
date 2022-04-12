@@ -58,6 +58,12 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
     protected Optional<JsonNode> validateProperty(JsonNode properties, String propertyName, String propertyType) {
         properties = resolve(properties);
+
+        if (properties.propertyNames().isEmpty()) {
+            addIssue(key, translate("generic.property-missing", propertyName), properties);
+            return Optional.empty();
+        }
+
         JsonNode prop = properties.get(propertyName);
         return validateProperty(prop, propertyName, propertyType, properties.key());
     }
@@ -149,11 +155,6 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         JSONArray schemaRequired = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
         JSONObject schemaProperties = (propertySchema != null && propertySchema.has("properties")) ? propertySchema.getJSONObject("properties") : null;
 
-        if (schemaRequired != null && schemaRequired.length() > 0 ) {
-            Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-            validateRequiredProperties(propertyNode, requiredProperties, String.join(", ", requiredProperties));
-        }
-
         if (schemaProperties != null && !schemaProperties.keySet().isEmpty()) {
             List<String> sortedSchemaProperties = new ArrayList<>(schemaProperties.keySet());
             Collections.sort(sortedSchemaProperties);
@@ -161,6 +162,11 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                 JSONObject childPropertySchema = (schemaProperties != null && schemaProperties.has(childProperty)) ? schemaProperties.getJSONObject(childProperty) : null;
                 validateProperties(childProperty, childPropertySchema, propertyNode);
             });
+        }
+        
+        if (schemaRequired != null && schemaRequired.length() > 0 ) {
+            Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+            validateRequiredProperties(propertyNode, requiredProperties, String.join(", ", requiredProperties));
         }
     }
 
