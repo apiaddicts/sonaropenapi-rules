@@ -1,5 +1,5 @@
 {
-  "title": "OAR053 - ResponseHeaders - Response headers required",
+  "title": "OAR053 - ResponseHeaders - Cabeceras de respuesta permitidas y obligatorias",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
