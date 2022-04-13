@@ -23,6 +23,8 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
     public static final String KEY = "OAR053";
     private static final String MANDATORY_HEADERS = "X-Trace-ID";
     private static final String ALLOWED_HEADERS = "idCorrelacion, X-CorrelacionId, X-Global-Trasaction-Id, x-power-by, X-Trace-ID";
+    private static final String INCLUDED_RESPONSE_CODES = "*";
+    private static final String EXCLUDED_RESPONSE_CODES = "204";
 
     @RuleProperty(
             key = "mandatory-headers",
@@ -37,14 +39,32 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
             defaultValue = ALLOWED_HEADERS
     )
     private String allowedHeadersStr = ALLOWED_HEADERS;
+
+    @RuleProperty(
+            key = "included-response-codes",
+            description = "List of allowed response codes. Comma separated",
+            defaultValue = INCLUDED_RESPONSE_CODES
+    )
+    private String includedResponseCodesStr = INCLUDED_RESPONSE_CODES;
+
+    @RuleProperty(
+            key = "excluded-response-codes",
+            description = "List of excluded response codes. Comma separated",
+            defaultValue = EXCLUDED_RESPONSE_CODES
+    )
+    private String excludedResponseCodesStr = EXCLUDED_RESPONSE_CODES;
     
     private Set<String> mandatoryHeaders = new HashSet<>();
     private Set<String> allowedHeaders = new HashSet<>();
+    private Set<String> includedResponseCodes = new HashSet<>();
+    private Set<String> excludedResponseCodes = new HashSet<>();
 
     @Override
     protected void visitFile(JsonNode root) {
         if (!mandatoryHeadersStr.trim().isEmpty()) mandatoryHeaders.addAll(Stream.of(mandatoryHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         if (!allowedHeadersStr.trim().isEmpty()) allowedHeaders.addAll(Stream.of(allowedHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!includedResponseCodesStr.trim().isEmpty()) includedResponseCodes.addAll(Stream.of(includedResponseCodesStr.split(",")).map(code -> code.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!excludedResponseCodesStr.trim().isEmpty()) excludedResponseCodes.addAll(Stream.of(excludedResponseCodesStr.split(",")).map(code -> code.toLowerCase().trim()).collect(Collectors.toSet()));
     }
 
 	@Override
@@ -60,8 +80,14 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
     private void visitResponsesNode(JsonNode node) {
         List<JsonNode> allResponses = node.properties().stream().collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
-            responseNode = resolve(responseNode);
-            visitResponseNode(responseNode);
+            String statusCode = responseNode.key().getTokenValue();
+            
+            if (excludedResponseCodes.contains(statusCode)) continue;
+            
+            if (includedResponseCodes.contains(statusCode) || includedResponseCodes.contains("*")) {
+                responseNode = resolve(responseNode);
+                visitResponseNode(responseNode);
+            }
         }
     }
 
