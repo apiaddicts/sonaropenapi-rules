@@ -5,7 +5,6 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Ordering;
 import com.sonar.sslr.api.Token;
 import com.sonar.sslr.api.Trivia;
-
 import org.assertj.core.api.AbstractCharSequenceAssert;
 import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.Assertions;
@@ -75,34 +74,34 @@ public class ExtendedOpenApiCheckVerifier {
         }
 
         if (expected.message() != null) {
-            ((AbstractCharSequenceAssert) Assertions.assertThat(actual.primaryLocation().message()).as("Bad message at line " + expected.line(), new Object[0])).isEqualTo(expected.message());
+            ((AbstractCharSequenceAssert<?, ?>) Assertions.assertThat(actual.primaryLocation().message()).as("Bad message at line " + expected.line(), new Object[0])).isEqualTo(expected.message());
         }
 
         if (expected.effortToFix() != null) {
-            ((AbstractIntegerAssert) Assertions.assertThat(actual.cost()).as("Bad effortToFix at line " + expected.line(), new Object[0])).isEqualTo(expected.effortToFix());
+            ((AbstractIntegerAssert<?>) Assertions.assertThat(actual.cost()).as("Bad effortToFix at line " + expected.line(), new Object[0])).isEqualTo(expected.effortToFix());
         }
 
         if (expected.startColumn() != null) {
-            ((AbstractIntegerAssert) Assertions.assertThat(actual.primaryLocation().startLineOffset()).as("Bad start column at line " + expected.line(), new Object[0])).isEqualTo(expected.startColumn());
+            ((AbstractIntegerAssert<?>) Assertions.assertThat(actual.primaryLocation().startLineOffset()).as("Bad start column at line " + expected.line(), new Object[0])).isEqualTo(expected.startColumn());
         }
 
         if (expected.endColumn() != null) {
-            ((AbstractIntegerAssert) Assertions.assertThat(actual.primaryLocation().endLineOffset()).as("Bad end column at line " + expected.line(), new Object[0])).isEqualTo(expected.endColumn());
+            ((AbstractIntegerAssert<?>) Assertions.assertThat(actual.primaryLocation().endLineOffset()).as("Bad end column at line " + expected.line(), new Object[0])).isEqualTo(expected.endColumn());
         }
 
         if (expected.endLine() != null) {
-            ((AbstractIntegerAssert) Assertions.assertThat(actual.primaryLocation().endLine()).as("Bad end line at line " + expected.line(), new Object[0])).isEqualTo(expected.endLine());
+            ((AbstractIntegerAssert<?>) Assertions.assertThat(actual.primaryLocation().endLine()).as("Bad end line at line " + expected.line(), new Object[0])).isEqualTo(expected.endLine());
         }
 
         if (expected.secondaryLines() != null) {
-            ((ListAssert) Assertions.assertThat(secondary(actual)).as("Bad secondary locations at line " + expected.line(), new Object[0])).isEqualTo(expected.secondaryLines());
+            ((ListAssert<?>) Assertions.assertThat(secondary(actual)).as("Bad secondary locations at line " + expected.line(), new Object[0])).isEqualTo(expected.secondaryLines());
         }
 
     }
 
     private static List<Integer> secondary(PreciseIssue issue) {
-        List<Integer> result = new ArrayList();
-        Iterator var2 = issue.secondaryLocations().iterator();
+        List<Integer> result = new ArrayList<Integer>();
+        Iterator<IssueLocation> var2 = issue.secondaryLocations().iterator();
 
         while (var2.hasNext()) {
             IssueLocation issueLocation = (IssueLocation) var2.next();
@@ -165,7 +164,7 @@ public class ExtendedOpenApiCheckVerifier {
     }
 
     private static void addParams(TestIssue issue, String params) {
-        Iterator var2 = Splitter.on(';').split(params).iterator();
+        Iterator<String> var2 = Splitter.on(';').split(params).iterator();
 
         while (var2.hasNext()) {
             String param = (String) var2.next();
@@ -196,9 +195,9 @@ public class ExtendedOpenApiCheckVerifier {
     }
 
     private static void addSecondaryLines(TestIssue issue, String value) {
-        List<Integer> secondaryLines = new ArrayList();
+        List<Integer> secondaryLines = new ArrayList<Integer>();
         if (!"".equals(value)) {
-            Iterator var3 = Splitter.on(',').split(value).iterator();
+            Iterator<String> var3 = Splitter.on(',').split(value).iterator();
 
             while (var3.hasNext()) {
                 String secondary = (String) var3.next();
@@ -253,7 +252,7 @@ public class ExtendedOpenApiCheckVerifier {
         }
 
         protected void visitToken(Token token) {
-            Iterator var2 = token.getTrivia().iterator();
+            Iterator<Trivia> var2 = token.getTrivia().iterator();
 
             while (var2.hasNext()) {
                 Trivia trivia = (Trivia) var2.next();

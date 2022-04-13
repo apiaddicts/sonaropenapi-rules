@@ -1,13 +1,23 @@
 package org.sonar.samples.openapi;
 
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.scanner.ScannerSide;
+import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.samples.openapi.checks.RulesLists;
 import org.sonarsource.analyzer.commons.RuleMetadataLoader;
+import org.sonarsource.api.sonarlint.SonarLintSide;
 
 /**
  * Declare rule metadata in server repository of rules.
  * This allows to list the rules in the page "Rules".
  */
+@ServerSide
+@SonarLintSide
+@ComputeEngineSide
+@ScannerSide
+@ExtensionPoint
 public class OpenAPICustomRulesDefinition implements RulesDefinition {
 	public static final String REPOSITORY_KEY = "openapi-custom";
 	private static final String REPOSITORY_NAME = "OpenAPI Custom";

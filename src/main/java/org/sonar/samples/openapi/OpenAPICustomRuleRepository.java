@@ -1,6 +1,7 @@
 package org.sonar.samples.openapi;
 
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.scanner.ScannerSide;
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiCustomRuleRepository;
 import org.sonar.samples.openapi.checks.RulesLists;
 import org.sonarsource.api.sonarlint.SonarLintSide;
@@ -17,6 +18,7 @@ import static org.sonar.samples.openapi.OpenAPICustomRulesDefinition.REPOSITORY_
  */
 @SonarLintSide
 @ScannerSide
+@ExtensionPoint
 public class OpenAPICustomRuleRepository implements OpenApiCustomRuleRepository {
 	@Override
 	public String repositoryKey() {

@@ -17,14 +17,12 @@ import java.util.List;
  */
 public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDefinition {
 	public static final String MY_COMPANY_WAY = "Custom";
-	private final OpenApiCustomRuleRepository[] repositories;
 
 	public OpenAPICustomProfileDefinition() {
 		this(null);
 	}
 
 	public OpenAPICustomProfileDefinition(@Nullable OpenApiCustomRuleRepository[] repositories) {
-		this.repositories = repositories;
 	}
 
 	@Override
