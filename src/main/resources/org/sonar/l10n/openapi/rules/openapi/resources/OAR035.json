@@ -1,5 +1,5 @@
 {
-  "title": "OAR035 - AuthorizationResponses - Responses in a specification with security schemes defined, must define authorization response codes",
+  "title": "OAR035 - AuthorizationResponses - When defining security schemes, authorization response codes must be defined",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
