@@ -38,7 +38,7 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR031 - Examples - An example must be provided", RuleType.BUG, Severity.MAJOR, tags("resources"));
+        assertRuleProperties("OAR031 - Examples - Responses, Request Body, Parameters and Properties must have an example defined", RuleType.BUG, Severity.MAJOR, tags("resources"));
     }
 
 }
