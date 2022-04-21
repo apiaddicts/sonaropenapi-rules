@@ -1,13 +1,90 @@
-<p>The defined mime types (for specification v2) or media types (for specification v3) must conform to the <a href="https://tools.ietf.org/html/rfc6838">RFC6838</a> and <a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>.</p>
+<p>The defined media types must conform to the <a href="https://tools.ietf.org/html/rfc6838">RFC6838</a> and <a href="https://tools.ietf.org/html/rfc7231">RFC7231</a>.
+    This ensures that a tool can rely on the declared media type to generate appropriate code to handle the parsing of output.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
+swagger: "2.0"
+info:
+    version: 1.0.0
+    title: Swagger Petstore
+produces:
+    - application/json
+    - text/*
+consumes:
+    - application/json
+    - text/*
+paths:
+    /pets:
+    get:
+        produces:
+        - application
+        - text/plain
+        consumes:
+        - application
+        - text/plain
+        responses:
+        '200':
+            description: some operation
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
+swagger: "2.0"
+info:
+    version: 1.0.0
+    title: Swagger Petstore
+produces:
+    - application/json
+    - text/plain
+consumes:
+    - application/json
+    - text/plain
+paths:
+    /pets:
+    get:
+        produces:
+        - application/json
+        - text/plain
+        consumes:
+        - application/json
+        - text/plain
+        responses:
+        '200':
+            description: some operation
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
+openapi: "3.0.1"
+info:
+    version: 1.0.0
+    title: Swagger Petstore
+paths:
+    /pets:
+    post:
+        requestBody:
+        content:
+            'application': {}
+            'text/*': {}
+        responses:
+        '200':
+            description: some operation
+            content:
+            'application': {}
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>
+openapi: "3.0.1"
+info:
+    version: 1.0.0
+    title: Swagger Petstore
+paths:
+    /pets:
+    post:
+        requestBody:
+        content:
+            'application/json': {}
+            'text/plain': {}
+        responses:
+        '200':
+            description: some operation
+            content:
+            'application/json': {}
 </pre>
