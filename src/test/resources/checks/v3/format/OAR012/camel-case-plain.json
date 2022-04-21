@@ -9,7 +9,7 @@
       "parameters": [
         {
           "in": "path",
-          "name": "pet_id", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          "name": "pet_id", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           "schema": {
             "type": "integer"
           }
@@ -23,14 +23,14 @@
         },
         {
           "in": "path",
-          "name": "PET-ID", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          "name": "PET-ID", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           "schema": {
             "type": "integer"
           }
         },
         {
           "in": "query",
-          "name": "expand_info", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          "name": "expand_info", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           "schema": {
             "type": "integer"
           }
@@ -44,14 +44,14 @@
         },
         {
           "in": "query",
-          "name": "EXPAND-INFO", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          "name": "EXPAND-INFO", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           "schema": {
             "type": "integer"
           }
         },
         {
           "in": "query",
-          "name": "expandInfo3", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+          "name": "expandInfo3", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           "schema": {
             "type": "integer"
           }
@@ -69,7 +69,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "pet_id", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+            "name": "pet_id", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
             "schema": {
               "type": "integer"
             }
@@ -83,14 +83,14 @@
           },
           {
             "in": "path",
-            "name": "PET-ID", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+            "name": "PET-ID", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
             "schema": {
               "type": "integer"
             }
           },
           {
             "in": "query",
-            "name": "expand_info", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+            "name": "expand_info", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
             "schema": {
               "type": "integer"
             }
@@ -104,14 +104,14 @@
           },
           {
             "in": "query",
-            "name": "EXPAND-INFO", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+            "name": "EXPAND-INFO", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
             "schema": {
               "type": "integer"
             }
           },
           {
             "in": "query",
-            "name": "expandInfo3", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+            "name": "expandInfo3", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
             "schema": {
               "type": "integer"
             }

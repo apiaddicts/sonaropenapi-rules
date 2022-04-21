@@ -22,19 +22,19 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
 
 	private String key;
 	private String message;
-	protected String defaultNamingConvention = SNAKE_CASE;
+	protected String namingConvention = SNAKE_CASE;
     protected Set<String> nameExceptions = new HashSet<>();
 
-	public AbstractNamingConventionCheck(String key, String message, String defaultNamingConvention) {
+	public AbstractNamingConventionCheck(String key, String message, String namingConvention) {
 		this.key = key;
 		this.message = message;
-        this.defaultNamingConvention = defaultNamingConvention;
+        this.namingConvention = namingConvention;
 	}
 
-	public AbstractNamingConventionCheck(String key, String message, String defaultNamingConvention, Set<String> nameExceptions) {
+	public AbstractNamingConventionCheck(String key, String message, String namingConvention, Set<String> nameExceptions) {
 		this.key = key;
 		this.message = message;
-        this.defaultNamingConvention = defaultNamingConvention;
+        this.namingConvention = namingConvention;
         this.nameExceptions = nameExceptions;
 	}
 
@@ -44,7 +44,7 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
             name = name.replaceAll(PARAM_REGEX, "");
         }
 
-		switch (defaultNamingConvention) {
+		switch (namingConvention) {
 			case CAMEL_CASE:
                 name = name.replaceAll("/", "");
 				if (!isCamelCase(name)) {

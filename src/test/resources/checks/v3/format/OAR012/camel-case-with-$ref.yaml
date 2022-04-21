@@ -6,7 +6,7 @@ components:
   parameters:
     petType:
       in: path
-      name: pet-Type # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+      name: pet-Type # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
       schema:
         type: integer
     pathParamOk:
@@ -16,12 +16,12 @@ components:
         type: integer
     pathParamWrong1:
       in: path
-      name: pet_id # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+      name: pet_id # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
       schema:
         type: integer
     pathParamWrong2:
       in: path
-      name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+      name: PET-ID # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
       schema:
         type: integer
     queryParamOk:
@@ -31,12 +31,12 @@ components:
         type: integer
     queryParamWrong1:
       in: query
-      name: expand_info # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+      name: expand_info # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
       schema:
         type: integer
     queryParamWrong2:
       in: query
-      name: expand-info # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+      name: expand-info # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
       schema:
         type: integer
     headerParam:
@@ -49,11 +49,11 @@ components:
     Pet: 
       type: object
       properties:
-        pet-type: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        pet-type: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           type: string
         petAge:
           type: number
-        pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+        pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
           type: string
   requestBodies:
     PetsPostRequest:
@@ -62,7 +62,7 @@ components:
           schema:
             type: object
             properties:
-              pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+              pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
                 type: string
               petAge:
                 type: number
@@ -74,7 +74,7 @@ components:
           schema:
             type: object
             properties:
-              pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+              pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
                 type: string
 
 paths:
@@ -106,7 +106,7 @@ paths:
             schema:
               type: object
               properties:
-                pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+                pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
                   type: string
                 petAge:
                   type: number
@@ -121,7 +121,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in camelCase}}
+                  pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
                     type: string
                   petAge:
                     type: number

@@ -6,32 +6,32 @@ components:
   parameters:
     petType:
       in: path
-      name: pet-Type # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+      name: pet-Type # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
       schema:
         type: integer
     pathParamOk:
       in: path
-      name: petId # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+      name: petId # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
       schema:
         type: integer
     pathParamWrong1:
       in: path
-      name: pet_id # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+      name: pet_id # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
       schema:
         type: integer
     pathParamWrong2:
       in: path
-      name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+      name: PET-ID # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
       schema:
         type: integer
     queryParamOk:
       in: query
-      name: expandInfo # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+      name: expandInfo # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
       schema:
         type: integer
     queryParamWrong1:
       in: query
-      name: expand_info # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+      name: expand_info # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
       schema:
         type: integer
     queryParamWrong2:
@@ -51,9 +51,9 @@ components:
       properties:
         pet-type:
           type: string
-        petAge: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+        petAge: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
           type: number
-        pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+        pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
           type: string
   requestBodies:
     PetsPostRequest:
@@ -62,9 +62,9 @@ components:
           schema:
             type: object
             properties:
-              pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+              pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                 type: string
-              petAge: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+              petAge: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                 type: number
   responses:
     PetsResponse:
@@ -74,7 +74,7 @@ components:
           schema:
             type: object
             properties:
-              pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+              pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                 type: string
 
 paths:
@@ -82,7 +82,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/petType"
       - in: path
-        name: petName # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+        name: petName # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
         schema:
           type: string
     post:
@@ -106,9 +106,9 @@ paths:
             schema:
               type: object
               properties:
-                pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+                pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                   type: string
-                petAge: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+                petAge: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                   type: number
           application/xml:
             schema:
@@ -121,9 +121,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  pet_name: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+                  pet_name: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                     type: string
-                  petAge: # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+                  petAge: # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
                     type: number
             application/xml:
               schema:

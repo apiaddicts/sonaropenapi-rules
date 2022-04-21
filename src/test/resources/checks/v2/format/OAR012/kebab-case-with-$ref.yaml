@@ -5,27 +5,27 @@ info:
 parameters:
   pathParamOk:
     in: path
-    name: pet_id # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+    name: pet_id # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
     type: integer
   pathParamWrong1:
     in: path
-    name: petId # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+    name: petId # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
     type: integer
   pathParamWrong2:
     in: path
-    name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+    name: PET-ID # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
     type: integer
   queryParamOk:
     in: query
-    name: expand_info # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+    name: expand_info # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
     type: integer
   queryParamWrong1:
     in: query
-    name: expandInfo # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+    name: expandInfo # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
     type: integer
   queryParamWrong2:
     in: query
-    name: EXPAND-INFO # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in kebab-case}}
+    name: EXPAND-INFO # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: kebab-case}}
     type: integer
   headerParam:
     in: header

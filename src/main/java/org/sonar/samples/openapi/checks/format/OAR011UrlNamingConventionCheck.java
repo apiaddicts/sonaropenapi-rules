@@ -18,16 +18,16 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	public static final String KEY = "OAR011";
 	private static final String MESSAGE = "OAR011.error";
 
-	private static final String DEFAULT_NAMING_CONVENTION = KEBAB_CASE;
+	private static final String NAMING_CONVENTION = KEBAB_CASE;
 	
 	@RuleProperty(
-			key = "default-naming-convention",
-			description = "Default naming convention (snake_case, kebab-case, camelCase or UpperCamelCase).",
-			defaultValue = DEFAULT_NAMING_CONVENTION)
-	private static String defaultNamingConvention = DEFAULT_NAMING_CONVENTION;
+			key = "naming-convention",
+			description = "Naming convention (snake_case, kebab-case, camelCase or UpperCamelCase).",
+			defaultValue = NAMING_CONVENTION)
+	private static String namingConvention = NAMING_CONVENTION;
 
 	public OAR011UrlNamingConventionCheck() {
-		super(KEY, MESSAGE, defaultNamingConvention);
+		super(KEY, MESSAGE, namingConvention);
 	}
 
 	@Override

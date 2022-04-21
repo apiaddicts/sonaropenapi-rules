@@ -50,11 +50,11 @@ public class OAR011UrlNamingConventionCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("default-naming-convention", "kebab-case", RuleParamType.STRING);
+        assertParameterProperties("naming-convention", "kebab-case", RuleParamType.STRING);
     }
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR011 - UrlNamingConvention - Non variable path parts must be in kebab-case", RuleType.BUG, Severity.MAJOR, tags("format"));
+        assertRuleProperties("OAR011 - UrlNamingConvention - The base path and resource names with more than two words must be compliant with the standard naming convention", RuleType.BUG, Severity.MAJOR, tags("format"));
     }
 }

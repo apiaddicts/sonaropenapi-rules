@@ -4,6 +4,6 @@
     "version": "1.0.0",
     "title": "Swagger Petstore"
   },
-  "basePath": "/BASE/path", # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+  "basePath": "/BASE/path", # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
   "paths": {}
 }

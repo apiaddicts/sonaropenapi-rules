@@ -1,5 +1,5 @@
 {
-  "title": "OAR011 - UrlNamingConvention - Las partes no variables de los paths deben estar en kebab-case",
+  "title": "OAR011 - UrlNamingConvention - La ruta base y los nombres de recursos con más de dos palabras deben cumplir con la convención de nombres estándar",
   "type": "BUG",
   "status": "ready",
   "remediation": {

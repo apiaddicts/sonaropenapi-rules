@@ -6,7 +6,7 @@
   },
   "servers" : [
     {
-      "url": "https://petstore.swagger.io/APIStore/v1" # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+      "url": "https://petstore.swagger.io/APIStore/v1" # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
     }
   ],
   "paths": {}
