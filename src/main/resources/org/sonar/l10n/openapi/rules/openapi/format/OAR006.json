@@ -1,5 +1,5 @@
 {
-  "title": "OAR006 - UndefinedConsumes - consumes section for OpenAPI 2 and requestBody.content section for OpenAPI 3 are mandatory",
+  "title": "OAR006 - UndefinedRequestMediaType - APIs must define request media types supported by the API",
   "type": "BUG",
   "status": "ready",
   "remediation": {

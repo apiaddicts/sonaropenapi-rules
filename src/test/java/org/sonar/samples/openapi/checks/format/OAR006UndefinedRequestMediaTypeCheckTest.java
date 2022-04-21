@@ -6,12 +6,12 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR007UndefinedProducesCheckTest extends BaseCheckTest {
+public class OAR006UndefinedRequestMediaTypeCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
-        ruleName = "OAR007";
-        check = new OAR007UndefinedProducesCheck();
+        ruleName = "OAR006";
+        check = new OAR006UndefinedRequestMediaTypeCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
@@ -43,6 +43,6 @@ public class OAR007UndefinedProducesCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR007 - UndefinedProduces - Section produces is mandatory", RuleType.BUG, Severity.BLOCKER, tags("format"));
+        assertRuleProperties("OAR006 - UndefinedRequestMediaType - APIs must define request media types supported by the API", RuleType.BUG, Severity.BLOCKER, tags("format"));
     }
 }

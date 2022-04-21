@@ -1,5 +1,5 @@
 {
-  "title": "OAR009 - ConsumesDefaultMimeType - Debe consumir el mime type por defecto",
+  "title": "OAR009 - DefaultRequestMediaType - Debe indicar el tipo de medio de solicitud predeterminado",
   "type": "BUG",
   "status": "ready",
   "remediation": {

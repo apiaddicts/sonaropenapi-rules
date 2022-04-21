@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 
-public abstract class AbstractDefaultMimeCheck extends BaseCheck {
+public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
 	private static final String DEFAULT_MEDIA_TYPE_VALUE = "application/json";
 	private static final String MEDIA_TYPE_EXCEPTIONS_VALUE = "-";
@@ -35,14 +35,14 @@ public abstract class AbstractDefaultMimeCheck extends BaseCheck {
     private Set<String> mediaTypeExceptions;
 
 	@RuleProperty(
-			key = "default-mime-type",
+			key = "default-media-type",
 			description = "Default media type.",
 			defaultValue = DEFAULT_MEDIA_TYPE_VALUE)
 	public String defaultMediaType = DEFAULT_MEDIA_TYPE_VALUE;
 
 	private boolean globalSupportsDefaultMimeType = false;
 
-	public AbstractDefaultMimeCheck(String key, String section, String message) {
+	public AbstractDefaultMediaTypeCheck(String key, String section, String message) {
 		this.key = key;
 		this.section = section;
 		this.message = translate(message);

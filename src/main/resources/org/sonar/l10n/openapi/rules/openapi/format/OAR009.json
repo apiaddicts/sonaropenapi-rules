@@ -1,5 +1,5 @@
 {
-  "title": "OAR009 - ConsumesDefaultMimeType - Should consume a default mime type",
+  "title": "OAR009 - DefaultRequestMediaType - Should indicate the default request media type",
   "type": "BUG",
   "status": "ready",
   "remediation": {

@@ -12,16 +12,16 @@ import java.util.Set;
 
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 
-public abstract class AbstractUndefinedMimeCheck extends BaseCheck {
+public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
 
 	private static final String MESSAGE = "generic.section";
 
 	private String key;
 	private String section;
 
-	private boolean globalDefinesMimeTypes = false;
+	private boolean globalDefinesMediaTypes = false;
 
-	public AbstractUndefinedMimeCheck(String key, String section) {
+	public AbstractUndefinedMediaTypeCheck(String key, String section) {
 		this.key = key;
 		this.section = section;
 	}
@@ -33,7 +33,7 @@ public abstract class AbstractUndefinedMimeCheck extends BaseCheck {
 
 	@Override
 	protected void visitFile(JsonNode root) {
-		globalDefinesMimeTypes = (root.getType() instanceof OpenApi2Grammar) ? definesMimeTypesV2(root) : false;
+		globalDefinesMediaTypes = (root.getType() instanceof OpenApi2Grammar) ? definesMimeTypesV2(root) : false;
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public abstract class AbstractUndefinedMimeCheck extends BaseCheck {
 	}
 
 	private void visitV2Node(JsonNode node) {
-		if (!globalDefinesMimeTypes && !definesMimeTypesV2(node)) {
+		if (!globalDefinesMediaTypes && !definesMimeTypesV2(node)) {
 			addIssue(key, translate(MESSAGE, section), node.key());
 		}
 	}
@@ -77,7 +77,7 @@ public abstract class AbstractUndefinedMimeCheck extends BaseCheck {
 			contentNode = node.at("/content");
 		}
 
-		if (!globalDefinesMimeTypes && !definesMimeTypesV3(contentNode)) {
+		if (!globalDefinesMediaTypes && !definesMimeTypesV3(contentNode)) {
 			addIssue(key, translate(MESSAGE, "content"), node.key());
 		}
 	}

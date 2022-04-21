@@ -1,5 +1,5 @@
 {
-  "title": "OAR007 - UndefinedProduces - La sección produces es obligatoria",
+  "title": "OAR007 - UndefinedResponseMediaType - Las API deben definir los tipos de medios de respuesta admitidos por la API",
   "type": "BUG",
   "status": "ready",
   "remediation": {

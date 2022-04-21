@@ -7,12 +7,12 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR010ProducesDefaultMimeTypeCheckTest extends BaseCheckTest {
+public class OAR009DefaultRequestMediaTypeCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
-        ruleName = "OAR010";
-        check = new OAR010ProducesDefaultMimeTypeCheck();
+        ruleName = "OAR009";
+        check = new OAR009DefaultRequestMediaTypeCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
@@ -33,13 +33,13 @@ public class OAR010ProducesDefaultMimeTypeCheckTest extends BaseCheckTest {
     }
 
     @Test
-    public void verifyInV2WithDefaultAndSpecific() {
-        verifyV2("with-default-and-specific");
+    public void verifyInV2WithWrongDefaultAndSpecific() {
+        verifyV2("with-wrong-default-and-specific");
     }
 
     @Test
-    public void verifyInV2WithWrongDefaultAndSpecific() {
-        verifyV2("with-wrong-default-and-specific");
+    public void verifyInV2WithDefaultAndSpecific() {
+        verifyV2("with-default-and-specific");
     }
 
     @Test
@@ -77,15 +77,20 @@ public class OAR010ProducesDefaultMimeTypeCheckTest extends BaseCheckTest {
         verifyV3("without-anything");
     }
 
+    @Test
+    public void verifyInV3OperationNotAllowsRequestBody() {
+        verifyV3("operation-not-allows-request-body");
+    }
+
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR010 - ProducesDefaultMimeType - Should produce a default mime type", RuleType.BUG, Severity.MINOR, tags("format"));
+        assertRuleProperties("OAR009 - DefaultRequestMediaType - Should indicate the default request media type", RuleType.BUG, Severity.MAJOR, tags("format"));
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
         assertParameterProperties("media-type-exceptions", "-", RuleParamType.STRING);
-        assertParameterProperties("default-mime-type", "application/json", RuleParamType.STRING);
+        assertParameterProperties("default-media-type", "application/json", RuleParamType.STRING);
     }
 }

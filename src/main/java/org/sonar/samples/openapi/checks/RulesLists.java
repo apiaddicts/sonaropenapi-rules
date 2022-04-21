@@ -39,10 +39,10 @@ public final class RulesLists {
 
 	public static List<Class<?>> getFormatChecks() {
 		return Arrays.asList(
-				OAR006UndefinedConsumesCheck.class,
-				OAR007UndefinedProducesCheck.class,
-				OAR009ConsumesDefaultMimeTypeCheck.class,
-				OAR010ProducesDefaultMimeTypeCheck.class,
+				OAR006UndefinedRequestMediaTypeCheck.class,
+				OAR007UndefinedResponseMediaTypeCheck.class,
+				OAR009DefaultRequestMediaTypeCheck.class,
+				OAR010DefaultResponseMediaTypeCheck.class,
 				OAR011UrlNamingConventionCheck.class,
 				OAR012ParameterNamingConventionCheck.class,
 				OAR016NumericFormatCheck.class,

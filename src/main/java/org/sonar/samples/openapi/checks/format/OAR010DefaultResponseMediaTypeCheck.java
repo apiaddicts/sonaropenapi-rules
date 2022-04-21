@@ -2,13 +2,13 @@ package org.sonar.samples.openapi.checks.format;
 
 import org.sonar.check.Rule;
 
-@Rule(key = OAR010ProducesDefaultMimeTypeCheck.KEY)
-public class OAR010ProducesDefaultMimeTypeCheck extends AbstractDefaultMimeCheck {
+@Rule(key = OAR010DefaultResponseMediaTypeCheck.KEY)
+public class OAR010DefaultResponseMediaTypeCheck extends AbstractDefaultMediaTypeCheck {
 
 	public static final String KEY = "OAR010";
 	private static final String MESSAGE = "generic.produce";
 
-	public OAR010ProducesDefaultMimeTypeCheck() {
+	public OAR010DefaultResponseMediaTypeCheck() {
 		super(KEY,"produces", MESSAGE);
 	}
 }

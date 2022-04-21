@@ -7,7 +7,7 @@ consumes:
 paths:
   /pets:
     get:
-      consumes: # Noncompliant {{OAR009: Should consume a default mime type}}
+      consumes: # Noncompliant {{OAR009: Should indicate the default request media type}}
         - application/xml
       responses:
         200:

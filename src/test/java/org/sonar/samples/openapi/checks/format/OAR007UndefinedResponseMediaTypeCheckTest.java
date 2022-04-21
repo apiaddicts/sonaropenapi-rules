@@ -6,12 +6,12 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR006UndefinedConsumesCheckTest extends BaseCheckTest {
+public class OAR007UndefinedResponseMediaTypeCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
-        ruleName = "OAR006";
-        check = new OAR006UndefinedConsumesCheck();
+        ruleName = "OAR007";
+        check = new OAR007UndefinedResponseMediaTypeCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
@@ -43,6 +43,6 @@ public class OAR006UndefinedConsumesCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR006 - UndefinedConsumes - consumes section for OpenAPI 2 and requestBody.content section for OpenAPI 3 are mandatory", RuleType.BUG, Severity.BLOCKER, tags("format"));
+        assertRuleProperties("OAR007 - UndefinedResponseMediaType - APIs must define response media types supported by the API", RuleType.BUG, Severity.BLOCKER, tags("format"));
     }
 }

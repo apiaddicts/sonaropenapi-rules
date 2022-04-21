@@ -8,7 +8,7 @@
     "/pets": {
       "get": {
         "responses": {
-          "200": { # Noncompliant {{OAR010: Should produce a default mime type}}
+          "200": { # Noncompliant {{OAR010: Should indicate the default response media type}}
             "description": "Ok"
           }
         }
