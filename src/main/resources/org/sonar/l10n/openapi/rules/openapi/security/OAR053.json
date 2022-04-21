@@ -1,5 +1,5 @@
 {
-  "title": "OAR053 - ResponseHeaders - Required and allowed response headers",
+  "title": "OAR053 - ResponseHeaders - There are mandatory response headers and others that are not allowed",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {

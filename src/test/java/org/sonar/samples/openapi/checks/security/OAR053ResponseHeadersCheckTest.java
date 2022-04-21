@@ -29,15 +29,16 @@ public class OAR053ResponseHeadersCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(4);
+        assertNumberOfParameters(5);
         assertParameterProperties("mandatory-headers", "X-Trace-ID", RuleParamType.STRING);
         assertParameterProperties("allowed-headers", "idCorrelacion, X-CorrelacionId, X-Global-Trasaction-Id, x-power-by, X-Trace-ID", RuleParamType.STRING);
         assertParameterProperties("included-response-codes", "*", RuleParamType.STRING);
         assertParameterProperties("excluded-response-codes", "204", RuleParamType.STRING);
+        assertParameterProperties("path-exclusions", "/status", RuleParamType.STRING);
     }
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR053 - ResponseHeaders - Required and allowed response headers", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR053 - ResponseHeaders - There are mandatory response headers and others that are not allowed", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
     }
 }

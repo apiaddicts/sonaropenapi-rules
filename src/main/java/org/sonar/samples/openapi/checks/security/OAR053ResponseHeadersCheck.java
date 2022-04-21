@@ -9,6 +9,8 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +27,7 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
     private static final String ALLOWED_HEADERS = "idCorrelacion, X-CorrelacionId, X-Global-Trasaction-Id, x-power-by, X-Trace-ID";
     private static final String INCLUDED_RESPONSE_CODES = "*";
     private static final String EXCLUDED_RESPONSE_CODES = "204";
+    private static final String DEFAULT_EXCLUSION = "/status";
 
     @RuleProperty(
             key = "mandatory-headers",
@@ -53,11 +56,19 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
             defaultValue = EXCLUDED_RESPONSE_CODES
     )
     private String excludedResponseCodesStr = EXCLUDED_RESPONSE_CODES;
+
+    @RuleProperty(
+            key = "path-exclusions",
+            description = "List of explicit paths to exclude from this rule.",
+            defaultValue = DEFAULT_EXCLUSION
+    )
+    private String exclusionStr = DEFAULT_EXCLUSION;
     
     private Set<String> mandatoryHeaders = new HashSet<>();
     private Set<String> allowedHeaders = new HashSet<>();
     private Set<String> includedResponseCodes = new HashSet<>();
     private Set<String> excludedResponseCodes = new HashSet<>();
+    private Set<String> exclusion;
 
     @Override
     protected void visitFile(JsonNode root) {
@@ -65,19 +76,29 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
         if (!allowedHeadersStr.trim().isEmpty()) allowedHeaders.addAll(Stream.of(allowedHeadersStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         if (!includedResponseCodesStr.trim().isEmpty()) includedResponseCodes.addAll(Stream.of(includedResponseCodesStr.split(",")).map(code -> code.toLowerCase().trim()).collect(Collectors.toSet()));
         if (!excludedResponseCodesStr.trim().isEmpty()) excludedResponseCodes.addAll(Stream.of(excludedResponseCodesStr.split(",")).map(code -> code.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (!exclusionStr.trim().isEmpty()) exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
     }
 
 	@Override
-	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.RESPONSES, OpenApi3Grammar.RESPONSES);
-	}
+    public Set<AstNodeType> subscribedKinds() {
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+    }
 
 	@Override
 	public void visitNode(JsonNode node) {
-        visitResponsesNode(node);
+        visitPathNode(node);
     }
-    
-    private void visitResponsesNode(JsonNode node) {
+
+    private void visitPathNode(JsonNode node) {
+        String path = node.key().getTokenValue();
+        if (exclusion.contains(path)) return;
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
+        for (JsonNode operationNode : operationNodes) {
+            visitResponsesNode(operationNode.at("/responses"));
+        }
+    }
+
+	private void visitResponsesNode(JsonNode node) {
         List<JsonNode> allResponses = node.properties().stream().collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
             String statusCode = responseNode.key().getTokenValue();
@@ -102,7 +123,7 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
         for (JsonNode nodeName : headerNameNodes) {
             String headerName = nodeName.key().getTokenValue().toLowerCase().trim();
             if (allowedHeaders != null && !allowedHeaders.isEmpty() && !allowedHeaders.contains(headerName)) {
-                addIssue(KEY, translate("generic.not-allowed-header"), nodeName.value());
+                addIssue(KEY, translate("generic.not-allowed-header"), nodeName.key());
             }
         }
 	}
