@@ -29,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/definitions/pet"
+                $ref: "#/components/schemas/pet"
         default:
           $ref: "#/components/responses/server_error_response"
 
@@ -60,7 +60,7 @@ components:
         pets:
           type: array
           items:
-            $ref: '#/definitions/pet'
+            $ref: '#/components/schemas/pet'
   responses:
     server_error_response: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
       description: Default error response

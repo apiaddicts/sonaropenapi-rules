@@ -46,7 +46,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/pet"
+                  "$ref": "#/components/schemas/pet"
                 }
               }
             }
@@ -93,7 +93,7 @@
           "pets": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/pet"
+              "$ref": "#/components/schemas/pet"
             }
           }
         }
