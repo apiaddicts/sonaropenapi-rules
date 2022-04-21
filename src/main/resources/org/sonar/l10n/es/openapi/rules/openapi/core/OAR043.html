@@ -1,5 +1,29 @@
 <p>El archivo con la especificación OpenAPI no puede contener líneas vacías, esto impedirá su análisis.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "title": "Ejemplo de API", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/clientes": {
+            "get": {
+                "summary": "Obtenci\u00f3n de una colecci\u00f3n de clientes", 
+                "description": "Permite obtener una colecci\u00f3n de clientes.\nPor ejemplo: /usuarios o /expedientes.\nPuede admitir cabeceras, *query parameters* y el objeto $filter en el body.\n\n**Scope Oauth:** clientes_sc_consulta\n", 
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info: 
@@ -27,6 +51,30 @@ paths:
           description: OK
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "title": "Ejemplo de API", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/clientes": {
+            "get": {
+                "summary": "Obtenci\u00f3n de una colecci\u00f3n de clientes", 
+                "description": "Permite obtener una colecci\u00f3n de clientes.\nPor ejemplo: /usuarios o /expedientes.\nPuede admitir cabeceras, *query parameters* y el objeto $filter en el body.\n**Scope Oauth:** clientes_sc_consulta\n", 
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info: 
@@ -50,6 +98,30 @@ paths:
           description: OK
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.1", 
+    "info": {
+        "title": "Ejemplo de API", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/clientes": {
+            "get": {
+                "summary": "Obtenci\u00f3n de una colecci\u00f3n de clientes", 
+                "description": "Permite obtener una colecci\u00f3n de clientes.\nPor ejemplo: /usuarios o /expedientes.\nPuede admitir cabeceras, *query parameters* y el objeto $filter en el body.\n\n**Scope Oauth:** clientes_sc_consulta\n", 
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 
@@ -74,6 +146,30 @@ paths:
           description: OK
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.1", 
+    "info": {
+        "title": "Ejemplo de API", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/clientes": {
+            "get": {
+                "summary": "Obtenci\u00f3n de una colecci\u00f3n de clientes", 
+                "description": "Permite obtener una colecci\u00f3n de clientes.\nPor ejemplo: /usuarios o /expedientes.\nPuede admitir cabeceras, *query parameters* y el objeto $filter en el body.\n**Scope Oauth:** clientes_sc_consulta\n", 
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:

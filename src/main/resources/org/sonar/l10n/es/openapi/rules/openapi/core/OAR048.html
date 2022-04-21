@@ -1,5 +1,45 @@
 <p>Puede haber como máximo un parámetro de tipo body en cada operación. Esta violación se aplica a OpenAPI 2 solamente.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "version": "1.0.0", 
+        "title": "Swagger Petstore"
+    }, 
+    "paths": {
+        "/pets": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body", 
+                        "name": "someParam", 
+                        "required": true, 
+                        "schema": {
+                            "type": "string"
+                        }
+                    }, 
+                    {
+                        "in": "body", 
+                        "name": "otherParam", 
+                        "required": true, 
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ], 
+                "responses": {
+                    "default": {
+                        "description": "the default response"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -24,6 +64,46 @@ paths:
           description: the default response
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "version": "1.0.0", 
+        "title": "Swagger Petstore"
+    }, 
+    "paths": {
+        "/pets": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "body", 
+                        "name": "someParam", 
+                        "required": true, 
+                        "schema": {
+                            "type": "string"
+                        }
+                    }, 
+                    {
+                        "in": "query", 
+                        "name": "otherParam", 
+                        "required": true, 
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ], 
+                "responses": {
+                    "default": {
+                        "description": "the default response"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:

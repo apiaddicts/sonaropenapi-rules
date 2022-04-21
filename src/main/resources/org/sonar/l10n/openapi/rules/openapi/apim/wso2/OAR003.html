@@ -1,9 +1,23 @@
 <p>A description can help other developers to understand the correct use of the scope.</p>
-<h2>Normativa - Definición de APIs</h2>
-<ul>
-  <li><b>NORMA</b>: Definición API - Nomenclatura.10</li>
-</ul>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "x-wso2-security": {
+        "apim": {
+            "x-wso2-scopes": [
+                {
+                    "name": "read", 
+                    "roles": "READ_ROLE", 
+                    "key": "read"
+                }
+            ]
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 x-wso2-security:
@@ -14,6 +28,25 @@ x-wso2-security:
       key: read
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "x-wso2-security": {
+        "apim": {
+            "x-wso2-scopes": [
+                {
+                    "name": "read", 
+                    "roles": "READ_ROLE", 
+                    "key": "read", 
+                    "description": "Allows users to read data"
+                }
+            ]
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 x-wso2-security:
@@ -25,6 +58,24 @@ x-wso2-security:
       description: Allows users to read data
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.0", 
+    "x-wso2-security": {
+        "apim": {
+            "x-wso2-scopes": [
+                {
+                    "name": "read", 
+                    "roles": "READ_ROLE", 
+                    "key": "read"
+                }
+            ]
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 x-wso2-security:
@@ -35,6 +86,25 @@ x-wso2-security:
       key: read
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.0", 
+    "x-wso2-security": {
+        "apim": {
+            "x-wso2-scopes": [
+                {
+                    "name": "read", 
+                    "roles": "READ_ROLE", 
+                    "key": "read", 
+                    "description": "Allows users to read data"
+                }
+            ]
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 x-wso2-security:
