@@ -72,8 +72,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi2Grammar.PATH, OpenApi3Grammar.PARAMETER,
-                OpenApi3Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
     }
 
     @Override
@@ -82,18 +81,17 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
             visitPathV2Node(node);
         } else if (node.getType() == OpenApi3Grammar.PATH) {
             visitPathV3Node(node);
-        } else {
-            visitParameterNode(node);
         }
     }
 
     private void visitPathV2Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        if (exclusion.contains(path) || mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
+        if (exclusion.contains(path)) return;
         Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             JsonNode parametersNode = operationNode.get("parameters");
             List<String> headerNames = listHeaderParameters(parametersNode);
+            if (mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
             if (!headerNames.containsAll(mandatoryHeaders)) {
                 addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), operationNode.key());
             }
@@ -102,7 +100,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     private void visitPathV3Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        if (exclusion.contains(path) || mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
+        if (exclusion.contains(path)) return;
         JsonNode parametersInPathNode = node.get("parameters");
         List<String> headerNamesInPath = listHeaderParameters(parametersInPathNode);
         Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
@@ -110,6 +108,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
             JsonNode parametersInOperationNode = operationNode.get("parameters");
             List<String> headerNamesInOperation = listHeaderParameters(parametersInOperationNode);
             headerNamesInOperation.addAll(headerNamesInPath);
+            if (mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
             if (!headerNamesInOperation.containsAll(mandatoryHeaders)) {
                 addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), operationNode.key());
             }
@@ -123,6 +122,9 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
         for (JsonNode headerParameterNode : headerParametersNodes) {
             JsonNode headerNameNode = headerParameterNode.resolve().get("name");
             String headerName = headerNameNode.getTokenValue().toLowerCase().trim();
+            if (!allowedHeaders.contains(headerName) || forbiddenHeaders.contains(headerName)) {
+                addIssue(KEY, translate("generic.not-allowed-header"), headerNameNode.value());
+            }
             JsonNode requiredProperty = headerParameterNode.resolve().get("required");
             if (mandatoryHeaders != null && !mandatoryHeaders.isEmpty() && mandatoryHeaders.contains(headerName)
                 && ( requiredProperty.isMissing() || requiredProperty.isNull() || !Boolean.parseBoolean(requiredProperty.getTokenValue()) )
@@ -131,15 +133,6 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
             }
         }
         return headerParametersNodes.stream().map(headerNode -> headerNode.resolve().get("name").getTokenValue().toLowerCase().trim()).collect(Collectors.toList());
-    }
-
-    private void visitParameterNode(JsonNode node) {
-        if (!"header".equals(node.get("in").getTokenValue())) return;
-        JsonNode nodeName = node.get("name");
-        String headerName = nodeName.getTokenValue().toLowerCase().trim();
-        if (!allowedHeaders.contains(headerName) || forbiddenHeaders.contains(headerName)) {
-            addIssue(KEY, translate("generic.not-allowed-header"), nodeName.value());
-        }
     }
 
     private boolean isHeaderParam(JsonNode n) {

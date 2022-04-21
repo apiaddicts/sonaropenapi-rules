@@ -29,7 +29,7 @@ public class OAR018ResourcesByVerbCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR018 - ResourcesByVerb - Resource path not encouraged", RuleType.BUG, Severity.MAJOR, tags("resources"));
+        assertRuleProperties("OAR018 - ResourcesByVerb - Operation not recommended for resource path", RuleType.BUG, Severity.MAJOR, tags("resources"));
     }
 
     @Override

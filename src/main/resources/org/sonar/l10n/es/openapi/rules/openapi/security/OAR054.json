@@ -1,5 +1,5 @@
 {
-  "title": "OAR054 - Host - Value of 'host' must be compliant with the standard",
+  "title": "OAR054 - Host - El host debe cumplir con el estándar",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {

@@ -8,7 +8,7 @@ paths:
       responses:
         201:
           description: Created
-          headers: # Noncompliant {{OAR027: Location header is required in POST response with 201 code}}
+          headers: # Noncompliant {{OAR027: Location header is required in responses with code 201 from POST operations}}
             X-Location:
               schema:
                 type: string

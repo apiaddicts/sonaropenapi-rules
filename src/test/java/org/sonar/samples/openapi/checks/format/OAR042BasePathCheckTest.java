@@ -68,6 +68,6 @@ public class OAR042BasePathCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR042 - BasePath - Value of 'basePath' must be compliant with the standard", RuleType.BUG, Severity.CRITICAL, tags("format"));
+        assertRuleProperties("OAR042 - BasePath - Base path must be compliant with the standard", RuleType.BUG, Severity.CRITICAL, tags("format"));
     }
 }

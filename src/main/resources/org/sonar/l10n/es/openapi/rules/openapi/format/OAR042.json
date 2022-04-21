@@ -1,5 +1,5 @@
 {
-  "title": "OAR042 - BasePath - El valor de 'basePath' debe cumplir con el estandar",
+  "title": "OAR042 - BasePath - La ruta base debe cumplir con el estándar",
   "type": "BUG",
   "status": "ready",
   "remediation": {

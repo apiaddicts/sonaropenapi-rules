@@ -6,5 +6,5 @@ paths:
   /pets:
     post:
       responses:
-        201: # Noncompliant {{OAR027: Location header is required in POST response with 201 code}}
+        201: # Noncompliant {{OAR027: Location header is required in responses with code 201 from POST operations}}
           description: Created

@@ -35,6 +35,6 @@ public class OAR054HostCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR054 - Host - Value of 'host' must be compliant with the standard", RuleType.VULNERABILITY, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR054 - Host - Host must be compliant with the standard", RuleType.VULNERABILITY, Severity.BLOCKER, tags("vulnerability"));
     }
 }

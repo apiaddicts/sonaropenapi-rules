@@ -1,5 +1,5 @@
 {
-  "title": "OAR039 - StandardResponseCodes - Responses must be compliant with the standard",
+  "title": "OAR039 - StandardResponseCodes - Los códigos de respuesta deben definirse de acuerdo con el estándar",
   "type": "BUG",
   "status": "ready",
   "remediation": {

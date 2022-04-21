@@ -12,15 +12,15 @@ paths:
       responses:
         200:
           description: Ok
-    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources}}
+    put: # Noncompliant {{OAR018: Operation not recommended for resource path: PUT /resources}}
       responses:
         200:
           description: Ok
-    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources}}
+    patch: # Noncompliant {{OAR018: Operation not recommended for resource path: PATCH /resources}}
       responses:
         200:
           description: Ok
-    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources}}
+    delete: # Noncompliant {{OAR018: Operation not recommended for resource path: DELETE /resources}}
       responses:
         200:
           description: Ok
@@ -30,7 +30,7 @@ paths:
       responses:
         200:
           description: Ok
-    post: # Noncompliant {{OAR018: Resource path not encouraged: POST /resources/{r_id}}}
+    post: # Noncompliant {{OAR018: Operation not recommended for resource path: POST /resources/{r_id}}}
       responses:
         200:
           description: Ok
@@ -48,7 +48,7 @@ paths:
           description: Ok
 
   /resources/get:
-    get: # Noncompliant {{OAR018: Resource path not encouraged: GET /resources/get}}
+    get: # Noncompliant {{OAR018: Operation not recommended for resource path: GET /resources/get}}
       responses:
         200:
           description: Ok
@@ -56,21 +56,21 @@ paths:
       responses:
         200:
           description: Ok
-    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources/get}}
+    put: # Noncompliant {{OAR018: Operation not recommended for resource path: PUT /resources/get}}
       responses:
         200:
           description: Ok
-    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources/get}}
+    patch: # Noncompliant {{OAR018: Operation not recommended for resource path: PATCH /resources/get}}
       responses:
         200:
           description: Ok
-    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources/get}}
+    delete: # Noncompliant {{OAR018: Operation not recommended for resource path: DELETE /resources/get}}
       responses:
         200:
           description: Ok
 
   /resources/delete:
-    get: # Noncompliant {{OAR018: Resource path not encouraged: GET /resources/delete}}
+    get: # Noncompliant {{OAR018: Operation not recommended for resource path: GET /resources/delete}}
       responses:
         200:
           description: Ok
@@ -78,15 +78,15 @@ paths:
       responses:
         200:
           description: Ok
-    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources/delete}}
+    put: # Noncompliant {{OAR018: Operation not recommended for resource path: PUT /resources/delete}}
       responses:
         200:
           description: Ok
-    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources/delete}}
+    patch: # Noncompliant {{OAR018: Operation not recommended for resource path: PATCH /resources/delete}}
       responses:
         200:
           description: Ok
-    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources/delete}}
+    delete: # Noncompliant {{OAR018: Operation not recommended for resource path: DELETE /resources/delete}}
       responses:
         200:
           description: Ok
@@ -100,15 +100,15 @@ paths:
       responses:
         200:
           description: Ok
-    put: # Noncompliant {{OAR018: Resource path not encouraged: PUT /resources/{r_id}/other}}
+    put: # Noncompliant {{OAR018: Operation not recommended for resource path: PUT /resources/{r_id}/other}}
       responses:
         200:
           description: Ok
-    patch: # Noncompliant {{OAR018: Resource path not encouraged: PATCH /resources/{r_id}/other}}
+    patch: # Noncompliant {{OAR018: Operation not recommended for resource path: PATCH /resources/{r_id}/other}}
       responses:
         200:
           description: Ok
-    delete: # Noncompliant {{OAR018: Resource path not encouraged: DELETE /resources/{r_id}/other}}
+    delete: # Noncompliant {{OAR018: Operation not recommended for resource path: DELETE /resources/{r_id}/other}}
       responses:
         200:
           description: Ok

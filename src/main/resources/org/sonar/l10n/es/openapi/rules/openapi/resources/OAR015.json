@@ -1,5 +1,5 @@
 {
-  "title": "OAR015 - ResourceLevelMax - El nivel del path debería ser menor",
+  "title": "OAR015 - ResourceLevelMax - El nivel de profundidad de los recursos debe ser menor",
   "type": "BUG",
   "status": "ready",
   "remediation": {
