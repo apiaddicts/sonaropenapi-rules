@@ -40,11 +40,11 @@ public class OAR012ParameterNamingConventionCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("default-naming-convention", "snake_case", RuleParamType.STRING);
+        assertParameterProperties("naming-convention", "snake_case", RuleParamType.STRING);
     }
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR012 - ParameterNamingConvention - Path parameters, query parameters and property names name must be in camelCase", RuleType.BUG, Severity.MINOR, tags("format"));
+        assertRuleProperties("OAR012 - ParameterNamingConvention - Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention", RuleType.BUG, Severity.MINOR, tags("format"));
     }
 }

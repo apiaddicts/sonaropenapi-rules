@@ -6,7 +6,7 @@ paths:
   /pets:
     get:
       responses:
-        206: # Noncompliant {{OAR031: Response must have an examples definition}}
+        206: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
           description: Pet list
           content:
             application/json:
@@ -16,7 +16,7 @@ paths:
           $ref: "#/components/responses/server_error_response"
   /pets/{id}:
     parameters:
-      - in: query
+      - in: query # Noncompliant {{OAR031: Parameters must have one or more examples defined}}
         name: $start
         schema:
           type: integer
@@ -24,19 +24,19 @@ paths:
       parameters:
         - $ref: "#/components/parameters/id"
       responses:
-        200: # Noncompliant {{OAR031: Response must have an examples definition}}
+        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
           description: One pet
           content:
             application/json:
               schema:
-                $ref: "#/definitions/pet"
+                $ref: "#/components/schemas/pet"
         default:
           $ref: "#/components/responses/server_error_response"
 
 components:
   parameters:
     id:
-      in: path
+      in: path # Noncompliant {{OAR031: Parameters must have one or more examples defined}}
       name: id
       schema:
         type: integer
@@ -48,26 +48,26 @@ components:
     pet:
       type: object
       properties:
-        name: # Noncompliant {{OAR031: Basic properties must have an example}}
+        name: # Noncompliant {{OAR031: Properties must have an example defined}}
           type: string
-        type: # Noncompliant {{OAR031: Basic properties must have an example}}
+        type: # Noncompliant {{OAR031: Properties must have an example defined}}
           type: string
     pets:
       type: object
       properties:
-        size: # Noncompliant {{OAR031: Basic properties must have an example}}
+        size: # Noncompliant {{OAR031: Properties must have an example defined}}
           type: integer
         pets:
           type: array
           items:
-            $ref: '#/definitions/pet'
+            $ref: '#/components/schemas/pet'
   responses:
-    server_error_response: # Noncompliant {{OAR031: Response must have an examples definition}}
+    server_error_response: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
       description: Default error response
       content:
         application/json:
           schema:
             type: object
             properties:
-              error: # Noncompliant {{OAR031: Basic properties must have an example}}
+              error: # Noncompliant {{OAR031: Properties must have an example defined}}
                 type: string

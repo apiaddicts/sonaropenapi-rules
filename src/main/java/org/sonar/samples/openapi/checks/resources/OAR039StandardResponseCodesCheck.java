@@ -27,11 +27,11 @@ public class OAR039StandardResponseCodesCheck extends AbstractVerbPathCheck {
     private static final String PARTIAL_CONTENT_CODE = "206";
     private static final String BAD_REQUEST_CODE = "400";
     private static final String NOT_FOUND_CODE = "404";
-    private static final String PAYLOAD_TOO_LARGE = "413";
+    //private static final String PAYLOAD_TOO_LARGE = "413";
     private static final String UNSUPPORTED_MEDIA_TYPE = "415";
     private static final String INTERNAL_SERVER_ERROR = "500";
     private static final String SERVICE_UNAVAILABLE = "503";
-    private static final String GATEWAY_TIMEOUT = "504";
+    //private static final String GATEWAY_TIMEOUT = "504";
 
     private static final String COMMON_CODES = INTERNAL_SERVER_ERROR + VALUE_SEPARATOR + SERVICE_UNAVAILABLE;
     private static final String OPS_WITH_BODY_CODES = BAD_REQUEST_CODE + VALUE_SEPARATOR + UNSUPPORTED_MEDIA_TYPE;

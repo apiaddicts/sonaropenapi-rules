@@ -1,5 +1,5 @@
 {
-  "title": "OAR035 - AuthorizationResponses - Las respuestas en una especificación con esquemas de seguridad definidios, deben definir códigos de respuesta de autorización",
+  "title": "OAR035 - AuthorizationResponses - Cuando se definen esquemas de seguridad, se deben definir códigos de respuesta de autorización",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {

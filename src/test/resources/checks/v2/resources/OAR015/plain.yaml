@@ -53,17 +53,17 @@ paths:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six: # Noncompliant {{OAR015: Path level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six: # Noncompliant {{OAR015: Resources depth level should be smaller}}
     get:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six/{six}: # Noncompliant {{OAR015: Path level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six/{six}: # Noncompliant {{OAR015: Resources depth level should be smaller}}
     get:
       responses:
         default:
           description: Ok
-  /one/two/three/four/five/six/seven: # Noncompliant {{OAR015: Path level should be smaller}}
+  /one/two/three/four/five/six/seven: # Noncompliant {{OAR015: Resources depth level should be smaller}}
     get:
       responses:
         default:

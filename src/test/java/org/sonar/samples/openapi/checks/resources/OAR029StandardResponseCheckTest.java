@@ -17,8 +17,8 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
         v3Path = getV3Path("resources");
     }
     
-    /* MD
-    @Test
+    //MD
+    /*@Test
     public void verifyInV2() {
         verifyV2("valid-md");
     }
@@ -56,10 +56,50 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV2WithoutRequiredFields() {
         verifyV2("without-required-fields-md");
+    }
+
+    @Test
+    public void verifyInV3() {
+        verifyV3("valid-md");
+    }
+
+    @Test
+    public void verifyInV3AllOf() {
+        verifyV3("valid-all-of-md");
+    }
+
+    @Test
+    public void verifyInV3WithoutData() {
+        verifyV3("without-data-md");
+    }
+
+    @Test
+    public void verifyInV3WithoutResult() {
+        verifyV3("without-result-md.yaml");
+    }
+
+    @Test
+    public void verifyInV3WithResultWrongType() {
+        verifyV3("with-result-wrong-type-md");
+    }
+
+    @Test
+    public void verifyInV3WithResultWithoutProperties() {
+        verifyV3("with-result-without-properties-md");
+    }
+
+    @Test
+    public void verifyInV3WithResultWithPropertiesWrongType() {
+        verifyV3("with-result-with-properties-wrong-type-md");
+    }
+
+    @Test
+    public void verifyInV3WithoutRequiredFields() {
+        verifyV3("without-required-fields-md");
     }*/
 
-    /* RIM
-    @Test
+    //RIM
+    /*@Test
     public void verifyInV2() {
         verifyV2("valid-r");
     }
@@ -116,7 +156,7 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
 
     @Test
     public void verifyInV3WithErrorWithoutProperties() {
-        verifyV3("with-error-without-properties-r");
+        verifyV3("with-error-without-properties-r.yaml");
     }
 
     @Test
@@ -129,6 +169,7 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
         verifyV3("without-required-fields-r");
     }*/
 
+    //CloudAppi
     @Test
     public void verifyInV2() {
         verifyV2("valid");
@@ -213,7 +254,7 @@ public class OAR029StandardResponseCheckTest extends BaseCheckTest {
     public void verifyParameters() {
         assertNumberOfParameters(2);
         //MD
-        //assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"result\":{\"type\":\"object\",\"properties\":{\"http_code\":{\"type\":\"integer\"},\"status\":{\"type\":\"boolean\"},\"trace_id\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"name\",\"value\"]}}},\"required\":[\"status\",\"http_code\",\"trace_id\"]},\"data\":{\"type\":\"any\"}},\"requiredOnError\":[],\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"result\"],\"dataProperty\":\"data\"}", RuleParamType.STRING);
+        //assertParameterProperties("response-schema", "{\"type\": \"object\",\"properties\": {\"result\": {\"type\": \"object\",\"properties\": {\"http_code\": {\"type\": \"integer\"},\"status\": {\"type\": \"boolean\"},\"trace_id\": {\"type\": \"string\"},\"errors\": {\"type\": \"array\",\"items\": {\"type\": \"object\",\"properties\": {\"code\": {\"type\": \"integer\"},\"message\": {\"type\": \"string\"}},\"required\": [\"code\",\"message\"]}}},\"required\": [\"status\",\"http_code\",\"trace_id\"]},\"data\": {\"type\": \"any\"}},\"requiredOnError\": [],\"requiredOnSuccess\": [\"data\"],\"requiredAlways\": [\"result\"],\"dataProperty\": \"data\"}", RuleParamType.STRING);
         //RIM
         //assertParameterProperties("response-schema", "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}", RuleParamType.STRING);
         //Cloudappi

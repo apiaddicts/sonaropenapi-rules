@@ -59,7 +59,7 @@
         }
       }
     },
-    "/one/{one}/two/{two}/three/{three}/four": { # Noncompliant {{OAR014: Path level should be smaller}}
+    "/one/{one}/two/{two}/three/{three}/four": { # Noncompliant {{OAR014: Resources depth level should be smaller}}
       "get": {
         "responses": {
           "default": {
@@ -68,7 +68,7 @@
         }
       }
     },
-    "/one/{one}/two/{two}/three/{three}/four/{four}": { # Noncompliant {{OAR014: Path level should be smaller}}
+    "/one/{one}/two/{two}/three/{three}/four/{four}": { # Noncompliant {{OAR014: Resources depth level should be smaller}}
       "get": {
         "responses": {
           "default": {
@@ -77,7 +77,7 @@
         }
       }
     },
-    "/one/{one}/two/{two}/three/{three}/four/{four}/five": { # Noncompliant {{OAR014: Path level should be smaller}}
+    "/one/{one}/two/{two}/three/{three}/four/{four}/five": { # Noncompliant {{OAR014: Resources depth level should be smaller}}
       "get": {
         "responses": {
           "default": {
@@ -86,7 +86,7 @@
         }
       }
     },
-    "/one/{one}/two/{two}/three/{three}/four/{four}/five/{five}": { # Noncompliant {{OAR014: Path level should be smaller}}
+    "/one/{one}/two/{two}/three/{three}/four/{four}/five/{five}": { # Noncompliant {{OAR014: Resources depth level should be smaller}}
       "get": {
         "responses": {
           "default": {

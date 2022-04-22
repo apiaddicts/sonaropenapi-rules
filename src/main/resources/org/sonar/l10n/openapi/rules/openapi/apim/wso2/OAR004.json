@@ -1,0 +1,15 @@
+{
+  "title": "OAR004 - ValidWso2ScopesRoles - WSO2 scope roles value is not valid",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "api-manager",
+    "vulnerability",
+    "wso2"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

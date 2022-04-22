@@ -1,5 +1,5 @@
 {
-  "title": "OAR001 - MandatoryHttpsProtocol - El esquema https es obligatorio",
+  "title": "OAR001 - MandatoryHttpsProtocol - El protocolo https es obligatorio",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {

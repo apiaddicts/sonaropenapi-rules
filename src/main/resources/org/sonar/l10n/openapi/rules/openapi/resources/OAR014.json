@@ -1,5 +1,5 @@
 {
-  "title": "OAR014 - ResourceLevelWithinNonSuggestedRangeCheck - Path level should be below the non-suggested range",
+  "title": "OAR014 - ResourceLevelWithinNonSuggestedRangeCheck - Resources depth level should be below the non-suggested range",
   "type": "BUG",
   "status": "ready",
   "remediation": {

@@ -14,7 +14,7 @@
         }
       }
     },
-    "/Pets": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+    "/Pets": { # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
       "get": {
         "responses": {
           "200": {
@@ -23,7 +23,7 @@
         }
       }
     },
-    "/PETS": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+    "/PETS": { # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
       "get": {
         "responses": {
           "200": {
@@ -41,7 +41,7 @@
         }
       }
     },
-    "/Pets/{id}": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+    "/Pets/{id}": { # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
       "get": {
         "responses": {
           "200": {
@@ -50,7 +50,7 @@
         }
       }
     },
-    "/PETS/{id}": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+    "/PETS/{id}": { # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
       "get": {
         "responses": {
           "200": {
@@ -68,7 +68,7 @@
         }
       }
     },
-    "/Pets/{id}/EXternal_INFO": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+    "/Pets/{id}/EXternal_INFO": { # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
       "get": {
         "responses": {
           "200": {
@@ -77,7 +77,7 @@
         }
       }
     },
-    "/PETS/{id}/externalInfo": { # Noncompliant {{OAR011: Non variable path parts must be in kebab-case}}
+    "/PETS/{id}/externalInfo": { # Noncompliant {{OAR011: The base path and resource names with more than two words must be compliant with the standard naming convention: kebab-case}}
       "get": {
         "responses": {
           "200": {

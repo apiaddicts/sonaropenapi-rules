@@ -74,6 +74,7 @@ components:
         type: integer
         format: int64
         maxLength: 22
+        example: 513168138
       description: Identificador del tipo de centro a obtener, actualizar o eliminar.
       required: true
 

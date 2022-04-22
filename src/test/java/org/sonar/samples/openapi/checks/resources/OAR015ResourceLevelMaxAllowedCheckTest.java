@@ -29,7 +29,7 @@ public class OAR015ResourceLevelMaxAllowedCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR015 - ResourceLevelMax - Path level should be smaller", RuleType.BUG, Severity.CRITICAL, tags("resources"));
+        assertRuleProperties("OAR015 - ResourceLevelMax - Resources depth level should be smaller", RuleType.BUG, Severity.CRITICAL, tags("resources"));
     }
 
     @Override

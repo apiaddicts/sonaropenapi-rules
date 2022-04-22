@@ -51,6 +51,44 @@
   </tbody>
 </table>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/customers/{customerId}": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "customerId", 
+                        "in": "path", 
+                        "required": true, 
+                        "type": "integer"
+                    }, 
+                    {
+                        "name": "body", 
+                        "in": "body", 
+                        "required": true, 
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ], 
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -74,6 +112,44 @@ paths:
           description: Ok
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/customers/{customerId}": {
+            "put": {
+                "parameters": [
+                    {
+                        "name": "customerId", 
+                        "in": "path", 
+                        "required": true, 
+                        "type": "integer"
+                    }, 
+                    {
+                        "name": "body", 
+                        "in": "body", 
+                        "required": true, 
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ], 
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -97,6 +173,53 @@ paths:
           description: Ok
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.1", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "servers": [
+        {
+            "url": "/"
+        }
+    ], 
+    "paths": {
+        "/customers/{customerId}": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "customerId", 
+                        "in": "path", 
+                        "required": true, 
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ], 
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }, 
+                    "required": true
+                }, 
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
@@ -124,6 +247,53 @@ paths:
           description: Ok
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.1", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "servers": [
+        {
+            "url": "/"
+        }
+    ], 
+    "paths": {
+        "/customers/{customerId}": {
+            "put": {
+                "parameters": [
+                    {
+                        "name": "customerId", 
+                        "in": "path", 
+                        "required": true, 
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ], 
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }, 
+                    "required": true
+                }, 
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:

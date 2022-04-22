@@ -111,7 +111,8 @@
           "maxLength": 22
         },
         "description": "Identificador del tipo de centro a obtener, actualizar o eliminar.",
-        "required": true
+        "required": true,
+        "example": 513168138
       }
     },
     "schemas": {

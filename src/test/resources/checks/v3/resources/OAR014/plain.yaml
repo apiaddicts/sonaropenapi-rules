@@ -18,12 +18,12 @@ paths:
       responses:
         default:
           description: Ok
-  /one/two/three/four: # Noncompliant {{OAR014: Path level should be smaller}}
+  /one/two/three/four: # Noncompliant {{OAR014: Resources depth level should be smaller}}
     get:
       responses:
         default:
           description: Ok
-  /one/two/three/four/five: # Noncompliant {{OAR014: Path level should be smaller}}
+  /one/two/three/four/five: # Noncompliant {{OAR014: Resources depth level should be smaller}}
     get:
       responses:
         default:

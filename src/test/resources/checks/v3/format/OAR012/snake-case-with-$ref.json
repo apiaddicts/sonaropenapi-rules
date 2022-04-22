@@ -8,14 +8,14 @@
     "parameters": {
       "petType": {
         "in": "path",
-        "name": "pet-Type", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        "name": "pet-Type", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         "schema": {
           "type": "integer"
         }
       },
       "pathParamOk": {
         "in": "path",
-        "name": "petId", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        "name": "petId", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         "schema": {
           "type": "integer"
         }
@@ -29,14 +29,14 @@
       },
       "pathParamWrong2": {
         "in": "path",
-        "name": "PET-ID", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        "name": "PET-ID", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         "schema": {
           "type": "integer"
         }
       },
       "queryParamOk": {
         "in": "query",
-        "name": "expandInfo", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        "name": "expandInfo", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         "schema": {
           "type": "integer"
         }
@@ -50,7 +50,7 @@
       },
       "queryParamWrong2": {
         "in": "query",
-        "name": "expand-info", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        "name": "expand-info", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         "schema": {
           "type": "integer"
         }
@@ -68,10 +68,10 @@
       "Pet": {
         "type": "object",
         "properties": {
-          "pet-type": { # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          "pet-type": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
             "type": "string"
           },
-          "petAge": { # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          "petAge": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
             "type": "number"
           },
           "pet_name": {
@@ -87,7 +87,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "petName": { # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+                "petName": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
                   "type": "string"
                 }
               }
@@ -104,7 +104,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "petName": { # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+                "petName": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
                   "type": "string"
                 }
               }
@@ -122,7 +122,7 @@
         },
         {
           "in": "path",
-          "name": "petName", # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          "name": "petName", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
           "schema": {
             "type": "string"
           }
@@ -189,7 +189,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "petName": { # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+                    "petName": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
                       "type": "string"
                     }
                   }

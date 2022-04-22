@@ -1,5 +1,5 @@
 {
-  "title": "OAR010 - ProducesDefaultMimeType - Should produce a default mime type",
+  "title": "OAR010 - DefaultResponseMediaType - Should indicate the default response media type",
   "type": "BUG",
   "status": "ready",
   "remediation": {

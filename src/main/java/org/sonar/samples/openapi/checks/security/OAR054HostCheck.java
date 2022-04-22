@@ -3,6 +3,7 @@ package org.sonar.samples.openapi.checks.security;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
@@ -18,6 +19,13 @@ public class OAR054HostCheck extends BaseCheck {
 	public static final String KEY = "OAR054";
     
     private static final String HOST_REGEX = "^((\\*|[\\w\\d]+(-[\\w\\d]+)*)\\.)*(cloudappi)(\\.net)$";
+
+    @RuleProperty(
+            key = "host-regex",
+            description = "Host regex.",
+            defaultValue = HOST_REGEX
+    )
+    private String hostRegex = HOST_REGEX;
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
@@ -55,7 +63,7 @@ public class OAR054HostCheck extends BaseCheck {
     }
     
     private void validateHost(String host, JsonNode node) {
-        if (!host.matches(HOST_REGEX)){
+        if (!host.matches(hostRegex)){
             addIssue(KEY, translate("OAR054.host-format"), node.value());
         }
     }

@@ -19,7 +19,7 @@
     },
     "/owners": {
       "get": {
-        "produces": [ # Noncompliant {{OAR010: Should produce a default mime type}}
+        "produces": [ # Noncompliant {{OAR010: Should indicate the default response media type}}
           "application/xml"
         ],
         "responses": {

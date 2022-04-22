@@ -11,7 +11,7 @@
           "204": {
             "description": "No content"
           },
-          "206" : { # Noncompliant {{OAR031: Response must have an examples definition}}
+          "206" : { # Noncompliant {{OAR031: Responses must have one or more examples defined}}
             "description" : "Pet list",
             "schema" : {
               "$ref" : "#/definitions/pets"
@@ -29,7 +29,7 @@
           "$ref" : "#/parameters/id"
         } ],
         "responses" : {
-          "200" : { # Noncompliant {{OAR031: Response must have an examples definition}}
+          "200" : { # Noncompliant {{OAR031: Responses must have one or more examples defined}}
             "description" : "One pet",
             "schema" : {
               "$ref" : "#/definitions/pet"
@@ -84,7 +84,7 @@
     }
   },
   "responses" : {
-    "server_error_response" : { # Noncompliant {{OAR031: Response must have an examples definition}}
+    "server_error_response" : { # Noncompliant {{OAR031: Responses must have one or more examples defined}}
       "description" : "Default error response",
       "schema" : {
         "type" : "object",

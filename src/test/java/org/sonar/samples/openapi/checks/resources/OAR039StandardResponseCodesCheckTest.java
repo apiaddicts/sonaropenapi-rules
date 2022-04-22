@@ -39,7 +39,7 @@ public class OAR039StandardResponseCodesCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR039 - StandardResponseCodes - Responses must be compliant with the standard", RuleType.BUG, Severity.MAJOR, tags("resources"));
+        assertRuleProperties("OAR039 - StandardResponseCodes - Response codes must be defined according to the standard", RuleType.BUG, Severity.MAJOR, tags("resources"));
     }
 
     @Override

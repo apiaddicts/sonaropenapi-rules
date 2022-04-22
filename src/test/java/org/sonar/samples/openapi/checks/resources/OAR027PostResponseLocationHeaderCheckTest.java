@@ -68,7 +68,7 @@ public class OAR027PostResponseLocationHeaderCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR027 - PostResponseLocationHeader - Location header is required in POST response with 201 code", RuleType.BUG, Severity.MAJOR, tags("resources"));
+        assertRuleProperties("OAR027 - PostResponseLocationHeader - Location header is required in responses with code 201 from POST operations", RuleType.BUG, Severity.MAJOR, tags("resources"));
     }
 
 }

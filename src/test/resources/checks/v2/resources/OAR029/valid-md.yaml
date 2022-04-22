@@ -18,7 +18,6 @@ paths:
             $ref: '#/definitions/response'
         default:
           description: Unknown
-
 definitions:
   response:
     type: object
@@ -32,9 +31,6 @@ definitions:
             type: array
             items:
               type: string
-    required:
-      - data
-      - result
   standard_response:
     type: object
     properties:
@@ -49,6 +45,14 @@ definitions:
             type: array
             items:
               type: object
+              properties: 
+                code:
+                  type: integer
+                message:
+                  type: string
+              required:
+                - code
+                - message
           trace_id:
             type: string
         required:

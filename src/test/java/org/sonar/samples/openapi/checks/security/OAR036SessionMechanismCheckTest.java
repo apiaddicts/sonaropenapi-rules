@@ -38,6 +38,6 @@ public class OAR036SessionMechanismCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR036 - SessionMechanismCheck - Session mechanisms are forbidden", RuleType.BUG, Severity.BLOCKER, tags("vulnerability"));
+        assertRuleProperties("OAR036 - SessionMechanismCheck - Session mechanisms are forbidden", RuleType.VULNERABILITY, Severity.BLOCKER, tags("vulnerability"));
     }
 }

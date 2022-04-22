@@ -46,6 +46,14 @@ definitions:
             type: array
             items:
               type: object
+              properties: 
+                code:
+                  type: integer
+                message:
+                  type: string
+              required:
+                - code
+                - message
           trace_id:
             type: string
         required: # Noncompliant {{OAR029: The following fields must be required: http_code, status, trace_id}}

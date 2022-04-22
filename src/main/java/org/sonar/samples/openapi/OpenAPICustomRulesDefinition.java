@@ -1,15 +1,23 @@
 package org.sonar.samples.openapi;
 
+import org.sonar.api.ExtensionPoint;
+import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.scanner.ScannerSide;
+import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.samples.openapi.checks.RulesLists;
 import org.sonarsource.analyzer.commons.RuleMetadataLoader;
-
-import java.util.List;
+import org.sonarsource.api.sonarlint.SonarLintSide;
 
 /**
  * Declare rule metadata in server repository of rules.
  * This allows to list the rules in the page "Rules".
  */
+@ServerSide
+@SonarLintSide
+@ComputeEngineSide
+@ScannerSide
+@ExtensionPoint
 public class OpenAPICustomRulesDefinition implements RulesDefinition {
 	public static final String REPOSITORY_KEY = "openapi-custom";
 	private static final String REPOSITORY_NAME = "OpenAPI Custom";
@@ -18,6 +26,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
 	private static final String FORMAT_GROUP = "format";
 	private static final String RESOURCES_GROUP = "resources";
 	private static final String PARAMETERS_GROUP = "parameters";
+	private static final String APIM_WSO2_GROUP = "apim/wso2";
 	private static final String CORE_GROUP = "core";
 
 	@Override
@@ -31,6 +40,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
 		new RuleMetadataLoader(getPath(RESOURCES_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getResourcesChecks());
 		new RuleMetadataLoader(getPath(PARAMETERS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getParametersChecks());
 		new RuleMetadataLoader(getPath(CORE_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getCoreChecks());
+		new RuleMetadataLoader(getPath(APIM_WSO2_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getWSO2Checks());
 		repository.done();
 	}
 

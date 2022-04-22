@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: Swagger Petstore
-schemes: # Noncompliant {{OAR001: Scheme https is mandatory}}
+schemes: # Noncompliant {{OAR001: Protocol https is mandatory}}
   - http
 paths:
   /pets: {}

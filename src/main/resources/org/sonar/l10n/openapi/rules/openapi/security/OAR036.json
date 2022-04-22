@@ -1,6 +1,6 @@
 {
   "title": "OAR036 - SessionMechanismCheck - Session mechanisms are forbidden",
-  "type": "BUG",
+  "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",

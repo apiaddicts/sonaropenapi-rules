@@ -1,0 +1,138 @@
+<h2><b>NORMA</b>: Definición API - Nomenclatura.10</h2>
+<p>
+  Los scopes disponibles se definen al final del documento de definición, a nivel raíz. Se definen mediante la siguiente estructura:
+</p>
+<h3>JSON</h3>
+<pre>
+{
+    "x-wso2-security": {
+        "apim": null, 
+        "x-wso2-scopes": [
+            {
+                "name": "Nombre_scope_1", 
+                "description": "", 
+                "key": "Etiqueta_scope_1", 
+                "roles": "Role_1, Role_2, \u2026, Role_n"
+            }, 
+            {
+                "name": "Nombre_scope_2&gt;", 
+                "description": "", 
+                "key": "Etiqueta_scope_2", 
+                "roles": "Role_1,Role_2,\u2026,Role_n"
+            }
+        ]
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+x-wso2-security:
+  apim:
+  x-wso2-scopes:
+    - name: Nombre_scope_1
+      description: ""
+      key: Etiqueta_scope_1
+      roles: "Role_1, Role_2, …, Role_n"
+    - name: Nombre_scope_2&gt;
+      description: ""
+      key: Etiqueta_scope_2
+      roles: "Role_1,Role_2,…,Role_n"
+</pre>
+<p>
+  Cada elemento del array x-wso2-scopes contiene los siguientes elementos:
+</p>
+<ul>
+  <li>name: El nombre que recibirá el scope.
+    <ul>
+      <li>La nomenclatura es {Código POAP del API}_sc_{nombre-descriptivo}</li>
+      <li>Por ejemplo: USUG-API_sc_user-scope</li>
+    </ul>
+  </li>
+  <li>description: Breve descripción del scope. Opcional.</li>
+  <li>key: Etiqueta del scope. Se recomienda que coincida con el nombre para evitar confusiones.</li>
+  <li>roles: Cadena con todos los roles asociados al scope separados por coma (se corresponde con los perfiles de cada Aplicación obtenidos de USUG).</li>
+</ul>
+<h2>Noncompliant</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "x-wso2-security": {
+        "apim": {
+            "x-wso2-scopes": [
+                {
+                    "name": "read", 
+                    "key": "read", 
+                    "roles": "READ_ROLE", 
+                    "description": "Allows users to view records"
+                }
+            ]
+        }
+    }, 
+    "paths": {
+        "/pets": {
+            "get": {
+                "x-scope": "read"
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+swagger: "2.0"
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+    - name: read
+      key: read
+      roles: READ_ROLE
+      description: Allows users to view records
+paths:
+  /pets:
+    get:
+      x-scope: read
+</pre>
+<h2>Compliant</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "x-wso2-security": {
+        "apim": {
+            "x-wso2-scopes": [
+                {
+                    "name": "read", 
+                    "key": "read", 
+                    "roles": "READ_ROLE", 
+                    "description": "Allows users to view records"
+                }
+            ]
+        }
+    }, 
+    "paths": {
+        "/pets": {
+            "get": {
+                "x-scope": "read", 
+                "x-aut-type": "Application &amp; Application User"
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+swagger: "2.0"
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+    - name: read
+      key: read
+      roles: READ_ROLE
+      description: Allows users to view records
+paths:
+  /pets:
+    get:
+      x-scope: read
+      x-aut-type: "Application &amp; Application User"
+</pre>

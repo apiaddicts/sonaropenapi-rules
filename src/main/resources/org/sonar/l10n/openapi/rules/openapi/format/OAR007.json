@@ -1,5 +1,5 @@
 {
-  "title": "OAR007 - UndefinedProduces - Section produces is mandatory",
+  "title": "OAR007 - UndefinedResponseMediaType - APIs must define response media types supported by the API",
   "type": "BUG",
   "status": "ready",
   "remediation": {

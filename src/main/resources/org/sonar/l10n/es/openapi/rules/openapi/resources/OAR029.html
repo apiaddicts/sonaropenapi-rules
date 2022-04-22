@@ -1,10 +1,36 @@
-<h2>Normativa - Definición de APIs</h2>
-<ul>
-  <li><b>NORMA: </b>Definición API - Formatos</li>
-  <li><b>NORMA: </b>Definición API - Errores</li>
-</ul>
 <p>Es conveniente definir un formato único de respuesta que usarán todas las APIs de la organización.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "version": "1.0.0", 
+        "title": "Swagger Petstore"
+    }, 
+    "paths": {
+        "/endpoint": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }, 
+                    "204": {
+                        "description": "No content"
+                    }, 
+                    "400": {
+                        "description": "Not found"
+                    }, 
+                    "default": {
+                        "description": "Unknown"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -24,6 +50,112 @@ paths:
           description: Unknown
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "version": "1.0.0", 
+        "title": "Swagger Petstore"
+    }, 
+    "paths": {
+        "/endpoint": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Ok", 
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    }, 
+                    "204": {
+                        "description": "No content"
+                    }, 
+                    "400": {
+                        "description": "Error", 
+                        "schema": {
+                            "$ref": "#/definitions/response"
+                        }
+                    }, 
+                    "default": {
+                        "description": "Unknown"
+                    }
+                }
+            }
+        }
+    }, 
+    "definitions": {
+        "response": {
+            "type": "object", 
+            "allOf": [
+                {
+                    "$ref": "#/definitions/standard_response"
+                }
+            ], 
+            "properties": {
+                "data": {
+                    "type": "object", 
+                    "properties": {
+                        "tipos": {
+                            "type": "array", 
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }, 
+            "required": [
+                "data", 
+                "status"
+            ]
+        }, 
+        "standard_response": {
+            "type": "object", 
+            "properties": {
+                "status": {
+                    "type": "object", 
+                    "properties": {
+                        "http_status": {
+                            "type": "string"
+                        }, 
+                        "code": {
+                            "type": "integer"
+                        }, 
+                        "errors": {
+                            "type": "array", 
+                            "items": {
+                                "type": "object", 
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }, 
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }, 
+                        "description": {
+                            "type": "string"
+                        }, 
+                        "internal_code": {
+                            "type": "string"
+                        }
+                    }, 
+                    "required": [
+                        "http_status", 
+                        "code", 
+                        "description", 
+                        "errors"
+                    ]
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -91,6 +223,37 @@ definitions:
           - errors  
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.0", 
+    "info": {
+        "version": "1.0.0", 
+        "title": "Swagger Petstore"
+    }, 
+    "paths": {
+        "/endpoint": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }, 
+                    "204": {
+                        "description": "No content"
+                    }, 
+                    "400": {
+                        "description": "Not found"
+                    }, 
+                    "default": {
+                        "description": "Unknown"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: 3.0.0
 info:
@@ -110,6 +273,122 @@ paths:
           description: Unknown
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.0", 
+    "info": {
+        "version": "1.0.0", 
+        "title": "Swagger Petstore"
+    }, 
+    "paths": {
+        "/endpoint": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Ok", 
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }, 
+                    "204": {
+                        "description": "No content"
+                    }, 
+                    "400": {
+                        "description": "Error", 
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }, 
+                    "default": {
+                        "description": "Unknown"
+                    }
+                }
+            }
+        }
+    }, 
+    "components": {
+        "schemas": {
+            "response": {
+                "type": "object", 
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/standard_response"
+                    }
+                ], 
+                "properties": {
+                    "data": {
+                        "type": "object", 
+                        "properties": {
+                            "tipos": {
+                                "type": "array", 
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }, 
+                "required": [
+                    "data", 
+                    "status"
+                ]
+            }, 
+            "standard_response": {
+                "type": "object", 
+                "properties": {
+                    "status": {
+                        "type": "object", 
+                        "properties": {
+                            "http_status": {
+                                "type": "string"
+                            }, 
+                            "code": {
+                                "type": "integer"
+                            }, 
+                            "errors": {
+                                "type": "array", 
+                                "items": {
+                                    "type": "object", 
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        }, 
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }, 
+                            "description": {
+                                "type": "string"
+                            }, 
+                            "internal_code": {
+                                "type": "string"
+                            }
+                        }, 
+                        "required": [
+                            "http_status", 
+                            "code", 
+                            "description", 
+                            "errors"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 info:

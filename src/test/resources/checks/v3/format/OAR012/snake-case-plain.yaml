@@ -10,11 +10,11 @@ paths:
         schema:
           type: integer
       - in: path
-        name: petId # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        name: petId # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         schema:
           type: integer
       - in: path
-        name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        name: PET-ID # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         schema:
           type: integer
       - in: query
@@ -22,15 +22,15 @@ paths:
         schema:
           type: integer
       - in: query
-        name: expandInfo # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        name: expandInfo # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         schema:
           type: integer
       - in: query
-        name: EXPAND-INFO # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        name: EXPAND-INFO # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         schema:
           type: integer
       - in: query
-        name: expandInfo3 # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+        name: expandInfo3 # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
         schema:
           type: integer
       - in: header
@@ -45,11 +45,11 @@ paths:
           schema:
             type: integer
         - in: path
-          name: petId # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          name: petId # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
           schema:
             type: integer
         - in: path
-          name: PET-ID # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          name: PET-ID # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
           schema:
             type: integer
         - in: query
@@ -57,15 +57,15 @@ paths:
           schema:
             type: integer
         - in: query
-          name: expandInfo # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          name: expandInfo # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
           schema:
             type: integer
         - in: query
-          name: EXPAND-INFO # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          name: EXPAND-INFO # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
           schema:
             type: integer
         - in: query
-          name: expandInfo3 # Noncompliant {{OAR012: Path parameters, query parameters, requestBody parameters and response parameters name must be in snake_case}}
+          name: expandInfo3 # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: snake_case}}
           schema:
             type: integer
         - in: header

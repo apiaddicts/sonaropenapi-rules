@@ -1,5 +1,5 @@
 {
-  "title": "OAR018 - ResourcesByVerb - Path de recurso no recomendado",
+  "title": "OAR018 - ResourcesByVerb - Operación no recomendada para la ruta del recurso",
   "type": "BUG",
   "status": "ready",
   "remediation": {

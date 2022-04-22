@@ -6,7 +6,7 @@ paths:
   /pets:
     post:
       requestBody:
-        content: # Noncompliant {{OAR009: Should consume a default mime type}}
+        content: # Noncompliant {{OAR009: Should indicate the default request media type}}
           application/xml: {}
       responses:
         200:
@@ -14,7 +14,7 @@ paths:
   /owners:
     post:
       requestBody:
-        content: # Noncompliant {{OAR009: Should consume a default mime type}}
+        content: # Noncompliant {{OAR009: Should indicate the default request media type}}
           application/text: {}
       responses:
         200:
