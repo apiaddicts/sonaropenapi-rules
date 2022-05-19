@@ -7,8 +7,10 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 

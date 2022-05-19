@@ -50,7 +50,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE);
+		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSES);
 	}
 
 	@Override
@@ -99,8 +99,14 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 			}
 		}
 
-		if ( node.getType() == OpenApi3Grammar.RESPONSE && section.equals("produces") ) {
-			visitContentNode(node);
+		if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
+            List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
+            for (JsonNode jsonNode : responseCodes) {
+                if (!jsonNode.key().getTokenValue().equals("204")) {
+                    JsonNode responseNode = jsonNode.resolve();
+                    visitContentNode(responseNode);
+                }
+            }
 		}
 	}
 
