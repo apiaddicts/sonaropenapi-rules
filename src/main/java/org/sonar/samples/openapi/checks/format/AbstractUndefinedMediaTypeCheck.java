@@ -7,8 +7,10 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.sonar.samples.openapi.utils.JsonNodeUtils.*;
 
@@ -28,7 +30,7 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE);
+		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSES);
 	}
 
 	@Override
@@ -59,8 +61,14 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
 			}
 		}
 
-		if (node.getType() == OpenApi3Grammar.RESPONSE && section.equals("produces")) {
-			visitContentNode(node);
+		if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
+            List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
+            for (JsonNode jsonNode : responseCodes) {
+                if (!jsonNode.key().getTokenValue().equals("204")) {
+                    JsonNode responseNode = jsonNode.resolve();
+                    visitContentNode(responseNode);
+                }
+            }
 		}
 	}
 
