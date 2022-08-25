@@ -4,7 +4,7 @@
 
   <groupId>org.sonar.samples.openapi</groupId>
   <artifactId>dosonarapi-community</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Custom Rules Example</name>
@@ -17,7 +17,7 @@
 
     <sonar.version>8.7.0.41497</sonar.version>
     <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
-    <sonaropenapi.version>1.0.0</sonaropenapi.version>
+    <sonaropenapi.version>1.0.1</sonaropenapi.version>
     <sonaranalyzer.version>1.22.0.848</sonaranalyzer.version>
     <orgjson.version>20220320</orgjson.version>
     <junit.version>4.13.2</junit.version>
