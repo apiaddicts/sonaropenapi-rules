@@ -1,5 +1,5 @@
 {
-  "title": "OAR047 - DocumentedTag - Los tags deben de estar documentados.",
+  "title": "OAR047 - DocumentedTag - Los tags deben de estar documentados y empezar con letra mayúscula.",
   "type": "BUG",
   "status": "ready",
   "remediation": {
