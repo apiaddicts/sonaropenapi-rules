@@ -9,10 +9,12 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.sonar.samples.openapi.utils.JsonNodeUtils.isOperation;
 
 @Rule(key = OAR008AllowedHttpVerbCheck.KEY)
 public class OAR008AllowedHttpVerbCheck extends BaseCheck {
@@ -39,12 +41,24 @@ public class OAR008AllowedHttpVerbCheck extends BaseCheck {
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
+		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.PATH);
 	}
 
 	@Override
 	public void visitNode(JsonNode node) {
-		visitOperationNode(node);
+		if (node.getType() == OpenApi2Grammar.OPERATION) {
+			visitOperationNode(node);
+		} else {
+			visitV3PathNode(node);
+		}
+	}
+
+	private void visitV3PathNode(JsonNode node) {
+		node = node.resolve();
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
+        for (JsonNode operationNode : operationNodes) {
+			visitOperationNode(operationNode);
+        }
 	}
 
 	private void visitOperationNode(JsonNode node) {

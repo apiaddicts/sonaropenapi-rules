@@ -1,5 +1,4 @@
 <p>Each tag should be documented with a short statement explaining its intent.</p>
-<p>Tags must start with capital letter</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <h3>JSON</h3>
 <pre>
@@ -62,11 +61,11 @@ paths:
     }, 
     "tags": [
         {
-            "name": "Some-tag", 
+            "name": "some-tag", 
             "description": "a tag referenced in the operations"
         }, 
         {
-            "name": "Other-tag", 
+            "name": "other-tag", 
             "description": "another tag referenced in the operations"
         }
     ], 
@@ -74,8 +73,8 @@ paths:
         "/pets": {
             "get": {
                 "tags": [
-                    "Some-tag", 
-                    "Other-tag"
+                    "some-tag", 
+                    "other-tag"
                 ], 
                 "responses": {
                     "200": {
@@ -94,16 +93,16 @@ info:
   version: 1.0.0
   title: Swagger Petstore
 tags:
-- name: Some-tag
+- name: some-tag
   description: a tag referenced in the operations
-- name: Other-tag
+- name: other-tag
   description: another tag referenced in the operations
 paths:
   /pets:
     get:
       tags:
-      - Some-tag
-      - Other-tag
+      - some-tag
+      - other-tag
       responses:
         200:
           description: OK
@@ -170,11 +169,11 @@ paths:
     }, 
     "tags": [
         {
-            "name": "Some-tag", 
+            "name": "some-tag", 
             "description": "a tag referenced in the operations"
         }, 
         {
-            "name": "Other-tag", 
+            "name": "other-tag", 
             "description": "another tag referenced in the operations"
         }
     ], 
@@ -182,8 +181,8 @@ paths:
         "/pets": {
             "get": {
                 "tags": [
-                    "Some-tag", 
-                    "Other-tag"
+                    "some-tag", 
+                    "other-tag"
                 ], 
                 "responses": {
                     "200": {
@@ -202,16 +201,16 @@ info:
   version: 1.0.0
   title: Swagger Petstore
 tags:
-- name: Some-tag
+- name: some-tag
   description: a tag referenced in the operations
-- name: Other-tag
+- name: other-tag
   description: another tag referenced in the operations
 paths:
   /pets:
     get:
       tags:
-      - Some-tag
-      - Other-tag
+      - some-tag
+      - other-tag
       responses:
         200:
           description: OK

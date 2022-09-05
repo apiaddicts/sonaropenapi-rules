@@ -4,21 +4,19 @@
     "version" : "1.0.0",
     "title" : "Swagger Petstore"
   },
-  "x-bcp-api-type": "PU",
-  "x-bcp-api-id": "account",
   "tags" : [ {
-    "name" : "Used-tag",
+    "name" : "used-tag",
     "description" : "a tag referenced in the operations"
   }, { # Noncompliant {{OAR047: Add a short description to this tag}}
-    "name" : "Undescribed-tag"
+    "name" : "undescribed-tag"
   }, { # Noncompliant [[secondary=-5]] {{OAR047: Remove this duplicate tag}}
-    "name" : "Used-tag",
+    "name" : "used-tag",
     "description" : "another description"
   } ],
   "paths" : {
     "/pets" : {
       "get" : {
-        "tags" : [ "Used-tag", "Undescribed-tag", "Unlisted-tag" ], # Noncompliant {{OAR047: This tag should be declared in the tags section of the contract}}
+        "tags" : [ "used-tag", "undescribed-tag", "unlisted-tag" ], # Noncompliant {{OAR047: This tag should be declared in the tags section of the contract}}
         "responses" : { }
       }
     }

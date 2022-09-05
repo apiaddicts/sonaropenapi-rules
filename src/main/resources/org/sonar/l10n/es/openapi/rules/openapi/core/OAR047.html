@@ -1,5 +1,4 @@
 <p>Cada etiqueta debe documentarse con una breve declaración que explique su intención.</p>
-<p>Las etiquetas deben empezar con letra mayúcula</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <h3>JSON</h3>
 <pre>
@@ -62,11 +61,11 @@ paths:
     }, 
     "tags": [
         {
-            "name": "Some-tag", 
+            "name": "some-tag", 
             "description": "a tag referenced in the operations"
         }, 
         {
-            "name": "Other-tag", 
+            "name": "other-tag", 
             "description": "another tag referenced in the operations"
         }
     ], 
@@ -74,8 +73,8 @@ paths:
         "/pets": {
             "get": {
                 "tags": [
-                    "Some-tag", 
-                    "Other-tag"
+                    "some-tag", 
+                    "other-tag"
                 ], 
                 "responses": {
                     "200": {
@@ -94,9 +93,9 @@ info:
   version: 1.0.0
   title: Swagger Petstore
 tags:
-- name: Some-tag
+- name: some-tag
   description: a tag referenced in the operations
-- name: Other-tag
+- name: other-tag
   description: another tag referenced in the operations
 paths:
   /pets:
@@ -170,11 +169,11 @@ paths:
     }, 
     "tags": [
         {
-            "name": "Some-tag", 
+            "name": "some-tag", 
             "description": "a tag referenced in the operations"
         }, 
         {
-            "name": "Other-tag", 
+            "name": "other-tag", 
             "description": "another tag referenced in the operations"
         }
     ], 
@@ -182,8 +181,8 @@ paths:
         "/pets": {
             "get": {
                 "tags": [
-                    "Some-tag", 
-                    "Other-tag"
+                    "some-tag", 
+                    "other-tag"
                 ], 
                 "responses": {
                     "200": {
@@ -210,8 +209,8 @@ paths:
   /pets:
     get:
       tags:
-      - Some-tag
-      - Other-tag
+      - some-tag
+      - other-tag
       responses:
         200:
           description: OK

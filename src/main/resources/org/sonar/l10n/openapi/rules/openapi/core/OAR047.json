@@ -1,5 +1,5 @@
 {
-  "title": "OAR047 - DocumentedTag - Tags SHOULD be documented and start with capital letter.",
+  "title": "OAR047 - DocumentedTag - Tags SHOULD be documented.",
   "type": "BUG",
   "status": "ready",
   "remediation": {
