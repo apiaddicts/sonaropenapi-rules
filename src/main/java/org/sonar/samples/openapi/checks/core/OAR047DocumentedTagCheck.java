@@ -38,6 +38,10 @@ public class OAR047DocumentedTagCheck extends BaseCheck {
   public static final String CHECK_KEY = "OAR047";
   private final Map<String, JsonNode> tagNames = new HashMap<>();
 
+  private final String TAG_PATTERN = "^([A-Z][a-z]*|[A-Z][a-z]*( [A-Z][a-z]*)*)$";
+  private final String PU_PV_TAG_PATTERN = "^([A-Z].*)$";
+  private String apiType;
+
   @Override
   public Set<AstNodeType> subscribedKinds() {
     return Sets.newHashSet(OpenApi2Grammar.TAG, OpenApi2Grammar.OPERATION, OpenApi3Grammar.TAG, OpenApi3Grammar.OPERATION);
@@ -47,6 +51,10 @@ public class OAR047DocumentedTagCheck extends BaseCheck {
   public void visitFile(JsonNode root) {
     tagNames.clear();
     JsonNode tagsArray = root.at("/tags").value();
+    if(null == apiType){
+      JsonNode bcpApiType = root.get("x-bcp-api-type");
+      apiType = bcpApiType.stringValue();
+    }
     if (tagsArray != null) {
       for (JsonNode element : tagsArray.elements()) {
         JsonNode previous = tagNames.put(element.at("/name").value().getTokenValue(), element);
@@ -82,6 +90,21 @@ public class OAR047DocumentedTagCheck extends BaseCheck {
       for (JsonNode element : tagsArray.elements()) {
         if (!tagNames.containsKey(element.getTokenValue())) {
           addIssue(CHECK_KEY, translate("OAR047.error-no-declared"), element);
+        }
+        if(apiType.equals("PU") || apiType.equals("PV")){
+          if(!element.getTokenValue().matches(PU_PV_TAG_PATTERN)){
+            addIssue(CHECK_KEY, translate("OAR047.error-no-capital-start"), element);
+          }
+        }
+        else if(!apiType.isEmpty()){
+          if(!element.getTokenValue().matches(TAG_PATTERN)){
+            addIssue(CHECK_KEY, translate("OAR047.error-no-capital"), element);
+          }
+        }
+        else{
+          if(!element.getTokenValue().matches(TAG_PATTERN)){
+            addIssue(CHECK_KEY, translate("OAR047.error-no-capital"), element);
+          }
         }
       }
     }

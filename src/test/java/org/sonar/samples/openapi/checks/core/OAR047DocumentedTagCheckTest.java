@@ -23,6 +23,6 @@ public class OAR047DocumentedTagCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR047 - DocumentedTag - Tags SHOULD be documented.", RuleType.BUG, Severity.BLOCKER, tags("core"));
+        assertRuleProperties("OAR047 - DocumentedTag - Tags SHOULD be documented and start with capital letter.", RuleType.BUG, Severity.BLOCKER, tags("core"));
     }
 }
