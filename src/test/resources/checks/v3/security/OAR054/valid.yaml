@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Swagger Petstore
 servers:
-  - url: https://api-dev.cloudappi.net/api-vehicular/v1/
-  - url: https://api-test.cloudappi.net/api-vehicular/v1/
-  - url: https://api.cloudappi.net/api-vehicular/v1/
+  - url: https://api-dev.apiaddicts.org/api-vehicular/v1/
+  - url: https://api-test.apiaddicts.org/api-vehicular/v1/
+  - url: https://api.apiaddicts.org/api-vehicular/v1/
 paths: {}

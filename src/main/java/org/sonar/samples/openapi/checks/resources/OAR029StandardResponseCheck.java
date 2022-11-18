@@ -26,11 +26,6 @@ public class OAR029StandardResponseCheck extends AbstractSchemaCheck {
 
     public static final String KEY = "OAR029";
 
-    //MD
-    //private static final String RESPONSE_SCHEMA = "{\"type\": \"object\",\"properties\": {\"result\": {\"type\": \"object\",\"properties\": {\"http_code\": {\"type\": \"integer\"},\"status\": {\"type\": \"boolean\"},\"trace_id\": {\"type\": \"string\"},\"errors\": {\"type\": \"array\",\"items\": {\"type\": \"object\",\"properties\": {\"code\": {\"type\": \"integer\"},\"message\": {\"type\": \"string\"}},\"required\": [\"code\",\"message\"]}}},\"required\": [\"status\",\"http_code\",\"trace_id\"]},\"data\": {\"type\": \"any\"}},\"requiredOnError\": [],\"requiredOnSuccess\": [\"data\"],\"requiredAlways\": [\"result\"],\"dataProperty\": \"data\"}";
-    //RIM
-    //private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"error\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"},\"httpStatus\":{\"type\":\"integer\"},\"details\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"required\":[\"code\",\"message\",\"httpStatus\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnError\":[\"error\"],\"requiredOnSuccess\":[\"payload\"],\"dataProperty\":\"payload\"}";
-    //Cloudappi
     private static final String RESPONSE_SCHEMA = "{\"type\":\"object\",\"properties\":{\"status\":{\"type\":\"object\",\"properties\":{\"http_status\":{\"type\":\"string\"},\"code\":{\"type\":\"integer\"},\"description\":{\"type\":\"string\"},\"internal_code\":{\"type\":\"string\"},\"errors\":{\"type\":\"array\",\"nullable\":true,\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"}}}}},\"required\":[\"http_status\",\"code\",\"description\",\"errors\"]},\"payload\":{\"type\":\"any\"}},\"requiredOnSuccess\":[\"data\"],\"requiredAlways\":[\"status\"],\"dataProperty\":\"data\"}";
 
     @RuleProperty(
