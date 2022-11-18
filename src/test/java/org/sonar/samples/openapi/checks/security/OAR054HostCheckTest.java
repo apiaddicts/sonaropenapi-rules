@@ -30,7 +30,7 @@ public class OAR054HostCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("host-regex", "^((\\*|[\\w\\d]+(-[\\w\\d]+)*)\\.)*(cloudappi)(\\.net)$", RuleParamType.STRING);
+        assertParameterProperties("host-regex", "^((\\*|[\\w\\d]+(-[\\w\\d]+)*)\\.)*(apiaddicts)(\\.org)$", RuleParamType.STRING);
     }
 
     @Override

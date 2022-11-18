@@ -18,7 +18,7 @@ public class OAR054HostCheck extends BaseCheck {
 
 	public static final String KEY = "OAR054";
     
-    private static final String HOST_REGEX = "^((\\*|[\\w\\d]+(-[\\w\\d]+)*)\\.)*(cloudappi)(\\.net)$";
+    private static final String HOST_REGEX = "^((\\*|[\\w\\d]+(-[\\w\\d]+)*)\\.)*(apiaddicts)(\\.org)$";
 
     @RuleProperty(
             key = "host-regex",

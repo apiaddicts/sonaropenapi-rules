@@ -4,6 +4,6 @@
     "version" : "1.0.0",
     "title" : "Swagger Petstore"
   },
-  "host" : "api.cloudappi.net",
+  "host" : "api.apiaddicts.org",
   "paths" : { }
 }
