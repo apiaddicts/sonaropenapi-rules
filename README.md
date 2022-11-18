@@ -1,3 +1,16 @@
+<p align="center">
+	<a href="https://apiaddicts.org/">
+	  <img src="https://apiaddicts-web.s3.eu-west-1.amazonaws.com/wp-content/uploads/2022/03/17155736/cropped-APIAddicts-logotipo_rojo-2048x523.png">
+	</a>
+</p>
+
+## Contributors
+### CloudAPPi
+CloudAppi is one leader in APIs in global word. See the CloudAPPi Services
+
+### Madrid Digital
+Madrid Digital is a public administration in Spain. See the Comunidad de Madrid website
+
 ## Configure scanner
 
 ### Maven plugin
