@@ -1,20 +1,6 @@
 <p>For security reasons and as a REST best practice, the HTTPS protocol is mandatory.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0"
-    }, 
-    "schemes": [
-        "http"
-    ], 
-    "paths": {}
-}
-</pre>
-<h3>YAML</h3>
+<h3>All the examples are in YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -25,21 +11,6 @@ schemes:
 paths: {}
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0"
-    }, 
-    "schemes": [
-        "https"
-    ], 
-    "paths": {}
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -50,23 +21,6 @@ schemes:
 paths: {}
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0"
-    }, 
-    "servers": [
-        {
-            "url": "http://petstore.swagger.io/"
-        }
-    ], 
-    "paths": {}
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 info:
@@ -77,23 +31,6 @@ servers:
 paths: {}
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0"
-    }, 
-    "servers": [
-        {
-            "url": "https://petstore.swagger.io/"
-        }
-    ], 
-    "paths": {}
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 info:

@@ -1,55 +1,6 @@
 <p>Se recomienda indicar un formato para propiedades de tipo numérico.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/invoices": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "An invoice.", 
-                        "schema": {
-                            "type": "array", 
-                            "items": {
-                                "type": "object", 
-                                "properties": {
-                                    "products": {
-                                        "type": "array", 
-                                        "items": {
-                                            "type": "object", 
-                                            "properties": {
-                                                "productId": {
-                                                    "type": "integer"
-                                                }, 
-                                                "quantity": {
-                                                    "type": "number"
-                                                }, 
-                                                "price": {
-                                                    "type": "number"
-                                                }
-                                            }
-                                        }
-                                    }, 
-                                    "amount": {
-                                        "type": "number"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>Todos los ejemplos están en YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -81,60 +32,6 @@ paths:
                   type: number
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/invoices": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "An invoice.", 
-                        "schema": {
-                            "type": "array", 
-                            "items": {
-                                "type": "object", 
-                                "properties": {
-                                    "products": {
-                                        "type": "array", 
-                                        "items": {
-                                            "type": "object", 
-                                            "properties": {
-                                                "productId": {
-                                                    "type": "integer", 
-                                                    "format": "int32"
-                                                }, 
-                                                "quantity": {
-                                                    "type": "integer", 
-                                                    "format": "int32"
-                                                }, 
-                                                "price": {
-                                                    "type": "number", 
-                                                    "format": "double"
-                                                }
-                                            }
-                                        }
-                                    }, 
-                                    "amount": {
-                                        "type": "number", 
-                                        "format": "double"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -170,60 +67,6 @@ paths:
                   format: double
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0.0"
-    }, 
-    "paths": {
-        "/invoices": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "An invoice.", 
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array", 
-                                    "items": {
-                                        "type": "object", 
-                                        "properties": {
-                                            "products": {
-                                                "type": "array", 
-                                                "items": {
-                                                    "type": "object", 
-                                                    "properties": {
-                                                        "productId": {
-                                                            "type": "integer"
-                                                        }, 
-                                                        "quantity": {
-                                                            "type": "number"
-                                                        }, 
-                                                        "price": {
-                                                            "type": "number"
-                                                        }
-                                                    }
-                                                }
-                                            }, 
-                                            "amount": {
-                                                "type": "number"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
@@ -257,64 +100,6 @@ paths:
                       type: number
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0.0"
-    }, 
-    "paths": {
-        "/invoices": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "An invoice.", 
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array", 
-                                    "items": {
-                                        "type": "object", 
-                                        "properties": {
-                                            "products": {
-                                                "type": "array", 
-                                                "items": {
-                                                    "type": "object", 
-                                                    "properties": {
-                                                        "productId": {
-                                                            "type": "integer", 
-                                                            "format": "int32"
-                                                        }, 
-                                                        "quantity": {
-                                                            "type": "integer", 
-                                                            "format": "int32"
-                                                        }, 
-                                                        "price": {
-                                                            "type": "number", 
-                                                            "format": "double"
-                                                        }
-                                                    }
-                                                }
-                                            }, 
-                                            "amount": {
-                                                "type": "number", 
-                                                "format": "double"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
