@@ -3,28 +3,7 @@
   Este endpoint se definirá siempre de la siguiente manera: GET {basepath}/status
 </b>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>Todos los ejemplos están en YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -38,37 +17,6 @@ paths:
           description: Ok
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }, 
-        "/status": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -87,28 +35,6 @@ paths:
           description: Ok
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.0
 info:
@@ -122,37 +48,6 @@ paths:
           description: Ok
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }, 
-        "/status": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.0
 info:

@@ -2,35 +2,7 @@
 summary will help those populations understand what the operation is about, instead of approaching it in technical terms.
 </p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "post": {
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }, 
-            "get": {
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>All the examples are in YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -48,37 +20,6 @@ paths:
           description: the default response
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "post": {
-                "summary": "Create a new pet", 
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }, 
-            "get": {
-                "summary": "List all pets", 
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -98,35 +39,6 @@ paths:
           description: the default response
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "post": {
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }, 
-            "get": {
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.0
 info:
@@ -144,37 +56,6 @@ paths:
           description: the default response
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "post": {
-                "summary": "Create a new pet", 
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }, 
-            "get": {
-                "summary": "List all pets", 
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.0
 info:

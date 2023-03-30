@@ -1,35 +1,6 @@
 <p>The default value of $total parameter should be false to prevent performance issues.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0.0"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "parameters": [
-                    {
-                        "in": "query", 
-                        "name": "$total", 
-                        "required": false, 
-                        "type": "boolean"
-                    }
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>All the examples are in YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -48,37 +19,6 @@ paths:
           description: Ok
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0.0"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "parameters": [
-                    {
-                        "in": "query", 
-                        "name": "$total", 
-                        "required": false, 
-                        "type": "boolean", 
-                        "default": false
-                    }
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -98,38 +38,6 @@ paths:
           description: Ok
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0.0"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "parameters": [
-                    {
-                        "in": "query", 
-                        "name": "$total", 
-                        "required": false, 
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
@@ -149,39 +57,6 @@ paths:
           description: Ok
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "title": "Swagger Petstore", 
-        "version": "1.0.0"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "parameters": [
-                    {
-                        "in": "query", 
-                        "name": "$total", 
-                        "required": false, 
-                        "schema": {
-                            "type": "boolean", 
-                            "default": false
-                        }
-                    }
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "Ok"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:

@@ -1,28 +1,7 @@
 <h2>Normative - API Definition</h2>
 <p>Allowing any response headers to be set and not specifying the required response headers can cause some vulnerabilities in the API</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>All the examples are in YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -36,45 +15,6 @@ paths:
             description: OK
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "OK", 
-                        "headers": {
-                            "strinct-transport-security": {
-                                "type": "string"
-                            }, 
-                            "x-frame-options": {
-                                "type": "string"
-                            }, 
-                            "referrer-policy": {
-                                "type": "string"
-                            }, 
-                            "x-content-type-options": {
-                                "type": "string"
-                            }, 
-                            "x-xss-protection": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -99,35 +39,6 @@ paths:
                 type: string
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "components": {
-        "responses": {
-            "PetsResponse": {
-                "description": "OK"
-            }
-        }
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/PetsResponse"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 info:
@@ -145,62 +56,6 @@ paths:
             $ref: '#/components/responses/PetsResponse'
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "components": {
-        "responses": {
-            "PetsResponse": {
-                "description": "OK", 
-                "headers": {
-                    "strinct-transport-security": {
-                        "schema": {
-                            "type": "string"
-                        }
-                    }, 
-                    "x-frame-options": {
-                        "schema": {
-                            "type": "string"
-                        }
-                    }, 
-                    "referrer-policy": {
-                        "schema": {
-                            "type": "string"
-                        }
-                    }, 
-                    "x-content-type-options": {
-                        "schema": {
-                            "type": "string"
-                        }
-                    }, 
-                    "x-xss-protection": {
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        }
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/PetsResponse"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: "3.0.0"
 info:

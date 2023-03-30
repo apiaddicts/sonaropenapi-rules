@@ -1,34 +1,6 @@
 <p>You should categorize the operations of your contract with tags. Categorizing operations helps your users understand the broad organization of the API and highlights the type of manipulated resources.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }, 
-            "post": {
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>All the examples are in YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -46,51 +18,6 @@ paths:
           description: the default response
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "tags": [
-        {
-            "name": "used-tag", 
-            "description": "a tag referenced in the operations"
-        }, 
-        {
-            "name": "other-tag", 
-            "description": "a tag referenced in the operations"
-        }
-    ], 
-    "paths": {
-        "/pets": {
-            "get": {
-                "tags": [
-                    "used-tag"
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }, 
-            "post": {
-                "tags": [
-                    "other-tag"
-                ], 
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -117,35 +44,6 @@ paths:
           description: the default response
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }, 
-            "post": {
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
@@ -163,51 +61,6 @@ paths:
           description: the default response
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "tags": [
-        {
-            "name": "used-tag", 
-            "description": "a tag referenced in the operations"
-        }, 
-        {
-            "name": "other-tag", 
-            "description": "a tag referenced in the operations"
-        }
-    ], 
-    "paths": {
-        "/pets": {
-            "get": {
-                "tags": [
-                    "used-tag"
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }, 
-            "post": {
-                "tags": [
-                    "other-tag"
-                ], 
-                "responses": {
-                    "default": {
-                        "description": "the default response"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
