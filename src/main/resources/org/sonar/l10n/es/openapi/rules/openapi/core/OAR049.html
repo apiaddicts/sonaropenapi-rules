@@ -1,39 +1,6 @@
 <p>Las respuestas con código 204 no deben devolver contenido.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets/{petId}": {
-            "delete": {
-                "parameters": [
-                    {
-                        "in": "path", 
-                        "name": "petId", 
-                        "required": true, 
-                        "type": "string", 
-                        "format": "uuid"
-                    }
-                ], 
-                "responses": {
-                    "204": {
-                        "description": "Deleted", 
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>Todos los ejemplos están en YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -55,37 +22,6 @@ paths:
             type: object
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets/{petId}": {
-            "delete": {
-                "parameters": [
-                    {
-                        "in": "path", 
-                        "name": "petId", 
-                        "required": true, 
-                        "type": "string", 
-                        "format": "uuid"
-                    }
-                ], 
-                "responses": {
-                    "204": {
-                        "description": "Deleted"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -105,46 +41,6 @@ paths:
           description: Deleted
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets/{petId}": {
-            "delete": {
-                "parameters": [
-                    {
-                        "in": "path", 
-                        "name": "petId", 
-                        "required": true, 
-                        "schema": {
-                            "type": "string", 
-                            "format": "uuid"
-                        }
-                    }
-                ], 
-                "responses": {
-                    "204": {
-                        "description": "Deleted", 
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:
@@ -169,39 +65,6 @@ paths:
                 type: object
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "paths": {
-        "/pets/{petId}": {
-            "delete": {
-                "parameters": [
-                    {
-                        "in": "path", 
-                        "name": "petId", 
-                        "required": true, 
-                        "schema": {
-                            "type": "string", 
-                            "format": "uuid"
-                        }
-                    }
-                ], 
-                "responses": {
-                    "204": {
-                        "description": "Deleted"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: 3.0.1
 info:

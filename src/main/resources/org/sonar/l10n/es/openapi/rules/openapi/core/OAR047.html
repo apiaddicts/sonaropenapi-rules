@@ -1,38 +1,6 @@
 <p>Cada etiqueta debe documentarse con una breve declaración que explique su intención.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swagger": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "tags": [
-        {
-            "name": "unused-tag"
-        }, 
-        {
-            "name": "some-tag"
-        }
-    ], 
-    "paths": {
-        "/pets": {
-            "get": {
-                "tags": [
-                    "some-tag"
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
+<h3>Todos los ejemplos están en YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -51,42 +19,6 @@ paths:
           description: OK
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "swaggeer": "2.0", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "tags": [
-        {
-            "name": "some-tag", 
-            "description": "a tag referenced in the operations"
-        }, 
-        {
-            "name": "other-tag", 
-            "description": "another tag referenced in the operations"
-        }
-    ], 
-    "paths": {
-        "/pets": {
-            "get": {
-                "tags": [
-                    "some-tag", 
-                    "other-tag"
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 swaggeer: "2.0"
 info:
@@ -108,39 +40,6 @@ paths:
           description: OK
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "tags": [
-        {
-            "name": "unused-tag"
-        }, 
-        {
-            "name": "some-tag"
-        }
-    ], 
-    "paths": {
-        "/pets": {
-            "get": {
-                "tags": [
-                    "some-tag"
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: "3.0.1"
 info:
@@ -159,42 +58,6 @@ paths:
           description: OK
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
-<h3>JSON</h3>
-<pre>
-{
-    "openapi": "3.0.1", 
-    "info": {
-        "version": "1.0.0", 
-        "title": "Swagger Petstore"
-    }, 
-    "tags": [
-        {
-            "name": "some-tag", 
-            "description": "a tag referenced in the operations"
-        }, 
-        {
-            "name": "other-tag", 
-            "description": "another tag referenced in the operations"
-        }
-    ], 
-    "paths": {
-        "/pets": {
-            "get": {
-                "tags": [
-                    "some-tag", 
-                    "other-tag"
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-<h3>YAML</h3>
 <pre>
 openapi: "3.0.1"
 info:
