@@ -86,12 +86,10 @@ public final class RulesLists {
 
 	public static List<Class<?>> getCoreChecks() {
 		return Arrays.asList(
-				OAR043ParsingErrorCheck.class,
 				OAR044MediaTypeCheck.class,
 				OAR045DefinedResponseCheck.class,
 				OAR046DeclaredTagCheck.class,
 				OAR047DocumentedTagCheck.class,
-				OAR048AtMostOneBodyParameterCheck.class,
 				OAR049NoContentIn204Check.class,
 				OAR050ProvideOpSummaryCheck.class,
 				OAR051DescriptionDiffersSummaryCheck.class
