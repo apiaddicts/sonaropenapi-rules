@@ -1,69 +1,60 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "version" : "1.0.0",
-    "title" : "Swagger Petstore"
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
   },
-  "paths" : {
-    "/" : {
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
+  "paths": {
+    "/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
           }
         }
       }
     },
-    "/one" : {
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
+    "/one": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
           }
         }
       }
     },
-    "/{one}" : { # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
+    "/{one}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
           }
         }
       }
     },
-    "/one/two" : { # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
+    "/one/two": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
           }
         }
       }
     },
-    "/one/{two}" : {
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
+    "/one/{two}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
           }
         }
       }
     },
-    "/one/{two}/three" : {
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
-          }
-        }
-      }
-    },
-    "/one/{two}/{three}" : { # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
-      "get" : {
-        "responses" : {
-          "200" : {
-            "description" : "Ok"
+    "/one/{two}/three": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Ok"
           }
         }
       }

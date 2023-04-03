@@ -17,9 +17,6 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 	public static final String KEY = "OAR017";
 	private static final String MESSAGE = "OAR017.error";
 
-	private int numberOfMe = 0;
-	private boolean isSectionMeAllowed = true;
-
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
 		return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
@@ -39,21 +36,24 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 		String[] parts = Stream.of(path.split("/")).filter(p -> !p.trim().isEmpty()).toArray(String[]::new);
 		if (parts.length == 0) return true;
 
-		numberOfMe = 0;
-		boolean previousIsVar = isVariable(parts[0]);
-		if (previousIsVar) return false;
+		boolean previousWasVariable = false;
+		boolean twoOrMoreVariablesInARow = false;
 
-		for (int i = 1; i < parts.length; i++) {
-			boolean currentIsVar = i < parts.length - 1 ? isVariable(parts[i]) : (isVariable(parts[i]) || parts[i].equals("get") || parts[i].equals("delete"));
-			if (previousIsVar == currentIsVar) return false;
-			previousIsVar = currentIsVar;
+		for (int i = 0; i < parts.length; i++) {
+		boolean currentIsVariable = isVariable(parts[i]);
+
+			if (previousWasVariable && currentIsVariable) {
+				twoOrMoreVariablesInARow = true;
+				break;
+			}
+
+			previousWasVariable = currentIsVariable;
 		}
 
-		return true;
+		return !twoOrMoreVariablesInARow;
 	}
 
 	private boolean isVariable(String part) {
-		if (isSectionMeAllowed && part.equals("me")) numberOfMe++;
-		return '{' == part.charAt(0) && '}' == part.charAt(part.length()-1) || (isSectionMeAllowed && (part.equals("me") && numberOfMe <= 1));
+		return '{' == part.charAt(0) && '}' == part.charAt(part.length() - 1);
 	}
 }
