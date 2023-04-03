@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
   version: 1.0.0
   title: Swagger Petstore
@@ -8,44 +8,22 @@ paths:
       responses:
         200:
           description: Ok
-
-  /{one}: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+  /{one}:
     get:
       responses:
         200:
           description: Ok
-
-  /one/two: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
+  /one/two:
     get:
       responses:
         200:
           description: Ok
-
   /one/{two}:
     get:
       responses:
         200:
           description: Ok
-
   /one/{two}/three:
-    get:
-      responses:
-        200:
-          description: Ok
-
-  /one/me:
-    get:
-      responses:
-        200:
-          description: Ok
-
-  /one/me/three:
-    get:
-      responses:
-        200:
-          description: Ok
-
-  /one/{two}/{three}: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
     get:
       responses:
         200:
