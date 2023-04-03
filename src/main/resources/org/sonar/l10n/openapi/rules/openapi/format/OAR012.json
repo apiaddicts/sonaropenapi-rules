@@ -1,5 +1,5 @@
 {
-  "title": "OAR012 - ParameterNamingConvention - Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention",
+  "title": "OAR012 - ParameterNamingConventionSnakeCase - Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention (snake_case)",
   "type": "BUG",
   "status": "ready",
   "remediation": {

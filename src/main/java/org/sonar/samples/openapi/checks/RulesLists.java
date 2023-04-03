@@ -42,7 +42,7 @@ public final class RulesLists {
 				OAR009DefaultRequestMediaTypeCheck.class,
 				OAR010DefaultResponseMediaTypeCheck.class,
 				OAR011UrlNamingConventionCheck.class,
-				OAR012ParameterNamingConventionCheck.class,
+				OAR012ParameterNamingConventionSnakeCaseCheck.class,
 				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,
 				OAR042BasePathCheck.class,
