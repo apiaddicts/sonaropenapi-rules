@@ -80,7 +80,8 @@ public final class RulesLists {
 				OAR024StartParameterCheck.class,
 				OAR025LimitParameterCheck.class,
 				OAR026TotalParameterDefaultValueCheck.class,
-				OAR028FilterParameterCheck.class
+				OAR028FilterParameterCheck.class,
+				OAR060QueryParametersOptionalCheck.class
 		);
 	}
 
