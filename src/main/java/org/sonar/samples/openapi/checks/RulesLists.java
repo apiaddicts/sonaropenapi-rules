@@ -80,18 +80,17 @@ public final class RulesLists {
 				OAR024StartParameterCheck.class,
 				OAR025LimitParameterCheck.class,
 				OAR026TotalParameterDefaultValueCheck.class,
-				OAR028FilterParameterCheck.class
+				OAR028FilterParameterCheck.class,
+				OAR060QueryParametersOptionalCheck.class
 		);
 	}
 
 	public static List<Class<?>> getCoreChecks() {
 		return Arrays.asList(
-				OAR043ParsingErrorCheck.class,
 				OAR044MediaTypeCheck.class,
 				OAR045DefinedResponseCheck.class,
 				OAR046DeclaredTagCheck.class,
 				OAR047DocumentedTagCheck.class,
-				OAR048AtMostOneBodyParameterCheck.class,
 				OAR049NoContentIn204Check.class,
 				OAR050ProvideOpSummaryCheck.class,
 				OAR051DescriptionDiffersSummaryCheck.class
