@@ -1,5 +1,5 @@
 {
-    "title": "OAR060 - QueryParametersOptional - $Todos los parámetros en query deben definirse como opcionales",
+    "title": "OAR060 - QueryParametersOptional - Todos los parámetros en query deben definirse como opcionales",
     "type": "BUG",
     "status": "ready",
     "remediation": {

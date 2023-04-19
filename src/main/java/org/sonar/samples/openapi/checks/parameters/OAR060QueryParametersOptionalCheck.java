@@ -1,13 +1,16 @@
 package org.sonar.samples.openapi.checks.parameters;
 
-import org.sonar.check.Rule;
+
+import org.sonar.check.RuleProperty;
 import com.sonar.sslr.api.AstNodeType;
+import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Rule(key = OAR060QueryParametersOptionalCheck.KEY)
 public class OAR060QueryParametersOptionalCheck extends BaseCheck {

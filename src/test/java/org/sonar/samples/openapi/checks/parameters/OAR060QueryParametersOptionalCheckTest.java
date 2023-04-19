@@ -34,7 +34,7 @@ public class OAR060QueryParametersOptionalCheckTest extends BaseCheckTest{
     }
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR060 - QueryParametersOptional - $All parameters in query must be defined as optional", RuleType.BUG, Severity.CRITICAL, tags("parameters"));
+        assertRuleProperties("OAR060 - QueryParametersOptional - All parameters in query must be defined as optional", RuleType.BUG, Severity.CRITICAL, tags("parameters"));
     }
     
 }
