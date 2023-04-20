@@ -1,0 +1,31 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    parameters:
+    - in: header
+      name: x-api-key
+      schema:
+        type: string
+      required: true
+    - in: header
+      name: traceId
+      schema:
+        type: string
+      required: true
+    - in: header
+      name: dateTime
+      schema:
+        type: string
+      required: true
+    - in: query
+      name: Authorization
+      schema:
+        type: string
+      required: true
+    get:
+      responses:
+        200:
+          description: Ok
