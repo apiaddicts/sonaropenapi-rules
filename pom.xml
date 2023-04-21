@@ -32,6 +32,13 @@
 
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone -->
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-console-standalone</artifactId>
+        <version>1.8.2</version>
+        <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-front-end</artifactId>

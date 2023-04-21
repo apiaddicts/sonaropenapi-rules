@@ -67,7 +67,8 @@ public final class RulesLists {
 				OAR034StandardPagedResponseCheck.class,
 				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
-				OAR039StandardResponseCodesCheck.class
+				OAR039StandardResponseCodesCheck.class,
+				OAR061GetMethodCheck.class
 		);
 	}
 
