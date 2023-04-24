@@ -1,4 +1,4 @@
-<p>Los códigos de respuesta en las operaciones POST deben definirse de acuerdo con el estándar</p>
+<p>Los códigos de respuesta en las operaciones PUT deben definirse de acuerdo con el estándar</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <h3>Todos los ejemplos están en YAML</h3>
 <pre>
@@ -8,7 +8,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    put:
       responses:
         400:
           description: Bad request
@@ -21,7 +21,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    put:
       responses:
         200:
           description: OK
@@ -34,7 +34,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    put:
       responses:
         400:
           description: Bad request
@@ -47,7 +47,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    put:
       responses:
     200:
       description: OK
