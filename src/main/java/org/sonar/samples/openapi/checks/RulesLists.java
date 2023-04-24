@@ -68,7 +68,8 @@ public final class RulesLists {
 				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
 				OAR039StandardResponseCodesCheck.class,
-				OAR061GetMethodCheck.class
+				OAR061GetMethodCheck.class,
+				OAR062PostMethodCheck.class
 		);
 	}
 
