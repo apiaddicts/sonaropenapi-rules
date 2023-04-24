@@ -21,9 +21,9 @@
         "/users": {
           "get": {
             "summary": "Get all users",
-            "responses": {  # Noncompliant {{OAR061: Response code 202 must be defined}} {{OAR061: Response code 206 must be defined}}
-              "200": {
-                "description": "OK"
+            "responses": {  # Noncompliant {{OAR061: Response code 200 or 202 or 206 must be defined}} 
+              "400": {
+                "description": "Error"
               }
             }
           }
