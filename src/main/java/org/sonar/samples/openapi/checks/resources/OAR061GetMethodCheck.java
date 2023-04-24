@@ -20,12 +20,12 @@ public class OAR061GetMethodCheck extends BaseCheck {
 
     public static final String KEY = "OAR061";
     private static final String MESSAGE = "OAR061.error";
-    private static final String MANDATORY_RESPONSE_CODES = "200, 202, 206";
+    private static final String MANDATORY_RESPONSE_CODES = "200 or 202 or 206";
     private static final String DEFAULT_EXCLUSION = "/status";
 
     @RuleProperty(
             key = "mandatory-response-codes",
-            description = "List of allowed response codes. Comma separated",
+            description = "List of allowed response codes. Or separated",
             defaultValue = MANDATORY_RESPONSE_CODES
     )
     private String mandatoryResponseCodesStr = MANDATORY_RESPONSE_CODES;
@@ -44,12 +44,12 @@ public class OAR061GetMethodCheck extends BaseCheck {
     @Override
     protected void visitFile(JsonNode root) {
         if (!mandatoryResponseCodesStr.trim().isEmpty()) {
-            mandatoryResponseCodes.addAll(Stream.of(mandatoryResponseCodesStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+            mandatoryResponseCodes.addAll(Stream.of(mandatoryResponseCodesStr.split(" or ")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         }
         if (!exclusionStr.trim().isEmpty()) {
-            exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
+            exclusion = Arrays.stream(exclusionStr.split(" or ")).map(String::trim).collect(Collectors.toSet());
         } else {
-            exclusion = new HashSet<>(); // Asegurarse de que 'exclusion' esté inicializado incluso si 'exclusionStr' está vacío
+            exclusion = new HashSet<>(); 
         }
         super.visitFile(root);
     }
@@ -59,7 +59,7 @@ public class OAR061GetMethodCheck extends BaseCheck {
         return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
     }
 
-    @Override
+@Override
 public void visitNode(JsonNode node) {
     if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH) {
         currentPath = node.key().getTokenValue();
@@ -75,16 +75,16 @@ public void visitNode(JsonNode node) {
 
         JsonNode responsesNode = node.get("responses");
         if (responsesNode.isMissing() || responsesNode.isNull()) {
-            addIssue(KEY, translate(MESSAGE, mandatoryResponseCodes.toString()), responsesNode.key());
+            addIssue(KEY, translate(MESSAGE, String.join(" or ", mandatoryResponseCodes)), responsesNode.key());
             return;
         }
 
         Set<String> responseCodes = responsesNode.propertyNames().stream().map(String::trim).collect(Collectors.toSet());
-        Set<String> missingCodes = new HashSet<>(mandatoryResponseCodes);
-        missingCodes.removeAll(responseCodes);
-        
-        for (String missingCode : missingCodes) {
-            addIssue(KEY, translate(MESSAGE, missingCode), responsesNode.key());
+
+        boolean hasMandatoryCode = mandatoryResponseCodes.stream().anyMatch(responseCodes::contains);
+
+        if (!hasMandatoryCode) {
+            addIssue(KEY, translate(MESSAGE, String.join(" or ", mandatoryResponseCodes)), responsesNode.key());
         }
     }
 }

@@ -10,12 +10,8 @@ paths:
   /pets:
     get:
       responses:
-        default:
-          description: Default
-    post:
-      responses:
         400:
-          description: Bad request
+          description: Bad request       
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
@@ -29,10 +25,6 @@ paths:
       responses:
         200:
           description: OK
-        202:
-          description: Accepted
-        206:
-          description: Partial collection
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
@@ -44,12 +36,8 @@ paths:
   /pets:
     get:
       responses:
-        default:
-          description: Default
-    post:
-      responses:
         400:
-          description: Bad request
+          description: Bad request     
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>
@@ -63,8 +51,4 @@ paths:
       responses:
     200:
       description: OK
-    202:
-      description: Accepted
-    206:
-      description: Partial collection
 </pre>
