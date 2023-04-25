@@ -7,12 +7,12 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR012ParameterNamingConventionSnakeCaseCheckTest extends BaseCheckTest {
+public class OAR012ParameterNamingConventionCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
         ruleName = "OAR012";
-        check = new OAR012ParameterNamingConventionSnakeCaseCheck();
+        check = new OAR012ParameterNamingConventionCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
@@ -45,6 +45,6 @@ public class OAR012ParameterNamingConventionSnakeCaseCheckTest extends BaseCheck
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR012 - ParameterNamingConventionSnakeCase - Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention (snake_case)", RuleType.BUG, Severity.MINOR, tags("format"));
+        assertRuleProperties("OAR012 - ParameterNamingConvention - Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention", RuleType.BUG, Severity.MINOR, tags("format"));
     }
 }

@@ -30,6 +30,7 @@ public final class RulesLists {
 	public static List<Class<?>> getSecurityChecks() {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
+				OAR033HttpHeadersCheck.class,
 				OAR036SessionMechanismsCheck.class,
 				OAR054HostCheck.class
 		);
@@ -42,7 +43,7 @@ public final class RulesLists {
 				OAR009DefaultRequestMediaTypeCheck.class,
 				OAR010DefaultResponseMediaTypeCheck.class,
 				OAR011UrlNamingConventionCheck.class,
-				OAR012ParameterNamingConventionSnakeCaseCheck.class,
+				OAR012ParameterNamingConventionCheck.class,
 				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,
 				OAR042BasePathCheck.class,
@@ -66,7 +67,13 @@ public final class RulesLists {
 				OAR034StandardPagedResponseCheck.class,
 				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
-				OAR039StandardResponseCodesCheck.class
+				OAR039StandardResponseCodesCheck.class,
+				OAR061GetMethodCheck.class,
+				OAR062PostMethodCheck.class,
+				OAR063PutMethodCheck.class,
+				OAR064PatchMethodCheck.class,
+				OAR065DeleteMethodCheck.class
+
 		);
 	}
 
@@ -80,7 +87,8 @@ public final class RulesLists {
 				OAR024StartParameterCheck.class,
 				OAR025LimitParameterCheck.class,
 				OAR026TotalParameterDefaultValueCheck.class,
-				OAR028FilterParameterCheck.class
+				OAR028FilterParameterCheck.class,
+				OAR060QueryParametersOptionalCheck.class
 		);
 	}
 
