@@ -26,5 +26,5 @@ maven-publish:
   stage: publish
   image: maven:3-jdk-11
   script:
-    . mvn clean
+    - mvn clean
     - mvn $MAVEN_CLI_OPTS deploy
