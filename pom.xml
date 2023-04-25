@@ -4,7 +4,7 @@
   <distributionManagement>
     <repository>
         <id>apiquality</id>
-        <url>http://nexus.cloudappi.net/repository/apiquality/</url>
+        <url>http://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/</url>
     </repository>
   </distributionManagement>
   <groupId>org.sonar.samples.openapi</groupId>
