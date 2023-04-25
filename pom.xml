@@ -9,7 +9,7 @@
   </distributionManagement>
   <groupId>org.sonar.samples.openapi</groupId>
   <artifactId>dosonarapi-community</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.3</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Custom Rules Example</name>
