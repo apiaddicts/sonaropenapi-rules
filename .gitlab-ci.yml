@@ -37,6 +37,7 @@ deploy:
   before_script: ''
   script:
     - export KUBECONFIG=$KUBECONFIG
+    - apt-get install wget
     - wget --user=$NEXUS_USERNAME --password=$NEXUS_PASSWORD '$NEXUS_URL/org/sonar/samples/openapi/dosonarapi-community/1.0.3/dosonarapi-community-1.0.3.jar' 
     - helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
     - helm repo update
