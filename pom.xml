@@ -4,7 +4,7 @@
   <distributionManagement>
     <repository>
         <id>apiquality</id>
-        <url>https://nexus.cloudappi.net/repository/apiquality/</url>
+        <url>https://nexus.cloudappi.net/repository/apiquality</url>
     </repository>
   </distributionManagement>
   <groupId>org.sonar.samples.openapi</groupId>
@@ -102,10 +102,6 @@
           <sonarLintSupported>true</sonarLintSupported>
           <sonarQubeMinVersion>${sonarQubeMinVersion}</sonarQubeMinVersion>
           <basePlugin>openapi</basePlugin>
-          <serverId>nexus</serverId>
-          <nexusUrl>https://nexus.cloudappi.net</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
         </configuration>
       </plugin>
 
@@ -151,10 +147,6 @@
                   </excludes>
                 </filter>
               </filters>
-              <serverId>nexus</serverId>
-              <nexusUrl>https://nexus.cloudappi.net</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-              <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
             </configuration>
           </execution>
         </executions>
@@ -167,10 +159,6 @@
         <configuration>
           <destFile>${sonar.jacoco.reportPaths}</destFile>
           <append>true</append>
-          <serverId>nexus</serverId>
-          <nexusUrl>https://nexus.cloudappi.net</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
         </configuration>
         <executions>
           <execution>
