@@ -1,0 +1,29 @@
+variables:
+  MAVEN_CLI_OPTS: "-s settings.xml --batch-mode"
+
+stages:
+  - build
+  - test
+  - publish
+
+maven-build:
+  stage: build
+  image: maven:3-jdk-11
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+    - mvn $MAVEN_CLI_OPTS package
+  artifacts:
+    paths:
+      - target/*.jar
+
+maven-test:
+  stage: test
+  image: maven:3-jdk-11
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+
+maven-publish:
+  stage: publish
+  image: maven:3-jdk-11
+  script:
+    - mvn $MAVEN_CLI_OPTS deploy
