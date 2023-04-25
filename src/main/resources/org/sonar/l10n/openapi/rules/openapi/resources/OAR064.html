@@ -1,6 +1,6 @@
-<p>Los códigos de respuesta en las operaciones POST deben definirse de acuerdo con el estándar</p>
-<h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>Todos los ejemplos están en YAML</h3>
+<p>Response codes in PATCH operations must be defined according to the standard</p>
+<h2>Noncompliant Code Example (OpenAPI 2)</h2>
+<h3>All the examples are in YAML</h3>
 <pre>
 swagger: "2.0"
 info:
@@ -8,12 +8,12 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    patch:
       responses:
         400:
-          description: Bad request
+          description: Bad request       
 </pre>
-<h2>Solución compatible (OpenAPI 2)</h2>
+<h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
 info:
@@ -21,12 +21,12 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    patch:
       responses:
         200:
           description: OK
 </pre>
-<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
 openapi: "3.0.0"
 info:
@@ -34,12 +34,12 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    patch:
       responses:
         400:
-          description: Bad request
+          description: Bad request     
 </pre>
-<h2>Solución compatible (OpenAPI 3)</h2>
+<h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>
 openapi: "3.0.0"
 info:
@@ -47,7 +47,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    post:
+    patch:
       responses:
     200:
       description: OK
