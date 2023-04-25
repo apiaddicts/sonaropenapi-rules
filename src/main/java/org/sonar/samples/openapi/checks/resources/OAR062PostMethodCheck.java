@@ -15,12 +15,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Rule(key = OAR061GetMethodCheck.KEY)
-public class OAR061GetMethodCheck extends BaseCheck {
+@Rule(key = OAR062PostMethodCheck.KEY)
+public class OAR062PostMethodCheck extends BaseCheck {
 
-    public static final String KEY = "OAR061";
-    private static final String MESSAGE = "OAR061.error";
-    private static final String MANDATORY_RESPONSE_CODES = "200 or 202 or 206";
+    public static final String KEY = "OAR062";
+    private static final String MESSAGE = "OAR062.error";
+    private static final String MANDATORY_RESPONSE_CODES = "200 or 201 or 202 or 204 or 206";
     private static final String DEFAULT_EXCLUSION = "/status";
 
     @RuleProperty(
@@ -69,7 +69,7 @@ public class OAR061GetMethodCheck extends BaseCheck {
             }
 
             String operationType = node.key().getTokenValue();
-            if (!"get".equalsIgnoreCase(operationType)) {
+            if (!"post".equalsIgnoreCase(operationType)) { 
                 return;
             }
 
