@@ -162,6 +162,10 @@
         <configuration>
           <destFile>${sonar.jacoco.reportPaths}</destFile>
           <append>true</append>
+          <serverId>nexus</serverId>
+          <nexusUrl>https://nexus.cloudappi.net</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
         </configuration>
         <executions>
           <execution>
@@ -171,12 +175,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <serverId>nexus</serverId>
-          <nexusUrl>https://nexus.cloudappi.net</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          <skipStagingRepositoryClose>false</skipStagingRepositoryClose>
-        </configuration>
       </plugin>
     </plugins>
   </build>
