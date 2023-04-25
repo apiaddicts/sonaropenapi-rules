@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <distributionManagement>
     <repository>
-        <id>nexus</id>
+        <id>apiquality</id>
         <url>http://nexus.cloudappi.net/repository/apiquality/</url>
     </repository>
   </distributionManagement>

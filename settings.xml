@@ -1,7 +1,7 @@
 <settings>
   <servers>
     <server>
-      <id>nexus</id>
+      <name>apiquality</name>
       <username>apiquality</username>
       <password>VuwtYGz35or6gb</password>
     </server>
