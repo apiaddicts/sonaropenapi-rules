@@ -41,7 +41,7 @@ deploy:
     - mv ./kubectl ~/.local/bin/kubectl
     - export KUBECONFIG=$KUBECONFIG
     - apt install wget -y
-    - wget --user=$NEXUS_USERNAME --password=$NEXUS_PASSWORD '$NEXUS_URL/org/sonar/samples/openapi/dosonarapi-community/1.0.3/dosonarapi-community-1.0.3.jar' 
+    - wget --user=$NEXUS_USERNAME --password=$NEXUS_PASSWORD $NEXUS_URL/org/sonar/samples/openapi/dosonarapi-community/1.0.3/dosonarapi-community-1.0.3.jar 
     - wget https://get.helm.sh/helm-v3.9.3-linux-amd64.tar.gz
     - tar xvf helm-v3.9.3-linux-amd64.tar.gz
     - sudo mv linux-amd64/helm /usr/local/bin
