@@ -73,7 +73,4 @@ deploy:
     - helm upgrade --install -n $NAMESPACE sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yaml
   needs:
     - "maven-publish"
-  only:
-     refs:
-      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
-      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
+
