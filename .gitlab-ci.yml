@@ -8,6 +8,7 @@ stages:
   - publish
   - deploy
 
+##BUILD ARTIFACT
 maven-build:
   stage: build
   image: maven:3-jdk-11
@@ -22,7 +23,7 @@ maven-build:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
-
+##TEST ARTIFACT
 maven-test:
   stage: test
   image: maven:3-jdk-11
@@ -33,7 +34,7 @@ maven-test:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
-
+##PUBLISH ARTIFACT
 maven-publish:
   stage: publish
   image: maven:3-jdk-11
@@ -44,7 +45,7 @@ maven-publish:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
-
+##DEPLOY DEVELOP ENVIRONMENT
 deploy:dev:
   stage: deploy
   image: ubuntu:latest
@@ -71,6 +72,7 @@ deploy:dev:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
+##DEPLOY PRODUCTION ENVIRONMENT
 deploy:pro:
   stage: deploy
   image: ubuntu:latest
