@@ -36,7 +36,7 @@ maven-publish:
   image: maven:3-jdk-11
   script:
     - mvn $MAVEN_CLI_OPTS deploy
- only:
+  only:
      refs:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
 
