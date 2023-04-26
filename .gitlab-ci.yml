@@ -34,7 +34,7 @@ deploy:
   image: ubuntu:latest
   script:
     - apt update -y  && apt upgrade -y
-    - apt install curl
+    - apt install curl -y
     - curl -LO https://dl.k8s.io/release/v1.24.8/bin/linux/amd64/kubectl
     - chmod +x kubectl
     - mkdir -p ~/.local/bin/kubectl
