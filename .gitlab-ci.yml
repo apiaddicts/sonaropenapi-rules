@@ -16,27 +16,30 @@ maven-build:
   artifacts:
     paths:
       - target/*.jar
-    only:
-        refs:
-        - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+  only:
+     refs:
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+
 
 maven-test:
   stage: test
   image: maven:3-jdk-11
   script:
     - mvn $MAVEN_CLI_OPTS test
-    only:
-        refs:
-        - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+  only:
+     refs:
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+
 
 maven-publish:
   stage: publish
   image: maven:3-jdk-11
   script:
     - mvn $MAVEN_CLI_OPTS deploy
-    only:
-        refs:
-        - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+ only:
+     refs:
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+
 
 deploy:
   stage: deploy
@@ -56,8 +59,8 @@ deploy:
     - helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
     - helm repo update
     - helm upgrade --install -n sonarqube-dev sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yaml
-   needs:
-     - "maven-publish"
-   only:
-      refs:
-       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+  needs:
+    - "maven-publish"
+  only:
+     refs:
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
