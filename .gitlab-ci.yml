@@ -16,27 +16,27 @@ maven-build:
   artifacts:
     paths:
       - target/*.jar
-  only:
-      refs:
-       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+    only:
+        refs:
+        - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
 
 maven-test:
   stage: test
   image: maven:3-jdk-11
   script:
     - mvn $MAVEN_CLI_OPTS test
-  only:
-      refs:
-       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+    only:
+        refs:
+        - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
 
 maven-publish:
   stage: publish
   image: maven:3-jdk-11
   script:
     - mvn $MAVEN_CLI_OPTS deploy
-  only:
-      refs:
-       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+    only:
+        refs:
+        - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
 
 deploy:
   stage: deploy
