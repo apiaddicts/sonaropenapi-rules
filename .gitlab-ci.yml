@@ -59,7 +59,7 @@ deploy:
     - mv linux-amd64/helm /usr/local/bin
     - helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
     - helm repo update
-    - sed -i "s,${TAG_NAME},$CI_COMMIT_TAG,g" sonarqube/values-dev.yaml
+    - sed -i "s,${VERSION},${TAG_NAME},g" sonarqube/values-dev.yaml
     - helm upgrade --install -n sonarqube-dev sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yaml
   needs:
     - "maven-publish"
