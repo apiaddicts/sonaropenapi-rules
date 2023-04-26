@@ -33,6 +33,7 @@ deploy:
   stage: deploy
   image: ubuntu:latest
   script:
+    - apt install curl
     - curl -LO https://dl.k8s.io/release/v1.24.8/bin/linux/amd64/kubectl
     - chmod +x kubectl
     - mkdir -p ~/.local/bin/kubectl
@@ -45,8 +46,8 @@ deploy:
     - helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
     - helm repo update
     - helm upgrade --install -n sonarqube-dev sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yam
-  needs:
-    - "maven-publish"
+  # needs:
+  #   - "maven-publish"
   # only:
   #    refs:
   #     - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
