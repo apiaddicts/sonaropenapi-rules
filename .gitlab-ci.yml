@@ -1,5 +1,6 @@
 variables:
   MAVEN_CLI_OPTS: "-s settings.xml --batch-mode"
+  TAG_NAME: $CI_COMMIT_TAG
 
 stages:
   - build

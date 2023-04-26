@@ -217,7 +217,7 @@ prometheusExporter:
 plugins:
   install: 
     - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/checkstyle/9.0.1/checkstyle-9.0.1.jar"
-    - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/dosonarapi/${env.CI_COMMIT_TAG}/dosonarapi-${env.CI_COMMIT_TAG}.jar"
+    - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/dosonarapi/${TAG_NAME}/dosonarapi-${env.CI_COMMIT_TAG}.jar"
     - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/findbugs/4.0.5/findbugs-4.0.5.jar"
     - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/openapi/1.0.0/openapi-1.0.0.jar"
 

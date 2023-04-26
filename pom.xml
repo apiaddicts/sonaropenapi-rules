@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.sonar.samples.openapi</groupId>
   <artifactId>dosonarapi-community</artifactId>
-  <version>${env.CI_COMMIT_TAG}</version>
+  <version>${TAG_NAME}</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Custom Rules Example</name>
