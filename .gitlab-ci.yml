@@ -90,7 +90,7 @@ deploy:pro:
     - helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
     - helm repo update
     - sed -i "s,plugin_version,${TAG_NAME},g" sonarqube/values-dev.yaml
-    - helm upgrade --install -n sonarqube sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yaml
+    - helm upgrade --install -n sonarqube sonarqube-lts sonarqube/sonarqube-lts --create-namespace -f values.yaml
   needs:
     - "maven-publish"
   only:
