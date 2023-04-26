@@ -20,6 +20,7 @@ maven-build:
   only:
      refs:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
 
 maven-test:
@@ -30,6 +31,7 @@ maven-test:
   only:
      refs:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
 
 maven-publish:
@@ -40,11 +42,19 @@ maven-publish:
   only:
      refs:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
 
 deploy:
   stage: deploy
   image: ubuntu:latest
+  rules:
+    - if: $CI_COMMIT_TAG == "/^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/"
+      variables:
+        NAMESPACE: sonarqube-dev
+    - if: $CI_COMMIT_TAG == "/^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/"
+      variables:
+        NAMESPACE: sonarqube
   script:
     - apt update -y  && apt upgrade -y
     - apt install curl -y
@@ -60,9 +70,10 @@ deploy:
     - helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
     - helm repo update
     - sed -i "s,plugin_version,${TAG_NAME},g" sonarqube/values-dev.yaml
-    - helm upgrade --install -n sonarqube-dev sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yaml
+    - helm upgrade --install -n $NAMESPACE sonarqube-lts-dev sonarqube/sonarqube-lts --create-namespace -f sonarqube/values-dev.yaml
   needs:
     - "maven-publish"
   only:
      refs:
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
+      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
