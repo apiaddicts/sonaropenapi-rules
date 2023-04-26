@@ -33,7 +33,7 @@ deploy:
   stage: deploy
   image: ubuntu:latest
   script:
-    - apt update && apt upgrade
+    - apt update -y  && apt upgrade -y
     - apt install curl
     - curl -LO https://dl.k8s.io/release/v1.24.8/bin/linux/amd64/kubectl
     - chmod +x kubectl
