@@ -45,7 +45,7 @@ public class OAR063PutMethodCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("mandatory-response-codes", "200 or 202 or 204 or 206", RuleParamType.STRING);
-        assertParameterProperties("path-exclusions", "/status", RuleParamType.STRING);
+        assertParameterProperties("mandatory-response-codes", "200, 202, 204, 206", RuleParamType.STRING);
+        assertParameterProperties("path-exclusions", "/status, /another", RuleParamType.STRING);
     }
 }
