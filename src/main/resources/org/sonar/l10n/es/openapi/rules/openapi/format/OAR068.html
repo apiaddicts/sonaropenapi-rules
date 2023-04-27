@@ -1,4 +1,4 @@
-<p>Los nombres de las propiedades del esquema RequestBody y Responses deben cumplir la convención de nomenclatura snake_case</p>
+<p>Los nombres de las propiedades del esquema RequestBody y Responses deben cumplir la convención de nomenclatura PascalCase</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <h3>Todos los ejemplos están en YAML</h3>
 <pre>
@@ -16,7 +16,7 @@ paths:
           schema:
             type: object
             properties:
-              firstName: 
+              first_name: 
                 type: string
       responses:
         '200':
@@ -24,7 +24,7 @@ paths:
           schema:
             type: object
             properties:
-              userId:
+              user_id:
                 type: integer
   </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
@@ -43,9 +43,9 @@ paths:
             schema:
               type: object
               properties:
-                first_name:
+                FirstName:
                   type: string
-                last_name:
+                LastName:
                   type: string
         responses:
           '200':
@@ -53,9 +53,9 @@ paths:
             schema:
               type: object
               properties:
-                user_id:
+                UserId:
                   type: integer
-                user_name:
+                UserName:
                   type: string
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
@@ -73,7 +73,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  firstName: 
+                  first_name: 
+                    type: string
+                  last_name:
                     type: string
         responses:
           '200':
@@ -83,8 +85,10 @@ paths:
                 schema:
                   type: object
                   properties:
-                    userID: 
+                    user_id: 
                       type: integer
+                    user_name:
+                      type: string
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
 <pre>
@@ -101,7 +105,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  last_name:
+                  LastName:
                     type: string
         responses:
           '200':
@@ -111,6 +115,6 @@ paths:
                 schema:
                   type: object
                   properties:
-                    user_name:
+                    UserName:
                       type: string
 </pre>
