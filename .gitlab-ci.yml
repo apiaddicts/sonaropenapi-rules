@@ -69,7 +69,6 @@ deploy:dev:
     - "maven-publish"
   only:
      refs:
-      - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)$/
       - /^[0-9]+(\.[0-9]+)+(\.[0-9]+)-dev$/
 
 ##DEPLOY PRODUCTION ENVIRONMENT
