@@ -47,7 +47,10 @@ public final class RulesLists {
 				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,
 				OAR042BasePathCheck.class,
-				OAR052UndefinedNumericFormatCheck.class
+				OAR052UndefinedNumericFormatCheck.class,
+				OAR066SnakeCaseNamingConventionCheck.class,
+				OAR067CamelCaseNamingConventionCheck.class,
+				OAR068PascalCaseNamingConventionCheck.class
 		);
 	}
 
