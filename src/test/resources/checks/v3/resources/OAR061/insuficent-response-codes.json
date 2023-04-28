@@ -1,32 +1,39 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Swagger Petstore"
-    },
-    "paths": {
-        "/status": {
-          "get": {
-            "summary": "Get API status",
-            "responses": {  
-              "200": {
-                "description": "OK"
-              },
-              "202": {
-                "description": "Accepted"
-              }
-            }
-          }
-        },
-        "/users": {
-          "get": {
-            "summary": "Get all users",
-            "responses": {  # Noncompliant {{OAR061: Response code 200 or 202 or 206 must be defined}}
-              "400": {
-                "description": "Error"
-              }
-            }
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "summary": "Get API status",
+        "responses": {
+          "400": {
+            "description": "error"
           }
         }
       }
+    },
+    "/another": {
+      "get": {
+        "summary": "Get another API status",
+        "responses": {
+          "400": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "responses": {  # Noncompliant {{OAR061: Response code 200, 202, 206 must be defined}}
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  }
 }

@@ -20,8 +20,8 @@ public class OAR062PostMethodCheck extends BaseCheck {
 
     public static final String KEY = "OAR062";
     private static final String MESSAGE = "OAR062.error";
-    private static final String MANDATORY_RESPONSE_CODES = "200 or 201 or 202 or 204 or 206";
-    private static final String DEFAULT_EXCLUSION = "/status";
+    private static final String MANDATORY_RESPONSE_CODES = "200, 201, 202, 204, 206";
+    private static final String DEFAULT_EXCLUSION = "/status, /another";
 
     @RuleProperty(
             key = "mandatory-response-codes",
@@ -44,10 +44,10 @@ public class OAR062PostMethodCheck extends BaseCheck {
     @Override
     protected void visitFile(JsonNode root) {
         if (!mandatoryResponseCodesStr.trim().isEmpty()) {
-            mandatoryResponseCodes.addAll(Stream.of(mandatoryResponseCodesStr.split(" or ")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+            mandatoryResponseCodes.addAll(Stream.of(mandatoryResponseCodesStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
         }
         if (!exclusionStr.trim().isEmpty()) {
-            exclusion = Arrays.stream(exclusionStr.split(" or ")).map(String::trim).collect(Collectors.toSet());
+            exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
         } else {
             exclusion = new HashSet<>(); 
         }
@@ -75,7 +75,7 @@ public class OAR062PostMethodCheck extends BaseCheck {
 
             JsonNode responsesNode = node.get("responses");
             if (responsesNode.isMissing() || responsesNode.isNull()) {
-                addIssue(KEY, translate(MESSAGE, String.join(" or ", mandatoryResponseCodes)), responsesNode.key());
+                addIssue(KEY, translate(MESSAGE, String.join(", ", mandatoryResponseCodes)), responsesNode.key());
                 return;
             }
 
@@ -84,7 +84,7 @@ public class OAR062PostMethodCheck extends BaseCheck {
             boolean hasMandatoryCode = mandatoryResponseCodes.stream().anyMatch(responseCodes::contains);
 
             if (!hasMandatoryCode) {
-                addIssue(KEY, translate(MESSAGE, String.join(" or ", mandatoryResponseCodes)), responsesNode.key());
+                addIssue(KEY, translate(MESSAGE, String.join(", ", mandatoryResponseCodes)), responsesNode.key());
             }
         }
     }
