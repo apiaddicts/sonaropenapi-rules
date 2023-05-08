@@ -92,7 +92,8 @@ public final class RulesLists {
 				OAR025LimitParameterCheck.class,
 				OAR026TotalParameterDefaultValueCheck.class,
 				OAR028FilterParameterCheck.class,
-				OAR060QueryParametersOptionalCheck.class
+				OAR060QueryParametersOptionalCheck.class,
+				OAR070BrokenAccessControlCheck.class
 		);
 	}
 
