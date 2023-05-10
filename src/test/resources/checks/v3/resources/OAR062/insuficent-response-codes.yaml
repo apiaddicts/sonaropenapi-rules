@@ -7,14 +7,17 @@ paths:
     post:
       summary: Get API status
       responses:
-        200:
-          description: OK
-        202:
-          description: Accepted
+        400:
+          description: error
+  /another:
+    post:
+      summary: Get another API status
+      responses:
+        400:
+          description: error
   /users:
     post:
       summary: Get all users
-      responses:  # Noncompliant {{OAR062: Response code 200 or 201 or 202 or 204 or 206 must be defined}}
+      responses:  # Noncompliant {{OAR062: Response code 200, 201, 202, 204, 206 must be defined}}
         400:
           description: Error
-

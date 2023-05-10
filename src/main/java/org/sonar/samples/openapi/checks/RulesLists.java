@@ -43,11 +43,13 @@ public final class RulesLists {
 				OAR009DefaultRequestMediaTypeCheck.class,
 				OAR010DefaultResponseMediaTypeCheck.class,
 				OAR011UrlNamingConventionCheck.class,
-				OAR012ParameterNamingConventionCheck.class,
 				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,
 				OAR042BasePathCheck.class,
-				OAR052UndefinedNumericFormatCheck.class
+				OAR052UndefinedNumericFormatCheck.class,
+				OAR066SnakeCaseNamingConventionCheck.class,
+				OAR067CamelCaseNamingConventionCheck.class,
+				OAR068PascalCaseNamingConventionCheck.class
 		);
 	}
 
@@ -67,28 +69,21 @@ public final class RulesLists {
 				OAR034StandardPagedResponseCheck.class,
 				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
-				OAR039StandardResponseCodesCheck.class,
 				OAR061GetMethodCheck.class,
 				OAR062PostMethodCheck.class,
 				OAR063PutMethodCheck.class,
 				OAR064PatchMethodCheck.class,
-				OAR065DeleteMethodCheck.class
+				OAR065DeleteMethodCheck.class,
+				OAR071GetQueryParamsDefinedCheck.class
 
 		);
 	}
 
 	public static List<Class<?>> getParametersChecks() {
 		return Arrays.asList(
-				OAR019SelectParameterCheck.class,
-				OAR020ExpandParameterCheck.class,
-				OAR021ExcludeParameterCheck.class,
-				OAR022OrderbyParameterCheck.class,
-				OAR023TotalParameterCheck.class,
-				OAR024StartParameterCheck.class,
-				OAR025LimitParameterCheck.class,
 				OAR026TotalParameterDefaultValueCheck.class,
-				OAR028FilterParameterCheck.class,
-				OAR060QueryParametersOptionalCheck.class
+				OAR060QueryParametersOptionalCheck.class,
+				OAR070BrokenAccessControlCheck.class
 		);
 	}
 
