@@ -13,10 +13,13 @@ paths:
             type: integer
             minimum: 1
             maximum: 100
+            format: double
         - name: param2
           in: query
           schema:
             type: number
+            minimum: 1
+            maximum: 100
             format: double
       responses:
         200:

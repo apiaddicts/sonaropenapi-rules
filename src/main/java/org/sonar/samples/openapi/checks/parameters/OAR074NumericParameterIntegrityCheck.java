@@ -45,8 +45,11 @@ public class OAR074NumericParameterIntegrityCheck extends BaseCheck {
                 JsonNode maxNode = schemaNode.get("maximum");
                 JsonNode formatNode = schemaNode.get("format");
 
-                boolean lacksRestriction = (minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing());
-                if (lacksRestriction) {
+                boolean lacksLengthRestriction = (minNode.isMissing() && !maxNode.isMissing()) || (!minNode.isMissing() && maxNode.isMissing()); 
+                boolean formatAlone = !formatNode.isMissing() && minNode.isMissing() && maxNode.isMissing();
+                boolean allMissing = minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing();
+                boolean lacksRestriction = lacksLengthRestriction || allMissing;
+                if (!formatAlone && lacksRestriction) {
                     addIssue(KEY, translate(MESSAGE), typeNode);
                 }
             }
@@ -65,8 +68,11 @@ public class OAR074NumericParameterIntegrityCheck extends BaseCheck {
             JsonNode maxNode = node.get("maximum");
             JsonNode formatNode = node.get("format");
 
-            boolean lacksRestriction = (minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing());
-            if (lacksRestriction) {
+            boolean lacksLengthRestriction = (minNode.isMissing() && !maxNode.isMissing()) || (!minNode.isMissing() && maxNode.isMissing()); 
+            boolean formatAlone = !formatNode.isMissing() && minNode.isMissing() && maxNode.isMissing();
+            boolean allMissing = minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing();
+            boolean lacksRestriction = lacksLengthRestriction || allMissing;
+            if (!formatAlone && lacksRestriction) {
                 addIssue(KEY, translate(MESSAGE), typeNode);
             }
         }

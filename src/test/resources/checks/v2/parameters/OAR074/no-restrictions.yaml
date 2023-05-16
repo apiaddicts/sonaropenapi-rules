@@ -12,7 +12,7 @@ paths:
           type: integer # Noncompliant {{OAR074: Numeric parameters should have minimum, maximum, or format restriction}}
         - name: param2
           in: query
-          type: number  
+          type: number  # Noncompliant {{OAR074: Numeric parameters should have minimum, maximum, or format restriction}}
           minimum: 12
       responses:
         200:
