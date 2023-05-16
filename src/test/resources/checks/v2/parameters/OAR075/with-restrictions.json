@@ -13,7 +13,8 @@
               "in": "path",
               "required": true,
               "type": "string",
-              "maxLength": 10,
+              "minLength": 10,
+              "maxLength": 100,
               "enum": ["admin", "user", "guest"]
             }
           ],

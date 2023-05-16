@@ -44,8 +44,8 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
                 JsonNode patternNode = schemaNode.get("pattern");
                 JsonNode enumNode = schemaNode.get("enum");
 
-                boolean lacksRestriction = (minLengthNode.isMissing() && maxLengthNode.isMissing() &&
-                    patternNode.isMissing() && enumNode.isMissing());
+                boolean lacksLengthRestriction = minLengthNode.isMissing() != maxLengthNode.isMissing();  
+                boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing())); 
                 if (lacksRestriction) {
                     addIssue(KEY, translate(MESSAGE), typeNode);
                 }
@@ -63,9 +63,9 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
             JsonNode maxLengthNode = node.get("maxLength");
             JsonNode patternNode = node.get("pattern");
             JsonNode enumNode = node.get("enum");
-
-            boolean lacksRestriction = (minLengthNode.isMissing() && maxLengthNode.isMissing() &&
-                patternNode.isMissing() && enumNode.isMissing());
+            
+            boolean lacksLengthRestriction = minLengthNode.isMissing() != maxLengthNode.isMissing();  
+            boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing())); 
             if (lacksRestriction) {
                 addIssue(KEY, translate(MESSAGE), typeNode);
             }
