@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
-import org.sonar.samples.openapi.checks.parameters.OAR070BrokenAccessControlCheck;
+
 
 public class OAR070BrokenAccessControlCheckTest extends BaseCheckTest{
     

@@ -75,7 +75,6 @@ public final class RulesLists {
 				OAR064PatchMethodCheck.class,
 				OAR065DeleteMethodCheck.class,
 				OAR071GetQueryParamsDefinedCheck.class
-
 		);
 	}
 
@@ -83,7 +82,8 @@ public final class RulesLists {
 		return Arrays.asList(
 				OAR026TotalParameterDefaultValueCheck.class,
 				OAR060QueryParametersOptionalCheck.class,
-				OAR070BrokenAccessControlCheck.class
+				OAR070BrokenAccessControlCheck.class,
+				OAR075StringParameterIntegrityCheck.class
 		);
 	}
 
