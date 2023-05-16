@@ -75,7 +75,6 @@ public final class RulesLists {
 				OAR064PatchMethodCheck.class,
 				OAR065DeleteMethodCheck.class,
 				OAR071GetQueryParamsDefinedCheck.class
-
 		);
 	}
 
@@ -84,7 +83,9 @@ public final class RulesLists {
 				OAR026TotalParameterDefaultValueCheck.class,
 				OAR060QueryParametersOptionalCheck.class,
 				OAR070BrokenAccessControlCheck.class,
-				OAR074NumericParameterIntegrityCheck.class
+				OAR074NumericParameterIntegrityCheck.class,
+				OAR075StringParameterIntegrityCheck.class
+
 		);
 	}
 
