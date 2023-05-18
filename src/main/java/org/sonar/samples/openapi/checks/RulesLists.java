@@ -83,6 +83,7 @@ public final class RulesLists {
 		return Arrays.asList(
 				OAR026TotalParameterDefaultValueCheck.class,
 				OAR060QueryParametersOptionalCheck.class,
+				OAR069PathParamAndQueryCheck.class,
 				OAR070BrokenAccessControlCheck.class,
 				OAR074NumericParameterIntegrityCheck.class,
 				OAR075StringParameterIntegrityCheck.class
