@@ -75,6 +75,7 @@ public final class RulesLists {
 				OAR064PatchMethodCheck.class,
 				OAR065DeleteMethodCheck.class,
 				OAR071GetQueryParamsDefinedCheck.class,
+				OAR072NonOKModelResponseCheck.class,
 				OAR073RateLimitCheck.class
 		);
 	}
