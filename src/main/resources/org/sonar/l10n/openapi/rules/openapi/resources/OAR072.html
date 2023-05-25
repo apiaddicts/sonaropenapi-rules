@@ -1,0 +1,154 @@
+<p>Non OK responses shouldn't have stackTraces</p>
+<h2>Noncompliant Code Example (OpenAPI 2)</h2>
+<h3>All the examples are in YAML</h3>
+<pre>
+  swagger: '2.0'
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /sample:
+    get:
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              status:
+                type: string
+        '400':
+          description: Bad request
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: string
+              stackTrace:
+                type: string
+</pre>
+<h2>Compliant Solution (OpenAPI 2)</h2>
+<pre>
+  swagger: '2.0'
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /sample:
+    get:
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              status:
+                type: string
+        '400':
+          description: Bad request
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: string
+</pre>
+<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<pre>
+  openapi: 3.0.0
+  info:
+    title: Sample API
+    version: 1.0.0
+  paths:
+    /sample:
+      get:
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                    name:
+                      type: string
+                    status:
+                      type: string
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                      format: int32
+                    message:
+                      type: string
+                    details:
+                      type: string
+                    stackTrace:
+                      type: string
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<pre>
+  openapi: 3.0.0
+  info:
+    title: Sample API
+    version: 1.0.0
+  paths:
+    /sample:
+      get:
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                    name:
+                      type: string
+                    status:
+                      type: string
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                      format: int32
+                    message:
+                      type: string
+                    details:
+                      type: string
+</pre>
