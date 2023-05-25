@@ -22,5 +22,5 @@ definitions:
     type: object
     properties:
       value:
-        type: number # Noncompliant {{OAR016: Numeric types requires a valid format}}
+        type: number # Noncompliant {{OAR076: Numeric types requires a valid format}}
         format: int64
