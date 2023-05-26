@@ -81,7 +81,15 @@ public final class RulesLists {
 
 	public static List<Class<?>> getParametersChecks() {
 		return Arrays.asList(
+				OAR019SelectParameterCheck.class,
+				OAR020ExpandParameterCheck.class,
+				OAR021ExcludeParameterCheck.class,
+				OAR022OrderbyParameterCheck.class,
+				OAR023TotalParameterCheck.class,
+				OAR024StartParameterCheck.class,
+				OAR025LimitParameterCheck.class,
 				OAR026TotalParameterDefaultValueCheck.class,
+				OAR028FilterParameterCheck.class,
 				OAR060QueryParametersOptionalCheck.class,
 				OAR069PathParamAndQueryCheck.class,
 				OAR070BrokenAccessControlCheck.class,

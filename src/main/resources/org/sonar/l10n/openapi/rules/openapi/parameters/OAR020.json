@@ -1,0 +1,13 @@
+{
+  "title": "OAR020 - ExpandParameter - $expand must be defined as a non-required parameter in this operation",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MINOR"
+}
