@@ -1,0 +1,13 @@
+{
+  "title": "OAR021 - ExcludeParameter - $exclude must be defined as a parameter in this operation",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MINOR"
+}

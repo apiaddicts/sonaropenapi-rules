@@ -1,0 +1,69 @@
+<p>En operaciones de consulta, el parámetro $orderby, que permite indicar la ordenación, se debe definir como parámetro no obligatorio.</p>
+<h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<h3>Todos los ejemplos están en YAML</h3>
+<pre>
+swagger: "2.0"
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+</pre>
+<h2>Solución compatible (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: query
+          name: $orderby
+          required: false
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: Ok
+</pre>
+<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<pre>
+openapi: 3.0.1
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+</pre>
+<h2>Solución compatible (OpenAPI 3)</h2>
+<pre>
+openapi: 3.0.1
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: query
+          name: $orderby
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        200:
+          description: Ok
+</pre>
