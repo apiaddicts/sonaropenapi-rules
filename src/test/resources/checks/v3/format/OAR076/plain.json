@@ -15,30 +15,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "id": {
+                      "type": "integer" # Noncompliant {{OAR076: Numeric types requires a valid format}}
+                    },
+                    "product_id": {
+                      "type": "integer", # Noncompliant {{OAR076: Numeric types requires a valid format}}
+                      "format": "int128"
+                    },
+                    "line": {
+                      "type": "number", # Noncompliant {{OAR076: Numeric types requires a valid format}}
+                      "format": "int32"
+                    },
                     "price": {
                       "type": "number",
                       "format": "double"
-                    },
-                    "nested": {
-                      "$ref": "#/components/schemas/nested"
                     }
                   }
                 }
               }
             }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "nested": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "number", # Noncompliant {{OAR016: Numeric types requires a valid format}}
-            "format": "int64"
           }
         }
       }

@@ -43,13 +43,12 @@ public final class RulesLists {
 				OAR009DefaultRequestMediaTypeCheck.class,
 				OAR010DefaultResponseMediaTypeCheck.class,
 				OAR011UrlNamingConventionCheck.class,
-				OAR016NumericFormatCheck.class,
 				OAR037StringFormatCheck.class,
 				OAR042BasePathCheck.class,
-				OAR052UndefinedNumericFormatCheck.class,
 				OAR066SnakeCaseNamingConventionCheck.class,
 				OAR067CamelCaseNamingConventionCheck.class,
-				OAR068PascalCaseNamingConventionCheck.class
+				OAR068PascalCaseNamingConventionCheck.class,
+				OAR076NumericFormatCheck.class
 		);
 	}
 

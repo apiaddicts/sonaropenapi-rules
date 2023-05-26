@@ -12,12 +12,12 @@ paths:
             type: object
             properties:
               id:
-                type: integer
+                type: integer # Noncompliant {{OAR076: Numeric types requires a valid format}}
               product_id:
-                type: integer # Noncompliant {{OAR016: Numeric types requires a valid format}}
+                type: integer # Noncompliant {{OAR076: Numeric types requires a valid format}}
                 format: int128
               line:
-                type: number # Noncompliant {{OAR016: Numeric types requires a valid format}}
+                type: number # Noncompliant {{OAR076: Numeric types requires a valid format}}
                 format: int32
               price:
                 type: number

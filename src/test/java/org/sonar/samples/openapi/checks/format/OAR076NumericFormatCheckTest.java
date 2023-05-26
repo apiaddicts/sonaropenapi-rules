@@ -6,12 +6,12 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR016NumericFormatCheckTest extends BaseCheckTest {
+public class OAR076NumericFormatCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
-        ruleName = "OAR016";
-        check = new OAR016NumericFormatCheck();
+        ruleName = "OAR076";
+        check = new OAR076NumericFormatCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
@@ -48,6 +48,6 @@ public class OAR016NumericFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR016 - NumericFormat - Numeric types requires a valid format", RuleType.BUG, Severity.MAJOR, tags("format"));
+        assertRuleProperties("OAR076 - NumericFormat - Numeric types requires a valid format", RuleType.BUG, Severity.MINOR, tags("format"));
     }
 }
