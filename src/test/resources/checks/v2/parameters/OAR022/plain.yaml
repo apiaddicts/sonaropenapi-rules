@@ -7,7 +7,7 @@ paths:
     get:
       parameters:
         - in: query
-          name: other
+          name: $orderby
           type: array
           items:
             type: string

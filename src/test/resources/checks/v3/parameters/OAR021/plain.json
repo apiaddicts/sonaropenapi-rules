@@ -9,7 +9,7 @@
       "get" : {
         "parameters" : [ {
           "in" : "query",
-          "name" : "other",
+          "name" : "$exclude",
           "schema": {
             "type" : "array",
             "items" : {

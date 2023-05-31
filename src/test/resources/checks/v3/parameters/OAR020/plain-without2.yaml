@@ -5,15 +5,15 @@ info:
 paths:
   /pets:
     get:
-      parameters:
+      parameters: 
         - in: query
-          name: $select
+          name: other # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
           schema:
             type: array
             items:
               type: string
         - in: query
-          name: $select
+          name: select # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
           schema:
             type: array
             items:

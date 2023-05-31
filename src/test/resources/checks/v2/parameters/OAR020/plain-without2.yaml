@@ -5,14 +5,14 @@ info:
 paths:
   /pets:
     get:
-      parameters:
+      parameters: 
         - in: query
-          name: $start
+          name: other # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
           type: array
           items:
             type: string
         - in: query
-          name: $start
+          name: hola # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
           type: array
           items:
             type: string

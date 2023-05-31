@@ -9,14 +9,14 @@
       "get" : {
         "parameters" : [ {
           "in" : "query",
-          "name" : "other",
+          "name" : "$exclude", 
           "type" : "array",
           "items" : {
             "type" : "string"
           }
         }, {
           "in" : "query",
-          "name" : "$exclude",
+          "name" : "$exclude", 
           "type" : "array",
           "items" : {
             "type" : "string"

@@ -7,9 +7,9 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { # Noncompliant {{OAR023: $total must be defined as a parameter in this operation}}
+        "parameters" : [ { 
           "in" : "query",
-          "name" : "other",
+          "name" : "other", # Noncompliant {{OAR023: $total must be defined as a parameter in this operation}}
           "schema": {
             "type" : "array",
             "items" : {
@@ -18,9 +18,12 @@
           }
         }, {
           "in" : "query",
-          "name" : "total",
+          "name" : "select",  # Noncompliant {{OAR023: $total must be defined as a parameter in this operation}}
           "schema": {
-            "type" : "boolean"
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
           }
         } ],
         "responses" : {

@@ -5,14 +5,14 @@ info:
 paths:
   /pets:
     get:
-      parameters: # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
+      parameters: 
         - in: query
-          name: other
+          name: other # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
           type: array
           items:
             type: string
         - in: query
-          name: exclude
+          name: hola # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
           type: array
           items:
             type: string

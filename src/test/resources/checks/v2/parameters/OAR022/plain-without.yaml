@@ -5,14 +5,14 @@ info:
 paths:
   /pets:
     get:
-      parameters: # Noncompliant {{OAR022: $orderby must be defined as a parameter in this operation}}
+      parameters: 
         - in: query
-          name: other
+          name: other # Noncompliant {{OAR022: $orderby must be defined as a parameter in this operation}}
           type: array
           items:
             type: string
         - in: query
-          name: orderby
+          name: hola # Noncompliant {{OAR022: $orderby must be defined as a parameter in this operation}}
           type: array
           items:
             type: string

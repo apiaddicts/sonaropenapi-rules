@@ -5,16 +5,17 @@ info:
 paths:
   /pets:
     get:
-      parameters: # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
+      parameters: 
         - in: query
-          name: other
+          name: other # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
           type: array
           items:
             type: string
         - in: query
-          name: init
-          type: integer
-          format: int64
+          name: hola # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
+          type: array
+          items:
+            type: string
       responses:
         206:
           description: Ok

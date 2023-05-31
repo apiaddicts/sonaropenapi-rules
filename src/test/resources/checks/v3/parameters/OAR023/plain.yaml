@@ -7,7 +7,7 @@ paths:
     get:
       parameters:
         - in: query
-          name: other
+          name: $total
           schema:
             type: array
             items:
@@ -15,7 +15,9 @@ paths:
         - in: query
           name: $total
           schema:
-            type: boolean
+            type: array
+            items:
+              type: string
       responses:
         206:
           description: Ok
