@@ -9,15 +9,18 @@
       "get" : {
         "parameters" : [ {
           "in" : "query",
-          "name" : "other",
+          "name" : "$total", 
           "type" : "array",
           "items" : {
             "type" : "string"
           }
         }, {
           "in" : "query",
-          "name" : "$total",
-          "type" : "boolean"
+          "name" : "$total", 
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "206" : {

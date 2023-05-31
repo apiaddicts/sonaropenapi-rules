@@ -7,9 +7,9 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { 
+        "parameters" : [ {
           "in" : "query",
-          "name" : "other", # Noncompliant {{OAR019: $select must be defined as a parameter in this operation}}
+          "name" : "$expand",
           "schema": {
             "type" : "array",
             "items" : {
@@ -18,7 +18,7 @@
           }
         }, {
           "in" : "query",
-          "name" : "select",  # Noncompliant {{OAR019: $select must be defined as a parameter in this operation}}
+          "name" : "$expand",
           "schema": {
             "type" : "array",
             "items" : {

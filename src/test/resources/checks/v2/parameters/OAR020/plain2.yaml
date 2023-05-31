@@ -7,12 +7,12 @@ paths:
     get:
       parameters:
         - in: query
-          name: $start
+          name: $expand
           type: array
           items:
             type: string
         - in: query
-          name: $start
+          name: $expand
           type: array
           items:
             type: string

@@ -9,16 +9,18 @@
       "get" : {
         "parameters" : [ {
           "in" : "query",
-          "name" : "other",
+          "name" : "$limit", 
           "type" : "array",
           "items" : {
             "type" : "string"
           }
         }, {
           "in" : "query",
-          "name" : "$limit",
-          "type" : "integer",
-          "format" : "int64"
+          "name" : "$limit", 
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "206" : {

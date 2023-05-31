@@ -1,42 +1,85 @@
 package org.sonar.samples.openapi.checks.parameters;
 
+import java.util.Set;
+
+import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
+import org.sonar.samples.openapi.checks.BaseCheck;
 
-import static org.sonar.samples.openapi.utils.VerbPathMatcher.GET_ALL_1ST_LEVEL;
-import static org.sonar.samples.openapi.utils.VerbPathMatcher.GET_ALL_2ND_LEVEL;
-import static org.sonar.samples.openapi.utils.VerbPathMatcher.GET_ALL_3RD_LEVEL;
-import static org.sonar.samples.openapi.utils.VerbPathMatcher.POST_GET_1ST_LEVEL;
-import static org.sonar.samples.openapi.utils.VerbPathMatcher.POST_GET_2ND_LEVEL;
-import static org.sonar.samples.openapi.utils.VerbPathMatcher.POST_GET_3RD_LEVEL;
+import com.google.common.collect.ImmutableSet;
+import com.sonar.sslr.api.AstNode;
+import com.sonar.sslr.api.AstNodeType;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Rule(key = OAR022OrderbyParameterCheck.KEY)
-public class OAR022OrderbyParameterCheck extends AbstractParameterCheck {
+public class OAR022OrderbyParameterCheck extends BaseCheck {
 
-	public static final String KEY = "OAR022";
-	private static final String PARAM = "$orderby";
-	private static final String DEFAULT_PATTERN = 
-		GET_ALL_1ST_LEVEL + GET_ALL_2ND_LEVEL + GET_ALL_3RD_LEVEL +
-		POST_GET_1ST_LEVEL + POST_GET_2ND_LEVEL + POST_GET_3RD_LEVEL;
-	private static final String DEFAULT_EXCLUSION = "get:/status";
+    public static final String KEY = "OAR022";
+    private static final String MESSAGE = "OAR022.error";
+    private static final String DEFAULT_EXCLUDE_PATHS = "/status, /another";
+    private static final String PARAM_NAME = "$orderby";
 
-	@RuleProperty(
-			key = "resources-paths",
-			description = "List of resources paths to apply the rule. Format: <V>,<V>:<RX>,<RX>;<V>,<V>:<RX>,<RX>",
-			defaultValue = DEFAULT_PATTERN
-	)
-	private String pattern = DEFAULT_PATTERN;
+    @RuleProperty(
+        key = "excludePaths",
+        description = "Comma-separated paths where the rule should be excluded",
+        defaultValue = DEFAULT_EXCLUDE_PATHS)
+    private String excludePaths = DEFAULT_EXCLUDE_PATHS;
 
-	@RuleProperty(
-			key = "resources-exclusions",
-			description = "List of explicit resources to exclude from this rule. Format: <V>,<V>:<R>,<R>;<V>,<V>:<R>,<R>",
-			defaultValue = DEFAULT_EXCLUSION
-	)
-	private String exclusion = DEFAULT_EXCLUSION;
+    @RuleProperty(
+        key = "parameterName",
+        description = "Name of the parameter to be checked",
+        defaultValue = "$orderby"
+    )
+    private String parameterName = PARAM_NAME;
 
-	public OAR022OrderbyParameterCheck() {
-		super(KEY, PARAM);
-		super.verbPathPattern = pattern;
-		super.verbExclusions = exclusion;
-	}
+    private Set<String> exclusion;
+
+    @Override
+    public Set<AstNodeType> subscribedKinds() {
+        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER);
+    }
+
+    @Override
+    protected void visitFile(JsonNode root) {
+        exclusion = new HashSet<>(Arrays.asList(excludePaths.trim().split("\\s*,\\s*")));
+        super.visitFile(root);
+    }
+
+    @Override
+    public void visitNode(JsonNode node) {
+        visitParameterNode(node);
+    }
+
+    public void visitParameterNode(JsonNode node) {
+        JsonNode inNode = node.get("in");
+        JsonNode nameNode = node.get("name");
+
+        if (inNode != null && nameNode != null) {
+            String path = getPath(node);
+            if (!isExcludedPath(path) && !parameterName.equals(nameNode.getTokenValue())) {
+                addIssue(KEY, translate(MESSAGE, parameterName), nameNode);
+            }
+        }
+    }
+
+    private String getPath(JsonNode node) {
+        StringBuilder pathBuilder = new StringBuilder();
+        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        if (pathNode != null) {
+            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH) {
+                pathNode = pathNode.getParent();
+            }
+            pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());
+        }
+        return pathBuilder.toString();
+    }
+
+    private boolean isExcludedPath(String path) {
+        return exclusion.contains(path);
+    }
 }

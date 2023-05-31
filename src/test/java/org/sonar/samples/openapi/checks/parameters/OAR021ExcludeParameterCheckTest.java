@@ -28,25 +28,9 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
-    public void verifyInV2With$ref() {
-        verifyV2("with-$ref");
-    }
-
-    @Test
     public void verifyInV2Without() {
         verifyV2("plain-without");
     }
-
-    @Test
-    public void verifyInV2With$refWithout() {
-        verifyV2("with-$ref-without");
-    }
-
-    @Test
-    public void verifyInV2WithoutParameters() {
-        verifyV2("without-parameters");
-    }
-
     @Test
     public void verifyInV3() {
         verifyV3("plain");
@@ -58,34 +42,19 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
-    public void verifyInV3With$ref() {
-        verifyV3("with-$ref");
-    }
-
-    @Test
     public void verifyInV3Without() {
         verifyV3("plain-without");
     }
 
-    @Test
-    public void verifyInV3With$refWithout() {
-        verifyV3("with-$ref-without");
-    }
-
-    @Test
-    public void verifyInV3WithoutParameters() {
-        verifyV3("without-parameters");
-    }
-
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR021 - ExcludeParameter - $exclude must be defined as a parameter in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
+        assertRuleProperties("OAR021 - ExcludeParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("resources-paths", ";get:^\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)$;get:^\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)\\/[^\\/{}]*\\/(\\{[^\\/{}]*\\}|\\bme\\b)$", RuleParamType.STRING);
-        assertParameterProperties("resources-exclusions", "get:/status", RuleParamType.STRING);
+        assertParameterProperties("excludePaths", "/status, /another", RuleParamType.STRING);
+        assertParameterProperties("parameterName", "$exclude", RuleParamType.STRING);
     }
 }

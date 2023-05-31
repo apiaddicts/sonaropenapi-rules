@@ -9,7 +9,7 @@
       "get" : {
         "parameters" : [ {
           "in" : "query",
-          "name" : "other",
+          "name" : "$filter",
           "schema": {
             "type" : "array",
             "items" : {

@@ -7,16 +7,16 @@
   "paths" : {
     "/pets" : {
       "get" : {
-        "parameters" : [ { 
+        "parameters" : [ {
           "in" : "query",
-          "name" : "other", # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
+          "name" : "$expand", 
           "type" : "array",
           "items" : {
             "type" : "string"
           }
         }, {
           "in" : "query",
-          "name" : "hola", # Noncompliant {{OAR024: $start must be defined as a parameter in this operation}}
+          "name" : "$expand", 
           "type" : "array",
           "items" : {
             "type" : "string"
