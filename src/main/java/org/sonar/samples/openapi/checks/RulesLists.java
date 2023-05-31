@@ -101,6 +101,7 @@ public final class RulesLists {
 
 	public static List<Class<?>> getCoreChecks() {
 		return Arrays.asList(
+				OAR043ParsingErrorCheck.class,
 				OAR044MediaTypeCheck.class,
 				OAR045DefinedResponseCheck.class,
 				OAR046DeclaredTagCheck.class,
