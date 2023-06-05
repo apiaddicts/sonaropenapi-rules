@@ -18,7 +18,7 @@ public class OAR035AuthorizationResponsesCheck extends BaseCheck {
     public static final String KEY = "OAR035";
     public static final String MESSAGE = "OAR035.error";
 
-    private static final String RESPONSE_CODES_STR = "401, 403, 429";
+    private static final String RESPONSE_CODES_STR = "401, 403";
 
     @RuleProperty(
         key = "expected-codes",

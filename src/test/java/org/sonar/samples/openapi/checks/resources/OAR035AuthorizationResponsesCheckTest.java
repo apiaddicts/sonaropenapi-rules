@@ -40,7 +40,7 @@ public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("expected-codes", "401, 403, 429", RuleParamType.STRING);
+        assertParameterProperties("expected-codes", "401, 403", RuleParamType.STRING);
     }
 
     @Override
