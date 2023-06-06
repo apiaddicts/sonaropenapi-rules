@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
 public class OAR079PathParameter404CheckTest extends BaseCheckTest {
@@ -40,5 +41,11 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
     public void verifyRule() {
         assertRuleProperties("OAR079 - PathParameter404 - Paths parameters, should have not found (404) response",
                 RuleType.BUG, Severity.MINOR, tags("parameters"));
+    }
+
+    @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(1);
+        assertParameterProperties("excludePaths", "/status, /health-check", RuleParamType.STRING);
     }
 }
