@@ -96,8 +96,8 @@ public final class RulesLists {
 				OAR069PathParamAndQueryCheck.class,
 				OAR070BrokenAccessControlCheck.class,
 				OAR074NumericParameterIntegrityCheck.class,
-				OAR075StringParameterIntegrityCheck.class
-
+				OAR075StringParameterIntegrityCheck.class,
+				OAR079PathParameter404Check.class
 		);
 	}
 

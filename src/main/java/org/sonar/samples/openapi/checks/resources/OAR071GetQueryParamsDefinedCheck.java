@@ -74,10 +74,6 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
             }
 
             JsonNode parametersNode = node.get("parameters");
-           if (parametersNode == null || parametersNode.isNull()) {
-                addIssue(KEY, translate(MESSAGE), node);
-                return;
-            }
             Set<String> queryParams = new HashSet<>();
             parametersNode.elements().forEach(parameterNode -> {
                 JsonNode inNode = parameterNode.get("in");
