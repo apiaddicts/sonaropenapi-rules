@@ -38,7 +38,7 @@ public class OAR069PathParamAndQueryCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR069 - Any param in PATH or QUERY, should have bad request (400) response",
+        assertRuleProperties("OAR069 - PathParamAndQuery -  Any param in PATH or QUERY, should have bad request (400) response",
                 RuleType.BUG, Severity.MAJOR, tags("parameters"));
     }
 }
