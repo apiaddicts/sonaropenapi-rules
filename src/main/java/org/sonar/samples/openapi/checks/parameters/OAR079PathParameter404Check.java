@@ -20,33 +20,24 @@ public class OAR079PathParameter404Check extends BaseCheck {
 
     public static final String KEY = "OAR079";
     private static final String MESSAGE = "OAR079.error";
-    private static final String DEFAULT_EXCLUSION = "/status, /health-check";
-    private static final String DEFAULT_INCLUSION = "/example1, /example2";
+    private static final String DEFAULT_PATH = "/status";
     private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(
-            key = "excludePaths",
-            description = "List of explicit paths to exclude from this rule separated by comma",
-            defaultValue = DEFAULT_EXCLUSION
+            key = "paths",
+            description = "List of explicit paths to include/exclude from this rule separated by comma",
+            defaultValue = DEFAULT_PATH
     )
-    private String exclusionStr = DEFAULT_EXCLUSION;
+    private String pathsStr = DEFAULT_PATH;
 
     @RuleProperty(
-            key = "includePaths",
-            description = "List of explicit paths to include in this rule separated by comma",
-            defaultValue = DEFAULT_INCLUSION
-    )
-    private String inclusionStr = DEFAULT_INCLUSION;
-
-    @RuleProperty(
-            key = "pathCheckStrategy",
-            description = "Path check strategy (include/exclude)",
+            key = "pathValidationStrategy",
+            description = "Path validation strategy (include/exclude)",
             defaultValue = PATH_STRATEGY
     )
     private String pathCheckStrategy = PATH_STRATEGY;
 
-    private Set<String> exclusion;
-    private Set<String> inclusion;
+    private Set<String> paths;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -55,11 +46,7 @@ public class OAR079PathParameter404Check extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        if (pathCheckStrategy.equals("/exclude")) {
-            exclusion = parsePaths(exclusionStr);
-        } else if (pathCheckStrategy.equals("/include")) {
-            inclusion = parsePaths(inclusionStr);
-        }
+        paths = parsePaths(pathsStr);
         super.visitFile(root);
     }
 
@@ -71,11 +58,11 @@ public class OAR079PathParameter404Check extends BaseCheck {
     private void visitOperationNode(JsonNode node) {
         String currentPath = getCurrentPath(node);
         if (pathCheckStrategy.equals("/exclude")) {
-            if (exclusion.contains(currentPath)) {
+            if (paths.contains(currentPath)) {
                 return;
             }
         } else if (pathCheckStrategy.equals("/include")) {
-            if (!inclusion.contains(currentPath)) {
+            if (!paths.contains(currentPath)) {
                 return;
             }
         }
