@@ -21,6 +21,8 @@ public class OAR079PathParameter404Check extends BaseCheck {
     public static final String KEY = "OAR079";
     private static final String MESSAGE = "OAR079.error";
     private static final String DEFAULT_EXCLUSION = "/status, /health-check";
+    private static final String DEFAULT_INCLUSION = "/example1, /example2";
+    private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(
             key = "excludePaths",
@@ -29,7 +31,22 @@ public class OAR079PathParameter404Check extends BaseCheck {
     )
     private String exclusionStr = DEFAULT_EXCLUSION;
 
+    @RuleProperty(
+            key = "includePaths",
+            description = "List of explicit paths to include in this rule separated by comma",
+            defaultValue = DEFAULT_INCLUSION
+    )
+    private String inclusionStr = DEFAULT_INCLUSION;
+
+    @RuleProperty(
+            key = "pathCheckStrategy",
+            description = "Path check strategy (include/exclude)",
+            defaultValue = PATH_STRATEGY
+    )
+    private String pathCheckStrategy = PATH_STRATEGY;
+
     private Set<String> exclusion;
+    private Set<String> inclusion;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -38,10 +55,10 @@ public class OAR079PathParameter404Check extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        if (!exclusionStr.trim().isEmpty()) {
-            exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
-        } else {
-            exclusion = new HashSet<>();
+        if (pathCheckStrategy.equals("/exclude")) {
+            exclusion = parsePaths(exclusionStr);
+        } else if (pathCheckStrategy.equals("/include")) {
+            inclusion = parsePaths(inclusionStr);
         }
         super.visitFile(root);
     }
@@ -53,8 +70,14 @@ public class OAR079PathParameter404Check extends BaseCheck {
 
     private void visitOperationNode(JsonNode node) {
         String currentPath = getCurrentPath(node);
-        if (exclusion.contains(currentPath)) {
-            return;
+        if (pathCheckStrategy.equals("/exclude")) {
+            if (exclusion.contains(currentPath)) {
+                return;
+            }
+        } else if (pathCheckStrategy.equals("/include")) {
+            if (!inclusion.contains(currentPath)) {
+                return;
+            }
         }
 
         JsonNode responsesNode = node.get("responses");
@@ -83,5 +106,13 @@ public class OAR079PathParameter404Check extends BaseCheck {
             return pathNode.key().getTokenValue();
         }
         return "";
+    }
+
+    private Set<String> parsePaths(String pathsStr) {
+        if (!pathsStr.trim().isEmpty()) {
+            return Arrays.stream(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
+        } else {
+            return new HashSet<>();
+        }
     }
 }

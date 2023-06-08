@@ -5,7 +5,7 @@
       "title" : "Swagger Petstore"
     },
     "paths": {
-      "/items": { 
+      "/example1": { 
         "get": {  
           "parameters": [ 
             { 
