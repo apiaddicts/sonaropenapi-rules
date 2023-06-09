@@ -1,5 +1,5 @@
 {
-    "title": "OAR069 - PathParamAndQuery -  Any param in PATH or QUERY, should have bad request (400) response",
+    "title": "OAR079 - PathParameter404 - Paths parameters, should have not found (404) response",
     "type": "BUG",
     "status": "ready",
     "remediation": {
@@ -9,5 +9,5 @@
     "tags": [
       "parameters"
     ],
-    "defaultSeverity": "MAJOR"
-  }
+    "defaultSeverity": "MINOR"
+}
