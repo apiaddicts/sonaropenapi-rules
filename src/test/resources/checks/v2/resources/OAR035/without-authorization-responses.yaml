@@ -28,7 +28,7 @@ paths:
       security:
         - ApiKeyAuth: []
         - OAuth2: [read, write]
-      responses: # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}} {{OAR035: Response code 429 must be defined for operations with security schemes defined}}
+      responses: # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}}
         200:
           description: Ok
   /with-header:

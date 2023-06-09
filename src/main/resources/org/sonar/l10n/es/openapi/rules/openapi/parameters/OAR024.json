@@ -1,0 +1,13 @@
+{
+  "title": "OAR024 - StartParameter - $start se debe definir como parámetro en esta operación",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MAJOR"
+}

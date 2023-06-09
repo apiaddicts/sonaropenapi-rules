@@ -1,0 +1,13 @@
+{
+    "title": "OAR073 - RateLimit - La API debería incluir una respuesta 429 para indicar la limitación de la tasa",
+    "type": "BUG",
+    "status": "ready",
+    "remediation": {
+      "func": "Constant\/Issue",
+      "constantCost": "15min"
+    },
+    "tags": [
+      "resources"
+    ],
+    "defaultSeverity": "MAJOR"
+  }

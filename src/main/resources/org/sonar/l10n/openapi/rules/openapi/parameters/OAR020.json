@@ -1,0 +1,13 @@
+{
+  "title": "OAR020 - ExpandParameter - the chosen parameter must be defined in this operation",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "parameters"
+  ],
+  "defaultSeverity": "MINOR"
+}
