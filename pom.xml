@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.sonar.samples.openapi</groupId>
   <artifactId>dosonarapi-community</artifactId>
-  <version>${TAG_NAME}</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Custom Rules Example</name>
@@ -165,10 +165,4 @@
       </plugin>
     </plugins>
   </build>
-  <distributionManagement>
-    <repository>
-        <id>apiquality</id>
-        <url>https://nexus.cloudappi.net/repository/apiquality</url>
-    </repository>
-  </distributionManagement>  
 </project>
