@@ -165,4 +165,11 @@
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <repository>
+        <id>apiquality</id>
+        <url>https://nexus.cloudappi.net/repository/apiquality</url>
+    </repository>
+  </distributionManagement>  
+
 </project>
