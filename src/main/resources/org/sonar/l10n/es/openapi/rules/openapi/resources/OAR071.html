@@ -1,6 +1,7 @@
 <p>Los parámetros query en las operaciones GET deben definirse de acuerdo con el estándar</p>
-<h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>Todos los ejemplos están en YAML</h3>
+<h2>Noncompliant Code Example (OpenAPI 2)</h2>
+
+<h3>All the examples are in YAML</h3>
 <h3>En el caso que param1, param2 and param3 sean obligatorios</h3>
 <pre>
   swagger: '2.0'
@@ -32,7 +33,7 @@
               items:
                 type: string
 </pre>
-<h2>Solución compatible (OpenAPI 2)</h2>
+<h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
   swagger: '2.0'
   info:
@@ -66,7 +67,7 @@
               items:
                 type: string
 </pre>
-<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
   openapi: "3.0.0"
   info:
@@ -103,7 +104,7 @@
                   items:
                     type: string
 </pre>
-<h2>Solución compatible (OpenAPI 3)</h2>
+<h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>
   openapi: "3.0.0"
   info:

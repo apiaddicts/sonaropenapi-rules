@@ -20,22 +20,30 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
 
     public static final String KEY = "OAR071";
     private static final String MESSAGE = "OAR071.error";
-    private static final String MANDATORY_QUERY_PARAMS = "param1, param2, param3";
-    private static final String DEFAULT_EXCLUSION = "/status, /another";
+    private static final String QUERY_PARAMS = "param1, param2, param3";
+    private static final String DEFAULT_PATH = "/status";
+    private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(
             key = "mandatory-query-params",
             description = "List of allowed query params separated by comma",
-            defaultValue = MANDATORY_QUERY_PARAMS
+            defaultValue = QUERY_PARAMS
     )
-    private String mandatoryQueryParamsStr = MANDATORY_QUERY_PARAMS;
+    private String mandatoryQueryParamsStr = QUERY_PARAMS;
 
     @RuleProperty(
-            key = "path-exclusions",
-            description = "List of explicit paths to exclude from this rule separated by comma",
-            defaultValue = DEFAULT_EXCLUSION
+            key = "paths",
+            description = "List of explicit paths to include/exclude from this rule separated by comma",
+            defaultValue = DEFAULT_PATH
     )
-    private String exclusionStr = DEFAULT_EXCLUSION;
+    private String pathsStr = DEFAULT_PATH;
+
+    @RuleProperty(
+            key = "pathValidationStrategy",
+            description = "Path validation strategy (include/exclude)",
+            defaultValue = PATH_STRATEGY
+    )
+    private String pathCheckStrategy = PATH_STRATEGY;
 
     private Set<String> mandatoryQueryParams = new HashSet<>();
     private Set<String> exclusion;
@@ -46,8 +54,8 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
         if (!mandatoryQueryParamsStr.trim().isEmpty()) {
             mandatoryQueryParams.addAll(Stream.of(mandatoryQueryParamsStr.split(",")).map(String::trim).collect(Collectors.toSet()));
         }
-        if (!exclusionStr.trim().isEmpty()) {
-            exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
+        if (!pathsStr.trim().isEmpty()) {
+            exclusion = Arrays.stream(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
         } else {
             exclusion = new HashSet<>();
         }
@@ -64,7 +72,7 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
         if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH) {
             currentPath = node.key().getTokenValue();
         } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION) {
-            if (exclusion.contains(currentPath)) {
+            if (shouldExcludePath()) {
                 return;
             }
 
@@ -75,20 +83,34 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
 
             JsonNode parametersNode = node.get("parameters");
             Set<String> queryParams = new HashSet<>();
-            parametersNode.elements().forEach(parameterNode -> {
-                JsonNode inNode = parameterNode.get("in");
-                if (inNode != null && "query".equals(inNode.getTokenValue())) {
-                    JsonNode nameNode = parameterNode.get("name");
-                    if (nameNode != null && !nameNode.isNull()) {
-                        queryParams.add(nameNode.getTokenValue());
+            if (parametersNode != null) {
+                parametersNode.elements().forEach(parameterNode -> {
+                    JsonNode inNode = parameterNode.get("in");
+                    if (inNode != null && "query".equals(inNode.getTokenValue())) {
+                        JsonNode nameNode = parameterNode.get("name");
+                        if (nameNode != null && !nameNode.isNull()) {
+                            queryParams.add(nameNode.getTokenValue());
+                        }
+                    }
+                });
+
+                if (parametersNode.key() != null) {
+                    boolean allMandatoryParamsDefined = mandatoryQueryParams.stream().allMatch(queryParams::contains);
+                    String missingParamsStr = mandatoryQueryParams.stream().filter(p -> !queryParams.contains(p)).collect(Collectors.joining(", "));
+                    if (!allMandatoryParamsDefined) {
+                        addIssue(KEY, translate(MESSAGE, missingParamsStr), parametersNode.key());
                     }
                 }
-            });
-            boolean allMandatoryParamsDefined = mandatoryQueryParams.stream().allMatch(queryParams::contains);
-            String missingParamsStr = mandatoryQueryParams.stream().filter(p -> !queryParams.contains(p)).collect(Collectors.joining(", "));
-            if (!allMandatoryParamsDefined) {
-                addIssue(KEY, translate(MESSAGE, missingParamsStr), parametersNode.key());
             }
         }
+    }
+
+    private boolean shouldExcludePath() {
+        if (pathCheckStrategy.equals("/exclude")) {
+            return exclusion.contains(currentPath);
+        } else if (pathCheckStrategy.equals("/include")) {
+            return !exclusion.contains(currentPath);
+        }
+        return false;
     }
 }

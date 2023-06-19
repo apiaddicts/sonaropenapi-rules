@@ -44,8 +44,9 @@ public class OAR071GetQueryParamsDefinedCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(2);
+        assertNumberOfParameters(3);
         assertParameterProperties("mandatory-query-params", "param1, param2, param3", RuleParamType.STRING);
-        assertParameterProperties("path-exclusions", "/status, /another", RuleParamType.STRING);
+        assertParameterProperties("paths", "/status", RuleParamType.STRING);
+        assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }
 }
