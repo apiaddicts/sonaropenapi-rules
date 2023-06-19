@@ -19,25 +19,29 @@ public class OAR073RateLimitCheck extends BaseCheck {
 
     public static final String KEY = "OAR073";
     private static final String MESSAGE = "OAR073.error";
-    private static final String DEFAULT_EXCLUSION = "/status, /health-check";
+    private static final String DEFAULT_PATH = "/status, /health-check";
+    private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(
-            key = "path-exclusions",
-            description = "List of explicit paths to exclude from this rule separated by comma",
-            defaultValue = DEFAULT_EXCLUSION
+            key = "paths",
+            description = "List of explicit paths to include/exclude from this rule separated by comma",
+            defaultValue = DEFAULT_PATH
     )
-    private String exclusionStr = DEFAULT_EXCLUSION;
-    
+    private String pathsStr = DEFAULT_PATH;
+
+    @RuleProperty(
+            key = "pathValidationStrategy",
+            description = "Path validation strategy (include/exclude)",
+            defaultValue = PATH_STRATEGY
+    )
+    private String pathCheckStrategy = PATH_STRATEGY;
+
     private Set<String> exclusion;
     private String currentPath;
 
     @Override
     protected void visitFile(JsonNode root) {
-        if (!exclusionStr.trim().isEmpty()) {
-            exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
-        } else {
-            exclusion = new HashSet<>();
-        }
+        exclusion = parsePaths(pathsStr);
         super.visitFile(root);
     }
 
@@ -51,11 +55,20 @@ public class OAR073RateLimitCheck extends BaseCheck {
         if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH) {
             currentPath = node.key().getTokenValue();
         } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION) {
-            if (exclusion.contains(currentPath)) {
+            if (shouldSkipNode(currentPath)) {
                 return;
             }
             visitOperationNode(node);
         }
+    }
+
+    private boolean shouldSkipNode(String currentPath) {
+        if (pathCheckStrategy.equals("/exclude")) {
+            return exclusion.contains(currentPath);
+        } else if (pathCheckStrategy.equals("/include")) {
+            return !exclusion.contains(currentPath);
+        }
+        return false;
     }
 
     private void visitOperationNode(JsonNode node) {
@@ -65,6 +78,14 @@ public class OAR073RateLimitCheck extends BaseCheck {
             if (node429.isMissing()) {
                 addIssue(KEY, translate(MESSAGE), responsesNode.key());
             }
+        }
+    }
+
+    private Set<String> parsePaths(String pathsStr) {
+        if (!pathsStr.trim().isEmpty()) {
+            return Arrays.stream(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
+        } else {
+            return new HashSet<>();
         }
     }
 }
