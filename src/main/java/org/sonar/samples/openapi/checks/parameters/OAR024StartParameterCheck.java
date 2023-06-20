@@ -1,6 +1,7 @@
 package org.sonar.samples.openapi.checks.parameters;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
@@ -21,23 +22,32 @@ public class OAR024StartParameterCheck extends BaseCheck {
 
     public static final String KEY = "OAR024";
     private static final String MESSAGE = "OAR024.error";
-    private static final String DEFAULT_EXCLUDE_PATHS = "/status, /another";
+    private static final String DEFAULT_PATH = "/status, /another";
+    private static final String PATH_STRATEGY = "/exclude";
     private static final String PARAM_NAME = "$start";
 
     @RuleProperty(
-        key = "excludePaths",
-        description = "Comma-separated paths where the rule should be excluded",
-        defaultValue = DEFAULT_EXCLUDE_PATHS)
-    private String excludePaths = DEFAULT_EXCLUDE_PATHS;
+        key = "paths",
+        description = "List of explicit paths to include/exclude from this rule separated by comma",
+        defaultValue = DEFAULT_PATH
+    )
+    private String pathsStr = DEFAULT_PATH;
+
+    @RuleProperty(
+        key = "pathValidationStrategy",
+        description = "Path validation strategy (include/exclude)",
+        defaultValue = PATH_STRATEGY
+    )
+    private String pathCheckStrategy = PATH_STRATEGY;
 
     @RuleProperty(
         key = "parameterName",
         description = "Name of the parameter to be checked",
-        defaultValue = "$start"
+        defaultValue = PARAM_NAME
     )
     private String parameterName = PARAM_NAME;
 
-    private Set<String> exclusion;
+    private Set<String> paths;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -46,7 +56,7 @@ public class OAR024StartParameterCheck extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        exclusion = new HashSet<>(Arrays.asList(excludePaths.trim().split("\\s*,\\s*")));
+        paths = parsePaths(pathsStr);
         super.visitFile(root);
     }
 
@@ -61,7 +71,7 @@ public class OAR024StartParameterCheck extends BaseCheck {
 
         if (inNode != null && nameNode != null) {
             String path = getPath(node);
-            if (!isExcludedPath(path) && !parameterName.equals(nameNode.getTokenValue())) {
+            if (shouldExcludePath(path) && !parameterName.equals(nameNode.getTokenValue())) {
                 addIssue(KEY, translate(MESSAGE, parameterName), nameNode);
             }
         }
@@ -79,7 +89,22 @@ public class OAR024StartParameterCheck extends BaseCheck {
         return pathBuilder.toString();
     }
 
-    private boolean isExcludedPath(String path) {
-        return exclusion.contains(path);
+    private boolean shouldExcludePath(String path) {
+        if (pathCheckStrategy.equals("/exclude")) {
+            return !paths.contains(path);
+        } else if (pathCheckStrategy.equals("/include")) {
+            return paths.contains(path);
+        }
+        return false;
+    }
+
+    private Set<String> parsePaths(String pathsStr) {
+        if (!pathsStr.trim().isEmpty()) {
+            return Arrays.stream(pathsStr.split(","))
+                .map(String::trim)
+                .collect(Collectors.toSet());
+        } else {
+            return new HashSet<>();
+        }
     }
 }

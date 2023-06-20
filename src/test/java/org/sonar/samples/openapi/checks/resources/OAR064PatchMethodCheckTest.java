@@ -44,8 +44,9 @@ public class OAR064PatchMethodCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(2);
+        assertNumberOfParameters(3);
         assertParameterProperties("mandatory-response-codes", "200, 202, 204, 206", RuleParamType.STRING);
-        assertParameterProperties("path-exclusions", "/status, /another", RuleParamType.STRING);
+        assertParameterProperties("paths", "/status, /another", RuleParamType.STRING);
+        assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }
 }
