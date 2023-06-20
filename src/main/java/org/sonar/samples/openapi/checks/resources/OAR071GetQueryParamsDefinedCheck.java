@@ -22,7 +22,7 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
     private static final String MESSAGE = "OAR071.error";
     private static final String QUERY_PARAMS = "param1, param2, param3";
     private static final String DEFAULT_PATH = "/status";
-    private static final String PATH_STRATEGY = "/exclude";
+    private static final String PATH_STRATEGY = "/include";
 
     @RuleProperty(
             key = "mandatory-query-params",
@@ -82,25 +82,24 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
             }
 
             JsonNode parametersNode = node.get("parameters");
+            if (parametersNode == null || parametersNode.isNull()) {
+                addIssue(KEY, translate(MESSAGE), node);
+                return;
+            }
             Set<String> queryParams = new HashSet<>();
-            if (parametersNode != null) {
-                parametersNode.elements().forEach(parameterNode -> {
-                    JsonNode inNode = parameterNode.get("in");
-                    if (inNode != null && "query".equals(inNode.getTokenValue())) {
-                        JsonNode nameNode = parameterNode.get("name");
-                        if (nameNode != null && !nameNode.isNull()) {
-                            queryParams.add(nameNode.getTokenValue());
-                        }
-                    }
-                });
-
-                if (parametersNode.key() != null) {
-                    boolean allMandatoryParamsDefined = mandatoryQueryParams.stream().allMatch(queryParams::contains);
-                    String missingParamsStr = mandatoryQueryParams.stream().filter(p -> !queryParams.contains(p)).collect(Collectors.joining(", "));
-                    if (!allMandatoryParamsDefined) {
-                        addIssue(KEY, translate(MESSAGE, missingParamsStr), parametersNode.key());
+            parametersNode.elements().forEach(parameterNode -> {
+                JsonNode inNode = parameterNode.get("in");
+                if (inNode != null && "query".equals(inNode.getTokenValue())) {
+                    JsonNode nameNode = parameterNode.get("name");
+                    if (nameNode != null && !nameNode.isNull()) {
+                        queryParams.add(nameNode.getTokenValue());
                     }
                 }
+            });
+            boolean allMandatoryParamsDefined = mandatoryQueryParams.stream().allMatch(queryParams::contains);
+            String missingParamsStr = mandatoryQueryParams.stream().filter(p -> !queryParams.contains(p)).collect(Collectors.joining(", "));
+            if (!allMandatoryParamsDefined) {
+                addIssue(KEY, translate(MESSAGE, missingParamsStr), parametersNode.key());
             }
         }
     }
