@@ -49,7 +49,9 @@ public final class RulesLists {
 				OAR067CamelCaseNamingConventionCheck.class,
 				OAR068PascalCaseNamingConventionCheck.class,
 				OAR076NumericFormatCheck.class,
-				OAR077ParametersInQuerySnakeCaseCheck.class
+				OAR077ParametersInQuerySnakeCaseCheck.class,
+				OAR081PasswordFormatCheck.class,
+				OAR082BinaryOrByteFormatCheck.class
 		);
 	}
 
@@ -77,7 +79,8 @@ public final class RulesLists {
 				OAR071GetQueryParamsDefinedCheck.class,
 				OAR072NonOKModelResponseCheck.class,
 				OAR073RateLimitCheck.class,
-				OAR078VerbsSecurityCheck.class
+				OAR078VerbsSecurityCheck.class,
+				OAR080SecuritySchemasCheck.class
 		);
 	}
 
