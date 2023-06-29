@@ -53,8 +53,9 @@ public class OAR024StartParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(2);
-        assertParameterProperties("excludePaths", "/status, /another", RuleParamType.STRING);
+        assertNumberOfParameters(3);
+        assertParameterProperties("paths", "/status, /another", RuleParamType.STRING);
+        assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
         assertParameterProperties("parameterName", "$start", RuleParamType.STRING);
     }
 }

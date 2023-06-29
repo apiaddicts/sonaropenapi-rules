@@ -44,7 +44,8 @@ public class OAR073RateLimitCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(1);
-        assertParameterProperties("path-exclusions", "/status, /health-check", RuleParamType.STRING);
+        assertNumberOfParameters(2);
+        assertParameterProperties("paths", "/status, /health-check", RuleParamType.STRING);
+        assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }
 }
