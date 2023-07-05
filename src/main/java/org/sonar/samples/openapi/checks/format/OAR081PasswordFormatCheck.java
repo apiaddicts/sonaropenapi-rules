@@ -12,6 +12,7 @@ import java.util.Set;
 @Rule(key = OAR081PasswordFormatCheck.KEY)
 public class OAR081PasswordFormatCheck extends BaseCheck {
 
+    
     public static final String KEY = "OAR081";
     private static final String MESSAGE = "OAR081.error";
     
