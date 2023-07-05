@@ -37,9 +37,7 @@ public class OAR082BinaryOrByteFormatCheck extends AbstractPropertiesCheck {
         }
 
         for (JsonNode matchingProperty : matchingProperties) {
-            System.out.println("MATCHING: " + matchingProperty.key());
             JsonNode formatNode = matchingProperty.key().get("format");
-            System.out.println("FORMAT: " + formatNode);
             if (formatNode == null) {
                 addIssue(KEY, translate(MESSAGE), matchingProperty.key());
             } else {
