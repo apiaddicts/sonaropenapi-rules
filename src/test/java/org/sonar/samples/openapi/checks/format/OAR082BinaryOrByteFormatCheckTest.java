@@ -7,7 +7,7 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR082BinaryOrByteCheckTest extends BaseCheckTest {
+public class OAR082BinaryOrByteFormatCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
