@@ -1,58 +1,37 @@
 package org.sonar.samples.openapi.checks.format;
-import org.sonar.check.Rule;
-import org.sonar.check.RuleProperty;
 
-import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.junit.Before;
+import org.junit.Test;
+import org.sonar.api.rule.Severity;
+import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
+import org.sonar.samples.openapi.BaseCheckTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+public class OAR082BinaryOrByteCheckTest extends BaseCheckTest {
 
-@Rule(key = OAR082BinaryOrByteFormatCheck.KEY)
-public class OAR082BinaryOrByteFormatCheck extends AbstractPropertiesCheck {
-
-    public static final String KEY = "OAR082";
-    private static final String MESSAGE = "OAR082.error";
-    private static final String FIELDS_TO_APPLY = "product,line,price";
-
-    @RuleProperty(
-            key = "fields-to-apply",
-            description = "List of fields where the rule should be applied (separated by comma)",
-            defaultValue = FIELDS_TO_APPLY
-    )
-    private String fieldsApply = FIELDS_TO_APPLY;
-
-    private List<String> fieldsList = Arrays.asList(fieldsApply.split(","));
+    @Before
+    public void init() {
+        ruleName = "OAR082";
+        check = new OAR082BinaryOrByteFormatCheck();
+        v2Path = getV2Path("format");
+        v3Path = getV3Path("format");
+    }
+    @Test
+    public void verifyvalidV2() {
+        verifyV2("valid-format");
+    }
+    @Test
+    public void verifyvalidV3() {
+        verifyV3("valid-format");
+    }
 
     @Override
-    public void validate(String type, String format, String properties, JsonNode typeNode, JsonNode propertiesNode) {
-        List<JsonNode> propertyChildren = propertiesNode.getJsonChildren();
-        List<JsonNode> matchingProperties = new ArrayList<>();
-
-        for (JsonNode propertyChild : propertyChildren) {
-            String propertyName = propertyChild.key().getTokenValue();
-            if (fieldsList.contains(propertyName)) {
-                matchingProperties.add(propertyChild);
-            }
-        }
-
-        for (JsonNode matchingProperty : matchingProperties) {
-            System.out.println("MATCHING: " + matchingProperty.key());
-            JsonNode formatNode = matchingProperty.key().get("format");
-            System.out.println("FORMAT: " + formatNode);
-            if (formatNode == null) {
-                addIssue(KEY, translate(MESSAGE), matchingProperty.key());
-            } else {
-                String propertyFormat = formatNode.getTokenValue();
-                if (!isValidStringFormat(propertyFormat)) {
-                    addIssue(KEY, translate(MESSAGE), matchingProperty.key());
-                }
-            }
-        }
+    public void verifyRule() {
+        assertRuleProperties("OAR082 - BinaryOrByte - The string properties of the specified parameters must define a byte or binary format.", RuleType.BUG, Severity.MAJOR, tags("format"));
     }
-    
-
-    private boolean isValidStringFormat(String format) {
-        return "binary".equals(format) || "byte".equals(format);
+    @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(1);
+        assertParameterProperties("fields-to-apply", "product,line,price", RuleParamType.STRING);
     }
 }
