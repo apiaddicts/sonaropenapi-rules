@@ -18,7 +18,9 @@ paths:
                 type: string
               status:
                 type: string
-        '400':
+              stackTrace: 
+                type: string
+        '401':
           description: Bad request
           schema:
             type: object
