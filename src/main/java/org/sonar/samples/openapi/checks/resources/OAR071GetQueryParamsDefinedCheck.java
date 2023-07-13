@@ -83,7 +83,7 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
 
             JsonNode parametersNode = node.get("parameters");
             if (parametersNode == null || parametersNode.isNull()) {
-                addIssue(KEY, translate(MESSAGE), node);
+                addIssue(KEY, translate(MESSAGE), node.key());
                 return;
             }
             Set<String> queryParams = new HashSet<>();
@@ -98,6 +98,9 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
             });
             boolean allMandatoryParamsDefined = mandatoryQueryParams.stream().allMatch(queryParams::contains);
             String missingParamsStr = mandatoryQueryParams.stream().filter(p -> !queryParams.contains(p)).collect(Collectors.joining(", "));
+            if (parametersNode == null || parametersNode.isNull() || parametersNode.isMissing()) {
+                return;
+            } 
             if (!allMandatoryParamsDefined) {
                 addIssue(KEY, translate(MESSAGE, missingParamsStr), parametersNode.key());
             }
