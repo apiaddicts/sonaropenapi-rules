@@ -6,7 +6,7 @@ paths:
   /sample:
     get:
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -19,6 +19,8 @@ paths:
                   name:
                     type: string
                   status:
+                    type: string
+                  stackTrace: 
                     type: string
         '400':
           description: Bad request

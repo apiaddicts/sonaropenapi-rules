@@ -16,6 +16,10 @@ public class OAR072NonOKModelResponseCheck extends BaseCheck {
     public static final String KEY = "OAR072";
     private static final String MESSAGE = "OAR072.error";
 
+    private static final Set<String> ALLOWED_RESPONSE_CODES = ImmutableSet.of(
+            "200", "201", "202", "203", "204", "205", "206", "207", "208", "226", "250"
+    );
+
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
@@ -27,18 +31,20 @@ public class OAR072NonOKModelResponseCheck extends BaseCheck {
     }
 
     private void visitOperationNode(JsonNode node) {
-        JsonNode responsesNode = node.get("responses");
-        if (responsesNode != null) {
-            JsonNode jsonNode = responsesNode.get("400");
-            if (jsonNode != null) {
+    JsonNode responsesNode = node.get("responses");
+    if (responsesNode != null) {
+        for (JsonNode responseNode : responsesNode.propertyMap().values()) {
+            String responseCode = responseNode.key().getTokenValue();
+            if (!ALLOWED_RESPONSE_CODES.contains(responseCode)) {
                 if (node.is(OpenApi2Grammar.OPERATION)) {
-                    checkSwaggerResponse(jsonNode);
+                    checkSwaggerResponse(responseNode);
                 } else if (node.is(OpenApi3Grammar.OPERATION)) {
-                    checkOpenApiResponse(jsonNode);
+                    checkOpenApiResponse(responseNode);
                 }
             }
         }
     }
+}
 
     private void checkSwaggerResponse(JsonNode jsonNode) {
         JsonNode schemaNode = jsonNode.get("schema");
@@ -48,7 +54,7 @@ public class OAR072NonOKModelResponseCheck extends BaseCheck {
                 JsonNode stackTraceNode = propertiesNode.get("stackTrace");
                 if (stackTraceNode.isMissing()) {
                     return;
-                }else{
+                } else {
                     addIssue(KEY, translate(MESSAGE), stackTraceNode.key());
                 }
             }
@@ -67,11 +73,9 @@ public class OAR072NonOKModelResponseCheck extends BaseCheck {
                         JsonNode stackTraceNode = propertiesNode.get("stackTrace");
                         if (stackTraceNode.isMissing()) {
                             return;
-                        }else{
+                        } else {
                             addIssue(KEY, translate(MESSAGE), stackTraceNode.key());
                         }
-                            
-                        
                     }
                 }
             }
