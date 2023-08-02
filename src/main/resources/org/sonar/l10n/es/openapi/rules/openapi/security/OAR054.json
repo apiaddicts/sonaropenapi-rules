@@ -1,0 +1,13 @@
+{
+  "title": "OAR054 - Host - El host debe cumplir con el estándar",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "BLOCKER"
+}
