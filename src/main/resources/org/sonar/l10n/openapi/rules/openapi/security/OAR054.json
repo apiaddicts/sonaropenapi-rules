@@ -1,0 +1,13 @@
+{
+  "title": "OAR054 - Host - Host must be compliant with the standard",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "BLOCKER"
+}
