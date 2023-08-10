@@ -1,13 +1,13 @@
 {
-    "title": "OAR070 - BrokenAccessControl - Los parámetros in: path no deberían ser numéricos",
-    "type": "BUG",
+    "title": "OAR070 - BrokenAccessControl - Parameters in path shouldn't be numeric",
+    "type": "VULNERABILITY",
     "status": "ready",
     "remediation": {
       "func": "Constant\/Issue",
       "constantCost": "15min"
     },
     "tags": [
-      "parameters"
+      "vulnerability"
     ],
     "defaultSeverity": "MAJOR"
   }

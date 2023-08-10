@@ -32,7 +32,8 @@ public final class RulesLists {
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
 				OAR036SessionMechanismsCheck.class,
-				OAR054HostCheck.class
+				OAR054HostCheck.class,
+				OAR070BrokenAccessControlCheck.class
 		);
 	}
 
@@ -97,7 +98,6 @@ public final class RulesLists {
 				OAR028FilterParameterCheck.class,
 				OAR060QueryParametersOptionalCheck.class,
 				OAR069PathParamAndQueryCheck.class,
-				OAR070BrokenAccessControlCheck.class,
 				OAR074NumericParameterIntegrityCheck.class,
 				OAR075StringParameterIntegrityCheck.class,
 				OAR079PathParameter404Check.class

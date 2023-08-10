@@ -1,4 +1,4 @@
-package org.sonar.samples.openapi.checks.parameters;
+package org.sonar.samples.openapi.checks.security;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
