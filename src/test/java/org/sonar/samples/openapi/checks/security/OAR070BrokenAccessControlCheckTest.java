@@ -1,4 +1,4 @@
-package org.sonar.samples.openapi.checks.parameters;
+package org.sonar.samples.openapi.checks.security;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +13,8 @@ public class OAR070BrokenAccessControlCheckTest extends BaseCheckTest{
     public void init() {
         ruleName = "OAR070";
         check = new OAR070BrokenAccessControlCheck();
-        v2Path = getV2Path("parameters");
-        v3Path = getV3Path("parameters");
+        v2Path = getV2Path("security");
+        v3Path = getV3Path("security");
     }
 
     @Test
@@ -35,7 +35,7 @@ public class OAR070BrokenAccessControlCheckTest extends BaseCheckTest{
     }
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR070 - BrokenAccessControl - Parameters in path shouldn't be numeric", RuleType.BUG, Severity.MAJOR, tags("parameters"));
+        assertRuleProperties("OAR070 - BrokenAccessControl - Parameters in path shouldn't be numeric", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
     }
     
 }
