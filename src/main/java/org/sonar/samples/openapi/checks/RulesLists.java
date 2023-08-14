@@ -31,8 +31,20 @@ public final class RulesLists {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
+				OAR035AuthorizationResponsesCheck.class,
 				OAR036SessionMechanismsCheck.class,
-				OAR054HostCheck.class
+				OAR054HostCheck.class,
+				OAR070BrokenAccessControlCheck.class,
+				OAR072NonOKModelResponseCheck.class,
+				OAR073RateLimitCheck.class,
+				OAR074NumericParameterIntegrityCheck.class,
+				OAR075StringParameterIntegrityCheck.class,
+				OAR076NumericFormatCheck.class,
+				OAR078VerbsSecurityCheck.class,
+				OAR079PathParameter404Check.class,
+				OAR080SecuritySchemasCheck.class,
+				OAR081PasswordFormatCheck.class,
+				OAR082BinaryOrByteFormatCheck.class
 		);
 	}
 
@@ -48,10 +60,8 @@ public final class RulesLists {
 				OAR066SnakeCaseNamingConventionCheck.class,
 				OAR067CamelCaseNamingConventionCheck.class,
 				OAR068PascalCaseNamingConventionCheck.class,
-				OAR076NumericFormatCheck.class,
-				OAR077ParametersInQuerySnakeCaseCheck.class,
-				OAR081PasswordFormatCheck.class,
-				OAR082BinaryOrByteFormatCheck.class
+				OAR077ParametersInQuerySnakeCaseCheck.class
+				
 		);
 	}
 
@@ -69,18 +79,14 @@ public final class RulesLists {
 				OAR031ExamplesCheck.class,
 				OAR032AmbiguousElementsPathCheck.class,
 				OAR034StandardPagedResponseCheck.class,
-				OAR035AuthorizationResponsesCheck.class,
 				OAR038StandardCreateResponseCheck.class,
 				OAR061GetMethodCheck.class,
 				OAR062PostMethodCheck.class,
 				OAR063PutMethodCheck.class,
 				OAR064PatchMethodCheck.class,
 				OAR065DeleteMethodCheck.class,
-				OAR071GetQueryParamsDefinedCheck.class,
-				OAR072NonOKModelResponseCheck.class,
-				OAR073RateLimitCheck.class,
-				OAR078VerbsSecurityCheck.class,
-				OAR080SecuritySchemasCheck.class
+				OAR071GetQueryParamsDefinedCheck.class
+				
 		);
 	}
 
@@ -96,11 +102,8 @@ public final class RulesLists {
 				OAR026TotalParameterDefaultValueCheck.class,
 				OAR028FilterParameterCheck.class,
 				OAR060QueryParametersOptionalCheck.class,
-				OAR069PathParamAndQueryCheck.class,
-				OAR070BrokenAccessControlCheck.class,
-				OAR074NumericParameterIntegrityCheck.class,
-				OAR075StringParameterIntegrityCheck.class,
-				OAR079PathParameter404Check.class
+				OAR069PathParamAndQueryCheck.class
+				
 		);
 	}
 
