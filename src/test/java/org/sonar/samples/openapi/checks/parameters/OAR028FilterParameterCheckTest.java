@@ -54,8 +54,8 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(3);
-        assertParameterProperties("paths", "/status, /another", RuleParamType.STRING);
-        assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
+        assertParameterProperties("paths", "/examples", RuleParamType.STRING);
+        assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
         assertParameterProperties("parameterName", "$filter", RuleParamType.STRING);
     }
 }

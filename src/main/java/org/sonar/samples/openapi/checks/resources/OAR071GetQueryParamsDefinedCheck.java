@@ -21,7 +21,7 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
     public static final String KEY = "OAR071";
     private static final String MESSAGE = "OAR071.error";
     private static final String QUERY_PARAMS = "param1, param2, param3";
-    private static final String DEFAULT_PATH = "/status";
+    private static final String DEFAULT_PATH = "/examples";
     private static final String PATH_STRATEGY = "/include";
 
     @RuleProperty(

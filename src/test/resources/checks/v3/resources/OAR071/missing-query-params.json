@@ -5,7 +5,7 @@
         "title": "My API"
     },
     "paths": {
-        "/status": {
+        "/examples": {
             "get": {
                 "summary": "Get a list of items",
                 "parameters": [ # Noncompliant {{OAR071: Query parameters param3 must be defined}} 
