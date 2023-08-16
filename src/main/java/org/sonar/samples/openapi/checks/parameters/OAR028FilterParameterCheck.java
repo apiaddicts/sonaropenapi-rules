@@ -22,8 +22,8 @@ public class OAR028FilterParameterCheck extends BaseCheck {
 
     public static final String KEY = "OAR028";
     private static final String MESSAGE = "OAR028.error";
-    private static final String DEFAULT_PATH = "/status, /another";
-    private static final String PATH_STRATEGY = "/exclude";
+    private static final String DEFAULT_PATH = "/examples";
+    private static final String PATH_STRATEGY = "/include";
     private static final String PARAM_NAME = "$filter";
 
     @RuleProperty(

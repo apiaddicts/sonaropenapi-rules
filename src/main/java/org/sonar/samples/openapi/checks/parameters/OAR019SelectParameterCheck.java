@@ -21,8 +21,8 @@ public class OAR019SelectParameterCheck extends BaseCheck {
 
     public static final String KEY = "OAR019";
     private static final String MESSAGE = "OAR019.error";
-    private static final String DEFAULT_PATH = "/status, /another";
-    private static final String PATH_STRATEGY = "/exclude";
+    private static final String DEFAULT_PATH = "/examples";
+    private static final String PATH_STRATEGY = "/include";
     private static final String PARAM_NAME = "$select";
 
     @RuleProperty(

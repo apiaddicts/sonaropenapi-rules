@@ -22,8 +22,8 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
 
     public static final String KEY = "OAR022";
     private static final String MESSAGE = "OAR022.error";
-    private static final String DEFAULT_PATH = "/status, /another";
-    private static final String PATH_STRATEGY = "/exclude";
+    private static final String DEFAULT_PATH = "/examples";
+    private static final String PATH_STRATEGY = "/include";
     private static final String PARAM_NAME = "$orderby";
 
     @RuleProperty(

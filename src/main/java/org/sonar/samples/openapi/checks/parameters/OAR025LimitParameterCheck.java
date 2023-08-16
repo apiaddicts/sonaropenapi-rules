@@ -22,8 +22,8 @@ public class OAR025LimitParameterCheck extends BaseCheck {
 
     public static final String KEY = "OAR025";
     private static final String MESSAGE = "OAR025.error";
-    private static final String DEFAULT_PATH = "/status, /another";
-    private static final String PATH_STRATEGY = "/exclude";
+    private static final String DEFAULT_PATH = "/examples";
+    private static final String PATH_STRATEGY = "/include";
     private static final String PARAM_NAME = "$limit";
 
     @RuleProperty(
