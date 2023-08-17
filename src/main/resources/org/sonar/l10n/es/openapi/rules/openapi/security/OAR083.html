@@ -1,28 +1,22 @@
-<p>Los parámetros query en las operaciones GET deben definirse de acuerdo con el estándar</p>
+<p>Algunos parámetros no deben aparecer en algunos querystrings</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
-<h3>En el caso que param1, param2 and param3 sean obligatorios</h3>
+<h3>En el caso que forbiddenParam1 y forbiddenParam1 sean prohibidos</h3>
 <pre>
   swagger: '2.0'
   info:
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
         parameters:
-          - name: param1
+          - name: forbiddenParam1
             in: query
             type: string
           - name: param3
             in: query
             type: boolean
-          - name: param4
-            in: query
-            type: string
-          - name: param5
-            in: query
-            type: number
         responses:
           200:
             description: A list of items
@@ -38,7 +32,7 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
         parameters:
@@ -48,15 +42,6 @@
           - name: param2
             in: query
             type: integer
-          - name: param3
-            in: query
-            type: boolean
-          - name: param4
-            in: query
-            type: string
-          - name: param5
-            in: query
-            type: number
         responses:
           200:
             description: A list of items
@@ -76,22 +61,10 @@
       get:
         summary: Get a list of items
         parameters: 
-          - name: param1
+          - name: forbiddenParam1
             in: query
             schema:
               type: string
-          - name: param2
-            in: query
-            schema:
-              type: integer
-          - name: param4
-            in: query
-            schema:
-              type: string
-          - name: param5
-            in: query
-            schema:
-              type: number
         responses:
           200:
             description: A list of items
@@ -121,18 +94,6 @@
             in: query
             schema:
               type: integer
-          - name: param3
-            in: query
-            schema:
-              type: boolean
-          - name: param4
-            in: query
-            schema:
-              type: string
-          - name: param5
-            in: query
-            schema:
-              type: number
         responses:
           200:
             description: A list of items
