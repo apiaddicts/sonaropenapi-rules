@@ -44,7 +44,8 @@ public final class RulesLists {
 				OAR079PathParameter404Check.class,
 				OAR080SecuritySchemasCheck.class,
 				OAR081PasswordFormatCheck.class,
-				OAR082BinaryOrByteFormatCheck.class
+				OAR082BinaryOrByteFormatCheck.class,
+				OAR083ForbiddenQueryParamsCheck.class
 		);
 	}
 
