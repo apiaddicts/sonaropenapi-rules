@@ -112,3 +112,25 @@ paths:
       responses:
         200:
           description: Ok
+
+  /resources/me:
+    get: 
+      responses:
+        200:
+          description: Ok
+    post: # Noncompliant {{OAR018: Operation not recommended for resource path: POST /resources/me}}
+      responses:
+        200:
+          description: Ok
+    put:
+      responses:
+        200:
+          description: Ok
+    patch: 
+      responses:
+        200:
+          description: Ok
+    delete: 
+      responses:
+        200:
+          description: Ok
