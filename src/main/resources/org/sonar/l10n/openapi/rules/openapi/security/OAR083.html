@@ -10,7 +10,7 @@
     /examples:
       get:
         summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FF6B6B;"># Noncompliant {{OAR083: The parameter forbiddenParam1 should not pass through this querystring}}</span>
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter forbiddenParam1 should not pass through this querystring}}</span>
           - name: forbiddenParam1
             in: query
             type: string
@@ -57,10 +57,10 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
-        parameters: 
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter forbiddenParam1 should not pass through this querystring}}</span>
           - name: forbiddenParam1
             in: query
             schema:
@@ -82,7 +82,7 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
         parameters:
