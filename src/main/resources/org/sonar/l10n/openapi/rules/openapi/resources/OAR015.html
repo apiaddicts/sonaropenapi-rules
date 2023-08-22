@@ -7,7 +7,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
+  /customers/{customerId}/invoices/{invoiceId}/products/{productId}: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR015: Resources depth level should be smaller}}</span>
     get:
       parameters:
         - in: path
@@ -81,7 +81,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
+  /customers/{customerId}/invoices/{invoiceId}/products/{productId}: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR015: Resources depth level should be smaller}}</span>
     get:
       parameters:
       - name: customerId

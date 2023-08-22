@@ -7,10 +7,10 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
-        parameters:
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR071: Query parameters param2 must be defined}}</span>
           - name: param1
             in: query
             type: string
@@ -38,7 +38,7 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
         parameters:
@@ -72,10 +72,10 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
-        parameters: 
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR071: Query parameters param3 must be defined}}</span>
           - name: param1
             in: query
             schema:
@@ -109,7 +109,7 @@
     version: 1.0.0
     title: My API
   paths:
-    /items:
+    /examples:
       get:
         summary: Get a list of items
         parameters:

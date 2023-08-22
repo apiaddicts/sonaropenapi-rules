@@ -12,22 +12,22 @@
         in: header
     paths:
     /users:
-        get:  
+        get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
         responses:
             200:
             description: "OK"
     /products:
-        post: 
+        post: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
         responses:
             200:
             description: "OK"
     /orders:
-        put: 
+        put: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
         responses:
             200:
             description: "OK"
     /invoices:
-        delete:
+        delete: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
         responses:
             200:
             description: "OK"
@@ -78,7 +78,7 @@
       title: Sample API
     paths:
       /users:
-        get:
+        get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
           summary: Get all users
           security: 
             - apiKey: []
@@ -86,7 +86,7 @@
             '200':
               description: OK
       /products:
-        post:
+        post: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
           summary: Create a new product
           security: 
             - oauth2: []
@@ -94,7 +94,7 @@
             '200':
               description: OK
       /orders:
-        put: 
+        put: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
           summary: Update an order
           security: 
             - unknownScheme: []
@@ -102,7 +102,7 @@
             '200':
               description: OK
       /invoices:
-        delete: 
+        delete: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete}}</span>
           summary: Delete an invoice
           security: 
             - unknownScheme: []

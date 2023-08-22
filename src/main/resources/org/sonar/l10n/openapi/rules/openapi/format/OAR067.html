@@ -15,7 +15,7 @@ paths:
           schema:
             type: object
             properties:
-              first_name: 
+              first_name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR067: RequestBody and Responses schema property names must be compliant with the camelCase naming convention}}</span>
                 type: string
       responses:
         '200':
@@ -23,7 +23,7 @@ paths:
           schema:
             type: object
             properties:
-              user_id:
+              user_id: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR067: RequestBody and Responses schema property names must be compliant with the camelCase naming convention}}</span>
                 type: integer
   </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -72,9 +72,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  first_name: 
+                  first_name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR067: RequestBody and Responses schema property names must be compliant with the camelCase naming convention}}</span>
                     type: string
-                  last_name:
+                  last_name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR067: RequestBody and Responses schema property names must be compliant with the camelCase naming convention}}</span>
                     type: string
         responses:
           '200':
@@ -84,9 +84,9 @@ paths:
                 schema:
                   type: object
                   properties:
-                    user_id: 
+                    user_id: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR067: RequestBody and Responses schema property names must be compliant with the camelCase naming convention}}</span>
                       type: integer
-                    user_name:
+                    user_name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR067: RequestBody and Responses schema property names must be compliant with the camelCase naming convention}}</span>
                       type: string
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>

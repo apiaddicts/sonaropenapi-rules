@@ -10,12 +10,12 @@
       get:
         parameters: 
           - in: query
-            name: other 
+            name: other <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}</span>
             type: array
             items:
               type: string
           - in: query
-            name: hola 
+            name: hola <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}</span>
             type: array
             items:
               type: string
@@ -58,13 +58,13 @@
       get:
         parameters: 
           - in: query
-            name: other 
+            name: other <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}</span>
             schema:
               type: array
               items:
                 type: string
           - in: query
-            name: select 
+            name: select <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}</span>
             schema:
               type: array
               items:

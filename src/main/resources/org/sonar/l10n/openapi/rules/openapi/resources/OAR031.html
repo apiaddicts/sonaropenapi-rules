@@ -9,7 +9,7 @@ paths:
   /pets:
     get:
       responses:
-        206:
+        206: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Responses must have one or more examples defined}}</span>
           description: Pet list
           schema:
             $ref: '#/definitions/pets'
@@ -17,14 +17,14 @@ definitions:
   pet:
     type: object
     properties:
-      name:
+      name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
         type: string
-      type:
+      type: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
         type: string
   pets:
     type: object
     properties:
-      size:
+      size: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
         type: integer
       pets:
         type: array
@@ -85,7 +85,7 @@ paths:
   /pets:
     get:
       responses:
-        206:
+        206: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Responses must have one or more examples defined}}</span>
           description: Pet list
           content:
             application/json:
@@ -96,14 +96,14 @@ components:
     pet:
       type: object
       properties:
-        name:
+        name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
           type: string
-        type:
+        type: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
           type: string
     pets:
       type: object
       properties:
-        size:
+        size: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
           type: integer
         pets:
           type: array

@@ -1,13 +1,14 @@
 <p>For security reasons and as a REST best practice, the HTTPS protocol is mandatory.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
-swagger: "2.0"
-info:
-  title: Swagger Petstore
-  version: "1.0"
-schemes:
-  - http
-paths: {}
+  swagger: "2.0"
+  info:
+    version: 1.0.0
+    title: Swagger Petstore
+  schemes: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR001: Protocol https is mandatory}}</span>
+    - http
+  paths:
+    /pets: {}
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
@@ -21,13 +22,15 @@ paths: {}
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
-openapi: "3.0.0"
-info:
-  title: Swagger Petstore
-  version: "1.0"
-servers:
-  - url: http://petstore.swagger.io/
-paths: {}
+  openapi: "3.0.0"
+  info:
+    version: 1.0.0
+    title: Swagger Petstore
+  servers:
+    - url: http://petstore.swagger.io/v1 <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR001: Protocol https is mandatory}}</span>
+  paths:
+    /pets: {}
+  
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>

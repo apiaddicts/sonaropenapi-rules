@@ -14,7 +14,7 @@ paths:
           in: path
           required: false
           type: string
-      responses:
+      responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR079: Paths parameters, should have not found (404) response}}</span>
         200:
           description: A list of items
           schema:
@@ -37,7 +37,7 @@ paths:
             in: path
             required: false
             type: string
-        responses:
+        responses: 
           200:
             description: A list of items
             schema:
@@ -63,7 +63,7 @@ paths:
           required: false
           schema:
             type: string
-      responses:
+      responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR079: Paths parameters, should have not found (404) response}}</span>
         200:
           description: A list of items
           content:

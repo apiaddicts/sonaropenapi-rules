@@ -11,7 +11,7 @@ paths:
       responses:
         201:
           description: Ok
-          schema:
+          schema: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR038: 'data' property is missing}}</span>
             type: object
         204:
           description: No content
@@ -57,7 +57,7 @@ paths:
           description: Ok
           content:
             application/json:
-              schema:
+              schema: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR038: 'data' property is missing}}</span>
                 type: object
         204:
           description: No content
