@@ -15,7 +15,7 @@ paths:
           schema:
             type: object
             properties:
-              firstName: 
+              firstName: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}</span>
                 type: string
       responses:
         '200':
@@ -23,7 +23,7 @@ paths:
           schema:
             type: object
             properties:
-              userId:
+              userId: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}</span>
                 type: integer
   </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -72,7 +72,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  firstName: 
+                  firstName: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}</span>
                     type: string
                   last_name:
                     type: string
@@ -84,7 +84,7 @@ paths:
                 schema:
                   type: object
                   properties:
-                    userID: 
+                    userID: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}</span>
                       type: integer
                     user_name:
                       type: string

@@ -12,7 +12,7 @@
           - in: query
             name: $expand
             type: array
-            required: true
+            required: true <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR060: All parameters in query must be defined as optional}}</span>
             items:
               type: string
         responses:
@@ -51,7 +51,7 @@ paths:
         parameters:
           - in: query
             name: $orderby
-            required: true
+            required: true <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR060: All parameters in query must be defined as optional}}</span>
             schema:
               type: array
               items:

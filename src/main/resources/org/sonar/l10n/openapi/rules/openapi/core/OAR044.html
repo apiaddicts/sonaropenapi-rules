@@ -8,19 +8,19 @@ info:
     title: Swagger Petstore
 produces:
     - application/json
-    - text/*
+    - text/* <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR044: Declared mime type should conform to RFC6838}}</span>
 consumes:
     - application/json
-    - text/*
+    - text/* <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR044: Declared mime type should conform to RFC6838}}</span>
 paths:
     /pets:
     get:
         produces:
         - application
-        - text/plain
+        - text/plain <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR044: Declared mime type should conform to RFC6838}}</span>
         consumes:
         - application
-        - text/plain
+        - text/plain <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR044: Declared mime type should conform to RFC6838}}</span>
         responses:
         '200':
             description: some operation
@@ -61,13 +61,13 @@ paths:
     post:
         requestBody:
         content:
-            'application': {}
-            'text/*': {}
+            'application': {} <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}</span>
+            'text/*': {} 
         responses:
         '200':
             description: some operation
             content:
-            'application': {}
+            'application': {} <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}</span>
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>

@@ -7,11 +7,11 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    get:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR046: Associate a tag to this operation}}</span>
       responses:
         200:
           description: OK
-    post:
+    post: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR046: Associate a tag to this operation}}</span>
       responses:
         default:
           description: the default response
@@ -50,11 +50,11 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    get:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR046: Associate a tag to this operation}}</span>
       responses:
         200:
           description: OK
-    post:
+    post: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR046: Associate a tag to this operation}}</span>
       responses:
         default:
           description: the default response

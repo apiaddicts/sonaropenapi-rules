@@ -6,8 +6,8 @@ swagger: "2.0"
 info:
   title: Swagger Petstore
   version: "1.0"
-produces:
-  - application/xml
+produces: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR010: Should indicate the default response media type}}</span>
+  - application/xml 
 paths:
   /pets:
     put:
@@ -42,7 +42,7 @@ paths:
       responses:
         200:
           description: Ok
-          content:
+          content: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR010: Should indicate the default response media type}}</span>
             application/xml:
               schema:
                 type: object

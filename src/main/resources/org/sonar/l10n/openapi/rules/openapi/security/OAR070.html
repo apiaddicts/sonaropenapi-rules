@@ -14,7 +14,7 @@
               in: path
               description: ID of the item
               required: false
-              type: integer
+              type: integer <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR070: Parameters in path shouldnt be numeric}}</span>
           responses:
             200:
               description: Item details
@@ -72,7 +72,7 @@
               in: path
               required: false
               schema:
-                type: integer
+                type: integer <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR070: Parameters in path shouldnt be numeric}}</span>
           responses:
             200:
               description: A list of items

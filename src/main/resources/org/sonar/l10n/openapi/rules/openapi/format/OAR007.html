@@ -9,7 +9,7 @@ info:
   version: "1.0"
 paths:
   /pets:
-    put:
+    put: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR007: Section produces is mandatory}}</span>
       responses: 
         200:
           description: OK
@@ -52,7 +52,7 @@ info:
   version: "1.0"
 paths:
   /pets:
-    post:
+    post: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR007: Section produces is mandatory}}</span>
       responses:
         200:
           description: Ok

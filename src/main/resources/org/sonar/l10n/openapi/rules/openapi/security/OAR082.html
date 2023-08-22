@@ -1,5 +1,6 @@
-<p>All parameters in query must be snake_case</p>
+<p>The string properties of the specified parameters must define a byte or binary format</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
+<h3>In case "product, line and price" are the fields to wich the rule is applied</h3>
 <pre>
   swagger: "2.0"
   info:
@@ -14,14 +15,14 @@
             schema:
               type: object
               properties:
-                product:  
+                product: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format}}</span>
                   type: string 
                   format: int128
-                line: 
+                line: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format}}</span>
                   type: string 
                 lapiz:
                   type: string
-                price:  
+                price:  <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format}}</span>
                   type: string
                   format: byte
 </pre>
@@ -40,16 +41,16 @@
             schema:
               type: object
               properties:
-                product:  
+                goma:  
                   type: string 
                   format: byte
-                line: 
+                linea: 
                   type: string 
                   format: byte
                 lapiz:
                   type: string
                   format: byte
-                price:  
+                precio:  
                   type: string
                   format: byte
 </pre>
@@ -70,12 +71,12 @@
                 schema:
                   type: object
                   properties:
-                    product:  
+                    product: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format}}</span>
                       type: string 
                       format: int128
-                    line: 
+                    line: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format}}</span>
                       type: string 
-                    price:
+                    price:  <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format}}</span>
                       type: string
                       format: byte
 </pre>
@@ -96,13 +97,13 @@
                 schema:
                   type: object
                   properties:
-                    product:  
+                    producto:  
                     type: string
                     format: byte
-                    line: 
+                    linea: 
                       type: string
                       format: byte 
-                    price:
+                    precio:
                       type: string
                       format: byte
 </pre>

@@ -7,7 +7,7 @@ swagger: "2.0"
 info:
     version: 1.0.0
     title: Swagger Petstore
-basePath: /seguros
+basePath: /seguros <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR042: API name must start with prefix 'api-'}}</span>
 paths: {}
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -26,7 +26,7 @@ info:
     version: 1.0.0
     title: Swagger Petstore
 servers:
-    - url: https://petstore.swagger.io/seguros/version/1
+    - url: https://petstore.swagger.io/seguros/version/1 <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR042: API name must start with prefix 'api-'}}</span>
 paths: {}
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
