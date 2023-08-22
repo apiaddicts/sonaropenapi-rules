@@ -12,7 +12,7 @@
             - name: username
               in: query
               type: string
-            - name: userFirstName
+            - name: userFirstName <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR077: All parameters in query must be snake_case}}</span>
               in: query
               type: string
 </pre>
@@ -47,7 +47,7 @@
               in: query
               schema:
                 type: string
-            - name: userFirstName
+            - name: userFirstName <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR077: All parameters in query must be snake_case}}</span>
               in: query
               schema:
                 type: string

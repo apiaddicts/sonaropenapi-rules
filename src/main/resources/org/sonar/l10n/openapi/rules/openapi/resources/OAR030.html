@@ -5,7 +5,7 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: Swagger Petstore
-paths:
+paths: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR030: The path '/status' must be declared}}</span>
   /pets:
     get:
       responses:
@@ -36,7 +36,7 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Swagger Petstore
-paths:
+paths: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR030: The path '/status' must be declared}}</span>
   /pets:
     get:
       responses:

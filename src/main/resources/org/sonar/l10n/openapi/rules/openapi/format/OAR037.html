@@ -17,7 +17,7 @@ paths:
               type: object
               properties:
                 date:
-                  type: string
+                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}}</span>
                   format: 'dd/mm/yyyy'
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -61,7 +61,7 @@ paths:
                   type: object
                   properties:
                     date:
-                      type: string
+                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}}</span>
                       format: dd/mm/yyyy
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>

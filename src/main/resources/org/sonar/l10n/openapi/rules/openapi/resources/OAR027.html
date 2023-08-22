@@ -9,7 +9,7 @@ paths:
   /pets:
     post:
       responses:
-        201:
+        201: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR027: Location header is required in responses with code 201 from POST operations}}</span>
           description: Created
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -38,7 +38,7 @@ paths:
   /pets:
     post:
       responses:
-        201:
+        201: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR027: Location header is required in responses with code 201 from POST operations}}</span>
           description: Created
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>

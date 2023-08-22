@@ -15,7 +15,7 @@ paths:
           type: string
           format: uuid
       responses:
-        204:
+        204: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR049: 204 No Content MUST NOT return anything}}</span>
           description: Deleted
           schema:
             type: object
@@ -56,7 +56,7 @@ paths:
             type: string
             format: uuid
       responses:
-        204:
+        204: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR049: 204 No Content MUST NOT return anything}}</span>
           description: Deleted
           content:
             application/json:

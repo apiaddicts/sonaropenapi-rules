@@ -21,7 +21,7 @@ paths:
       responses:
         200:
           description: OK
-  /customers/{customerId}/invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR014: Resources depth level should be smaller}}</span>
     get:
       parameters:
         - in: path
@@ -97,7 +97,7 @@ paths:
       responses:
         200:
           description: OK
-  /customers/{customerId}/invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR014: Resources depth level should be smaller}}</span>
     get:
       parameters:
       - name: customerId
