@@ -5,19 +5,19 @@
       "title": "My API"
     },
     "paths": {
-      "/examples": {
+      "/items": {
         "get": {
           "summary": "Get a list of items",
-          "parameters": [ # Noncompliant {{OAR083: The parameter email should not pass through this querystring}}
+          "parameters": [
             {
-              "name": "email",
+              "name": "param1",
               "in": "query",
               "schema": {
                 "type": "string"
               }
             },
             {
-              "name": "patata",
+              "name": "param2",
               "in": "query",
               "schema": {
                 "type": "integer"

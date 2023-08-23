@@ -1,6 +1,6 @@
-<p>Some parameters should not pass through some querystring</p>
-<h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>In case email and password are forbidden</h3>
+<p>Algunos parámetros no deben aparecer en algunos querystrings</p>
+<h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<h3>En el caso que forbiddenParam1 y forbiddenParam1 sean prohibidos</h3>
 <pre>
   swagger: '2.0'
   info:
@@ -10,8 +10,8 @@
     /examples:
       get:
         summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter email should not pass through this querystring}}</span>
-          - name: email
+        parameters:
+          - name: forbiddenParam1
             in: query
             type: string
           - name: param3
@@ -25,7 +25,7 @@
               items:
                 type: string
 </pre>
-<h2>Compliant Solution (OpenAPI 2)</h2>
+<h2>Solución compatible (OpenAPI 2)</h2>
 <pre>
   swagger: '2.0'
   info:
@@ -50,18 +50,18 @@
               items:
                 type: string
 </pre>
-<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
 <pre>
   openapi: "3.0.0"
   info:
     version: 1.0.0
     title: My API
   paths:
-    /examples:
+    /items:
       get:
         summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter email should not pass through this querystring}}</span>
-          - name: email
+        parameters: 
+          - name: forbiddenParam1
             in: query
             schema:
               type: string
@@ -75,14 +75,14 @@
                   items:
                     type: string
 </pre>
-<h2>Compliant Solution (OpenAPI 3)</h2>
+<h2>Solución compatible (OpenAPI 3)</h2>
 <pre>
   openapi: "3.0.0"
   info:
     version: 1.0.0
     title: My API
   paths:
-    /examples:
+    /items:
       get:
         summary: Get a list of items
         parameters:

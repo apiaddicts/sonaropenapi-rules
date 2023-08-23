@@ -9,26 +9,28 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.sonar.samples.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Rule(key = OAR083ForbiddenQueryParamsCheck.KEY)
-public class OAR083ForbiddenQueryParamsCheck extends BaseCheck {
+@Rule(key = OAR084ForbiddenFormatsInQueryCheck.KEY)
+public class OAR084ForbiddenFormatsInQueryCheck extends BaseCheck {
 
-    public static final String KEY = "OAR083";
-    private static final String MESSAGE = "OAR083.error";
-    private static final String FORBIDDEN_QUERY_PARAMS = "email, password";
+    public static final String KEY = "OAR084";
+    private static final String MESSAGE = "OAR084.error";
+    private static final String FORBIDDEN_QUERY_FORMATS = "password";
     private static final String DEFAULT_PATH = "/examples";
     private static final String PATH_STRATEGY = "/include";
 
     @RuleProperty(
-            key = "forbidden-query-params",
+            key = "forbidden-query-formats",
             description = "List of forbidden query params separated by comma",
-            defaultValue = FORBIDDEN_QUERY_PARAMS
+            defaultValue = FORBIDDEN_QUERY_FORMATS
     )
-    private String forbiddenQueryParamsStr = FORBIDDEN_QUERY_PARAMS;
+    private String forbiddenQueryFormatsStr = FORBIDDEN_QUERY_FORMATS;
 
     @RuleProperty(
             key = "paths",
@@ -44,14 +46,14 @@ public class OAR083ForbiddenQueryParamsCheck extends BaseCheck {
     )
     private String pathCheckStrategy = PATH_STRATEGY;
 
-    private Set<String> forbiddenQueryParams = new HashSet<>();
+    private Set<String> forbiddenQueryFormats = new HashSet<>();
     private Set<String> paths;
     private String currentPath;
 
     @Override
     protected void visitFile(JsonNode root) {
-        if (!forbiddenQueryParamsStr.trim().isEmpty()) {
-            forbiddenQueryParams.addAll(Stream.of(forbiddenQueryParamsStr.split(",")).map(String::trim).collect(Collectors.toSet()));
+        if (!forbiddenQueryFormatsStr.trim().isEmpty()) {
+            forbiddenQueryFormats.addAll(Stream.of(forbiddenQueryFormatsStr.split(",")).map(String::trim).collect(Collectors.toSet()));
         }
         if (!pathsStr.trim().isEmpty()) {
             paths = Stream.of(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
@@ -84,19 +86,38 @@ public class OAR083ForbiddenQueryParamsCheck extends BaseCheck {
             if (parametersNode == null || parametersNode.isNull()) {
                 return;
             }
-            Set<String> queryParams = new HashSet<>();
+            
+            List<JsonNode> forbiddenFormatNodes = new ArrayList<>();
+
             parametersNode.elements().forEach(parameterNode -> {
                 JsonNode inNode = parameterNode.get("in");
                 if (inNode != null && "query".equals(inNode.getTokenValue())) {
-                    JsonNode nameNode = parameterNode.get("name");
-                    if (nameNode != null && !nameNode.isNull()) {
-                        queryParams.add(nameNode.getTokenValue());
+                    JsonNode formatNode;
+
+                    if (node.getType() == OpenApi2Grammar.OPERATION) {
+                        formatNode = parameterNode.get("format");
+                    } else {
+                        JsonNode schemaNode = parameterNode.get("schema");
+                        if (schemaNode == null || schemaNode.isNull()) {
+                            return;
+                        }
+                        formatNode = schemaNode.get("format");
+                    }
+
+                    if (formatNode != null && !formatNode.isNull() && forbiddenQueryFormats.contains(formatNode.getTokenValue())) {
+                        forbiddenFormatNodes.add(formatNode);
                     }
                 }
             });
-            String forbiddenParamsStr = forbiddenQueryParams.stream().filter(queryParams::contains).collect(Collectors.joining(", "));
-            if (!forbiddenParamsStr.isEmpty()) {
-                addIssue(KEY, translate(MESSAGE, forbiddenParamsStr), parametersNode.key());
+
+            if (!forbiddenFormatNodes.isEmpty()) {
+                String forbiddenFormatsStr = forbiddenFormatNodes.stream()
+                    .map(JsonNode::getTokenValue)
+                    .collect(Collectors.joining(", "));
+
+                for (JsonNode formatNode : forbiddenFormatNodes) {
+                    addIssue(KEY, translate(MESSAGE, forbiddenFormatsStr), formatNode);
+                }
             }
         }
     }

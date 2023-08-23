@@ -8,11 +8,12 @@
     "/examples": {
       "get": {
         "summary": "Get a list of items",
-        "parameters": [ # Noncompliant {{OAR083: The parameter email should not pass through this querystring}}
+        "parameters": [
           {
-            "name": "email",
+            "name": "exampleParam1",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "format": "date"
           },
           {
             "name": "param3",
@@ -24,10 +25,7 @@
           "200": {
             "description": "A list of items",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "type": "array"
             }
           }
         }
