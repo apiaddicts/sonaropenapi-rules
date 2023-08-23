@@ -19,7 +19,7 @@ public class OAR083ForbiddenQueryParamsCheck extends BaseCheck {
 
     public static final String KEY = "OAR083";
     private static final String MESSAGE = "OAR083.error";
-    private static final String FORBIDDEN_QUERY_PARAMS = "forbiddenParam1, forbiddenParam2";
+    private static final String FORBIDDEN_QUERY_PARAMS = "email, password";
     private static final String DEFAULT_PATH = "/examples";
     private static final String PATH_STRATEGY = "/include";
 

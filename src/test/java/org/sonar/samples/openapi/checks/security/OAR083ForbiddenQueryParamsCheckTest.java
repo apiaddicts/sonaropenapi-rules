@@ -45,7 +45,7 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(3);
-        assertParameterProperties("forbidden-query-params", "forbiddenParam1, forbiddenParam2", RuleParamType.STRING);
+        assertParameterProperties("forbidden-query-params", "email, password", RuleParamType.STRING);
         assertParameterProperties("paths", "/examples", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
     }

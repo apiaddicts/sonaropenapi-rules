@@ -1,6 +1,6 @@
 <p>Some parameters should not pass through some querystring</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>In case forbiddenParam1 and forbiddenParam2 are forbidden</h3>
+<h3>In case email and password are forbidden</h3>
 <pre>
   swagger: '2.0'
   info:
@@ -10,8 +10,8 @@
     /examples:
       get:
         summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter forbiddenParam1 should not pass through this querystring}}</span>
-          - name: forbiddenParam1
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter email should not pass through this querystring}}</span>
+          - name: email
             in: query
             type: string
           - name: param3
@@ -60,8 +60,8 @@
     /examples:
       get:
         summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter forbiddenParam1 should not pass through this querystring}}</span>
-          - name: forbiddenParam1
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR083: The parameter email should not pass through this querystring}}</span>
+          - name: email
             in: query
             schema:
               type: string

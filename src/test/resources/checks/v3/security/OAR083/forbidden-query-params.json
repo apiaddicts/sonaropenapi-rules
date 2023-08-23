@@ -8,16 +8,16 @@
       "/examples": {
         "get": {
           "summary": "Get a list of items",
-          "parameters": [ # Noncompliant {{OAR083: The parameter forbiddenParam1, forbiddenParam2 should not pass through this querystring}}
+          "parameters": [ # Noncompliant {{OAR083: The parameter email should not pass through this querystring}}
             {
-              "name": "forbiddenParam1",
+              "name": "email",
               "in": "query",
               "schema": {
                 "type": "string"
               }
             },
             {
-              "name": "forbiddenParam2",
+              "name": "patata",
               "in": "query",
               "schema": {
                 "type": "integer"
