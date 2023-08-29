@@ -46,7 +46,8 @@ public final class RulesLists {
 				OAR081PasswordFormatCheck.class,
 				OAR082BinaryOrByteFormatCheck.class,
 				OAR083ForbiddenQueryParamsCheck.class,
-				OAR084ForbiddenFormatsInQueryCheck.class
+				OAR084ForbiddenFormatsInQueryCheck.class,
+				OAR085OpenAPIVersionCheck.class
 		);
 	}
 
