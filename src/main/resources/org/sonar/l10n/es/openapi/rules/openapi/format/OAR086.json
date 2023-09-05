@@ -1,0 +1,13 @@
+{
+    "title": "OAR086 - DescriptionFormatCheck - Todas las descripciones deben empezar con mayúsculas y terminar con un punto",
+    "type": "BUG",
+    "status": "ready",
+    "remediation": {
+      "func": "Constant\/Issue",
+      "constantCost": "30min"
+    },
+    "tags": [
+      "format"
+    ],
+    "defaultSeverity": "MINOR"
+  }

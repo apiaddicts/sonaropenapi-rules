@@ -1,0 +1,27 @@
+swagger: '2.0'
+info:
+  title: Sample API
+  version: 1.0.0
+  description: esta es la descripción de la API. # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+
+paths:
+  /pets:
+    get:
+      summary: Lista de mascotas 
+      description: esta ruta devuelve una lista de mascotas. # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+      responses:
+        '200':
+          description: Una lista de mascotas.
+          schema:
+            $ref: '#/definitions/Pet'
+
+definitions:
+  Pet:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+    description: Representa una mascota # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
