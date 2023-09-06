@@ -65,7 +65,8 @@ public final class RulesLists {
 				OAR068PascalCaseNamingConventionCheck.class,
 				OAR077ParametersInQuerySnakeCaseCheck.class,
 				OAR086DescriptionFormatCheck.class,
-				OAR087SummaryFormatCheck.class
+				OAR087SummaryFormatCheck.class,
+				OAR088RefParamCheck.class
 				
 		);
 	}
