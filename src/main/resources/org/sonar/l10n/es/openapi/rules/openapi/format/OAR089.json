@@ -1,5 +1,5 @@
 {
-    "title": "OAR089 - RequestBodyParam - El $ref de un request body debe terminar con el sufijo correspondiente",
+    "title": "OAR089 - RefRequestBody - El $ref de un request body debe terminar con el sufijo correspondiente",
     "type": "BUG",
     "status": "ready",
     "remediation": {

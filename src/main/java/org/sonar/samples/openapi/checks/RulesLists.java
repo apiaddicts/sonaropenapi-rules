@@ -67,7 +67,8 @@ public final class RulesLists {
 				OAR086DescriptionFormatCheck.class,
 				OAR087SummaryFormatCheck.class,
 				OAR088RefParamCheck.class,
-				OAR089RefRequestBodyCheck.class
+				OAR089RefRequestBodyCheck.class,
+				OAR090RefResponseCheck.class
 				
 		);
 	}
