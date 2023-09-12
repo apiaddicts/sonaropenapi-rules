@@ -7,16 +7,23 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-public class OAR089RefRequestBodyCheckTest extends BaseCheckTest {
+public class OAR090RefResponseCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
-        ruleName = "OAR089";
-        check = new OAR089RefRequestBodyCheck();
+        ruleName = "OAR090";
+        check = new OAR090RefResponseCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
     }
-
+    @Test
+    public void verifyInV2() {
+        verifyV2("invalid-ref");
+    }
+    @Test
+    public void verifyvalidV2() {
+        verifyV2("valid-ref");
+    }
     @Test
     public void verifyInV3() {
         verifyV3("invalid-ref");
@@ -28,12 +35,12 @@ public class OAR089RefRequestBodyCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR089 - RefRequestBody - The $ref of a request body must end with a corresponding suffix", RuleType.BUG, Severity.MINOR, tags("format"));
+        assertRuleProperties("OAR090 - RefResponse - The $ref of a response must end with a corresponding suffix", RuleType.BUG, Severity.MINOR, tags("format"));
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("default-suffix", "Body", RuleParamType.STRING);
+        assertParameterProperties("default-suffix", "Response", RuleParamType.STRING);
     }
 }

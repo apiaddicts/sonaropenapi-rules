@@ -1,5 +1,5 @@
 {
-    "title": "OAR089 - RefRequestBody - The $ref of a request body must end with a corresponding suffix",
+    "title": "OAR090 - RefResponse - The $ref of a response must end with a corresponding suffix",
     "type": "BUG",
     "status": "ready",
     "remediation": {
