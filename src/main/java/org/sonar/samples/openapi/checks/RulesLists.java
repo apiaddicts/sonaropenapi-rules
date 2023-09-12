@@ -66,7 +66,8 @@ public final class RulesLists {
 				OAR077ParametersInQuerySnakeCaseCheck.class,
 				OAR086DescriptionFormatCheck.class,
 				OAR087SummaryFormatCheck.class,
-				OAR088RefParamCheck.class
+				OAR088RefParamCheck.class,
+				OAR089RefRequestBodyCheck.class
 				
 		);
 	}
