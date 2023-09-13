@@ -46,7 +46,8 @@ public final class RulesLists {
 				OAR081PasswordFormatCheck.class,
 				OAR082BinaryOrByteFormatCheck.class,
 				OAR083ForbiddenQueryParamsCheck.class,
-				OAR084ForbiddenFormatsInQueryCheck.class
+				OAR084ForbiddenFormatsInQueryCheck.class,
+				OAR085OpenAPIVersionCheck.class
 		);
 	}
 
@@ -62,7 +63,12 @@ public final class RulesLists {
 				OAR066SnakeCaseNamingConventionCheck.class,
 				OAR067CamelCaseNamingConventionCheck.class,
 				OAR068PascalCaseNamingConventionCheck.class,
-				OAR077ParametersInQuerySnakeCaseCheck.class
+				OAR077ParametersInQuerySnakeCaseCheck.class,
+				OAR086DescriptionFormatCheck.class,
+				OAR087SummaryFormatCheck.class,
+				OAR088RefParamCheck.class,
+				OAR089RefRequestBodyCheck.class,
+				OAR090RefResponseCheck.class
 				
 		);
 	}

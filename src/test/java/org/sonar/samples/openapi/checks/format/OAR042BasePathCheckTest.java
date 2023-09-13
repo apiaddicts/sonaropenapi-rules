@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
 public class OAR042BasePathCheckTest extends BaseCheckTest {
@@ -40,7 +41,10 @@ public class OAR042BasePathCheckTest extends BaseCheckTest {
     public void verifyInV2IncorrectVersion() {
         verifyV2("incorrect-version");
     }
-
+    @Test
+    public void verifyInV2IncorrectPath() {
+        verifyV2("incorrect-path");
+    }
     @Test
     public void verifyInV3() {
         verifyV3("valid");
@@ -65,9 +69,19 @@ public class OAR042BasePathCheckTest extends BaseCheckTest {
     public void verifyInV3IncorrectVersion() {
         verifyV3("incorrect-version");
     }
+    @Test
+    public void verifyInV3IncorrectPath() {
+        verifyV3("incorrect-path");
+    }
 
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR042 - BasePath - Base path must be compliant with the standard", RuleType.BUG, Severity.CRITICAL, tags("format"));
+    }
+    @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(2);
+        assertParameterProperties("first-part-values", "-", RuleParamType.STRING);
+        assertParameterProperties("second-part-values", "-", RuleParamType.STRING);
     }
 }

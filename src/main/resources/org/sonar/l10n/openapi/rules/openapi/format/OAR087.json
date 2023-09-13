@@ -1,0 +1,13 @@
+{
+    "title": "OAR087 - SummaryFormat - All summaries must begin with a capital letter and end with a period",
+    "type": "BUG",
+    "status": "ready",
+    "remediation": {
+      "func": "Constant\/Issue",
+      "constantCost": "30min"
+    },
+    "tags": [
+      "format"
+    ],
+    "defaultSeverity": "MINOR"
+  }
