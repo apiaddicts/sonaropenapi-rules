@@ -216,9 +216,9 @@ prometheusExporter:
 #    - "https://github.com/SonarSource/sonar-ldap/releases/download/2.2-RC3/sonar-ldap-plugin-2.2.0.601.jar"
 plugins:
   install: 
-    - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/checkstyle/9.0.1/checkstyle-9.0.1.jar"
+    #- "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/checkstyle/9.0.1/checkstyle-9.0.1.jar"
     - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/org/sonar/samples/openapi/dosonarapi-community/plugin_version/dosonarapi-community-plugin_version.jar"
-    - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/findbugs/4.0.5/findbugs-4.0.5.jar"
+    #- "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/findbugs/4.0.5/findbugs-4.0.5.jar"
     - "https://apiquality:VuwtYGz35or6gb@nexus.cloudappi.net/repository/apiquality/apiquality/openapi/1.0.5/openapi-1.0.5.jar"
 
  
