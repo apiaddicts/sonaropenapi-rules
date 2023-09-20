@@ -93,8 +93,8 @@ public final class RulesLists {
 				OAR063PutMethodCheck.class,
 				OAR064PatchMethodCheck.class,
 				OAR065DeleteMethodCheck.class,
-				OAR071GetQueryParamsDefinedCheck.class
-				
+				OAR071GetQueryParamsDefinedCheck.class,
+				OAR091ParamOnlyRefCheck.class				
 		);
 	}
 
