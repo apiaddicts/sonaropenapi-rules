@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.sonar.samples.openapi</groupId>
+  <groupId>apiquality.sonar.openapi</groupId>
   <artifactId>dosonarapi-community</artifactId>
   <version>${TAG_NAME}</version>
   <packaging>sonar-plugin</packaging>
@@ -91,7 +91,7 @@
         <configuration>
           <pluginKey>openapi-custom</pluginKey>
           <pluginName>OpenAPI Custom</pluginName>
-          <pluginClass>org.sonar.samples.openapi.OpenAPICustomPlugin</pluginClass>
+          <pluginClass>apiquality.sonar.openapi.OpenAPICustomPlugin</pluginClass>
           <skipDependenciesPackaging>true</skipDependenciesPackaging>
           <sonarLintSupported>true</sonarLintSupported>
           <sonarQubeMinVersion>${sonarQubeMinVersion}</sonarQubeMinVersion>

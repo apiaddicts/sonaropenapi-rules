@@ -20,6 +20,9 @@
 package org.sonar.samples.openapi.checks.core;
 
 import com.sonar.sslr.api.RecognitionException;
+
+import apiquality.sonar.openapi.checks.core.OAR043ParsingErrorCheck;
+
 import org.junit.Test;
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiFile;
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiVisitorContext;

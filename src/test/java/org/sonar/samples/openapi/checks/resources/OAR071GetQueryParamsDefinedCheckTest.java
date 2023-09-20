@@ -7,6 +7,8 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
+import apiquality.sonar.openapi.checks.resources.OAR071GetQueryParamsDefinedCheck;
+
 public class OAR071GetQueryParamsDefinedCheckTest extends BaseCheckTest {
 
     @Before
