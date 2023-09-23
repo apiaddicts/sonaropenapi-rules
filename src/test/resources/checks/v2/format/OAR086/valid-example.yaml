@@ -8,7 +8,7 @@ paths:
   /pets:
     get:
       summary: Lista de mascotas.
-      description: Esta ruta devuelve una lista de mascotas.
+      description: 
       responses:
         '200':
           description: Una lista de mascotas.

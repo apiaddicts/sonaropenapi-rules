@@ -76,11 +76,24 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
     }
 
     private void checkDescriptionFormat(JsonNode descriptionNode) {
+        boolean hasValidLength = false;
+    
         if (descriptionNode != null && !descriptionNode.isMissing()) {
             String description = descriptionNode.getTokenValue();
+            
+            // Comprobar la longitud de la cadena
+            hasValidLength = (description != null && description.length() > 0);
+            
+            // Si la longitud de la cadena es 0, añadir un problema y regresar
+            if (!hasValidLength) {
+                addIssue(KEY, translate(MESSAGE), descriptionNode);
+                return;
+            }
+    
+            // Comprobar otros criterios de formato
             if (!description.startsWith(Character.toString(description.charAt(0)).toUpperCase()) ||
                 !description.endsWith(".")) {
-                addIssue(KEY, translate(MESSAGE), descriptionNode.key());
+                addIssue(KEY, translate(MESSAGE), descriptionNode);
             }
         }
     }
