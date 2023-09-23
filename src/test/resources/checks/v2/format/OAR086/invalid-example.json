@@ -9,7 +9,7 @@
     "/pets": {
       "get": {
         "summary": "lista de mascotas", 
-        "description": "esta ruta devuelve una lista de mascotas.", # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+        "description": "", # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
         "responses": {
           "200": {
             "description": "una lista de mascotas.", # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
