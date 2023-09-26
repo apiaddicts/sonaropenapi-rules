@@ -1,145 +1,111 @@
-<p>Query parameters in GET operations must be defined according to the standard</p>
+<p>Parameters must contain only references ($ref)</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
-<h3>In case param1, param2 and param3 are mandatory</h3>
 <pre>
   swagger: '2.0'
   info:
-    version: 1.0.0
-    title: My API
+    title: Sample API
+    version: '1.0.0'
   paths:
-    /examples:
+    /sample:
       get:
-        summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR071: Query parameters param2 must be defined}}</span>
-          - name: param1
-            in: query
-            type: string
-          - name: param3
-            in: query
-            type: boolean
-          - name: param4
-            in: query
-            type: string
-          - name: param5
-            in: query
-            type: number
-        responses:
-          200:
-            description: A list of items
+        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR091: Parameters must contain only references ($ref)}}</span>
+          - name: userData
+            in: body
+            description: User Data
+            required: true
             schema:
-              type: array
-              items:
-                type: string
+              $ref: '#/definitions/User'
+        responses:
+          '200':
+            description: Successful response
+  definitions:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
   swagger: '2.0'
   info:
-    version: 1.0.0
-    title: My API
+    title: Sample API
+    version: '1.0.0'
   paths:
-    /examples:
+    /sample:
       get:
-        summary: Get a list of items
         parameters:
-          - name: param1
-            in: query
-            type: string
-          - name: param2
-            in: query
-            type: integer
-          - name: param3
-            in: query
-            type: boolean
-          - name: param4
-            in: query
-            type: string
-          - name: param5
-            in: query
-            type: number
+          - $ref: '#/parameters/UserId'
+          - $ref: '#/parameters/UserName'
         responses:
-          200:
-            description: A list of items
-            schema:
-              type: array
-              items:
-                type: string
+          '200':
+            description: Successful response
+  parameters:
+    UserId:
+      name: userId
+      in: query
+      description: User ID
+      required: true
+      type: integer
+    UserName:
+      name: userName
+      in: query
+      description: User Name
+      type: string
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
-  openapi: "3.0.0"
+  openapi: 3.0.0
   info:
+    title: Sample API
     version: 1.0.0
-    title: My API
   paths:
-    /examples:
+    /pets:
       get:
-        summary: Get a list of items
-        parameters: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR071: Query parameters param3 must be defined}}</span>
-          - name: param1
-            in: query
-            schema:
-              type: string
-          - name: param2
-            in: query
-            schema:
-              type: integer
-          - name: param4
-            in: query
-            schema:
-              type: string
-          - name: param5
-            in: query
-            schema:
-              type: number
-        responses:
-          200:
-            description: A list of items
+        summary: Get all pets
+        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR093: Responses must contain only references ($ref)}}</span>
+          '200':
+            description: A list of pets
             content:
               application/json:
                 schema:
                   type: array
                   items:
-                    type: string
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>
-  openapi: "3.0.0"
+  openapi: 3.0.0
   info:
+    title: Sample API
     version: 1.0.0
-    title: My API
   paths:
-    /examples:
+    /sample:
       get:
-        summary: Get a list of items
         parameters:
-          - name: param1
-            in: query
-            schema:
-              type: string
-          - name: param2
-            in: query
-            schema:
-              type: integer
-          - name: param3
-            in: query
-            schema:
-              type: boolean
-          - name: param4
-            in: query
-            schema:
-              type: string
-          - name: param5
-            in: query
-            schema:
-              type: number
+          - $ref: '#/components/parameters/UserParam'
         responses:
-          200:
-            description: A list of items
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: string
+          '200':
+            description: Successful response
+  components:
+    parameters:
+      UserParam:
+        name: user
+        in: query
+        description: User information
+        required: true
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
 </pre>
