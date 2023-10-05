@@ -1,0 +1,13 @@
+{
+    "title": "OAR095 - OpenaAPIVersionFormat - The API version must follow the X.X.X format",
+    "type": "BUG",
+    "status": "ready",
+    "remediation": {
+      "func": "Constant\/Issue",
+      "constantCost": "30min"
+    },
+    "tags": [
+      "format"
+    ],
+    "defaultSeverity": "MINOR"
+}
