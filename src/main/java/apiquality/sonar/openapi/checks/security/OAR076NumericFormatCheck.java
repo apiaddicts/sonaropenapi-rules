@@ -11,6 +11,7 @@ public class OAR076NumericFormatCheck extends AbstractFormatCheck2 {
 
     @Override
     public void validate(String type, String format, JsonNode typeNode) {
+        System.out.println("TYPENODE: " + typeNode);
         if ("integer".equals(type)) {
             if (format == null) {
                 addIssue(KEY, translate(MESSAGE), typeNode.key());

@@ -13,14 +13,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "product": {  # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}}
-                    "type": "string",  
+                  "product": {  
+                    "type": "string",  # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}}
                     "format": "int128"
                   },
-                  "line": { # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}} 
-                    "type": "string"   
+                  "line": { 
+                    "type": "string"   # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}}
                   },
-                  "price": {  # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}} 
+                  "price": {  
                     "type": "string",
                     "format": "byte"
                   }
