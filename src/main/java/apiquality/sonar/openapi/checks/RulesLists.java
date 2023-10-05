@@ -69,8 +69,7 @@ public final class RulesLists {
 				OAR088RefParamCheck.class,
 				OAR089RefRequestBodyCheck.class,
 				OAR090RefResponseCheck.class,
-				OAR094UseExamplesCheck.class,
-				OAR095OpenAPIVersionFormatCheck.class
+				OAR094UseExamplesCheck.class
 				
 		);
 	}
