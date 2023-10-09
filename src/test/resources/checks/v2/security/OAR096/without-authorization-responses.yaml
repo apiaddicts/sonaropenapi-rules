@@ -18,9 +18,6 @@ securityDefinitions:
       read: Grants read access
       write: Grants write access
       admin: Grants read and write access to administrative information
-security:
-  - ApiKeyAuth: []
-  - OAuth2: [read, write]
 paths:
   /with-auth-and-header:
     get:
@@ -28,15 +25,12 @@ paths:
         - in: header
           name: x-api-key
           type: string
-      responses:
+      security:
+        - ApiKeyAuth: []
+        - OAuth2: [read, write]
+      responses: # Noncompliant {{OAR096: Response code 403 must be defined for operations with security schemes defined}}  
         200:
           description: Ok
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-        429:
-          description: Forbidden
   /with-header:
     get:
       parameters:
@@ -46,14 +40,8 @@ paths:
       responses:
         200:
           description: Ok
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-        429:
-          description: Unauthorized
   /without:
     get:
-      responses: # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} 
+      responses:
         200:
           description: Ok
