@@ -13,12 +13,12 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Rule(key = OAR035AuthorizationResponsesCheck.KEY)
-public class OAR035AuthorizationResponsesCheck extends BaseCheck {
+@Rule(key = OAR035UnauthorizedResponseCheck.KEY)
+public class OAR035UnauthorizedResponseCheck extends BaseCheck {
     public static final String KEY = "OAR035";
     public static final String MESSAGE = "OAR035.error";
 
-    private static final String RESPONSE_CODES_STR = "401, 403";
+    private static final String RESPONSE_CODES_STR = "401";
 
     @RuleProperty(
         key = "expected-codes",

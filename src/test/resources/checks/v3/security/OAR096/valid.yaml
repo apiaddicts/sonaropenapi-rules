@@ -27,11 +27,6 @@ components:
             read: Grants read access
             write: Grants write access
             admin: Grants access to admin operations
-security:
-  - ApiKeyAuth: []
-  - OAuth2:
-    - read
-    - write
 paths:
   /with-auth-and-header:
     get:
@@ -40,10 +35,20 @@ paths:
           name: x-api-key
           schema:
             type: string
-      responses: # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} 
+      security:
+        - ApiKeyAuth: []
+        - OAuth2:
+          - read
+          - write
+      responses:
         200:
           description: Ok
-
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        429:
+          description: Forbidden
   /with-header:
     parameters:
       - in: header
@@ -51,12 +56,15 @@ paths:
         schema:
           type: string
     get:
-      responses: # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} 
+      responses:
         200:
           description: Ok
-
+        401:
+          description: Unauthorized
+        429:
+          description: Unauthorized
   /without:
     get:
-      responses: # Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} 
+      responses:
         200:
           description: Ok

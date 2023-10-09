@@ -7,14 +7,14 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.security.OAR035UnauthorizedResponseCheck;
+import apiquality.sonar.openapi.checks.security.OAR096ForbiddenResponseCheck;
 
-public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
+public class OAR096ForbiddenResponseCheckTest extends BaseCheckTest {
 
     @Before
     public void init() {
-        ruleName = "OAR035";
-        check = new OAR035UnauthorizedResponseCheck();
+        ruleName = "OAR096";
+        check = new OAR096ForbiddenResponseCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
     }
@@ -42,11 +42,11 @@ public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("expected-codes", "401", RuleParamType.STRING);
+        assertParameterProperties("expected-codes", "403", RuleParamType.STRING);
     }
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR035 - AuthorizationResponses - When defining security schemes, authorization response codes must be defined", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR096 - ForbiddenResponses - When defining security schemes, authorization response codes must be defined", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
     }
 }
