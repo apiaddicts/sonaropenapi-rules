@@ -31,7 +31,7 @@ public final class RulesLists {
 		return Arrays.asList(
 				OAR001MandatoryHttpsProtocolCheck.class,
 				OAR033HttpHeadersCheck.class,
-				OAR035AuthorizationResponsesCheck.class,
+				OAR035UnauthorizedResponseCheck.class,
 				OAR036SessionMechanismsCheck.class,
 				OAR054HostCheck.class,
 				OAR070BrokenAccessControlCheck.class,
@@ -47,7 +47,8 @@ public final class RulesLists {
 				OAR082BinaryOrByteFormatCheck.class,
 				OAR083ForbiddenQueryParamsCheck.class,
 				OAR084ForbiddenFormatsInQueryCheck.class,
-				OAR085OpenAPIVersionCheck.class
+				OAR085OpenAPIVersionCheck.class,
+				OAR096ForbiddenResponseCheck.class
 		);
 	}
 
