@@ -31,7 +31,7 @@
         security:
           - ApiKeyAuth: []
           - OAuth2: [read, write]
-        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}}</span>
+        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}}</span>
           200:
             description: Ok
     /with-header:
@@ -84,8 +84,6 @@ paths:
           description: Ok
         401:
           description: Unauthorized
-        403:
-          description: Forbidden
         429:
           description: Forbidden
   /with-header:
@@ -151,10 +149,9 @@ paths:
             name: x-api-key
             schema:
               type: string
-        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}}</span>
+        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}}</span>
           200:
-            description: Ok
-  
+            description: Ok  
     /with-header:
       parameters:
         - in: header
@@ -162,13 +159,12 @@ paths:
           schema:
             type: string
       get:
-        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}}</span> 
+        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}}</span> 
           200:
-            description: Ok
-  
+            description: Ok  
     /without:
       get:
-        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}} {{OAR035: Response code 403 must be defined for operations with security schemes defined}}</span>
+        responses: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR035: Response code 401 must be defined for operations with security schemes defined}}</span>
           200:
             description: Ok
 </pre>
