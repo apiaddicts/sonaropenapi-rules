@@ -43,9 +43,10 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
                 JsonNode maxLengthNode = schemaNode.get("maxLength");
                 JsonNode patternNode = schemaNode.get("pattern");
                 JsonNode enumNode = schemaNode.get("enum");
+                JsonNode formatNode = schemaNode.get("format");
 
                 boolean lacksLengthRestriction = minLengthNode.isMissing() != maxLengthNode.isMissing();  
-                boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing())); 
+                boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing() && formatNode.isMissing())); 
                 if (lacksRestriction) {
                     addIssue(KEY, translate(MESSAGE), typeNode);
                 }
@@ -63,9 +64,10 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
             JsonNode maxLengthNode = node.get("maxLength");
             JsonNode patternNode = node.get("pattern");
             JsonNode enumNode = node.get("enum");
-            
+            JsonNode formatNode = node.get("format");
+
             boolean lacksLengthRestriction = minLengthNode.isMissing() != maxLengthNode.isMissing();  
-            boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing())); 
+            boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing() && formatNode.isMissing())); 
             if (lacksRestriction) {
                 addIssue(KEY, translate(MESSAGE), typeNode);
             }
