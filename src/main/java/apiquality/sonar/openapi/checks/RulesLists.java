@@ -60,7 +60,6 @@ public final class RulesLists {
 				OAR010DefaultResponseMediaTypeCheck.class,
 				OAR011UrlNamingConventionCheck.class,
 				OAR037StringFormatCheck.class,
-				OAR042BasePathCheck.class,
 				OAR066SnakeCaseNamingConventionCheck.class,
 				OAR067CamelCaseNamingConventionCheck.class,
 				OAR068PascalCaseNamingConventionCheck.class,
@@ -70,8 +69,13 @@ public final class RulesLists {
 				OAR088RefParamCheck.class,
 				OAR089RefRequestBodyCheck.class,
 				OAR090RefResponseCheck.class,
-				OAR094UseExamplesCheck.class
-				
+				OAR094UseExamplesCheck.class,
+				OAR097ShortBasePathCheck.class,
+				OAR098LongBasePathCheck.class,
+				OAR099ApiPrefixBasePathCheck.class,
+				OAR100LastPartBasePathCheck.class,
+				OAR101FirstPartBasePathCheck.class,
+				OAR102SecondPartBasePathCheck.class			
 		);
 	}
 

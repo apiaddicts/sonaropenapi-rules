@@ -1,6 +1,0 @@
-swagger: "2.0"
-info:
-  version: 1.0.0
-  title: Swagger Petstore
-basePath: /api-seguros # Noncompliant {{OAR042: Path has to few parts}}
-paths: {}
