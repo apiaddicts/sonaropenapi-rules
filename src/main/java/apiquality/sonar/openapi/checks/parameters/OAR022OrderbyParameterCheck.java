@@ -51,7 +51,7 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
     }
 
     @Override
@@ -62,17 +62,28 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        visitParameterNode(node);
-    }
-
-    public void visitParameterNode(JsonNode node) {
-        JsonNode inNode = node.get("in");
-        JsonNode nameNode = node.get("name");
-
-        if (inNode != null && nameNode != null) {
+        if ("get".equals(node.key().getTokenValue())) {
             String path = getPath(node);
-            if (shouldExcludePath(path) && !parameterName.equals(nameNode.getTokenValue())) {
-                addIssue(KEY, translate(MESSAGE, parameterName), nameNode);
+            boolean hasParameter = false;
+
+            JsonNode parametersNode = node.get("parameters");
+            if (parametersNode != null) {
+                System.out.println("aaaa" + parametersNode);
+                for (JsonNode parameterNode : parametersNode.elements()) { // Cambio aquí
+                    System.out.println("PARAMMMM" + parameterNode);
+                    JsonNode inNode = parameterNode.get("in");
+                    System.out.println("bbbbS" + inNode);
+
+                    JsonNode nameNode = parameterNode.get("name");
+                    if (inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue())) {
+                        hasParameter = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldIncludePath(path) && !hasParameter) {
+                addIssue(KEY, translate(MESSAGE, PARAM_NAME), node.key());
             }
         }
     }
@@ -89,7 +100,7 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
         return pathBuilder.toString();
     }
 
-    private boolean shouldExcludePath(String path) {
+    private boolean shouldIncludePath(String path) {
         if (pathCheckStrategy.equals("/exclude")) {
             return !paths.contains(path);
         } else if (pathCheckStrategy.equals("/include")) {
