@@ -6,10 +6,10 @@
   },
   "paths" : {
     "/examples" : {
-      "get" : {
+      "get" : { # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
         "parameters" : [ { 
           "in" : "query",
-          "name" : "other", # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
+          "name" : "other", 
           "schema": {
             "type" : "array",
             "items" : {
@@ -18,7 +18,7 @@
           }
         }, {
           "in" : "query",
-          "name" : "select",  # Noncompliant {{OAR020: $expand must be defined as a parameter in this operation}}
+          "name" : "select",  
           "schema": {
             "type" : "array",
             "items" : {

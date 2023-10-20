@@ -4,16 +4,16 @@ info:
   title: Swagger Petstore
 paths:
   /examples:
-    get:
+    get: # Noncompliant {{OAR025: $limit must be defined as a parameter in this operation}}
       parameters: 
         - in: query
-          name: other # Noncompliant {{OAR025: $limit must be defined as a parameter in this operation}}
+          name: other 
           schema:
             type: array
             items:
               type: string
         - in: query
-          name: select # Noncompliant {{OAR025: $limit must be defined as a parameter in this operation}}
+          name: select 
           schema:
             type: array
             items:

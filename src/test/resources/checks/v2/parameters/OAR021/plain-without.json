@@ -6,17 +6,17 @@
   },
   "paths" : {
     "/examples" : {
-      "get" : {
+      "get" : { # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
         "parameters" : [ { 
           "in" : "query",
-          "name" : "other", # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
+          "name" : "other", 
           "type" : "array",
           "items" : {
             "type" : "string"
           }
         }, {
           "in" : "query",
-          "name" : "hola", # Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}
+          "name" : "hola", 
           "type" : "array",
           "items" : {
             "type" : "string"
