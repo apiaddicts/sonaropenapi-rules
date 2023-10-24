@@ -1,39 +1,49 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
   title: Sample API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+
+# Definición de seguridad global
+security:
+  - apiKeyHeader: []
+
 paths:
-  /users:
-    get:
-      security:
-        - apiKey: []
+  /items:
+    get:  # Verb 'get' sin definición de seguridad local
+      summary: Get all items
       responses:
         '200':
-          description: OK
-  /products:
-    post:
-      security:
-        - apiKey: []
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+    post: # Verb 'post' sin definición de seguridad local
+      summary: Create an item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
       responses:
-        '200':
-          description: OK
-  /orders:
-    put:
-      security:
-        - apiKey: []
-      responses:
-        '200':
-          description: OK
-  /invoices:
-    delete:
-      security:
-        - apiKey: []
-      responses:
-        '200':
-          description: OK esto a json
+        '201':
+          description: Item created
+
 components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
   securitySchemes:
-    apiKey:
+    apiKeyHeader:
       type: apiKey
-      name: X-API-Key
       in: header
+      name: X-API-Key
