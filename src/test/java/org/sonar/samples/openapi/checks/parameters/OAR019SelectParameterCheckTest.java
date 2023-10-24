@@ -33,6 +33,12 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     public void verifyInV2Without() {
         verifyV2("plain-without");
     }
+
+    @Test
+    public void verifyInV2WithRef() {
+        verifyV2("with-ref");
+    }
+
     @Test
     public void verifyInV3() {
         verifyV3("plain");
@@ -46,6 +52,11 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3Without() {
         verifyV3("plain-without");
+    }
+
+    @Test
+    public void verifyInV3WithRef() {
+        verifyV3("with-ref");
     }
 
     @Override
