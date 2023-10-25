@@ -18,6 +18,7 @@ public class OAR078VerbsSecurityCheck extends BaseCheck {
     private static final String MESSAGE = "OAR078.error";
 
     private static final Set<String> SECURITY_VERBS = ImmutableSet.of("get", "post", "put", "patch", "delete");
+    private boolean hasGlobalSecurity = false;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -25,7 +26,18 @@ public class OAR078VerbsSecurityCheck extends BaseCheck {
     }
 
     @Override
+    protected void visitFile(JsonNode root) {
+        JsonNode globalSecurity = root.get("security");
+        if (globalSecurity != null && !globalSecurity.isMissing() && !globalSecurity.isNull() && !globalSecurity.elements().isEmpty()) {
+            hasGlobalSecurity = true;
+        }
+        super.visitFile(root);
+    }
+
+    @Override
     public void visitNode(JsonNode node) {
+        if (hasGlobalSecurity) return;
+
         if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH) {
             visitOperationNode(node);
         } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION) {

@@ -48,33 +48,85 @@ public class OAR025LimitParameterCheck extends BaseCheck {
     private String parameterName = PARAM_NAME;
 
     private Set<String> paths;
+    private JsonNode rootNode;  // Variable de instancia para almacenar el nodo raíz
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
     }
 
     @Override
     protected void visitFile(JsonNode root) {
+        this.rootNode = root;  // Almacenamos el nodo raíz
         paths = parsePaths(pathsStr);
+        System.out.println("Visiting file...");
+        System.out.println("Parsing paths...");
         super.visitFile(root);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        visitParameterNode(node);
-    }
+        System.out.println("Visiting node: " + node.key().getTokenValue());
+        if ("get".equals(node.key().getTokenValue())) {
+            System.out.println("It's a GET operation");
 
-    public void visitParameterNode(JsonNode node) {
-        JsonNode inNode = node.get("in");
-        JsonNode nameNode = node.get("name");
-
-        if (inNode != null && nameNode != null) {
             String path = getPath(node);
-            if (shouldExcludePath(path) && !parameterName.equals(nameNode.getTokenValue())) {
-                addIssue(KEY, translate(MESSAGE, parameterName), nameNode);
+            System.out.println("Extracting path...\nPath found: " + path);
+
+            boolean hasParameter = hasParameterInNode(node);
+
+            System.out.println("Checking if should include path: " + path);
+            if (shouldIncludePath(path) && !hasParameter) {
+                System.out.println("Issue added for path: " + path);
+                System.out.println("Checking conditions for adding issue...");
+                System.out.println("Should include path: " + shouldIncludePath(path));
+                System.out.println("Has parameter: " + hasParameter);
+                addIssue(KEY, translate(MESSAGE, PARAM_NAME), node.key());
             }
         }
+    }
+
+    private boolean hasParameterInNode(JsonNode node) {
+        JsonNode parametersNode = node.get("parameters");
+        if (parametersNode != null) {
+            System.out.println("Parameters found");
+
+            for (JsonNode parameterNode : parametersNode.elements()) {
+                if (isRefParameter(parameterNode) && hasNamedRefParameter(parameterNode)) {
+                    return true;
+                } else if (hasDirectParameter(parameterNode)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isRefParameter(JsonNode parameterNode) {
+        JsonNode refNode = parameterNode.get("$ref");
+        if (refNode != null) {
+            System.out.println("Detected a $ref parameter node");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean hasNamedRefParameter(JsonNode parameterNode) {
+        String refValue = parameterNode.get("$ref").getTokenValue();
+        JsonNode refParameterNode = resolveReference(refValue, rootNode);  
+        if (refParameterNode != null) {
+            JsonNode nameNode = refParameterNode.get("name");
+            JsonNode inNode = refParameterNode.get("in"); 
+            return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
+        }
+        return false;
+    }
+
+    private boolean hasDirectParameter(JsonNode parameterNode) {
+        System.out.println("Processing a direct parameter node");
+        JsonNode nameNode = parameterNode.get("name");
+        JsonNode inNode = parameterNode.get("in");
+        return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
     }
 
     private String getPath(JsonNode node) {
@@ -89,7 +141,7 @@ public class OAR025LimitParameterCheck extends BaseCheck {
         return pathBuilder.toString();
     }
 
-    private boolean shouldExcludePath(String path) {
+    private boolean shouldIncludePath(String path) {
         if (pathCheckStrategy.equals("/exclude")) {
             return !paths.contains(path);
         } else if (pathCheckStrategy.equals("/include")) {
@@ -98,7 +150,7 @@ public class OAR025LimitParameterCheck extends BaseCheck {
         return false;
     }
 
-    private Set<String> parsePaths(String pathsStr) {
+      private Set<String> parsePaths(String pathsStr) {
         if (!pathsStr.trim().isEmpty()) {
             return Arrays.stream(pathsStr.split(","))
                 .map(String::trim)
@@ -106,5 +158,31 @@ public class OAR025LimitParameterCheck extends BaseCheck {
         } else {
             return new HashSet<>();
         }
+    }
+
+    private JsonNode resolveReference(String refValue, JsonNode root) {
+        if (refValue == null || !refValue.startsWith("#/")) { 
+            return null; 
+        }
+    
+        String pathToReference = refValue.substring(2);
+        String[] pathParts = pathToReference.split("/");
+    
+        JsonNode currentNode = root;
+        for (String part : pathParts) {
+            if (currentNode == null) {
+                return null; 
+            }
+            currentNode = currentNode.get(part);
+            System.out.println("Navigating to: " + part);
+        }
+    
+        if (currentNode == null) {
+            System.out.println("Resolved reference node is null for ref: " + refValue);
+        } else {
+            System.out.println("Resolved reference node for ref: " + refValue + " is: " + currentNode.toString());
+        }
+    
+        return currentNode;
     }
 }
