@@ -31,6 +31,7 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
     private String expectedSecurityScheme = SECURITY_SCHEMES;
 
     private Set<String> expectedSecuritySchemes;
+    private boolean hasGlobalSecurity = false;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -43,21 +44,26 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
     }
 
     @Override
-    public void visitNode(JsonNode node) {
-        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH)) {
-            visitOperationNode(node);
-        } else if (node.is(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION)) {
-            visitOperationNode(node);
-        }
-    }
-
-    @Override
     protected void visitFile(JsonNode root) {
+        JsonNode security = root.get("security");
+        hasGlobalSecurity = !(security.isMissing() || security.isNull() || security.elements().isEmpty());
+
         expectedSecuritySchemes = Arrays.stream(expectedSecurityScheme.split(","))
                 .map(String::trim)
                 .collect(Collectors.toSet());
 
         super.visitFile(root);
+    }
+
+    @Override
+    public void visitNode(JsonNode node) {
+        if (hasGlobalSecurity) return;  
+
+        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH)) {
+            visitOperationNode(node);
+        } else if (node.is(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION)) {
+            visitOperationNode(node);
+        }
     }
 
     private void visitOperationNode(JsonNode node) {
