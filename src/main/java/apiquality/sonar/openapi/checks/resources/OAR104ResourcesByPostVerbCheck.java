@@ -19,10 +19,10 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
 
     public static final String KEY = "OAR104";
     private static final String MESSAGE = "OAR104.error";
-    private static final String RESERVED_WORDS = "id,me";
+    private static final String RESERVED_WORDS = "me";
 
     @RuleProperty(
-        key = "reserved-words",
+        key = "words-to-exclude",
         description = "Comma-separated list of reserved words that should not appear as consecutive static parts",
         defaultValue = RESERVED_WORDS
     )
@@ -74,24 +74,20 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
                                .toArray(String[]::new);
         if (parts.length == 0) return true;
     
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (isVariable(part)) {
-                String variableName = part.substring(1, part.length() - 1).toLowerCase();
-                if (reservedWords.contains(variableName)) {
-                    return false;
-                }
-                if (reservedWords.contains("id") && variableName.endsWith("id") && i == parts.length - 1) {
-                    return false;
-                }
-            } else if (reservedWords.contains(part.toLowerCase())) {
-                return false; 
+        String lastPart = parts[parts.length - 1];
+        if (isVariable(lastPart)) {
+            return false;  
+        }
+    
+        for (String part : parts) {
+            if (!isVariable(part) && reservedWords.contains(part.toLowerCase())) {
+                return false;
             }
         }
     
         return true;
     }
-
+    
     private boolean isVariable(String part) {
         return part.startsWith("{") && part.endsWith("}");
     }

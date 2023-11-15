@@ -23,7 +23,7 @@ paths:
       responses:
         '200':
           description: Ok
-  /resources/{r_id}/other:
+  /hola/{r_id}/other:
     get:
       responses:
         '200':

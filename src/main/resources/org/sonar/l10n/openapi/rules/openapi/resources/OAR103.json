@@ -1,5 +1,5 @@
 {
-    "title": "OAR103 - ResourcesByGetVerb - Operation not recommended for resource path",
+    "title": "OAR103 - ResourcesByGetVerb - Get Operation not recommended for resource path",
     "type": "BUG",
     "status": "ready",
     "remediation": {

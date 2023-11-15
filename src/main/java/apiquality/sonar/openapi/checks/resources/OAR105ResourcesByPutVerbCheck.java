@@ -19,13 +19,14 @@ public class OAR105ResourcesByPutVerbCheck extends BaseCheck {
 
     public static final String KEY = "OAR105";
     private static final String MESSAGE = "OAR105.error";
-    private static final String RESERVED_WORDS = "get,delete";
+    private static final String WORDS_TO_EXCLUDE = "get,delete";
+
     @RuleProperty(
-        key = "reserved-words",
-        description = "Comma-separated list of reserved words that should not appear as consecutive static parts",
-        defaultValue = RESERVED_WORDS
+        key = "words-to-exclude",
+        description = "Comma-separated list of reserved words that should not appear in the path",
+        defaultValue = WORDS_TO_EXCLUDE
     )
-    private String reservedWordsStr = RESERVED_WORDS;
+    private String reservedWordsStr = WORDS_TO_EXCLUDE;
 
     private Set<String> reservedWords;
 
@@ -72,26 +73,24 @@ public class OAR105ResourcesByPutVerbCheck extends BaseCheck {
                                .filter(p -> !p.trim().isEmpty())
                                .toArray(String[]::new);
         if (parts.length == 0) return true;
-    
-        // Marcar como no conforme si la ruta contiene solo un segmento y este no es una variable
-        if (parts.length == 1 && !isVariable(parts[0])) {
-            return false;
-        }
-    
-        // Verificar palabras reservadas en segmentos estáticos
+
         for (String part : parts) {
-            if (!isVariable(part) && reservedWords.contains(part.toLowerCase())) {
-                return false;
+            if (isVariable(part)) {
+                String variableName = part.substring(1, part.length() - 1);
+                if (reservedWords.contains(variableName.toLowerCase())) {
+                    return false; 
+                }
+            } else if (reservedWords.contains(part.toLowerCase())) {
+                return false; 
             }
         }
-    
+
         return true;
     }
-    
+
     private boolean isVariable(String part) {
         return part.startsWith("{") && part.endsWith("}");
     }
-
 
     private String formatMessage(String path) {
         String[] parts = path.split("/");

@@ -4,7 +4,7 @@ info:
   title: Swagger Petstore (GETs only)
 paths:
   /resources:
-    patch: # Noncompliant {{OAR106: Operation not recommended for resource path: resources}}
+    patch: 
       responses:
         '200':
           description: Ok

@@ -31,12 +31,12 @@ public class OAR104ResourcesByPostVerbCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR104 - ResourcesByPostVerb - Operation not recommended for resource path", RuleType.BUG, Severity.MAJOR, tags("resources"));
+        assertRuleProperties("OAR104 - ResourcesByPostVerb - Post Operation not recommended for resource path", RuleType.BUG, Severity.MAJOR, tags("resources"));
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("reserved-words", "id,me", RuleParamType.STRING);
+        assertParameterProperties("words-to-exclude", "me", RuleParamType.STRING);
     }
 }

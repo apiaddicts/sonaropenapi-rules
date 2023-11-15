@@ -23,7 +23,7 @@ paths:
       responses:
         200:
           description: Ok
-  /resources/{delete}:
+  /resources/delete:
     post:
       parameters:
         - name: delete
