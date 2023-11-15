@@ -86,7 +86,6 @@ public final class RulesLists {
 				OAR014ResourceLevelWithinNonSuggestedRangeCheck.class,
 				OAR015ResourceLevelMaxAllowedCheck.class,
 				OAR017ResourcePathCheck.class,
-				OAR018ResourcesByVerbCheck.class,
 				OAR027PostResponseLocationHeaderCheck.class,
 				OAR029StandardResponseCheck.class,
 				OAR030StatusEndpointCheck.class,
@@ -102,7 +101,12 @@ public final class RulesLists {
 				OAR071GetQueryParamsDefinedCheck.class,
 				OAR091ParamOnlyRefCheck.class,
 				OAR092RequestBodyOnlyRefCheck.class,
-				OAR093ResponseOnlyRefCheck.class				
+				OAR093ResponseOnlyRefCheck.class,
+				OAR103ResourcesByGetVerbCheck.class,
+				OAR104ResourcesByPostVerbCheck.class,
+				OAR105ResourcesByPutVerbCheck.class,
+				OAR106ResourcesByPatchVerbCheck.class,
+				OAR107ResourcesByDeleteVerbCheck.class		
 		);
 	}
 
