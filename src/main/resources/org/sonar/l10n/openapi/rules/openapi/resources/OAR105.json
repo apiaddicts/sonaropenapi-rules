@@ -1,5 +1,5 @@
 {
-    "title": "OAR105 - ResourcesByPutVerb - Operation not recommended for resource path",
+    "title": "OAR105 - ResourcesByPutVerb - Put Operation not recommended for resource path",
     "type": "BUG",
     "status": "ready",
     "remediation": {

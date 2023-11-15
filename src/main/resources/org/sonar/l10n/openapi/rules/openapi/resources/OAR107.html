@@ -1,5 +1,5 @@
 <p>in the verb Delete, some path structures are not encouraged. This can be a hint of a design flaw.</p>
-<h2>Allowed paths</h2>
+<h2>Forbidden paths by default</h2>
 <table>
   <thead>
     <tr>
@@ -10,11 +10,11 @@
   <tbody>
     <tr>
         <td>DELETE</td>
-        <td>/resources/{id}</td>
+        <td>/resources/get</td>
       </tr>
       <tr>
         <td>DELETE</td>
-        <td>/resources/me</td>
+        <td>/resources/delet</td>
       </tr>
   </tbody>
 </table>
@@ -25,8 +25,8 @@ info:
   title: Swagger Petstore
   version: 1.0.0
 paths:
-  /resources:
-    delete: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR107: Operation not recommended for resource path: DELETE /resources}}</span>
+  /resources/get:
+    delete: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR107: Operation not recommended for resource path: DELETE /resources/get}}</span>
       responses:
         '200':
           description: Ok
@@ -53,8 +53,8 @@ info:
 servers:
 - url: /
 paths:
-  /resources/{r_id}/other:
-    delete: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR107: Operation not recommended for resource path: DELETE /resources/{r_id}/other}}</span>
+  /resources/get:
+    delete: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR107: Operation not recommended for resource path: DELETE /resources/get}}</span>
       responses:
         '200':
           description: Ok

@@ -19,14 +19,14 @@ public class OAR103ResourcesByGetVerbCheck extends BaseCheck {
 
     public static final String KEY = "OAR103";
     private static final String MESSAGE = "OAR103.error";
-    private static final String RESERVED_WORDS = "get,delete";
+    private static final String WORDS_TO_EXCLUDE = "get,delete";
 
     @RuleProperty(
-        key = "reserved-words",
-        description = "Comma-separated list of reserved words that should not appear as consecutive static parts",
-        defaultValue = RESERVED_WORDS
+        key = "words-to-exclude",
+        description = "Comma-separated list of reserved words that should not appear in the path",
+        defaultValue = WORDS_TO_EXCLUDE
     )
-    private String reservedWordsStr = RESERVED_WORDS;
+    private String reservedWordsStr = WORDS_TO_EXCLUDE;
 
     private Set<String> reservedWords;
 

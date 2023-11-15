@@ -1,5 +1,6 @@
 <p>in the verb Post, some path structures are not encouraged. This can be a hint of a design flaw.</p>
-<h2>Allowed paths</h2>
+<h2>All paths that end in a parameter are forbidden</h2>
+<h2>Forbidden paths by default</h2>
 <table>
   <thead>
     <tr>
@@ -9,20 +10,9 @@
   </thead>
   <tbody>
     <tr>
-        <td>POST</td>
-        <td>/resources</td>
-      </tr>
       <tr>
         <td>POST</td>
-        <td>/resources/get</td>
-      </tr>
-      <tr>
-        <td>POST</td>
-        <td>/resources/delete</td>
-      </tr>
-      <tr>
-        <td>POST</td>
-        <td>/resources/{id}/subresources</td>
+        <td>/resources/me</td>
       </tr>
   </tbody>
 </table>

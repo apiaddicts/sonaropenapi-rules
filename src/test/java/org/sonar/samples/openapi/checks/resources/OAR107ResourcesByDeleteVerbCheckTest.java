@@ -31,12 +31,12 @@ public class OAR107ResourcesByDeleteVerbCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR107 - ResourcesByDeleteVerb - Operation not recommended for resource path", RuleType.BUG, Severity.MAJOR, tags("resources"));
+        assertRuleProperties("OAR107 - ResourcesByDeleteVerb - Delete Operation not recommended for resource path", RuleType.BUG, Severity.MAJOR, tags("resources"));
     }
 
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("reserved-words", "get,delete", RuleParamType.STRING);
+        assertParameterProperties("words-to-exclude", "get,delete", RuleParamType.STRING);
     }
 }

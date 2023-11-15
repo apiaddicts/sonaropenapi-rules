@@ -40,7 +40,7 @@
         }
       }
     },
-    "/resources/{delete}": {
+    "/resources/delete": {
       "post": {
         "parameters": [
           {
