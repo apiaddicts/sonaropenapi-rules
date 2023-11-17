@@ -24,10 +24,9 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
 	private static final String ROOT_RESOURCE_FOLDER = "org/sonar/l10n/openapi/rules/openapi/";
 	private static final String SECURITY_GROUP = "security";
 	private static final String FORMAT_GROUP = "format";
-	private static final String RESOURCES_GROUP = "resources";
+	private static final String OPERATIONS_GROUP = "operations";
 	private static final String PARAMETERS_GROUP = "parameters";
 	private static final String APIM_WSO2_GROUP = "apim/wso2";
-	private static final String CORE_GROUP = "core";
 
 	@Override
 	public void define(Context context) {
@@ -37,9 +36,8 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
 				.setName(REPOSITORY_NAME);
 		new RuleMetadataLoader(getPath(SECURITY_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getSecurityChecks());
 		new RuleMetadataLoader(getPath(FORMAT_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getFormatChecks());
-		new RuleMetadataLoader(getPath(RESOURCES_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getResourcesChecks());
+		new RuleMetadataLoader(getPath(OPERATIONS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getOperationsChecks());
 		new RuleMetadataLoader(getPath(PARAMETERS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getParametersChecks());
-		new RuleMetadataLoader(getPath(CORE_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getCoreChecks());
 		new RuleMetadataLoader(getPath(APIM_WSO2_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getWSO2Checks());
 		repository.done();
 	}
