@@ -2,6 +2,9 @@ package apiquality.sonar.openapi.checks.operations;
 
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
+
+import apiquality.sonar.openapi.checks.schemas.AbstractExplicitResponseCheck;
+
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Map;

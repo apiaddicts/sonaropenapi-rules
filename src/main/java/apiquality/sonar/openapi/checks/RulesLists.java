@@ -1,10 +1,17 @@
 package apiquality.sonar.openapi.checks;
 
 import apiquality.sonar.openapi.checks.apim.wso2.*;
+import apiquality.sonar.openapi.checks.examples.OAR031ExamplesCheck;
+import apiquality.sonar.openapi.checks.examples.OAR094UseExamplesCheck;
 import apiquality.sonar.openapi.checks.format.*;
 import apiquality.sonar.openapi.checks.parameters.*;
+import apiquality.sonar.openapi.checks.schemas.OAR029StandardResponseSchemaCheck;
+import apiquality.sonar.openapi.checks.schemas.OAR034StandardPagedResponseSchemaCheck;
+import apiquality.sonar.openapi.checks.schemas.OAR080SecuritySchemasCheck;
 import apiquality.sonar.openapi.checks.security.*;
 import apiquality.sonar.openapi.checks.operations.*;
+import apiquality.sonar.openapi.checks.owasp.OAR070BrokenAccessControlCheck;
+import apiquality.sonar.openapi.checks.owasp.OAR073RateLimitCheck;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -32,7 +39,6 @@ public final class RulesLists {
             OAR088RefParamCheck.class,
             OAR089RefRequestBodyCheck.class,
             OAR090RefResponseCheck.class,
-            OAR094UseExamplesCheck.class,
             OAR097ShortBasePathCheck.class,
             OAR098LongBasePathCheck.class,
             OAR099ApiPrefixBasePathCheck.class,
@@ -68,15 +74,12 @@ public final class RulesLists {
             OAR035UnauthorizedResponseCheck.class,
             OAR036SessionMechanismsCheck.class,
             OAR054HostCheck.class,
-            OAR070BrokenAccessControlCheck.class,
             OAR072NonOKModelResponseCheck.class,
-            OAR073RateLimitCheck.class,
             OAR074NumericParameterIntegrityCheck.class,
             OAR075StringParameterIntegrityCheck.class,
             OAR076NumericFormatCheck.class,
             OAR078VerbsSecurityCheck.class,
             OAR079PathParameter404Check.class,
-            OAR080SecuritySchemasCheck.class,
             OAR081PasswordFormatCheck.class,
             OAR082BinaryOrByteFormatCheck.class,
             OAR083ForbiddenQueryParamsCheck.class,
@@ -96,11 +99,8 @@ public final class RulesLists {
             OAR015ResourceLevelMaxAllowedCheck.class,
             OAR017ResourcePathCheck.class,
             OAR027PostResponseLocationHeaderCheck.class,
-            OAR029StandardResponseCheck.class,
             OAR030StatusEndpointCheck.class,
-            OAR031ExamplesCheck.class,
             OAR032AmbiguousElementsPathCheck.class,
-            OAR034StandardPagedResponseCheck.class,
             OAR038StandardCreateResponseCheck.class,
             OAR061GetMethodCheck.class,
             OAR062PostMethodCheck.class,
@@ -122,6 +122,27 @@ public final class RulesLists {
         );
     }
 
+    public static List<Class<?>> getSchemasChecks() {
+        return Arrays.asList(
+            OAR029StandardResponseSchemaCheck.class,
+            OAR034StandardPagedResponseSchemaCheck.class,
+            OAR080SecuritySchemasCheck.class
+        );
+    }
+
+    public static List<Class<?>> getExamplesChcecks() {
+        return Arrays.asList(
+            OAR031ExamplesCheck.class,
+            OAR094UseExamplesCheck.class
+        );
+    }
+
+    public static List<Class<?>> getOWASPChecks() {
+        return Arrays.asList(
+            OAR070BrokenAccessControlCheck.class,
+            OAR073RateLimitCheck.class
+        );
+    }
     public static List<Class<?>> getWSO2Checks() {
         return Arrays.asList(
             OAR002ValidWso2ScopesCheck.class,
@@ -137,6 +158,9 @@ public final class RulesLists {
         List<Class<?>> allChecks = new LinkedList<>();
         allChecks.addAll(getFormatChecks());
         allChecks.addAll(getParametersChecks());
+        allChecks.addAll(getSchemasChecks());
+        allChecks.addAll(getExamplesChcecks());
+        allChecks.addAll(getOWASPChecks());
         allChecks.addAll(getSecurityChecks());
         allChecks.addAll(getOperationsChecks());
         allChecks.addAll(getWSO2Checks());

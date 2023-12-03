@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+
+import apiquality.sonar.openapi.checks.schemas.AbstractSchemaCheck;
 import apiquality.sonar.openapi.utils.VerbPathMatcher;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
