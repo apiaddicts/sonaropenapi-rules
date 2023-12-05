@@ -40,6 +40,6 @@ public class OAR074NumericParameterIntegrityCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR074 - NumericParameterIntegrityCheck - Numeric parameters should have minimum, maximum, or format restriction", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR074 - NumericParameterIntegrityCheck - Numeric parameters should have minimum, maximum, or format restriction", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
     }
 }

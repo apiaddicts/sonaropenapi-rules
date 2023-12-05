@@ -41,7 +41,7 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR085 - OpenAPIVersion - The OpenAPI version should be one of the allowed by the organization", RuleType.VULNERABILITY, Severity.MINOR, tags("vulnerability"));
+        assertRuleProperties("OAR085 - OpenAPIVersion - The OpenAPI version should be one of the allowed by the organization", RuleType.VULNERABILITY, Severity.MINOR, tags("securityrules"));
     }
 
     @Override

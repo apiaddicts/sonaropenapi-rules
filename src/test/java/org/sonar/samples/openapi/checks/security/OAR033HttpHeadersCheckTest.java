@@ -51,7 +51,7 @@ public class OAR033HttpHeadersCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR033 - HttpHeaders - There are mandatory request headers and others that are not allowed", RuleType.VULNERABILITY, Severity.CRITICAL, tags("vulnerability"));
+        assertRuleProperties("OAR033 - HttpHeaders - There are mandatory request headers and others that are not allowed", RuleType.VULNERABILITY, Severity.CRITICAL, tags("securityrules"));
     }
 
     @Override

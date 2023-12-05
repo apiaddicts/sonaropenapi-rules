@@ -47,6 +47,6 @@ public class OAR081PasswordFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR081 - PasswordFormat - Fields of type password should be string with format password", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR081 - PasswordFormat - Fields of type password should be string with format password", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
     }
 }
