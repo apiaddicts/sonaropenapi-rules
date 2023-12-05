@@ -50,9 +50,19 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>2.13.3</version>
+    </dependency>
+    <dependency>
       <groupId>org.sonarsource.analyzer-commons</groupId>
       <artifactId>sonar-analyzer-commons</artifactId>
       <version>${sonaranalyzer.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.networknt</groupId>
+      <artifactId>json-schema-validator</artifactId>
+      <version>1.0.87</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.json/json -->
     <dependency>

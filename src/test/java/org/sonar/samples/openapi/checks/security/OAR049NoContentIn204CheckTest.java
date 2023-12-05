@@ -30,6 +30,6 @@ public class OAR049NoContentIn204CheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR049 - NoContent204 - 204 responses MUST NOT return content.", RuleType.BUG, Severity.BLOCKER, tags("core"));
+        assertRuleProperties("OAR049 - NoContent204 - 204 responses MUST NOT return content.", RuleType.BUG, Severity.BLOCKER, tags("security"));
     }
 }

@@ -7,7 +7,7 @@
     "constantCost": "2h"
   },
   "tags": [
-    "core"
+    "security"
   ],
   "defaultSeverity": "BLOCKER"
 }
