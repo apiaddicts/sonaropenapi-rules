@@ -25,6 +25,6 @@ public class OAR045DefinedResponseCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR045 - DefinedResponse - Each operation MUST have at least one defined response with a defined model.", RuleType.BUG, Severity.BLOCKER, tags("core"));
+        assertRuleProperties("OAR045 - DefinedResponse - Each operation MUST have at least one defined response with a defined model.", RuleType.BUG, Severity.BLOCKER, tags("security"));
     }
 }
