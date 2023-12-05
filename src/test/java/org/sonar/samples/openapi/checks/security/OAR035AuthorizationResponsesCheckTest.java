@@ -47,6 +47,6 @@ public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR035 - AuthorizationResponses - When defining security schemes, authorization response codes must be defined", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR035 - AuthorizationResponses - When defining security schemes, authorization response codes must be defined", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
     }
 }

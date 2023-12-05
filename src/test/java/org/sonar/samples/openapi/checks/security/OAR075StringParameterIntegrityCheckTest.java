@@ -40,6 +40,6 @@ public class OAR075StringParameterIntegrityCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR075 - StringParameterIntegrityCheck - String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR075 - StringParameterIntegrityCheck - String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
     }
 }
