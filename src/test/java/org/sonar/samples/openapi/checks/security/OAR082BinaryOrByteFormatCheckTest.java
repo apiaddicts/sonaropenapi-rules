@@ -29,7 +29,7 @@ public class OAR082BinaryOrByteFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR082 - BinaryOrByte - The string properties of the specified parameters must define a byte or binary format.", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
+        assertRuleProperties("OAR082 - BinaryOrByte - The string properties of the specified parameters must define a byte or binary format.", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
     @Override
     public void verifyParameters() {

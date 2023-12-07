@@ -41,7 +41,7 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR084 - ForbiddenQueryFormats - Some formats should not pass through this querystring", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
+        assertRuleProperties("OAR084 - ForbiddenQueryFormats - Some formats should not pass through this querystring", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 
     @Override

@@ -40,6 +40,6 @@ public class OAR072NonOKModelResponseCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR072 - NonOKModelResponseCheck - Non OK responses shouldnt have stackTraces", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
+        assertRuleProperties("OAR072 - NonOKModelResponseCheck - Non OK responses shouldnt have stackTraces", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 }
