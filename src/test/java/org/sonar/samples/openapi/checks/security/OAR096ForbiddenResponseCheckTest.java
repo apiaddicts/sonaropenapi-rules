@@ -47,6 +47,6 @@ public class OAR096ForbiddenResponseCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR096 - ForbiddenResponses - When defining security schemes, forbidden response codes must be defined", RuleType.VULNERABILITY, Severity.MAJOR, tags("vulnerability"));
+        assertRuleProperties("OAR096 - ForbiddenResponses - When defining security schemes, forbidden response codes must be defined", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 }

@@ -7,7 +7,7 @@
       "constantCost": "1h"
     },
     "tags": [
-      "vulnerability"
+      "safety"
     ],
     "defaultSeverity": "MAJOR"
   }
