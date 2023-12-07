@@ -42,7 +42,7 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR079 - PathParameter404 - Paths parameters, should have not found (404) response",
-                RuleType.VULNERABILITY, Severity.MINOR, tags("securityrules"));
+                RuleType.VULNERABILITY, Severity.MINOR, tags("safety"));
     }
 
     @Override

@@ -41,7 +41,7 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR083 - ForbiddenQueryParams - Some parameters should not pass through this querystring", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
+        assertRuleProperties("OAR083 - ForbiddenQueryParams - Some parameters should not pass through this querystring", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 
     @Override

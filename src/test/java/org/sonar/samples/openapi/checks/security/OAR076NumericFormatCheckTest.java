@@ -50,6 +50,6 @@ public class OAR076NumericFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR076 - NumericFormat - Numeric types requires a valid format", RuleType.VULNERABILITY, Severity.MINOR, tags("securityrules"));
+        assertRuleProperties("OAR076 - NumericFormat - Numeric types requires a valid format", RuleType.VULNERABILITY, Severity.MINOR, tags("safety"));
     }
 }

@@ -40,6 +40,6 @@ public class OAR078VerbsSecurityCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR078 - VerbsSecurity - All API methods must have security", RuleType.VULNERABILITY, Severity.MAJOR, tags("securityrules"));
+        assertRuleProperties("OAR078 - VerbsSecurity - All API methods must have security", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 }
