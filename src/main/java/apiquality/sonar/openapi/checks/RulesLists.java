@@ -8,6 +8,7 @@ import apiquality.sonar.openapi.checks.parameters.*;
 import apiquality.sonar.openapi.checks.schemas.OAR029StandardResponseSchemaCheck;
 import apiquality.sonar.openapi.checks.schemas.OAR034StandardPagedResponseSchemaCheck;
 import apiquality.sonar.openapi.checks.schemas.OAR080SecuritySchemasCheck;
+import apiquality.sonar.openapi.checks.schemas.OAR108SchemaValidatorCheck;
 import apiquality.sonar.openapi.checks.security.*;
 import apiquality.sonar.openapi.checks.operations.*;
 import apiquality.sonar.openapi.checks.owasp.OAR070BrokenAccessControlCheck;
@@ -126,7 +127,8 @@ public final class RulesLists {
         return Arrays.asList(
             OAR029StandardResponseSchemaCheck.class,
             OAR034StandardPagedResponseSchemaCheck.class,
-            OAR080SecuritySchemasCheck.class
+            OAR080SecuritySchemasCheck.class,
+            OAR108SchemaValidatorCheck.class
             );
     }
 
