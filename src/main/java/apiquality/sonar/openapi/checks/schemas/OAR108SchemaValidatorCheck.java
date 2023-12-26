@@ -1,6 +1,5 @@
 package apiquality.sonar.openapi.checks.schemas;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
@@ -9,7 +8,6 @@ import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -38,40 +36,40 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
                                 for (JsonNode mediaTypeNode : contentNode.propertyMap().values()) {
                                     JsonNode schemaNodeOpenApi3 = mediaTypeNode.get("schema");
                                     JsonNode exampleNodeOpenApi3 = mediaTypeNode.get("example");
-                                    if (schemaNodeOpenApi3 != null && exampleNodeOpenApi3 != null) {
-                                        Map<String, String> schemaTypes = extractSchemaTypes(schemaNodeOpenApi3);
-                                        Map<String, String> exampleTypes = extractExampleTypes(exampleNodeOpenApi3);
+                                    if (schemaNodeOpenApi3 != null && exampleNodeOpenApi3 != null && !schemaNodeOpenApi3.isMissing() && !schemaNodeOpenApi3.isNull() && !exampleNodeOpenApi3.isMissing() && !exampleNodeOpenApi3.isNull()) {
+                                            Map<String, String> schemaTypes = extractSchemaTypes(schemaNodeOpenApi3);
+                                            Map<String, String> exampleTypes = extractExampleTypes(exampleNodeOpenApi3);
+                                            for (Map.Entry<String, String> entry : schemaTypes.entrySet()) {
+                                                String key = entry.getKey();
+                                                String expectedType = entry.getValue();
+                                                String actualType = exampleTypes.getOrDefault(key, "unknown");
+                                                if (!expectedType.equals(actualType)) {
+                                                    addIssue(KEY, translate(MESSAGE), exampleNodeOpenApi3.key());
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    JsonNode schemaNodeSwagger2 = responseNode.get("schema");
+                                    JsonNode examplesNodeSwagger2 = responseNode.get("examples");
+                                    if (schemaNodeSwagger2 != null && examplesNodeSwagger2 != null && !schemaNodeSwagger2.isMissing() && !schemaNodeSwagger2.isNull() && !examplesNodeSwagger2.isMissing() && !examplesNodeSwagger2.isNull()) {
+                                        Map<String, String> schemaTypes = extractSchemaTypes(schemaNodeSwagger2);
+                                        Map<String, String> exampleTypes = extractExampleTypesSwagger2(examplesNodeSwagger2);
                                         for (Map.Entry<String, String> entry : schemaTypes.entrySet()) {
                                             String key = entry.getKey();
                                             String expectedType = entry.getValue();
                                             String actualType = exampleTypes.getOrDefault(key, "unknown");
                                             if (!expectedType.equals(actualType)) {
-                                                addIssue(KEY, translate(MESSAGE), exampleNodeOpenApi3.key());
+                                                addIssue(KEY, translate(MESSAGE), examplesNodeSwagger2.key());
                                             }
                                         }
                                     }
-                                }
-                            } else {
-                                JsonNode schemaNodeSwagger2 = responseNode.get("schema");
-                                JsonNode examplesNodeSwagger2 = responseNode.get("examples");
-                                if (schemaNodeSwagger2 != null && examplesNodeSwagger2 != null) {
-                                    Map<String, String> schemaTypes = extractSchemaTypes(schemaNodeSwagger2);
-                                    Map<String, String> exampleTypes = extractExampleTypesSwagger2(examplesNodeSwagger2);
-                                    for (Map.Entry<String, String> entry : schemaTypes.entrySet()) {
-                                        String key = entry.getKey();
-                                        String expectedType = entry.getValue();
-                                        String actualType = exampleTypes.getOrDefault(key, "unknown");
-                                        if (!expectedType.equals(actualType)) {
-                                            addIssue(KEY, translate(MESSAGE), examplesNodeSwagger2.key());
-                                        }
-                                    }
-                                }
+                            }
                         }
                     }
                 }
             }
         }
-    }
     }
     private Map<String, String> extractSchemaTypes(JsonNode schemaNode) {
         Map<String, String> schemaTypes = new HashMap<>();
@@ -106,7 +104,6 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
     private Map<String, String> extractExampleTypesSwagger2(JsonNode examplesNode) {
         Map<String, String> exampleTypes = new HashMap<>();
         
-        // Swagger 2.0 examples are often nested under a media type key, like 'application/json'.
         for (JsonNode exampleMediaTypeNode : examplesNode.propertyMap().values()) {
             if (exampleMediaTypeNode.isObject()) {
                 for (Map.Entry<String, JsonNode> entry : exampleMediaTypeNode.propertyMap().entrySet()) {
