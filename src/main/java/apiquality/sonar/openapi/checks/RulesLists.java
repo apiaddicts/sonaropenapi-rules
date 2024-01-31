@@ -119,7 +119,8 @@ public final class RulesLists {
             OAR107ResourcesByDeleteVerbCheck.class,
             OAR043ParsingErrorCheck.class,
             OAR046DeclaredTagCheck.class,
-            OAR047DocumentedTagCheck.class
+            OAR047DocumentedTagCheck.class,
+            OAR109ForbiddenInternalServerErrorCheck.class
         );
     }
 
