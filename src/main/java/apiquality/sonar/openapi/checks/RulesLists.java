@@ -48,7 +48,9 @@ public final class RulesLists {
             OAR102SecondPartBasePathCheck.class,
             OAR044MediaTypeCheck.class,
             OAR050ProvideOpSummaryCheck.class,
-            OAR051DescriptionDiffersSummaryCheck.class
+            OAR051DescriptionDiffersSummaryCheck.class,
+            OAR110LicenseInformationCheck.class,
+            OAR111ContactInformationCheck.class
         );
     }
 
