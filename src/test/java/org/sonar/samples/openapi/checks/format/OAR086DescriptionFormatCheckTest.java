@@ -38,6 +38,6 @@ public class OAR086DescriptionFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR086 - DescriptionFormat - All descriptions must begin with a capital letter and end with a period", RuleType.BUG, Severity.MINOR, tags("format"));
+        assertRuleProperties("OAR086 - DescriptionFormat - Descriptions must begin with a capital letter, end with a period and not be empty", RuleType.BUG, Severity.MINOR, tags("format"));
     }
 }

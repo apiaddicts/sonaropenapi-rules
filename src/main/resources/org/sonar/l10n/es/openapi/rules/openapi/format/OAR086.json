@@ -1,5 +1,5 @@
 {
-    "title": "OAR086 - DescriptionFormatCheck - Todas las descripciones deben empezar con mayúsculas y terminar con un punto",
+    "title": "OAR086 - DescriptionFormatCheck - Las descripciones no pueden estar vacías, deben empezar con mayúsculas y terminar con un punto",
     "type": "BUG",
     "status": "ready",
     "remediation": {
