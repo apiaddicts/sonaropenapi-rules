@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: Sample API
   version: 1.0.0
-  description: Esta es la descripción de la API.
+  description: ""
 paths:
   /pets:
     get:

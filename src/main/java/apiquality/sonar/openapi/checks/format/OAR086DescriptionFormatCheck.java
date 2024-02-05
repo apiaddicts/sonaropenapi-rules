@@ -88,14 +88,12 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
     
         // Ahora verifica si la descripción está vacía después de eliminar espacios en blanco.
         if (description.isEmpty()) {
-            System.out.println("La descripción está presente pero vacía.");
             addIssue(KEY, translate(MESSAGE), descriptionNode);
             return;
         }
     
         // Verifica que la descripción comience con mayúscula y termine con punto
         if (!Character.isUpperCase(description.charAt(0)) || !description.endsWith(".")) {
-            System.out.println("La descripción no comienza con mayúscula o no termina con punto.");
             addIssue(KEY, translate(MESSAGE), descriptionNode);
         }
     }

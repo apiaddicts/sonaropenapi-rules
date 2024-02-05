@@ -68,12 +68,27 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
     }
 
     private void checkSummaryFormat(JsonNode summaryNode) {
-        if (summaryNode != null && !summaryNode.isMissing()) {
-            String summary = summaryNode.getTokenValue();
-            if (!summary.startsWith(Character.toString(summary.charAt(0)).toUpperCase()) ||
-                !summary.endsWith(".")) {
-                addIssue(KEY, translate(MESSAGE), summaryNode.key());
-            }
+        // Verifica primero si el nodo de resumen es nulo o si el valor está ausente.
+        if (summaryNode == null || summaryNode.isMissing()) {
+            // No hacer nada si el nodo está ausente, ya que eso está permitido según tu criterio.
+            return;
+        }
+    
+        // Asegúrate de manejar el caso en que getTokenValue() devuelva null.
+        String summary = summaryNode.getTokenValue();
+        summary = summary == null ? "" : summary.trim();
+    
+        // Ahora verifica si el resumen está vacío después de eliminar espacios en blanco.
+        if (summary.isEmpty()) {
+            System.out.println("El resumen está presente pero vacío.");
+            addIssue(KEY, translate(MESSAGE), summaryNode);
+            return;
+        }
+    
+        // Verifica que el resumen comience con mayúscula y termine con punto.
+        if (!Character.isUpperCase(summary.charAt(0)) || !summary.endsWith(".")) {
+            System.out.println("El resumen no comienza con mayúscula o no termina con punto.");
+            addIssue(KEY, translate(MESSAGE), summaryNode);
         }
     }
 }

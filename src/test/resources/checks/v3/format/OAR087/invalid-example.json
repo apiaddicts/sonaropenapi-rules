@@ -8,7 +8,7 @@
   "paths": {
     "/pets": {
       "get": {
-        "summary": "Lista de mascotas", # Noncompliant {{OAR087: All summaries must begin with a capital letter and end with a period}}
+        "summary": "Lista de mascotas", # Noncompliant {{OAR087: Summaries must begin with a capital letter, end with a period and not be empty}}
         "description": "Esta ruta devuelve una lista de mascotas.",
         "responses": {
           "200": {

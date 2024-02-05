@@ -38,6 +38,6 @@ public class OAR087SummaryFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR087 - SummaryFormat - All summaries must begin with a capital letter and end with a period", RuleType.BUG, Severity.MINOR, tags("format"));
+        assertRuleProperties("OAR087 - SummaryFormat - Summaries must begin with a capital letter, end with a period and not be empty", RuleType.BUG, Severity.MINOR, tags("format"));
     }
 }
