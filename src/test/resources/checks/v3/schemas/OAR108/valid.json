@@ -16,7 +16,7 @@
                     "type": "object",
                     "properties": {
                       "id": {
-                        "type": "integer"
+                        "type": "number"
                       },
                       "nombre": {
                         "type": "string"
@@ -25,7 +25,7 @@
                     "required": ["id", "nombre"]
                   },
                   "example": {
-                    "id": 123,
+                    "id": 12.3,
                     "nombre": "Ejemplo"
                   }
                 }
