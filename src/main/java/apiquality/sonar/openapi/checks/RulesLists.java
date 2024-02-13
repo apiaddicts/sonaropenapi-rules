@@ -1,18 +1,14 @@
 package apiquality.sonar.openapi.checks;
 
 import apiquality.sonar.openapi.checks.apim.wso2.*;
-import apiquality.sonar.openapi.checks.examples.OAR031ExamplesCheck;
-import apiquality.sonar.openapi.checks.examples.OAR094UseExamplesCheck;
 import apiquality.sonar.openapi.checks.format.*;
+import apiquality.sonar.openapi.checks.schemas.*;
+import apiquality.sonar.openapi.checks.examples.*;
+import apiquality.sonar.openapi.checks.owasp.*;
 import apiquality.sonar.openapi.checks.parameters.*;
-import apiquality.sonar.openapi.checks.schemas.OAR029StandardResponseSchemaCheck;
-import apiquality.sonar.openapi.checks.schemas.OAR034StandardPagedResponseSchemaCheck;
-import apiquality.sonar.openapi.checks.schemas.OAR080SecuritySchemasCheck;
-import apiquality.sonar.openapi.checks.schemas.OAR108SchemaValidatorCheck;
+import apiquality.sonar.openapi.checks.regex.OAR112RegexCheck;
 import apiquality.sonar.openapi.checks.security.*;
 import apiquality.sonar.openapi.checks.operations.*;
-import apiquality.sonar.openapi.checks.owasp.OAR070BrokenAccessControlCheck;
-import apiquality.sonar.openapi.checks.owasp.OAR073RateLimitCheck;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -66,9 +62,9 @@ public final class RulesLists {
             OAR026TotalParameterDefaultValueCheck.class,
             OAR028FilterParameterCheck.class,
             OAR060QueryParametersOptionalCheck.class,
-            OAR069PathParamAndQueryCheck.class
-        );
-    }
+            OAR069PathParamAndQueryCheck.class  );
+    }            
+
 
     public static List<Class<?>> getSecurityChecks() {
         return Arrays.asList(
@@ -135,6 +131,12 @@ public final class RulesLists {
             );
     }
 
+    public static List<Class<?>> getRegexChecks() {
+        return Arrays.asList(
+            OAR112RegexCheck.class
+            );
+    }
+
     public static List<Class<?>> getExamplesChcecks() {
         return Arrays.asList(
             OAR031ExamplesCheck.class,
@@ -169,6 +171,7 @@ public final class RulesLists {
         allChecks.addAll(getSecurityChecks());
         allChecks.addAll(getOperationsChecks());
         allChecks.addAll(getWSO2Checks());
+        allChecks.addAll(getRegexChecks());
         return allChecks;
     }
 }
