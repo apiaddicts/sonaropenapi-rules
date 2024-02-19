@@ -17,7 +17,7 @@ import java.util.Set;
 public class OAR112RegexCheck extends BaseCheck {
 
     public static final String KEY = "OAR112";
-    private static final String NODE = "servers/url";
+    private static final String NODE = "externalDocs/url";
     private static final String ERROR_MESSAGE = "The field must start with an uppercase letter.";
     private static final String EXPREG_DEFAULT = "^https://.*";
     
@@ -55,7 +55,8 @@ public class OAR112RegexCheck extends BaseCheck {
             OpenApi3Grammar.SCHEMA,
             OpenApi3Grammar.SECURITY_SCHEME,
             OpenApi3Grammar.TAG,
-            OpenApi3Grammar.SERVER 
+            OpenApi3Grammar.SERVER,
+            OpenApi3Grammar.EXTERNAL_DOC
         );
     }
 
@@ -67,6 +68,12 @@ public class OAR112RegexCheck extends BaseCheck {
             handleInfoSection(node, pathSegments);
         } else if (pathSegments.contains("servers") && OpenApi3Grammar.SERVER.equals(node.getType())) {
             handleServerNode(node, pathSegments); 
+        } else if ((pathSegments.contains("get") || pathSegments.contains("post") || pathSegments.contains("put") || pathSegments.contains("patch") || pathSegments.contains("delete")) && OpenApi3Grammar.OPERATION.equals(node.getType())) {
+            handleOperationsNode(node, pathSegments);
+        } else if ((pathSegments.contains("tags")) && OpenApi3Grammar.TAG.equals(node.getType())) {
+            handleTagsNode(node, pathSegments);
+        } else if ((pathSegments.contains("externalDocs")) && OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType())) {
+            handleExternalDocsNode(node, pathSegments);
         }
     }
 
@@ -77,6 +84,16 @@ public class OAR112RegexCheck extends BaseCheck {
 
     private void handleServerNode(JsonNode serverNode, List<String> pathSegments) {
         validateSection(serverNode, pathSegments, Arrays.asList("url", "description"));
+    }
+
+    private void handleOperationsNode(JsonNode operationsNode, List<String> pathSegments) {
+        validateSection(operationsNode, pathSegments, Arrays.asList("summary", "description"));   
+    }
+    private void handleTagsNode(JsonNode tagsNode, List<String> pathSegments) {
+        validateSection(tagsNode, pathSegments, Arrays.asList("name", "description"));   
+    }
+    private void handleExternalDocsNode(JsonNode externalDocNode, List<String> pathSegments) {
+        validateSection(externalDocNode, pathSegments, Arrays.asList("url", "description"));   
     }
 
     private void validateSection(JsonNode parentNode, List<String> pathSegments, List<String> keysToValidate) {

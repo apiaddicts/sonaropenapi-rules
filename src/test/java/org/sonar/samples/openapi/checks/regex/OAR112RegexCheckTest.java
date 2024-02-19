@@ -39,7 +39,7 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(3);
-        assertParameterProperties("Node", "servers/url", RuleParamType.STRING);
+        assertParameterProperties("Node", "externalDocs/url", RuleParamType.STRING);
         assertParameterProperties("Error Message", "The field must start with an uppercase letter.", RuleParamType.STRING);
         assertParameterProperties("Regex", "^https://.*", RuleParamType.STRING);
     }
