@@ -1,0 +1,27 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: swagger Petstore
+  description: aaa 
+servers:
+  - url: https://petstore.swagger.io/v1
+    description: Eaa
+paths:
+  /examples:
+    get:
+      parameters:
+        - in: query
+          name: $select
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: $select
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        206:
+          description: Ok

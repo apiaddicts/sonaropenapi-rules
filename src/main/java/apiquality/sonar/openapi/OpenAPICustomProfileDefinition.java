@@ -35,7 +35,13 @@ public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDef
 	private void addRepositoryRules(NewBuiltInQualityProfile profile, String key, List<Class<?>> checks) {
 		for (Class<?> check : checks) {
 			Rule annotation = AnnotationUtils.getAnnotation(check, Rule.class);
-			profile.activateRule(key, annotation.key());
+			if (!isTemplateRule(annotation.key())) {
+				profile.activateRule(key, annotation.key());
+			}
 		}
+	}
+	
+	private boolean isTemplateRule(String ruleKey) {
+		return "OAR112".equals(ruleKey); 
 	}
 }

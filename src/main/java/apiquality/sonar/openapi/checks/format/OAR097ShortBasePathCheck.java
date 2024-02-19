@@ -54,7 +54,7 @@ public class OAR097ShortBasePathCheck extends BaseCheck {
     private void validatePath(String path, JsonNode node) {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
         if (pathParts.size() < 2) {
-            addIssue(KEY, translate("OAR097.error-path-short"), node.value());  // Utilizamos el mismo mensaje de OAR042 ya que es el mismo criterio
+            addIssue(KEY, translate("OAR097.error-path-short"), node.value());  
         }
     }
 }
