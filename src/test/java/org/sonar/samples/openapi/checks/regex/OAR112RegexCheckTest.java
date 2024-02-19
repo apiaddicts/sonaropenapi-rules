@@ -38,13 +38,9 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(6);
-        assertParameterProperties("node", "sample", RuleParamType.STRING);
-        assertParameterProperties("errorMessage", "sample", RuleParamType.STRING);
-        assertParameterProperties("descriptionMessage", "sample", RuleParamType.STRING);
-        assertParameterProperties("severityDefault", "sample", RuleParamType.STRING);
-        assertParameterProperties("functionDefault", "sample", RuleParamType.STRING);
-        assertParameterProperties("expreg", "sample", RuleParamType.STRING);
+        assertNumberOfParameters(3);
+        assertParameterProperties("Node", "servers/url", RuleParamType.STRING);
+        assertParameterProperties("Error Message", "The field must start with an uppercase letter.", RuleParamType.STRING);
+        assertParameterProperties("Regex", "^https://.*", RuleParamType.STRING);
     }
-
 }
