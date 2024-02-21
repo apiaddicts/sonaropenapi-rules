@@ -17,10 +17,10 @@ import java.util.Set;
 public class OAR112RegexCheck extends BaseCheck {
 
     public static final String KEY = "OAR112";
-    private static final String NODE = "externalDocs/url";
+    private static final String NODE = "paths/get/responses/200";
     private static final String ERROR_MESSAGE = "The field must start with an uppercase letter.";
-    private static final String EXPREG_DEFAULT = "^https://.*";
-    
+    private static final String VALIDATION = "false";
+
     @RuleProperty(
         key = "Node",
         description = "Specify the sections of the OpenAPI document to be validated. This defines the scope for the regular expression validation.",
@@ -36,11 +36,19 @@ public class OAR112RegexCheck extends BaseCheck {
     private String errorMessage = ERROR_MESSAGE;
 
     @RuleProperty(
-        key= "Regex",
+        key= "Validation",
         description= "Provide the regular expression that will be used to validate the specified sections of the OpenAPI document.",
-        defaultValue = EXPREG_DEFAULT
+        defaultValue = VALIDATION
     )
-    private String expReg = EXPREG_DEFAULT;
+    private String valid = VALIDATION;
+
+    String[] segments = NODE.split("/");
+
+    String segment1 = segments.length > 0 ? segments[0] : null;
+    String segment2 = segments.length > 1 ? segments[1] : null;
+    String segment3 = segments.length > 2 ? segments[2] : null;
+    String segment4 = segments.length > 3 ? segments[3] : null;
+    String segment5 = segments.length > 4 ? segments[4] : null;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -63,18 +71,23 @@ public class OAR112RegexCheck extends BaseCheck {
     @Override
     public void visitNode(JsonNode node) {
         List<String> pathSegments = Arrays.asList(nodes.split("/"));
-        
+        String[] pathSegmentsArray = nodes.split("/");
+
         if (pathSegments.contains("info") && OpenApi3Grammar.ROOT.equals(node.getType())) {
             handleInfoSection(node, pathSegments);
         } else if (pathSegments.contains("servers") && OpenApi3Grammar.SERVER.equals(node.getType())) {
             handleServerNode(node, pathSegments); 
-        } else if ((pathSegments.contains("get") || pathSegments.contains("post") || pathSegments.contains("put") || pathSegments.contains("patch") || pathSegments.contains("delete")) && OpenApi3Grammar.OPERATION.equals(node.getType())) {
-            handleOperationsNode(node, pathSegments);
+        } else if (pathSegmentsArray.length > 1 && "paths".equals(pathSegmentsArray[0]) &&
+        (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
+         pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) &&
+        OpenApi3Grammar.OPERATION.equals(node.getType())) {
+        handleOperationsNode(node, pathSegments);
         } else if ((pathSegments.contains("tags")) && OpenApi3Grammar.TAG.equals(node.getType())) {
             handleTagsNode(node, pathSegments);
         } else if ((pathSegments.contains("externalDocs")) && OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType())) {
             handleExternalDocsNode(node, pathSegments);
         }
+
     }
 
     private void handleInfoSection(JsonNode node, List<String> pathSegments) {
@@ -87,7 +100,37 @@ public class OAR112RegexCheck extends BaseCheck {
     }
 
     private void handleOperationsNode(JsonNode operationsNode, List<String> pathSegments) {
-        validateSection(operationsNode, pathSegments, Arrays.asList("summary", "description"));   
+        if ("responses".equals(segment3)) {
+            JsonNode responsesNode = operationsNode.get("responses");
+            if (responsesNode != null && !responsesNode.isMissing()) {
+                String statusCodeToCheck = segment4;
+                JsonNode responseNode = responsesNode.get(statusCodeToCheck);
+    
+                if ("false".equals(valid)) {
+                    if (responseNode != null && !responseNode.isMissing()) {
+                        addIssue(KEY, errorMessage, responseNode.key());
+                    }
+                } else {
+                    if (responseNode != null && !responseNode.isMissing()) {
+                        JsonNode descriptionNode = responseNode.get("description");
+                        if ("true".equals(valid)) {
+                            // Si la validación es "true", esperamos que la descripción exista.
+                            if (descriptionNode == null || descriptionNode.isMissing() || descriptionNode.getTokenValue().isEmpty()) {
+                                addIssue(KEY, "Expected to find a description but didn't.", responseNode.key());
+                            }
+                        } else {
+                            // Si es una expresión regular, validamos el contenido de la descripción.
+                            if (descriptionNode != null && !descriptionNode.isMissing() && !descriptionNode.getTokenValue().matches(valid)) {
+                                addIssue(KEY, errorMessage, descriptionNode.key());
+                            }
+                        }
+                    } else if ("true".equals(valid)) {
+                        // Si la validación es "true" pero el código de estado no se encuentra, se reporta el problema.
+                        addIssue(KEY, "Expected to find a response code but didn't.", responsesNode.key());
+                    }
+                }
+            }
+        }
     }
     private void handleTagsNode(JsonNode tagsNode, List<String> pathSegments) {
         validateSection(tagsNode, pathSegments, Arrays.asList("name", "description"));   
@@ -99,19 +142,27 @@ public class OAR112RegexCheck extends BaseCheck {
     private void validateSection(JsonNode parentNode, List<String> pathSegments, List<String> keysToValidate) {
         for (String key : keysToValidate) {
             if (pathSegments.contains(key)) {
-                validateNodeWithRegex(parentNode, key, expReg);
+                validateNodeWithRegex(parentNode, key, valid);
             }
         }
     }
 
-    private void validateNodeWithRegex(JsonNode parentNode, String childKey, String regex) {
+    private void validateNodeWithRegex(JsonNode parentNode, String childKey, String validation) {
         JsonNode childNode = parentNode.get(childKey);
-        if (childNode == null || childNode instanceof MissingNode) {
-            return;
-        }
-        
-        if (!childNode.getTokenValue().matches(regex)) {
-            addIssue(KEY, errorMessage, childNode.key());
+        boolean validationAsBoolean = "true".equals(validation) || "false".equals(validation);
+    
+        if (validationAsBoolean && "false".equals(validation)) {
+            if (!(childNode == null || childNode instanceof MissingNode)) {
+                addIssue(KEY, errorMessage, childNode.key());
+            }
+        } else if (validationAsBoolean && "true".equals(validation)) {
+            if (childNode == null || childNode instanceof MissingNode || childNode.getTokenValue().isEmpty()) {
+                addIssue(KEY, "Expected to find a value but didn't.", parentNode.key());
+            }
+        } else {
+            if (childNode != null && !(childNode instanceof MissingNode) && !childNode.getTokenValue().matches(validation)) {
+                addIssue(KEY, errorMessage, childNode.key());
+            }
         }
     }
 }

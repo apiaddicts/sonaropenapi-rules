@@ -1,48 +1,38 @@
 openapi: 3.0.3
 info:
-  title: API de Usuarios
-  description: Una API simple para gestionar usuarios.
+  title: Ejemplo de API
   version: 1.0.0
+  description: Una API de ejemplo para ilustrar la estructura de OpenAPI.
 servers:
   - url: https://api.ejemplo.com/v1
 paths:
-  /users:
+  /usuarios:
     get:
+      summary: Obtiene una lista de usuarios
+      description: Retorna una lista completa de usuarios registrados.
+      operationId: getUsuarios
       tags:
-        - User
-      summary: Obtiene una lista de todos los usuarios
-      description: Retorna una lista completa de usuarios registrados en el sistema.
+        - Usuarios
       responses:
         '200':
-          description: Una lista de usuarios
+          description: ana lista de usuarios se retorna en caso de éxito.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/Usuario'
+        '404':
+          description: No se encontraron usuarios.
 components:
   schemas:
-    User:
+    Usuario:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          description: El ID único del usuario
+          description: El ID único del usuario.
         nombre:
           type: string
-          description: El nombre completo del usuario
-        email:
-          type: string
-          format: email
-          description: La dirección de correo electrónico del usuario
-tags:
-  - name: User
-    description: Operaciones relacionadas con los usuarios
-    externalDocs:
-      description: Más información sobre las operaciones de usuarios
-      url: https://example.com/more-info-users
-externalDocs:
-  description: Encuentra más información sobre esta API aquí
-  url: https://example.com/api-documentation
+          description: El nombre del usuario.
