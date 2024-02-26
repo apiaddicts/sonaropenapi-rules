@@ -5,6 +5,8 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import apiquality.sonar.openapi.checks.BaseCheck;
+
+import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.impl.MissingNode;
@@ -17,7 +19,7 @@ import java.util.Set;
 public class OAR112RegexCheck extends BaseCheck {
 
     public static final String KEY = "OAR112";
-    private static final String NODE = "paths/get/parameters/description";
+    private static final String NODE = "info/description";
     private static final String ERROR_MESSAGE = "The field must start with an uppercase letter.";
     private static final String VALIDATION = "^[A-Z].*";
 
@@ -59,12 +61,26 @@ public class OAR112RegexCheck extends BaseCheck {
             OpenApi3Grammar.INFO,
             OpenApi3Grammar.RESPONSES,
             OpenApi3Grammar.PARAMETER,
+            OpenApi3Grammar.COMPONENTS,
             OpenApi3Grammar.REQUEST_BODY,
             OpenApi3Grammar.SCHEMA,
             OpenApi3Grammar.SECURITY_SCHEME,
             OpenApi3Grammar.TAG,
             OpenApi3Grammar.SERVER,
-            OpenApi3Grammar.EXTERNAL_DOC
+            OpenApi3Grammar.EXTERNAL_DOC,
+            OpenApi2Grammar.ROOT,
+            OpenApi2Grammar.PATHS,
+            OpenApi2Grammar.OPERATION,
+            OpenApi2Grammar.INFO,
+            OpenApi2Grammar.RESPONSES,
+            OpenApi2Grammar.PARAMETER,
+            OpenApi2Grammar.DEFINITIONS,
+            OpenApi2Grammar.SCHEMA,
+            OpenApi2Grammar.SECURITY_SCHEME,
+            OpenApi2Grammar.TAG,
+            OpenApi2Grammar.EXTERNAL_DOC
+
+
         );
     }
 
@@ -73,7 +89,7 @@ public void visitNode(JsonNode node) {
     List<String> pathSegments = Arrays.asList(nodes.split("/"));
     String[] pathSegmentsArray = nodes.split("/");
 
-    if (pathSegments.contains("info") && OpenApi3Grammar.ROOT.equals(node.getType())) {
+    if (pathSegments.contains("info") && OpenApi3Grammar.ROOT.equals(node.getType()) || (pathSegments.contains("info") && OpenApi2Grammar.ROOT.equals(node.getType()))){
         handleInfoSection(node, pathSegments);
     } else if (pathSegments.contains("servers") && OpenApi3Grammar.SERVER.equals(node.getType())) {
         handleServerNode(node, pathSegments); 
