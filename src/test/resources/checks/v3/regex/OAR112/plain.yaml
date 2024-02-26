@@ -13,6 +13,14 @@ paths:
       operationId: getUsuarios
       tags:
         - Usuarios
+      parameters:
+        - name: "page"
+          in: "query"
+          description: "Número de página para la paginación" 
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
       responses:
         '200':
           description: ana lista de usuarios se retorna en caso de éxito.

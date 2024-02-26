@@ -17,9 +17,9 @@ import java.util.Set;
 public class OAR112RegexCheck extends BaseCheck {
 
     public static final String KEY = "OAR112";
-    private static final String NODE = "paths/get/responses/200";
+    private static final String NODE = "paths/get/parameters/description";
     private static final String ERROR_MESSAGE = "The field must start with an uppercase letter.";
-    private static final String VALIDATION = "false";
+    private static final String VALIDATION = "^[A-Z].*";
 
     @RuleProperty(
         key = "Node",
@@ -69,26 +69,29 @@ public class OAR112RegexCheck extends BaseCheck {
     }
 
     @Override
-    public void visitNode(JsonNode node) {
-        List<String> pathSegments = Arrays.asList(nodes.split("/"));
-        String[] pathSegmentsArray = nodes.split("/");
+public void visitNode(JsonNode node) {
+    List<String> pathSegments = Arrays.asList(nodes.split("/"));
+    String[] pathSegmentsArray = nodes.split("/");
 
-        if (pathSegments.contains("info") && OpenApi3Grammar.ROOT.equals(node.getType())) {
-            handleInfoSection(node, pathSegments);
-        } else if (pathSegments.contains("servers") && OpenApi3Grammar.SERVER.equals(node.getType())) {
-            handleServerNode(node, pathSegments); 
-        } else if (pathSegmentsArray.length > 1 && "paths".equals(pathSegmentsArray[0]) &&
-        (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
-         pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) &&
-        OpenApi3Grammar.OPERATION.equals(node.getType())) {
-        handleOperationsNode(node, pathSegments);
-        } else if ((pathSegments.contains("tags")) && OpenApi3Grammar.TAG.equals(node.getType())) {
-            handleTagsNode(node, pathSegments);
-        } else if ((pathSegments.contains("externalDocs")) && OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType())) {
-            handleExternalDocsNode(node, pathSegments);
-        }
-
+    if (pathSegments.contains("info") && OpenApi3Grammar.ROOT.equals(node.getType())) {
+        handleInfoSection(node, pathSegments);
+    } else if (pathSegments.contains("servers") && OpenApi3Grammar.SERVER.equals(node.getType())) {
+        handleServerNode(node, pathSegments); 
+    } else if (pathSegmentsArray.length > 1 && "paths".equals(pathSegmentsArray[0]) &&
+    (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
+     pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) &&
+    OpenApi3Grammar.OPERATION.equals(node.getType())) {
+    handleOperationsNode(node, pathSegments);
+    } else if ((pathSegments.contains("tags")) && OpenApi3Grammar.TAG.equals(node.getType())) {
+        handleTagsNode(node, pathSegments);
+    } else if ((pathSegments.contains("externalDocs")) && OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType())) {
+        handleExternalDocsNode(node, pathSegments);
+    } else if (pathSegmentsArray.length > 2 && "paths".equals(pathSegmentsArray[0]) &&
+    (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
+     pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) && "parameters".equals(pathSegmentsArray[2]) && OpenApi3Grammar.PARAMETER.equals(node.getType())) {
+        handleParametersNode(node, pathSegments);
     }
+}
 
     private void handleInfoSection(JsonNode node, List<String> pathSegments) {
         JsonNode infoNode = node.get("info");
@@ -105,32 +108,20 @@ public class OAR112RegexCheck extends BaseCheck {
             if (responsesNode != null && !responsesNode.isMissing()) {
                 String statusCodeToCheck = segment4;
                 JsonNode responseNode = responsesNode.get(statusCodeToCheck);
-    
-                if ("false".equals(valid)) {
-                    if (responseNode != null && !responseNode.isMissing()) {
-                        addIssue(KEY, errorMessage, responseNode.key());
-                    }
-                } else {
-                    if (responseNode != null && !responseNode.isMissing()) {
-                        JsonNode descriptionNode = responseNode.get("description");
-                        if ("true".equals(valid)) {
-                            // Si la validación es "true", esperamos que la descripción exista.
-                            if (descriptionNode == null || descriptionNode.isMissing() || descriptionNode.getTokenValue().isEmpty()) {
-                                addIssue(KEY, "Expected to find a description but didn't.", responseNode.key());
-                            }
-                        } else {
-                            // Si es una expresión regular, validamos el contenido de la descripción.
-                            if (descriptionNode != null && !descriptionNode.isMissing() && !descriptionNode.getTokenValue().matches(valid)) {
-                                addIssue(KEY, errorMessage, descriptionNode.key());
-                            }
-                        }
-                    } else if ("true".equals(valid)) {
-                        // Si la validación es "true" pero el código de estado no se encuentra, se reporta el problema.
-                        addIssue(KEY, "Expected to find a response code but didn't.", responsesNode.key());
+                if (responseNode != null && !responseNode.isMissing()) {
+                    JsonNode descriptionNode = responseNode.get("description");
+                    if (descriptionNode != null && !descriptionNode.isMissing() && !descriptionNode.getTokenValue().matches(valid)) {
+                        addIssue(KEY, errorMessage, descriptionNode.key());
                     }
                 }
             }
         }
+        else{
+            validateSection(operationsNode, pathSegments, Arrays.asList("summary", "description", "operationId"));
+        }
+    }
+    private void handleParametersNode(JsonNode parametersNode, List<String> pathSegments){
+        validateSection(parametersNode, pathSegments, Arrays.asList("description"));
     }
     private void handleTagsNode(JsonNode tagsNode, List<String> pathSegments) {
         validateSection(tagsNode, pathSegments, Arrays.asList("name", "description"));   
