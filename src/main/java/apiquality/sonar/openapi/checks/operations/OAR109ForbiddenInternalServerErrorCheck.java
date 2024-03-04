@@ -6,6 +6,7 @@ import org.sonar.check.Rule;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,12 @@ public class OAR109ForbiddenInternalServerErrorCheck extends BaseCheck {
     public void visitNode(JsonNode node) {
         JsonNode responsesNode = node.get("responses");
         if (responsesNode != null && !responsesNode.isMissing() && !responsesNode.isNull()) {
-            Set<String> responseCodes = responsesNode.propertyNames().stream().collect(Collectors.toSet());
+            List<String> responseCodes = responsesNode.propertyNames();
+            boolean contains5xxCode = responseCodes.stream()
+                                                .anyMatch(code -> code.matches("5\\d\\d"));
 
-            if (responseCodes.contains("500")) {
-                addIssue(KEY, translate(MESSAGE), responsesNode.key());
+            if (contains5xxCode) {
+                addIssue(KEY, translate(MESSAGE), responsesNode.key()); 
             }
         }
     }

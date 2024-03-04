@@ -1,5 +1,5 @@
 {
-    "title": "OAR109 - ForbiddenInternalServerErrorCheckTest - No se deben definir códigos de respuesta 500 Internal Server Error",
+    "title": "OAR109 - ForbiddenInternalServerErrorCheckTest - Utilice default en lugar de especificar códigos 5XX directamente",
     "type": "BUG",
     "status": "ready",
     "remediation": {

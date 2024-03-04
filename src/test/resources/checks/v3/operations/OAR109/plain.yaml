@@ -18,7 +18,7 @@ paths:
   /users:
     delete:
       summary: Get all users
-      responses: # Noncompliant {{OAR109: 500 Internal Server Error response codes should not be defined}}
+      responses: # Noncompliant {{OAR109: Use default instead of directly specifying 5XX codes}}
         '400':
           description: Error
         '500':
