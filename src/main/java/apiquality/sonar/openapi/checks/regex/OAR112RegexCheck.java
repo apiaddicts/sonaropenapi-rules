@@ -80,34 +80,34 @@ public class OAR112RegexCheck extends BaseCheck {
             OpenApi2Grammar.TAG,
             OpenApi2Grammar.EXTERNAL_DOC
 
-
         );
     }
 
     @Override
-public void visitNode(JsonNode node) {
-    List<String> pathSegments = Arrays.asList(nodes.split("/"));
-    String[] pathSegmentsArray = nodes.split("/");
+    public void visitNode(JsonNode node) {
+        List<String> pathSegments = Arrays.asList(nodes.split("/"));
+        String[] pathSegmentsArray = nodes.split("/");
 
-    if (pathSegments.contains("info") && OpenApi3Grammar.ROOT.equals(node.getType()) || (pathSegments.contains("info") && OpenApi2Grammar.ROOT.equals(node.getType()))){
-        handleInfoSection(node, pathSegments);
-    } else if (pathSegments.contains("servers") && OpenApi3Grammar.SERVER.equals(node.getType())) {
-        handleServerNode(node, pathSegments); 
-    } else if (pathSegmentsArray.length > 1 && "paths".equals(pathSegmentsArray[0]) &&
-    (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
-     pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) &&
-    OpenApi3Grammar.OPERATION.equals(node.getType())) {
-    handleOperationsNode(node, pathSegments);
-    } else if ((pathSegments.contains("tags")) && OpenApi3Grammar.TAG.equals(node.getType())) {
-        handleTagsNode(node, pathSegments);
-    } else if ((pathSegments.contains("externalDocs")) && OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType())) {
-        handleExternalDocsNode(node, pathSegments);
-    } else if (pathSegmentsArray.length > 2 && "paths".equals(pathSegmentsArray[0]) &&
-    (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
-     pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) && "parameters".equals(pathSegmentsArray[2]) && OpenApi3Grammar.PARAMETER.equals(node.getType())) {
-        handleParametersNode(node, pathSegments);
+        if (pathSegments.contains("info") && (OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi2Grammar.ROOT.equals(node.getType()))){
+            handleInfoSection(node, pathSegments);
+        } else if (pathSegments.contains("servers") && (OpenApi3Grammar.SERVER.equals(node.getType()))) {
+            handleServerNode(node, pathSegments); 
+        } else if (pathSegmentsArray.length > 1 && "paths".equals(pathSegmentsArray[0]) &&
+        (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
+        pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) &&
+        (OpenApi3Grammar.OPERATION.equals(node.getType()) || OpenApi2Grammar.OPERATION.equals(node.getType()))) {
+            handleOperationsNode(node, pathSegments);
+        } else if ((pathSegments.contains("tags")) && (OpenApi3Grammar.TAG.equals(node.getType()) || OpenApi2Grammar.TAG.equals(node.getType()))) {
+            handleTagsNode(node, pathSegments);
+        } else if ((pathSegments.contains("externalDocs")) && (OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType()) || OpenApi2Grammar.EXTERNAL_DOC.equals(node.getType()))) {
+            handleExternalDocsNode(node, pathSegments);
+        } else if (pathSegmentsArray.length > 2 && "paths".equals(pathSegmentsArray[0]) &&
+        (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
+        pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) && "parameters".equals(pathSegmentsArray[2]) && 
+        (OpenApi3Grammar.PARAMETER.equals(node.getType()) || OpenApi2Grammar.PARAMETERS.equals(node.getType()))) {
+            handleParametersNode(node, pathSegments);
+        }
     }
-}
 
     private void handleInfoSection(JsonNode node, List<String> pathSegments) {
         JsonNode infoNode = node.get("info");
@@ -136,6 +136,7 @@ public void visitNode(JsonNode node) {
             validateSection(operationsNode, pathSegments, Arrays.asList("summary", "description", "operationId"));
         }
     }
+
     private void handleParametersNode(JsonNode parametersNode, List<String> pathSegments){
         validateSection(parametersNode, pathSegments, Arrays.asList("description"));
     }
