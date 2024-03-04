@@ -29,7 +29,7 @@ public class OAR109ForbiddenInternalServerErrorCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR109 - ForbiddenInternalServerErrorCheckTest - 500 Internal Server Error response codes should not be defined", RuleType.BUG, Severity.MAJOR, tags("operations"));
+        assertRuleProperties("OAR109 - ForbiddenInternalServerErrorCheckTest - Use default instead of directly specifying 5XX codes", RuleType.BUG, Severity.MAJOR, tags("operations"));
     }
 
 }
