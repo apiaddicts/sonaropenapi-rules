@@ -76,25 +76,25 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
     }
 
     private void checkDescriptionFormat(JsonNode descriptionNode) {
-        boolean hasValidLength = false;
+        // Verifica primero si el nodo de descripción es nulo o si el valor está ausente.
+        if (descriptionNode == null || descriptionNode.isMissing()) {
+            // No hacer nada si el nodo está ausente, ya que eso está permitido según tu criterio.
+            return;
+        }
     
-        if (descriptionNode != null && !descriptionNode.isMissing()) {
-            String description = descriptionNode.getTokenValue();
-            
-            // Comprobar la longitud de la cadena
-            hasValidLength = (description != null && description.length() > 0);
-            
-            // Si la longitud de la cadena es 0, añadir un problema y regresar
-            if (!hasValidLength) {
-                addIssue(KEY, translate(MESSAGE), descriptionNode);
-                return;
-            }
+        String description = descriptionNode.getTokenValue();
+        // Asegúrate de manejar el caso en que getTokenValue() devuelva null.
+        description = description == null ? "" : description.trim();
     
-            // Comprobar otros criterios de formato
-            if (!description.startsWith(Character.toString(description.charAt(0)).toUpperCase()) ||
-                !description.endsWith(".")) {
-                addIssue(KEY, translate(MESSAGE), descriptionNode);
-            }
+        // Ahora verifica si la descripción está vacía después de eliminar espacios en blanco.
+        if (description.isEmpty()) {
+            addIssue(KEY, translate(MESSAGE), descriptionNode);
+            return;
+        }
+    
+        // Verifica que la descripción comience con mayúscula y termine con punto
+        if (!Character.isUpperCase(description.charAt(0)) || !description.endsWith(".")) {
+            addIssue(KEY, translate(MESSAGE), descriptionNode);
         }
     }
 }

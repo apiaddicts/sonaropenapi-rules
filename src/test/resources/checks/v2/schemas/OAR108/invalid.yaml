@@ -18,7 +18,7 @@
                 required:
                   - id
                   - nombre
-              examples: 
+              examples: # Noncompliant {{OAR108: Schema does not match the provided example}}
                 application/json:
-                  id: "123" 
+                  id: "hola123" 
                   nombre: "Ejemplo"

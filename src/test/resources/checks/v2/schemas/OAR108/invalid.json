@@ -14,7 +14,7 @@
                 "type": "object",
                 "properties": {
                   "id": {
-                    "type": "integer"
+                    "type": "string"
                   },
                   "nombre": {
                     "type": "string"
@@ -22,9 +22,9 @@
                 },
                 "required": ["id", "nombre"]
               },
-              "examples": { 
+              "examples": { # Noncompliant {{OAR108: Schema does not match the provided example}}
                 "application/json": {
-                  "id": "123",  
+                  "id": 123,  
                   "nombre": "Ejemplo"
                 }
               }

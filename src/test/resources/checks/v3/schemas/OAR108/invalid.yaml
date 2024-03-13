@@ -20,6 +20,6 @@
                     required:
                       - id
                       - nombre
-                  example: 
-                    id: "123"  
+                  example: # Noncompliant {{OAR108: Schema does not match the provided example}}
+                    id: hola123  
                     nombre: Ejemplo

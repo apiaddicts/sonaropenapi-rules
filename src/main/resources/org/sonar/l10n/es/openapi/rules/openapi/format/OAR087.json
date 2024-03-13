@@ -1,5 +1,5 @@
 {
-    "title": "OAR087 - SummarynFormatCheck - Todas los summary deben empezar con mayúsculas y terminar con un punto",
+    "title": "OAR087 - SummarynFormatCheck - Los summary no pueden estar vacíos, deben empezar con mayúsculas y terminar con un punto",
     "type": "BUG",
     "status": "ready",
     "remediation": {

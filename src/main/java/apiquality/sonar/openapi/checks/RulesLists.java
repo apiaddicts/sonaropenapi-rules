@@ -1,17 +1,14 @@
 package apiquality.sonar.openapi.checks;
 
 import apiquality.sonar.openapi.checks.apim.wso2.*;
-import apiquality.sonar.openapi.checks.examples.OAR031ExamplesCheck;
-import apiquality.sonar.openapi.checks.examples.OAR094UseExamplesCheck;
 import apiquality.sonar.openapi.checks.format.*;
+import apiquality.sonar.openapi.checks.schemas.*;
+import apiquality.sonar.openapi.checks.examples.*;
+import apiquality.sonar.openapi.checks.owasp.*;
 import apiquality.sonar.openapi.checks.parameters.*;
-import apiquality.sonar.openapi.checks.schemas.OAR029StandardResponseSchemaCheck;
-import apiquality.sonar.openapi.checks.schemas.OAR034StandardPagedResponseSchemaCheck;
-import apiquality.sonar.openapi.checks.schemas.OAR080SecuritySchemasCheck;
+import apiquality.sonar.openapi.checks.regex.OAR112RegexCheck;
 import apiquality.sonar.openapi.checks.security.*;
 import apiquality.sonar.openapi.checks.operations.*;
-import apiquality.sonar.openapi.checks.owasp.OAR070BrokenAccessControlCheck;
-import apiquality.sonar.openapi.checks.owasp.OAR073RateLimitCheck;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -47,7 +44,9 @@ public final class RulesLists {
             OAR102SecondPartBasePathCheck.class,
             OAR044MediaTypeCheck.class,
             OAR050ProvideOpSummaryCheck.class,
-            OAR051DescriptionDiffersSummaryCheck.class
+            OAR051DescriptionDiffersSummaryCheck.class,
+            OAR110LicenseInformationCheck.class,
+            OAR111ContactInformationCheck.class
         );
     }
 
@@ -63,9 +62,9 @@ public final class RulesLists {
             OAR026TotalParameterDefaultValueCheck.class,
             OAR028FilterParameterCheck.class,
             OAR060QueryParametersOptionalCheck.class,
-            OAR069PathParamAndQueryCheck.class
-        );
-    }
+            OAR069PathParamAndQueryCheck.class  );
+    }            
+
 
     public static List<Class<?>> getSecurityChecks() {
         return Arrays.asList(
@@ -118,7 +117,8 @@ public final class RulesLists {
             OAR107ResourcesByDeleteVerbCheck.class,
             OAR043ParsingErrorCheck.class,
             OAR046DeclaredTagCheck.class,
-            OAR047DocumentedTagCheck.class
+            OAR047DocumentedTagCheck.class,
+            OAR109ForbiddenInternalServerErrorCheck.class
         );
     }
 
@@ -126,7 +126,14 @@ public final class RulesLists {
         return Arrays.asList(
             OAR029StandardResponseSchemaCheck.class,
             OAR034StandardPagedResponseSchemaCheck.class,
-            OAR080SecuritySchemasCheck.class
+            OAR080SecuritySchemasCheck.class,
+            OAR108SchemaValidatorCheck.class
+            );
+    }
+
+    public static List<Class<?>> getRegexChecks() {
+        return Arrays.asList(
+            OAR112RegexCheck.class
             );
     }
 
@@ -164,6 +171,7 @@ public final class RulesLists {
         allChecks.addAll(getSecurityChecks());
         allChecks.addAll(getOperationsChecks());
         allChecks.addAll(getWSO2Checks());
+        allChecks.addAll(getRegexChecks());
         return allChecks;
     }
 }

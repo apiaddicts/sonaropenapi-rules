@@ -24,7 +24,7 @@
               },
               "examples": {
                 "application/json": {
-                  "id": 123,
+                  "id": 123, 
                   "nombre": "Ejemplo"
                 }
               }
