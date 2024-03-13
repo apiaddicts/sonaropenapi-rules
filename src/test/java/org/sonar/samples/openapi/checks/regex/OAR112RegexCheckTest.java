@@ -33,7 +33,7 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR112 - RegexRule - Regex rule", RuleType.BUG, Severity.MINOR, tags("regex"));
+        assertRuleProperties("OAR112 - TemplateRule - Create your own OpenAPI rules", RuleType.BUG, Severity.MINOR, tags("regex"));
     }
 
     @Override

@@ -1,5 +1,5 @@
 {
-    "title": "OAR112 - RegexRule - Regex rule",
+    "title": "OAR112 - TemplateRule - Create tus propias reglas de OpenAPI",
     "type": "BUG",
     "status": "ready",
     "remediation": {
