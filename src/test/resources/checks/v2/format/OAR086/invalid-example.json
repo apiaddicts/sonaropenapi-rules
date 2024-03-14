@@ -3,16 +3,16 @@
   "info": {
     "title": "Sample API",
     "version": "1.0.0",
-    "description": "esta es la descripción de la API." # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+    "description": "esta es la descripción de la API." # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
   },
   "paths": {
     "/pets": {
       "get": {
         "summary": "lista de mascotas", 
-        "description": "", # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+        "description": "", # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
         "responses": {
           "200": {
-            "description": "una lista de mascotas.", # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+            "description": "una lista de mascotas.", # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
             "schema": {
               "$ref": "#/definitions/Pet"
             }
@@ -33,7 +33,7 @@
           "type": "string"
         }
       },
-      "description": "Representa una mascota" # Noncompliant {{OAR086: All descriptions must begin with a capital letter and end with a period}}
+      "description": "Representa una mascota" # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
     }
   }
 }

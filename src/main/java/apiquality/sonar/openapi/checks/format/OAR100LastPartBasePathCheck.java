@@ -43,6 +43,7 @@ public class OAR100LastPartBasePathCheck extends BaseCheck {
     private void visitV3ServerNode(JsonNode node) {
         JsonNode urlNode = node.get("url");
         String server = urlNode.getTokenValue();
+        System.out.println("server: " + server);
         try {
             String path = new URL(server).getPath();
             validatePath(path, urlNode);
