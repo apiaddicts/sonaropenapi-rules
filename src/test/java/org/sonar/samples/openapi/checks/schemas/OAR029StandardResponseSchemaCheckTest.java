@@ -39,7 +39,7 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
     public void verifyInV3AllOf() {
         verifyV3("valid-all-of");
     }
-
+    
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);

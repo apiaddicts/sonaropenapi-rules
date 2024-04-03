@@ -27,18 +27,30 @@ public class JsonNodeUtils {
     public static final String TYPE_ANY = "*";
 
     public static JsonNode resolve(JsonNode original) {
-        if (original.isRef()) return original.resolve();
-        // Resolver allOf with one $ref
+        if (original.isRef()) {
+            String ref = original.get("$ref").getTokenValue();
+            if (ref.startsWith("#")) {
+                return original.resolve();
+            }
+            return original;
+        }
         JsonNode allOf = original.get("allOf");
         if (!allOf.isMissing()) {
             Collection<JsonNode> refs = allOf.elements();
             if (refs.size() == 1) {
                 JsonNode refNode = refs.iterator().next();
-                original = refNode.resolve();
+                if (refNode.isRef()) {
+                    String ref = refNode.get("$ref").getTokenValue();
+                    if (ref.startsWith("#")) {
+                        return refNode.resolve();
+                    }
+                }
             }
         }
         return original;
     }
+    
+
 
     public static JsonNode getType(JsonNode schema) {
         return schema.get(TYPE);
