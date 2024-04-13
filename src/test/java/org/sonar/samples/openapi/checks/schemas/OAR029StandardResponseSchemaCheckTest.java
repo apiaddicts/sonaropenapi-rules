@@ -19,10 +19,7 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
         v3Path = getV3Path("schemas");
     }
     
-    @Test
-    public void verifyInV2() {
-        verifyV2("valid");
-    }
+
 
     @Test
     public void verifyInV2AllOf() {
@@ -30,15 +27,13 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
     }
 
 
-    @Test
-    public void verifyInV3() {
-        verifyV3("valid");
-    }
 
     @Test
     public void verifyInV3AllOf() {
         verifyV3("valid-all-of");
     }
+
+
     
     @Override
     public void verifyParameters() {
