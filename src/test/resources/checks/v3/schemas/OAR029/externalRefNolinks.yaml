@@ -1,0 +1,106 @@
+openapi: 3.0.1
+info:
+  title: Sample-API_efc2b9f76813_V
+  description: API de ejemplo para pruebas
+  contact:
+    name: Nombre del Contacto.
+    email: contact@mail.com
+  version: 1.0.12
+servers:
+  - url: https://api.example.es/api-sample/v1
+paths:
+  /datos-usuarios:
+    get:
+      summary: Listado de usuarios
+      description: Método que permite obtener un listado con datos básicos de un usuario.
+      parameters:
+        - name: desde
+          in: query
+          schema:
+            type: string
+            format: date
+          required: false
+        - name: hasta
+          in: query
+          schema:
+            type: string
+            format: date
+          required: false
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Correlation-Id:
+              description: Cabecera 'X-Correlation-Id'
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  status:
+                    type: string
+                    description: Especifica el status code HTTP al que se traducirá la excepción.
+                  message:
+                    type: string
+                    description: Mensaje descriptivo del error.
+                  path:
+                    type: string
+                    description: URL path de la petición que originó el error.
+                  type:
+                    type: string
+                    description: URL que apunta a una descripción de los códigos de error.
+                  operationId:
+                    type: string
+                    description: Id de negocio de la operación realizada.
+                  errors:
+                    type: array
+                    description: Listado de suberrores usado para dar información más detallada, como en el caso de errores de validación.
+        '400':
+          description: Bad Request.
+          headers:
+            X-Correlation-Id:
+              description: Cabecera 'X-Correlation-Id'
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  status:
+                    type: string
+                    description: Especifica el status code HTTP al que se traducirá la excepción.
+                  message:
+                    type: string
+                    description: Mensaje descriptivo del error.
+                  path:
+                    type: string
+                    description: URL path de la petición que originó el error.
+                  type:
+                    type: string
+                    description: URL que apunta a una descripción de los códigos de error.
+                  operationId:
+                    type: string
+                    description: Id de negocio de la operación realizada.
+                  errors:
+                    type: array
+                    description: Listado de suberrores usado para dar información más detallada, como en el caso de errores de validación.
+              example:
+                error:
+                  status: '400'
+                  message: Bad Request
+                  path: /datos-usuario
+                  type: https://docs.example.es/x/A1D8Aw
+                  operationId: '10004'
+                  errors:
+                    - code: '101'
+                      message: Invalid format
+                      location: desde
