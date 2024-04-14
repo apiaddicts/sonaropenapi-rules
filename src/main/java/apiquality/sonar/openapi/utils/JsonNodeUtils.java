@@ -3,11 +3,11 @@ package apiquality.sonar.openapi.utils;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.impl.MissingNode;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
@@ -34,6 +34,11 @@ public class JsonNodeUtils {
     public static final String TYPE_ANY = "*";
 
     public static JsonNode resolve(JsonNode original) {
+        if (original == null || original.isMissing()) {
+            System.out.println("Attempted to resolve a missing or null JsonNode.");
+            return MissingNode.MISSING;
+        }
+
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
@@ -43,45 +48,63 @@ public class JsonNodeUtils {
                 return resolveExternalRef(ref);
             }
         }
+
         JsonNode allOf = original.get("allOf");
         if (allOf != null && !allOf.isMissing()) {
             Collection<JsonNode> refs = allOf.elements();
-            if (refs.size() == 1) {
-                JsonNode refNode = refs.iterator().next();
-                if (refNode.isRef()) {
-                    String ref = refNode.get("$ref").getTokenValue();
-                    if (ref.startsWith("#")) {
-                        return refNode.resolve();
-                    } else {
-                        return resolveExternalRef(ref);
-                    }
-                }
-            }
+            return refs.stream()
+                .map(JsonNodeUtils::resolve)
+                .filter(node -> node != null && !node.isMissing())
+                .findFirst()
+                .orElse(MissingNode.MISSING);
         }
         return original;
     }
 
     private static JsonNode resolveExternalRef(String ref) {
+        HttpURLConnection conn = null;
         try {
             URL url = new URL(ref);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             conn.connect();
     
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            int responseCode = conn.getResponseCode();
+            System.out.println("HTTP response code: " + responseCode); // Log the response code
+    
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (InputStream is = conn.getInputStream()) {
                     String jsonResponse = readInputStreamToString(is);
-                    System.out.println("External JSON Response: " + jsonResponse);  // Muestra el contenido del JSON obtenido
-                    return parseJsonFromString(jsonResponse);
+                    System.out.println("External JSON Response: " + jsonResponse); // Log the response
+                    JsonNode parsedNode = parseJsonFromString(jsonResponse);
+                    if (parsedNode == null) {
+                        System.out.println("Failed to parse JSON response");
+                    }
+                    return parsedNode;
                 }
             } else {
-                System.out.println("Failed to fetch external JSON: HTTP error code " + conn.getResponseCode());
+                handleErrorResponse(conn);
+                return MissingNode.MISSING;
             }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error while fetching external JSON: " + e.getMessage());
+            return MissingNode.MISSING;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
-        return null; // o algún nodo de error
+    }
+
+    private static void handleErrorResponse(HttpURLConnection conn) throws IOException {
+        int responseCode = conn.getResponseCode();
+        InputStream errorStream = conn.getErrorStream();
+        String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
+        System.out.println("Failed to fetch external JSON: HTTP error code " + responseCode);
+        System.out.println("Error response: " + errorResponse);
+        conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
     }
 
     private static String readInputStreamToString(InputStream inputStream) throws IOException {
@@ -96,19 +119,25 @@ public class JsonNodeUtils {
     }
 
     private static JsonNode parseJsonFromString(String json) {
-        // Implementa tu lógica de deserialización aquí
-        // Esta parte depende de cómo deserializas una cadena JSON a JsonNode en tu infraestructura actual
-        return null;  // Este es solo un placeholder.
+        // Implement your JSON deserialization logic here
+        return null;  // This is just a placeholder.
     }
-    
-
 
     public static JsonNode getType(JsonNode schema) {
         return schema.get(TYPE);
     }
 
     public static JsonNode getProperties(JsonNode schema) {
-        return schema.get(PROPERTIES);
+        if (schema == null || schema.isMissing()) {
+            System.out.println("Schema node is null or missing.");
+            return MissingNode.MISSING;
+        }
+        JsonNode propertiesNode = schema.get(PROPERTIES);
+        if (propertiesNode == null || propertiesNode.isMissing()) {
+            System.out.println("No properties found in the schema node.");
+            return MissingNode.MISSING;
+        }
+        return propertiesNode;
     }
 
     public static JsonNode getRequired(JsonNode schema) {

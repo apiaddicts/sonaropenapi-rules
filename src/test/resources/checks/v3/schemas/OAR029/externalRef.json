@@ -55,7 +55,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/f07117aa-2ecf-4234-9041-622ddee20f3a/user.yaml#/datosUsuario"
+                    "$ref": "https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/e2e600f2-fd07-4a5b-9d78-21a4c2c36059/error-message.yaml#/errorMessage"
                   }
                 }
               }
