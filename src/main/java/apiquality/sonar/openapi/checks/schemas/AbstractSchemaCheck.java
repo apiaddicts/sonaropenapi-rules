@@ -29,28 +29,24 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected Map<String, JsonNode> getAllProperties(JsonNode schemaNode) {
-        if (schemaNode == null || schemaNode.isMissing()) {
-            System.out.println("Schema node is null or missing.");
-            return Collections.emptyMap();  
-        }
-    
         final Map<String, JsonNode> properties = new HashMap<>();
-    
+
         JsonNode propertiesNode = getProperties(schemaNode);
         if (!propertiesNode.isMissing()) {
-            Map<String, JsonNode> baseProperties = propertiesNode.propertyMap();
+            Map<String, JsonNode> baseProperties = getProperties(schemaNode).propertyMap();
             properties.putAll(baseProperties);
         }
-    
+
         JsonNode allOfNode = schemaNode.get("allOf");
         if (!allOfNode.isMissing()) {
             allOfNode.elements().stream()
                     .map(JsonNodeUtils::resolve)
                     .forEach(node -> properties.putAll(getAllProperties(node)));
         }
-    
+
         return properties;
     }
+
 
     protected Optional<JsonNode> validateProperty(Map<String, JsonNode> properties, String propertyName, String propertyType, JsonNode parentNode) {
         if (!properties.containsKey(propertyName)) {

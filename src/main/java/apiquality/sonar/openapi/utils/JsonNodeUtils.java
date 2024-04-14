@@ -71,17 +71,11 @@ public class JsonNodeUtils {
             conn.connect();
     
             int responseCode = conn.getResponseCode();
-            System.out.println("HTTP response code: " + responseCode); // Log the response code
-    
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (InputStream is = conn.getInputStream()) {
                     String jsonResponse = readInputStreamToString(is);
-                    System.out.println("External JSON Response: " + jsonResponse); // Log the response
-                    JsonNode parsedNode = parseJsonFromString(jsonResponse);
-                    if (parsedNode == null) {
-                        System.out.println("Failed to parse JSON response");
-                    }
-                    return parsedNode;
+                    System.out.println("External JSON Response: " + jsonResponse);
+                    return MissingNode.MISSING;  // Assumes jsonResponse is verified but not parsed.
                 }
             } else {
                 handleErrorResponse(conn);
@@ -118,26 +112,11 @@ public class JsonNodeUtils {
         return result.toString();
     }
 
-    private static JsonNode parseJsonFromString(String json) {
-        // Implement your JSON deserialization logic here
-        return null;  // This is just a placeholder.
-    }
-
     public static JsonNode getType(JsonNode schema) {
         return schema.get(TYPE);
     }
-
     public static JsonNode getProperties(JsonNode schema) {
-        if (schema == null || schema.isMissing()) {
-            System.out.println("Schema node is null or missing.");
-            return MissingNode.MISSING;
-        }
-        JsonNode propertiesNode = schema.get(PROPERTIES);
-        if (propertiesNode == null || propertiesNode.isMissing()) {
-            System.out.println("No properties found in the schema node.");
-            return MissingNode.MISSING;
-        }
-        return propertiesNode;
+        return schema.get(PROPERTIES);
     }
 
     public static JsonNode getRequired(JsonNode schema) {
@@ -176,4 +155,5 @@ public class JsonNodeUtils {
         AstNodeType type = node.getType();
         return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
     }
+
 }
