@@ -34,32 +34,29 @@ public class JsonNodeUtils {
     public static final String TYPE_ANY = "*";
 
     public static JsonNode resolve(JsonNode original) {
-        if (original == null || original.isMissing()) {
-            System.out.println("Attempted to resolve a missing or null JsonNode.");
-            return MissingNode.MISSING;
-        }
-
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
                 return original.resolve();
-            } else {
-                // Simply return the original node when encountering an external reference
-                return original;
             }
+            return original;
         }
-
         JsonNode allOf = original.get("allOf");
-        if (allOf != null && !allOf.isMissing()) {
+        if (!allOf.isMissing()) {
             Collection<JsonNode> refs = allOf.elements();
-            return refs.stream()
-                .map(JsonNodeUtils::resolve)
-                .filter(node -> node != null && !node.isMissing())
-                .findFirst()
-                .orElse(MissingNode.MISSING);
+            if (refs.size() == 1) {
+                JsonNode refNode = refs.iterator().next();
+                if (refNode.isRef()) {
+                    String ref = refNode.get("$ref").getTokenValue();
+                    if (ref.startsWith("#")) {
+                        return refNode.resolve();
+                    }
+                }
+            }
         }
         return original;
     }
+
 
     // Retained for possible future use or other contexts
     private static JsonNode resolveExternalRef(String ref) {
