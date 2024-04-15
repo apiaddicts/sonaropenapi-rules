@@ -47,7 +47,6 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         return properties;
     }
 
-
     protected Optional<JsonNode> validateProperty(Map<String, JsonNode> properties, String propertyName, String propertyType, JsonNode parentNode) {
         if (!properties.containsKey(propertyName)) {
             addIssue(key, translate("generic.property-missing", propertyName), parentNode);
@@ -190,3 +189,4 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         }
     }
 }
+
