@@ -43,7 +43,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                     .map(JsonNodeUtils::resolve)
                     .forEach(node -> properties.putAll(getAllProperties(node)));
         }
-//hola
+//hola si
         return properties;
     }
 
