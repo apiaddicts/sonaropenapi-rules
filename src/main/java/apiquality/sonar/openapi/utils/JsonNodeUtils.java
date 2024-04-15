@@ -44,8 +44,8 @@ public class JsonNodeUtils {
             if (ref.startsWith("#")) {
                 return original.resolve();
             } else {
-                // Gestión de referencias externas
-                return resolveExternalRef(ref);
+                // Simply return the original node when encountering an external reference
+                return original;
             }
         }
 
@@ -61,6 +61,7 @@ public class JsonNodeUtils {
         return original;
     }
 
+    // Retained for possible future use or other contexts
     private static JsonNode resolveExternalRef(String ref) {
         HttpURLConnection conn = null;
         try {
@@ -115,6 +116,7 @@ public class JsonNodeUtils {
     public static JsonNode getType(JsonNode schema) {
         return schema.get(TYPE);
     }
+
     public static JsonNode getProperties(JsonNode schema) {
         return schema.get(PROPERTIES);
     }
@@ -155,5 +157,4 @@ public class JsonNodeUtils {
         AstNodeType type = node.getType();
         return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
     }
-
 }
