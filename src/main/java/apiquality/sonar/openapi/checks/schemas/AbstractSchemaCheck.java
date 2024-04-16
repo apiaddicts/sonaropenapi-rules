@@ -31,20 +31,31 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
     protected Map<String, JsonNode> getAllProperties(JsonNode schemaNode) {
         final Map<String, JsonNode> properties = new HashMap<>();
-
+    
         JsonNode propertiesNode = getProperties(schemaNode);
         if (!propertiesNode.isMissing()) {
             Map<String, JsonNode> baseProperties = getProperties(schemaNode).propertyMap();
             properties.putAll(baseProperties);
         }
-
+    
         JsonNode allOfNode = schemaNode.get("allOf");
         if (!allOfNode.isMissing()) {
-            allOfNode.elements().stream()
-                    .map(JsonNodeUtils::resolve)
-                    .forEach(node -> properties.putAll(getAllProperties(node)));
+            for (JsonNode element : allOfNode.elements()) {
+                boolean externalRefManagement = false;
+                if (isExternalRef(element) && externalRefNode == null) {
+                    externalRefNode = element;
+                    externalRefManagement = true;
+                }
+    
+                JsonNode resolvedNode = JsonNodeUtils.resolve(element);
+                properties.putAll(getAllProperties(resolvedNode));
+    
+                if (externalRefManagement) {
+                    externalRefNode = null;  
+                }
+            }
         }
-
+    
         return properties;
     }
     
