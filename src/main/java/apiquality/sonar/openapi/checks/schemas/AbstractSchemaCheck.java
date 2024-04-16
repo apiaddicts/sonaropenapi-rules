@@ -23,6 +23,7 @@ import static apiquality.sonar.openapi.utils.JsonNodeUtils.*;
 public abstract class AbstractSchemaCheck extends BaseCheck {
 
     protected String key;
+    protected JsonNode externalRefNode= null;
 
     public AbstractSchemaCheck(String key) {
         this.key = key;
@@ -43,9 +44,10 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                     .map(JsonNodeUtils::resolve)
                     .forEach(node -> properties.putAll(getAllProperties(node)));
         }
-//hola si
+
         return properties;
     }
+    
 
     protected Optional<JsonNode> validateProperty(Map<String, JsonNode> properties, String propertyName, String propertyType, JsonNode parentNode) {
         if (!properties.containsKey(propertyName)) {
@@ -98,23 +100,32 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         JsonNode type = getType(prop);
         if (isType(type, TYPE_ARRAY)) {
             JsonNode itemsSchema = prop.get("items");
+            boolean externalRefManagment= false;
+            if (isExternalRef(itemsSchema) && externalRefNode== null){
+                externalRefNode= itemsSchema;
+                externalRefManagment= true;
+            }
             itemsSchema = resolve(itemsSchema);
             String propertyName = prop.key().getTokenValue();
             if (itemsSchema.isMissing()) {
-                addIssue(key, translate("generic.property-items-missing", propertyName, iType), prop.key());
+                addIssue(key, translate("generic.property-items-missing", propertyName, iType), getTrueNode(prop.key()) );//estudiar ? y : 
             } else {
                 JsonNode itemsType = getType(itemsSchema);
                 if (!isType(itemsType, iType)) {
                     JsonNode errorNode = (itemsType.isMissing() ? itemsSchema : itemsType.key());
-                    addIssue(key, translate("generic.property-items-wrong-type", propertyName, iType), errorNode);
+                    addIssue(key, translate("generic.property-items-wrong-type", propertyName, iType), getTrueNode(errorNode));
+                    if(externalRefManagment) externalRefNode=null;
                     return Optional.empty();
                 } else {
+                    if(externalRefManagment) externalRefNode=null;
                     return Optional.of(itemsSchema);
                 }
             }
+            if(externalRefManagment) externalRefNode=null;
         }
         return Optional.empty();
     }
+    
 
     protected void validateEnumValues(JsonNode property, Set<String> expected) {
         Set<String> found = getEnumValues(property);
@@ -187,6 +198,10 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         } else {
             validateItems(propertyNode, itemsType);
         }
+    }
+
+    protected JsonNode getTrueNode (JsonNode node){
+        return externalRefNode== null ? node : externalRefNode;
     }
 }
 
