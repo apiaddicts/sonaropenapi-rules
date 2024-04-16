@@ -59,15 +59,22 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected Optional<JsonNode> validateProperty(JsonNode properties, String propertyName, String propertyType) {
+        boolean externalRefManagment= false;
+            if (isExternalRef(properties) && externalRefNode== null){
+                externalRefNode= properties;
+                externalRefManagment= true;
+            }
         properties = resolve(properties);
 
         if (properties.propertyNames().isEmpty()) {
-            addIssue(key, translate("generic.property-missing", propertyName), properties);
+            addIssue(key, translate("generic.property-missing", propertyName), getTrueNode(properties));
+            if(externalRefManagment) externalRefNode=null;
             return Optional.empty();
         }
 
         JsonNode prop = properties.get(propertyName);
-        return validateProperty(prop, propertyName, propertyType, properties.key());
+        if(externalRefManagment) externalRefNode=null;
+        return validateProperty(prop, propertyName, propertyType, getTrueNode(properties.key()));
     }
 
     protected Optional<JsonNode> validateProperty(JsonNode prop, String propertyName, String propertyType, JsonNode parentNode) {
@@ -75,13 +82,20 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
             addIssue(key, translate("generic.property-missing", propertyName), parentNode);
             return Optional.empty();
         } else {
+            boolean externalRefManagment= false;
+            if (isExternalRef(prop) && externalRefNode== null){
+                externalRefNode= prop;
+                externalRefManagment= true;
+            }
             prop = resolve(prop);
             JsonNode type = getType(prop);
             if (!isType(type, propertyType)) {
                 JsonNode errorNode = (type.isMissing() ? prop : type.key());
-                addIssue(key, translate("generic.property-wrong-type", propertyName, propertyType), errorNode);
+                addIssue(key, translate("generic.property-wrong-type", propertyName, propertyType), getTrueNode(errorNode));
+                if(externalRefManagment) externalRefNode=null;
                 return Optional.empty();
             }
+            if(externalRefManagment) externalRefNode=null;
         }
         return Optional.of(prop);
     }
@@ -96,11 +110,15 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected Optional<JsonNode> validateItems(JsonNode prop, String iType) {
+        boolean externalRefManagment= false;
+            if (isExternalRef(prop) && externalRefNode== null){
+                externalRefNode= prop;
+                externalRefManagment= true;
+            }
         prop = resolve(prop);
         JsonNode type = getType(prop);
         if (isType(type, TYPE_ARRAY)) {
             JsonNode itemsSchema = prop.get("items");
-            boolean externalRefManagment= false;
             if (isExternalRef(itemsSchema) && externalRefNode== null){
                 externalRefNode= itemsSchema;
                 externalRefManagment= true;
@@ -123,6 +141,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
             }
             if(externalRefManagment) externalRefNode=null;
         }
+        if(externalRefManagment) externalRefNode=null;
         return Optional.empty();
     }
     

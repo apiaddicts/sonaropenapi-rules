@@ -44,7 +44,6 @@ public class JsonNodeUtils {
                 return original.resolve();  
             } else {
                 System.out.println("External reference: " + ref);
-                retriveExternalRefContent(ref);
                 return resolveExternalRef(ref);
             }
         }
