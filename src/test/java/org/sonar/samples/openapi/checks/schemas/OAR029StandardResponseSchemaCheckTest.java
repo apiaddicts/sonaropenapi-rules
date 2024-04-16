@@ -45,6 +45,11 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
         verifyV3("externalRef");
     }
 
+    @Test
+    public void verifyInV3ExternalRefsNoLinks() {
+        verifyV3("externalRefNoLinks");
+    }
+
     
     @Override
     public void verifyParameters() {

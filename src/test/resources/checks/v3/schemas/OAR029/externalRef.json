@@ -55,7 +55,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/e2e600f2-fd07-4a5b-9d78-21a4c2c36059/error-message.yaml#/errorMessage"
+                    "$ref": "https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage"
                   }
                 }
               }
@@ -74,7 +74,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/e2e600f2-fd07-4a5b-9d78-21a4c2c36059/error-message.yaml#/errorMessage"
+                  "$ref": "https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage"
                 },
                 "example": {
                   "error": {

@@ -3,11 +3,7 @@ package apiquality.sonar.openapi.utils;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.impl.MissingNode;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
@@ -15,12 +11,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
+import java.util.stream.Collectors;
 import com.sonar.sslr.api.AstNodeType;
 
 public class JsonNodeUtils {
 
     private JsonNodeUtils() {
-        // Intentional blank
+        // Utility class
     }
 
     public static final String PROPERTIES = "properties";
@@ -37,29 +35,19 @@ public class JsonNodeUtils {
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                return original.resolve();
-            }
-            return original;
-        }
-        JsonNode allOf = original.get("allOf");
-        if (!allOf.isMissing()) {
-            Collection<JsonNode> refs = allOf.elements();
-            if (refs.size() == 1) {
-                JsonNode refNode = refs.iterator().next();
-                if (refNode.isRef()) {
-                    String ref = refNode.get("$ref").getTokenValue();
-                    if (ref.startsWith("#")) {
-                        return refNode.resolve();
-                    }
-                }
+                System.out.println("Internal reference: " + ref);
+                return original.resolve();  // Resolve internal references normally
+            } else {
+                System.out.println("External reference: " + ref);
+                resolveExternalRef(ref);
             }
         }
         return original;
-    }
+    }       
 
+    private static String lastFetchedContent = "";
 
-    // Retained for possible future use or other contexts
-    private static JsonNode resolveExternalRef(String ref) {
+    private static String resolveExternalRef(String ref) {
         HttpURLConnection conn = null;
         try {
             URL url = new URL(ref);
@@ -71,34 +59,25 @@ public class JsonNodeUtils {
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (InputStream is = conn.getInputStream()) {
-                    String jsonResponse = readInputStreamToString(is);
-                    System.out.println("External JSON Response: " + jsonResponse);
-                    return MissingNode.MISSING;  // Assumes jsonResponse is verified but not parsed.
+                    String httpResponse = readInputStreamToString(is);
+                    lastFetchedContent = httpResponse;
+                    System.out.println("External JSON Response: " + httpResponse);
+                    return httpResponse;
                 }
             } else {
                 handleErrorResponse(conn);
-                return MissingNode.MISSING;
+                return "Error: Response code " + responseCode;
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error while fetching external JSON: " + e.getMessage());
-            return MissingNode.MISSING;
+            return "Error: " + e.getMessage();
         } finally {
             if (conn != null) {
                 conn.disconnect();
             }
         }
     }
-
-    private static void handleErrorResponse(HttpURLConnection conn) throws IOException {
-        int responseCode = conn.getResponseCode();
-        InputStream errorStream = conn.getErrorStream();
-        String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
-        System.out.println("Failed to fetch external JSON: HTTP error code " + responseCode);
-        System.out.println("Error response: " + errorResponse);
-        conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
-    }
-
+    
     private static String readInputStreamToString(InputStream inputStream) throws IOException {
         StringBuilder result = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -110,12 +89,41 @@ public class JsonNodeUtils {
         return result.toString();
     }
 
+    private static void handleErrorResponse(HttpURLConnection conn) throws IOException {
+        int responseCode = conn.getResponseCode();
+        InputStream errorStream = conn.getErrorStream();
+        String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
+        System.out.println("Failed to fetch external JSON: HTTP error code " + responseCode);
+        System.out.println("Error response: " + errorResponse);
+        conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
+    }
+
+    // Método para acceder al contenido de la última respuesta
+    public static String getLastFetchedContent() {
+        return lastFetchedContent;
+    }
+
     public static JsonNode getType(JsonNode schema) {
         return schema.get(TYPE);
     }
 
     public static JsonNode getProperties(JsonNode schema) {
         return schema.get(PROPERTIES);
+    }
+
+    private static JsonNode parseJsonToNode(String json) {
+        // Implementación del análisis de JSON a JsonNode, ajusta según la librería que uses
+        // Ejemplo con Jackson (debes tener Jackson en tu proyecto):
+        /*
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readTree(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+        */
+        return null; // Cambia esto con tu lógica de conversión real
     }
 
     public static JsonNode getRequired(JsonNode schema) {
