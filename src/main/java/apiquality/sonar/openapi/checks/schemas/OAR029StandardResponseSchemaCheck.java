@@ -69,7 +69,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             dataProperty = (responseSchema.has("dataProperty")) ? responseSchema.getString("dataProperty") : null;
             rootProperty = (responseSchema.has("rootProperty")) ? responseSchema.getString("rootProperty") : null;
         } catch (JSONException err) {
-			addIssue(KEY, "Error parsing Standard Response Schemas", root.key());
+			addIssue(KEY, "Error parsing Standard Response Schemas", getTrueNode(root.key()));
         }
     }
 
@@ -121,6 +121,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         if (code == 204) return;
 
         JsonNode schemaNode = responseNode.value().get("schema");
+        //JsonNode refNode = schemaNode.get("$ref");
         if (schemaNode.isMissing()) return;
         schemaNode = resolve(schemaNode);
         Map<String, JsonNode> properties = getAllProperties(schemaNode);
@@ -133,7 +134,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateProperty(properties, rootProperty, "object", schemaNode.key()).ifPresent(node -> {
                 Map<String, JsonNode> allProp = getAllProperties(node);
                 if (allProp.isEmpty()) {
-                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), node.key());
+                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), getTrueNode(node.key()));
                 }
             });
 
@@ -160,7 +161,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
                     validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
                         Map<String, JsonNode> allProp = getAllProperties(node);
                         if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
-                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), node.key());
+                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), getTrueNode(node.key()));
                         }
                     });
                 } else {
