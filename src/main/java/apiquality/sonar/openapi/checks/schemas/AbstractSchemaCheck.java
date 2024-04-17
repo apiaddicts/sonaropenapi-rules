@@ -231,7 +231,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected JsonNode getTrueNode (JsonNode node){
-        return externalRefNode== null ? node : externalRefNode;
+        return externalRefNode== null ? node : externalRefNode.key();
     }
 }
 
