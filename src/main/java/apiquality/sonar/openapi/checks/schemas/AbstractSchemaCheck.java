@@ -5,7 +5,6 @@ import com.sonar.sslr.api.AstNode;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import apiquality.sonar.openapi.checks.BaseCheck;
-import apiquality.sonar.openapi.utils.JsonNodeUtils;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.ArrayList;
@@ -47,12 +46,10 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                     externalRefManagement = true;
                 }
     
-                JsonNode resolvedNode = JsonNodeUtils.resolve(element);
-                properties.putAll(getAllProperties(resolvedNode));
+                element = resolve(element);
+                properties.putAll(getAllProperties(element));
     
-                if (externalRefManagement) {
-                    externalRefNode = null;  
-                }
+                if (externalRefManagement) externalRefNode = null;  
             }
         }
     
@@ -62,7 +59,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
     protected Optional<JsonNode> validateProperty(Map<String, JsonNode> properties, String propertyName, String propertyType, JsonNode parentNode) {
         if (!properties.containsKey(propertyName)) {
-            addIssue(key, translate("generic.property-missing", propertyName), parentNode);
+            addIssue(key, translate("generic.property-missing", propertyName), getTrueNode(parentNode));
             return Optional.empty();
         }
         JsonNode prop = properties.get(propertyName);
@@ -71,10 +68,10 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
     protected Optional<JsonNode> validateProperty(JsonNode properties, String propertyName, String propertyType) {
         boolean externalRefManagment= false;
-            if (isExternalRef(properties) && externalRefNode== null){
-                externalRefNode= properties;
-                externalRefManagment= true;
-            }
+        if (isExternalRef(properties) && externalRefNode== null){
+            externalRefNode= properties;
+            externalRefManagment= true;
+        }
         properties = resolve(properties);
 
         if (properties.propertyNames().isEmpty()) {
@@ -90,7 +87,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
     protected Optional<JsonNode> validateProperty(JsonNode prop, String propertyName, String propertyType, JsonNode parentNode) {
         if (prop.isMissing()) {
-            addIssue(key, translate("generic.property-missing", propertyName), parentNode);
+            addIssue(key, translate("generic.property-missing", propertyName), getTrueNode(parentNode));
             return Optional.empty();
         } else {
             boolean externalRefManagment= false;
@@ -116,15 +113,15 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         Set<String> requiredProperties = getRequiredValues(required);
         if (!requiredProperties.containsAll(requiredValues)) {
             JsonNode errorNode = (required.isMissing() ? schema : required.key());
-            addIssue(key, translate("generic.required-properties", requiredStr), errorNode);
+            addIssue(key, translate("generic.required-properties", requiredStr), getTrueNode(errorNode));
         }
     }
 
     protected Optional<JsonNode> validateItems(JsonNode prop, String iType) {
         boolean externalRefManagment= false;
-            if (isExternalRef(prop) && externalRefNode== null){
-                externalRefNode= prop;
-                externalRefManagment= true;
+        if (isExternalRef(prop) && externalRefNode== null){
+            externalRefNode= prop;
+            externalRefManagment= true;
             }
         prop = resolve(prop);
         JsonNode type = getType(prop);
@@ -162,7 +159,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         if (!expected.equals(found)) {
             String propertyName = property.key().getTokenValue();
             String values = expected.stream().sorted().collect(Collectors.joining(", "));
-            addIssue(key, translate("generic.enum-values", propertyName, values), property.key());
+            addIssue(key, translate("generic.enum-values", propertyName, values), getTrueNode(property.key()));
         }
     }
 
@@ -231,7 +228,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected JsonNode getTrueNode (JsonNode node){
-        return externalRefNode== null ? node : externalRefNode.key();
+        return externalRefNode== null ? node : externalRefNode;
     }
 }
 

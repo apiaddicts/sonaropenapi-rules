@@ -40,10 +40,8 @@ public class JsonNodeUtils {
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                System.out.println("Internal reference: " + ref);
                 return original.resolve();  
             } else {
-                System.out.println("External reference: " + ref);
                 return resolveExternalRef(ref);
             }
         }
@@ -65,21 +63,32 @@ public class JsonNodeUtils {
 
     // TODO sacar el charset de la respuesta que me da la url (contentype logs)
     // TODO Gestion de errores si la url no funciona
-    private static JsonNode resolveExternalRef(String url){
-
-        String content= retriveExternalRefContent(url);
-
+    // TODO errorMessage sustituir por split de almohadilla, despues un split de barras, (si el split de almohadilla nos haya dado un valor)(bucle for, iterar el array y luego rootnode = valor del array) 
+    private static JsonNode resolveExternalRef(String url) {
+        String content = retriveExternalRefContent(url);    
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
-
-        YamlParser parser= OpenApiParser.createGeneric(configuration);
-                
+        YamlParser parser = OpenApiParser.createGeneric(configuration);
+    
         JsonNode rootNode = parser.parse(content);
-
+    
+        if (url.contains("#")) {
+            String[] parts = url.split("#");
+            if (parts.length > 1) {
+                String path = parts[1];
+                String[] keys = path.split("/");
+                for (String key : keys) {
+                    if (!key.isEmpty()) {
+                        rootNode = rootNode.get(key);
+                    }
+                }
+            }
+        }
+    
         return rootNode;
-
     }
 
     private static String retriveExternalRefContent(String ref) {
+
         HttpURLConnection conn = null;
         try {
             URL url = new URL(ref);
@@ -93,7 +102,6 @@ public class JsonNodeUtils {
                 try (InputStream is = conn.getInputStream()) {
                     String httpResponse = readInputStreamToString(is);
                     lastFetchedContent = httpResponse;
-                    System.out.println("External JSON Response: " + httpResponse);
                     return httpResponse;
                 }
             } else {
@@ -127,8 +135,6 @@ public class JsonNodeUtils {
         int responseCode = conn.getResponseCode();
         InputStream errorStream = conn.getErrorStream();
         String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
-        System.out.println("Failed to fetch external JSON: HTTP error code " + responseCode);
-        System.out.println("Error response: " + errorResponse);
         conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
     }
 
@@ -143,21 +149,6 @@ public class JsonNodeUtils {
 
     public static JsonNode getProperties(JsonNode schema) {
         return schema.get(PROPERTIES);
-    }
-
-    private static JsonNode parseJsonToNode(String json) {
-        // Implementación del análisis de JSON a JsonNode, ajusta según la librería que uses
-        // Ejemplo con Jackson (debes tener Jackson en tu proyecto):
-        /*
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readTree(json);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
-        }
-        */
-        return null; // Cambia esto con tu lógica de conversión real
     }
 
     public static JsonNode getRequired(JsonNode schema) {
