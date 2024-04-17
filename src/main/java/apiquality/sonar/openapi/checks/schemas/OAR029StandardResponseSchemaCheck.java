@@ -35,7 +35,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
     )
     private String responseSchemaStr = RESPONSE_SCHEMA;
     private JSONObject responseSchema;
-
+//hola
     private JSONArray requiredOnSuccess = null;
     private JSONArray requiredOnError = null;
     private JSONArray requiredAlways = null;
