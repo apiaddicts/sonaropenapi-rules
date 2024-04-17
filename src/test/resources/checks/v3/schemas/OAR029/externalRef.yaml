@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.1  
 info:
   title: Sample-API_efc2b9f76813_V
   description: API de ejemplo para pruebas
@@ -36,11 +36,9 @@ paths:
                 type: string
           content:
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: >-
-                    https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
+              schema: 
+                $ref: >-  # Noncompliant {{OAR029: 'data' property is missing}} {{OAR029: 'status' must be of type object}}
+                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
         '400':
           description: Bad Request.
           headers:
@@ -51,10 +49,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: >-
+                $ref: >-  # Noncompliant {{OAR029: 'status' must be of type object}}
                   https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
               example:
-                error:
+                error: 
                   status: '400'
                   message: Bad Request
                   path: /datos-usuario

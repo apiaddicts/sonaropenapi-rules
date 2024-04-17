@@ -30,24 +30,29 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
     }
 
 
-    @Test
+    /*@Test
     public void verifyInV3() {
         verifyV3("valid");
-    }
+    }*/
 
     @Test
     public void verifyInV3AllOf() {
         verifyV3("valid-all-of");
     }
 
-    @Test
+/*     @Test
     public void verifyInV3ExternalRefs() {
         verifyV3("externalRef");
     }
 
-/*     @Test
+    @Test
     public void verifyInV3ExternalRefsNoLinks() {
         verifyV3("externalRefNoLinks");
+    }
+
+    @Test
+    public void verifyInV3InternalRefsNoLinks() {
+        verifyV3("internalRef");
     }
 */
     

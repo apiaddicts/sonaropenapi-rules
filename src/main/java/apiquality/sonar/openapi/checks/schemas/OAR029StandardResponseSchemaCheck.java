@@ -35,7 +35,6 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
     )
     private String responseSchemaStr = RESPONSE_SCHEMA;
     private JSONObject responseSchema;
-//hola
     private JSONArray requiredOnSuccess = null;
     private JSONArray requiredOnError = null;
     private JSONArray requiredAlways = null;
@@ -94,19 +93,27 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
                 .collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
             String statusCode = responseNode.key().getTokenValue();
+            boolean externalRefManagement = false;
+                if (isExternalRef(responseNode) && externalRefNode == null) {
+                    externalRefNode = responseNode;
+                    externalRefManagement = true;
+                }
             responseNode = resolve(responseNode);
 
             if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
                 visitSchemaNode(responseNode, statusCode);
             } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
                 JsonNode content = responseNode.at("/content");
-                if (content.isMissing()) continue;
-
-                content.propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                if (content.isMissing()) {
+                    if (externalRefManagement) externalRefNode = null; 
+                    continue;
+                }
+                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { //estudiar funcion lamda
                     if (!mediaType.toLowerCase().contains("json")) return;
                     visitSchemaNode(mediaTypeNode, statusCode);
                 });
             }
+            if (externalRefManagement) externalRefNode = null; 
         }
     }
 
@@ -123,6 +130,11 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         JsonNode schemaNode = responseNode.value().get("schema");
         //JsonNode refNode = schemaNode.get("$ref");
         if (schemaNode.isMissing()) return;
+        boolean externalRefManagement = false;
+        if (isExternalRef(schemaNode) && externalRefNode == null) {
+            externalRefNode = schemaNode;
+            externalRefManagement = true;
+        }
         schemaNode = resolve(schemaNode);
         Map<String, JsonNode> properties = getAllProperties(schemaNode);
 
@@ -148,6 +160,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateRootProperties(requiredOnError, properties, schemaNode);
         }
         validateRootProperties(requiredAlways, properties, schemaNode);
+        if (externalRefManagement) externalRefNode = null; 
     }
 
     private void validateRootProperties(JSONArray requiredPropertiesJSONArray, Map<String, JsonNode> properties, JsonNode parentNode) {
