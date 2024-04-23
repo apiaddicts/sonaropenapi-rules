@@ -100,4 +100,6 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
     private boolean isPascalCase(String name) {
         return name.matches(PASCAL_REGEX);
     }
+
+    
 }

@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: Sample-API_efc2b9f76813_V
+  contact:
+    name: Nombre del Contacto.
+    email: contact@mail.com
+  version: 1.0.12 
+servers:
+  - url: https://api.example.es/api-sample/v1
+paths:
+  /datos-usuarios:
+    get:
+      summary: Listado de usuarios
+      parameters:
+        - name: desde
+          in: query
+          schema:
+            type: string
+            format: date
+          required: false
+        - name: hasta
+          in: query
+          schema:
+            type: string
+            format: date
+          required: false
+      responses:
+        '200':
+          description: OK.
+          headers:
+            X-Correlation-Id:
+              description: Cabecera 'X-Correlation-Id'
+              schema:
+                type: string
+          content:
+            application/json:
+              schema: # Noncompliant {{OAR068: RequestBody and Responses schema property names must be compliant with the PascalCase naming convention}} 
+                $ref: >-  
+                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/bc8a6999-da3f-4709-abdc-aac6dedff91c/user.yaml#/datosUsuario
+        '400':
+          description: Bad Request.
+          headers:
+            X-Correlation-Id:
+              description: Cabecera 'X-Correlation-Id'
+              schema:
+                type: string
+          content:
+            application/json:
+              schema: # Noncompliant {{OAR068: RequestBody and Responses schema property names must be compliant with the PascalCase naming convention}}
+                $ref: >- 
+                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
+              example:  
+                error:
+                  status: '400'
+                  message: Bad Request
+                  path: /datos-usuario
+                  type: https://docs.example.es/x/A1D8Aw
+                  operationId: '10004'
+                  errors:
+                    - code: '101'
+                      message: Invalid format
+                      location: desde

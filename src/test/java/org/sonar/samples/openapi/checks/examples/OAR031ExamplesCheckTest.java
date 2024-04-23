@@ -20,22 +20,27 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
 
     @Test
     public void verifyInV2() {
-        verifyV2("valid");
+        verifyV2("valid.yaml");
     }
 
     @Test
     public void verifyInV2WithoutExamples() {
-        verifyV2("without-examples");
+        verifyV2("without-examples.yaml");
     }
 
     @Test
     public void verifyInV3() {
-        verifyV3("valid");
+        verifyV3("valid.yaml");
     }
 
     @Test
     public void verifyInV3WithoutExamples() {
-        verifyV3("without-examples");
+        verifyV3("without-examples.yaml");
+    }
+
+    @Test
+    public void verifyvalidV3ExternalRefs() {
+        verifyV3("externalref.yaml");
     }
 
     @Override

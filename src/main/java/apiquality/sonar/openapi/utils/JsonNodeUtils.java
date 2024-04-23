@@ -42,6 +42,7 @@ public class JsonNodeUtils {
             if (ref.startsWith("#")) {
                 return original.resolve();  
             } else {
+
                 return resolveExternalRef(ref);
             }
         }
@@ -53,8 +54,10 @@ public class JsonNodeUtils {
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
+                System.out.println("REFERENCIA INTERNA");
                 return false;  // Resolve internal references normally
             } else {
+                System.out.println("REFERENCIA EXTERNA");
                 return true;
             }
         }
@@ -66,6 +69,7 @@ public class JsonNodeUtils {
     // TODO errorMessage sustituir por split de almohadilla, despues un split de barras, (si el split de almohadilla nos haya dado un valor)(bucle for, iterar el array y luego rootnode = valor del array) 
     private static JsonNode resolveExternalRef(String url) {
         String content = retriveExternalRefContent(url);    
+        
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
         YamlParser parser = OpenApiParser.createGeneric(configuration);
     
