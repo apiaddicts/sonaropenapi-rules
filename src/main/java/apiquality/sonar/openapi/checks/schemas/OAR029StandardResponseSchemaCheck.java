@@ -128,7 +128,6 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         if (code == 204) return;
 
         JsonNode schemaNode = responseNode.value().get("schema");
-        //JsonNode refNode = schemaNode.get("$ref");
         if (schemaNode.isMissing()) return;
         boolean externalRefManagement = false;
         if (isExternalRef(schemaNode) && externalRefNode == null) {
@@ -151,6 +150,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             });
 
             schemaNode = properties.get(rootProperty);
+            System.out.println("RootProperty: " + rootProperty);
             properties = getAllProperties(properties.get(rootProperty));
         }
         

@@ -36,6 +36,11 @@ public class OAR068PascalCaseNamingConventionCheckTest extends BaseCheckTest {
         verifyV3("valid");
     }
 
+    @Test
+    public void verifyvalidV3ExternalRefs() {
+        verifyV3("externalref.yaml");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR068 - PascalCaseNamingConvention - RequestBody and Responses schema property names must be compliant with the PascalCase naming convention", RuleType.BUG, Severity.MINOR, tags("format"));

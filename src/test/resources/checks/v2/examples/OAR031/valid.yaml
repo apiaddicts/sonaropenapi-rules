@@ -48,10 +48,10 @@ definitions:
   pets:
     type: object
     properties:
-      size:
+      size: 
         type: integer
         example: 1
-      pets:
+      pets: # Noncompliant {{OAR031: Properties must have an example defined}}
         type: array
         items:
           $ref: '#/definitions/pet'
