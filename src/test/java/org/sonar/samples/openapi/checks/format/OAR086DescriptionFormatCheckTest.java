@@ -36,6 +36,16 @@ public class OAR086DescriptionFormatCheckTest extends BaseCheckTest {
         verifyV3("valid-example");
     }
 
+    @Test
+    public void verifyvalidV3internalRef() {
+        verifyV3("internal-refexample.yaml");
+    }
+
+    @Test
+    public void verifyvalidV3externalRef() {
+        verifyV3("external-refexample.yaml");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR086 - DescriptionFormat - Descriptions must begin with a capital letter, end with a period and not be empty", RuleType.BUG, Severity.MINOR, tags("format"));

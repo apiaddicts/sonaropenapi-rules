@@ -17,21 +17,30 @@ public class OAR094UseExamplesCheckTest extends BaseCheckTest {
         v2Path = getV2Path("examples");
         v3Path = getV3Path("examples");
     }
+
     @Test
     public void verifyInV2() {
         verifyV2("invalid-example");
     }
+
     @Test
     public void verifyvalidV2() {
         verifyV2("valid-example");
     }
+
     @Test
     public void verifyInV3() {
         verifyV3("invalid-example");
     }
+
     @Test
     public void verifyvalidV3() {
         verifyV3("valid-example");
+    }
+
+    @Test
+    public void verifyvalidV3ExternalRefs() {
+        verifyV3("externalref.yaml");
     }
 
     @Override

@@ -35,7 +35,6 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
     )
     private String responseSchemaStr = RESPONSE_SCHEMA;
     private JSONObject responseSchema;
-
     private JSONArray requiredOnSuccess = null;
     private JSONArray requiredOnError = null;
     private JSONArray requiredAlways = null;
@@ -69,7 +68,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             dataProperty = (responseSchema.has("dataProperty")) ? responseSchema.getString("dataProperty") : null;
             rootProperty = (responseSchema.has("rootProperty")) ? responseSchema.getString("rootProperty") : null;
         } catch (JSONException err) {
-			addIssue(KEY, "Error parsing Standard Response Schemas", root.key());
+			addIssue(KEY, "Error parsing Standard Response Schemas", getTrueNode(root.key()));
         }
     }
 
@@ -94,19 +93,27 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
                 .collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
             String statusCode = responseNode.key().getTokenValue();
+            boolean externalRefManagement = false;
+                if (isExternalRef(responseNode) && externalRefNode == null) {
+                    externalRefNode = responseNode;
+                    externalRefManagement = true;
+                }
             responseNode = resolve(responseNode);
 
             if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
                 visitSchemaNode(responseNode, statusCode);
             } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
                 JsonNode content = responseNode.at("/content");
-                if (content.isMissing()) continue;
-
-                content.propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                if (content.isMissing()) {
+                    if (externalRefManagement) externalRefNode = null; 
+                    continue;
+                }
+                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { //estudiar funcion lamda
                     if (!mediaType.toLowerCase().contains("json")) return;
                     visitSchemaNode(mediaTypeNode, statusCode);
                 });
             }
+            if (externalRefManagement) externalRefNode = null; 
         }
     }
 
@@ -122,6 +129,11 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
 
         JsonNode schemaNode = responseNode.value().get("schema");
         if (schemaNode.isMissing()) return;
+        boolean externalRefManagement = false;
+        if (isExternalRef(schemaNode) && externalRefNode == null) {
+            externalRefNode = schemaNode;
+            externalRefManagement = true;
+        }
         schemaNode = resolve(schemaNode);
         Map<String, JsonNode> properties = getAllProperties(schemaNode);
 
@@ -133,11 +145,12 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateProperty(properties, rootProperty, "object", schemaNode.key()).ifPresent(node -> {
                 Map<String, JsonNode> allProp = getAllProperties(node);
                 if (allProp.isEmpty()) {
-                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), node.key());
+                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), getTrueNode(node.key()));
                 }
             });
 
             schemaNode = properties.get(rootProperty);
+            System.out.println("RootProperty: " + rootProperty);
             properties = getAllProperties(properties.get(rootProperty));
         }
         
@@ -147,6 +160,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateRootProperties(requiredOnError, properties, schemaNode);
         }
         validateRootProperties(requiredAlways, properties, schemaNode);
+        if (externalRefManagement) externalRefNode = null; 
     }
 
     private void validateRootProperties(JSONArray requiredPropertiesJSONArray, Map<String, JsonNode> properties, JsonNode parentNode) {
@@ -160,7 +174,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
                     validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
                         Map<String, JsonNode> allProp = getAllProperties(node);
                         if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
-                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), node.key());
+                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), getTrueNode(node.key()));
                         }
                     });
                 } else {

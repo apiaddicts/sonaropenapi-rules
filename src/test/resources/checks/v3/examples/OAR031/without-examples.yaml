@@ -57,7 +57,7 @@ components:
       properties:
         size: # Noncompliant {{OAR031: Properties must have an example defined}}
           type: integer
-        pets:
+        pets: # Noncompliant {{OAR031: Properties must have an example defined}}
           type: array
           items:
             $ref: '#/components/schemas/pet'

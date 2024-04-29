@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Sample-API_efc2b9f76813_V
-  description: API de ejemplo para pruebas.
+  description: API de ejemplo para pruebas
   contact:
     name: Nombre del Contacto.
     email: contact@mail.com
@@ -11,7 +11,7 @@ servers:
 paths:
   /datos-usuarios:
     get:
-      summary: Listado de usuarios.
+      summary: Listado de usuarios
       description: Método que permite obtener un listado con datos básicos de un usuario.
       parameters:
         - name: desde
@@ -28,7 +28,7 @@ paths:
           required: false
       responses:
         '200':
-          description: OK.
+          description: OK
           headers:
             X-Correlation-Id:
               description: Cabecera 'X-Correlation-Id'
@@ -40,14 +40,14 @@ paths:
                 $ref: '#/components/schemas/errorMessage'
 components:
   schemas:
-    errorMessage: 
+    errorMessage: # Noncompliant {{OAR029: 'data' property is missing}}
       required:
       - message
       - status
       type: object
       properties:
         status:
-          type: string  
+          type: string  # Noncompliant {{OAR029: 'status' must be of type object}}
           description: Especifica el status code HTTP al que se traducirá la excepción.
         message:
           type: string

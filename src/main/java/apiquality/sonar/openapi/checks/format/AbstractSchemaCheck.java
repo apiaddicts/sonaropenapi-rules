@@ -1,4 +1,4 @@
-package apiquality.sonar.openapi.checks.schemas;
+package apiquality.sonar.openapi.checks.format;
 
 import com.sonar.sslr.api.AstNode;
 

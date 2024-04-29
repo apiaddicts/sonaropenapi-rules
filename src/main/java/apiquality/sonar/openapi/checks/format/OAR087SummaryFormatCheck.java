@@ -80,14 +80,12 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
     
         // Ahora verifica si el resumen está vacío después de eliminar espacios en blanco.
         if (summary.isEmpty()) {
-            System.out.println("El resumen está presente pero vacío.");
             addIssue(KEY, translate(MESSAGE), summaryNode);
             return;
         }
     
         // Verifica que el resumen comience con mayúscula y termine con punto.
         if (!Character.isUpperCase(summary.charAt(0)) || !summary.endsWith(".")) {
-            System.out.println("El resumen no comienza con mayúscula o no termina con punto.");
             addIssue(KEY, translate(MESSAGE), summaryNode);
         }
     }
