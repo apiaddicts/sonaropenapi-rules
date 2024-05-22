@@ -1,62 +1,68 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
-  title: Sample-API_efc2b9f76813_V
-  contact:
-    name: Nombre del Contacto.
-    email: contact@mail.com
-  version: 1.0.12
+  title: Example API
+  description: This is a basic example of an OpenAPI document.
+  version: 1.0.0
 servers:
-  - url: https://api.example.es/api-sample/v1
+  - url: https://api.example.com/v1
+    description: Main (production) server
+  - url: https://api.staging.example.com
+    description: Staging server
 paths:
-  /datos-usuarios:
+  /users:
     get:
-      summary: Listado de usuarios
-      parameters:
-        - name: desde # Noncompliant {{OAR031: Parameters must have one or more examples defined}}
-          in: query
-          schema:
-            type: string
-            format: date
-          required: false
-        - name: hasta # Noncompliant {{OAR031: Parameters must have one or more examples defined}}
-          in: query
-          schema:
-            type: string
-            format: date
-          required: false
+      summary: Get all users
+      description: Returns a list of users.
       responses:
-        '200': # Noncompliant {{OAR031: Responses must have one or more examples defined}}
-          description: OK.
-          headers:
-            X-Correlation-Id: 
-              description: Cabecera 'X-Correlation-Id'
-              schema:
-                type: string
+        '200':
+          description: A JSON array of user objects
           content:
             application/json:
-              schema:              
-                $ref: >- 
-                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/bc8a6999-da3f-4709-abdc-aac6dedff91c/user.yaml#/datosUsuario
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
-          description: Bad Request.
-          headers:
-            X-Correlation-Id:
-              description: Cabecera 'X-Correlation-Id'
-              schema:
-                type: string
+          $ref: >-  
+              https://api.swaggerhub.com/domains/santalucia/errores-domain-oas3/1.0#/components/responses/error_400
+  /users/{userId}:
+    get:
+      summary: Get a user by ID
+      description: Returns a single user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to retrieve
+          schema:
+            type: string
+          example:
+              name: Puppy
+              type: dog
+      responses:
+        '200':
+          description: A single user object
           content:
             application/json:
               schema:
-                $ref: >- # Noncompliant {{OAR031: Properties must have an example defined}}
-                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
-              example:  
-                error:
-                  status: '400'
-                  message: Bad Request
-                  path: /datos-usuario
-                  type: https://docs.example.es/x/A1D8Aw
-                  operationId: '10004'
-                  errors:
-                    - code: '101'
-                      message: Invalid format
-                      location: desde
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: >-  
+              https://api.swaggerhub.com/domains/santalucia/errores-domain-oas3/1.0#/components/responses/error_400
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          example: '12345'
+        name:
+          type: string
+          example: 'John Doe'
+        email:
+          type: string
+          example: 'john.doe@example.com'

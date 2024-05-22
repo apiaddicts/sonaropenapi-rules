@@ -68,8 +68,8 @@ public class JsonNodeUtils {
     // TODO Gestion de errores si la url no funciona
     // TODO errorMessage sustituir por split de almohadilla, despues un split de barras, (si el split de almohadilla nos haya dado un valor)(bucle for, iterar el array y luego rootnode = valor del array) 
     private static JsonNode resolveExternalRef(String url) {
-        String content = retriveExternalRefContent(url);    
-        
+        String content = retriveExternalRefContent(url);   
+        System.out.println("HOLAAA: " + content); 
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
         YamlParser parser = OpenApiParser.createGeneric(configuration);
     
