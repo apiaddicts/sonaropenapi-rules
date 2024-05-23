@@ -1,5 +1,7 @@
 package apiquality.sonar.openapi.checks.examples;
 
+public package apiquality.sonar.openapi.checks.examples;
+
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
@@ -28,31 +30,38 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
-            visitPathNode(node);
-        } else if (node.getType().equals(OpenApi2Grammar.RESPONSES) || node.getType().equals(OpenApi2Grammar.SCHEMA)) {
+        if (OpenApi2Grammar.PATH.equals(node.getType())) {
+            visitPathNodeV2(node);
+        } else if (OpenApi3Grammar.PATH.equals(node.getType())) {
+            visitPathNodeV3(node);
+        } else if (isOpenApi2Node(node)) {
             visitV2Node(node);
-        } else {
+        } else if (isOpenApi3Node(node)) {
             visitV3Node(node);
         }
+    }
+
+    private boolean isOpenApi2Node(JsonNode node) {
+        AstNodeType type = node.getType();
+        return type.equals(OpenApi2Grammar.RESPONSES) ||
+               type.equals(OpenApi2Grammar.SCHEMA);
+    }
+
+    private boolean isOpenApi3Node(JsonNode node) {
+        AstNodeType type = node.getType();
+        return type.equals(OpenApi3Grammar.RESPONSES) ||
+               type.equals(OpenApi3Grammar.SCHEMA) ||
+               type.equals(OpenApi3Grammar.REQUEST_BODY);
     }
 
     private void visitV2Node(JsonNode node) {
         AstNodeType type = node.getType();
         if (type.equals(OpenApi2Grammar.RESPONSES)) {
             List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
-            for (JsonNode responseNode : responseCodes) {
-                if (!responseNode.key().getTokenValue().equals("204")) {
-                    if (!responseNode.key().getTokenValue().equals("204")) {
-                        boolean externalRefManagement = false;
-                        if (isExternalRef(responseNode) && externalRefNode == null) {
-                            externalRefNode = responseNode;
-                            externalRefManagement = true;
-                        }
-                        responseNode = resolve(responseNode);
-                        visitResponseV2Node(responseNode);
-                        if (externalRefManagement) externalRefNode = null; 
-                    }
+            for (JsonNode jsonNode : responseCodes) {
+                if (!jsonNode.key().getTokenValue().equals("204")) {
+                    JsonNode responseNode = jsonNode.resolve();
+                    visitResponseV2Node(responseNode);
                 }
             }
         } else if (type.equals(OpenApi2Grammar.SCHEMA)) {
@@ -78,9 +87,20 @@ public class OAR031ExamplesCheck extends BaseCheck {
                         externalRefManagement = true;
                     }
                     responseNode = resolve(responseNode);
-                    visitRequestBodyOrResponseV3Node(responseNode);
-                    if (externalRefManagement) externalRefNode = null; 
-                } 
+
+                    if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                        JsonNode content = responseNode.at("/content");
+                        if (content.isMissing()) {
+                            if (externalRefManagement) externalRefNode = null;
+                            continue;
+                        }
+                        content.propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                            if (!mediaType.toLowerCase().contains("json")) return;
+                            visitSchemaNode2(mediaTypeNode);
+                        });
+                    }
+                    if (externalRefManagement) externalRefNode = null;
+                }
             }
         } else if (type.equals(OpenApi3Grammar.SCHEMA)) {
             visitSchemaNode(node);
@@ -90,6 +110,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitRequestBodyOrResponseV3Node(JsonNode node) {
+        if (node.isRef()) {
+            node = resolve(node);
+        }
         JsonNode content = node.at("/content");
         if (content.isMissing()) return;
         for (JsonNode mediaTypeNode : content.propertyMap().values()) {
@@ -101,11 +124,63 @@ public class OAR031ExamplesCheck extends BaseCheck {
             }
             if (!hasSchemaExample && mediaTypeNode.get("examples").isMissing() && mediaTypeNode.get("example").isMissing()) {
                 if (type.equals(OpenApi3Grammar.REQUEST_BODY)) {
-                    addIssue(KEY, translate("OAR031.error-request"), getTrueNode(node.key()));
+                    addIssue(KEY, translate("OAR031.error-request"), node.key());
                 } else {
-                    addIssue(KEY, translate("OAR031.error-response"), getTrueNode(node.key()));
+                    addIssue(KEY, translate("OAR031.error-response"), node.key());
                 }
             }
+        }
+    }
+
+    private void visitPathNodeV2(JsonNode node) {
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+                .map(JsonNode::value)
+                .flatMap(n -> n.properties().stream()) 
+                .map(JsonNode::value)
+                .flatMap(n -> n.properties().stream()) 
+                .collect(Collectors.toList());
+        for (JsonNode responseNode : allResponses) {
+            boolean externalRefManagement = false;
+            if (isExternalRef(responseNode) && externalRefNode == null) {
+                externalRefNode = responseNode;
+                externalRefManagement = true;
+            }
+            responseNode = resolve(responseNode);
+
+            if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
+                visitSchemaNode2(responseNode);
+            }
+            if (externalRefManagement) externalRefNode = null;
+        }
+    }
+
+    private void visitPathNodeV3(JsonNode node) {
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+                .map(JsonNode::value)
+                .flatMap(n -> n.properties().stream()) 
+                .map(JsonNode::value)
+                .flatMap(n -> n.properties().stream()) 
+                .collect(Collectors.toList());
+        for (JsonNode responseNode : allResponses) {
+            boolean externalRefManagement = false;
+            if (isExternalRef(responseNode) && externalRefNode == null) {
+                externalRefNode = responseNode;
+                externalRefManagement = true;
+            }
+            responseNode = resolve(responseNode);
+
+            if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                JsonNode content = responseNode.at("/content");
+                if (content.isMissing()) {
+                    if (externalRefManagement) externalRefNode = null;
+                    continue;
+                }
+                content.propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                    if (!mediaType.toLowerCase().contains("json")) return;
+                    visitSchemaNode2(mediaTypeNode);
+                });
+            }
+            if (externalRefManagement) externalRefNode = null;
         }
     }
 
@@ -127,38 +202,6 @@ public class OAR031ExamplesCheck extends BaseCheck {
         }
     }
 
-    private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
-                .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream())
-                .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream())
-                .collect(Collectors.toList());
-        for (JsonNode responseNode : allResponses) {
-            boolean externalRefManagement = false;
-            if (isExternalRef(responseNode) && externalRefNode == null) {
-                externalRefNode = responseNode;
-                externalRefManagement = true;
-            }
-            responseNode = resolve(responseNode);
-
-            if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
-                visitSchemaNode2(responseNode);
-            } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
-                JsonNode content = responseNode.at("/content");
-                if (content.isMissing()) {
-                    if (externalRefManagement) externalRefNode = null;
-                    continue;
-                }
-                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { // estudiar función lambda
-                    if (!mediaType.toLowerCase().contains("json")) return;
-                    visitSchemaNode2(mediaTypeNode);
-                });
-            }
-            if (externalRefManagement) externalRefNode = null;
-        }
-    }
-
     private void visitSchemaNode2(JsonNode responseNode) {
         JsonNode schemaNode = responseNode.value().get("schema");
 
@@ -177,7 +220,6 @@ public class OAR031ExamplesCheck extends BaseCheck {
         System.out.println("visitSchemaNode: Resolviendo el nodo del esquema.");
         schemaNode = resolve(schemaNode);
 
-        // Inspecciona si el nodo del esquema tiene propiedades
         JsonNode propertiesNode = schemaNode.get("properties");
         if (propertiesNode != null && !propertiesNode.isMissing() && propertiesNode.isObject()) {
             Map<String, JsonNode> properties = propertiesNode.propertyMap();
@@ -187,11 +229,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
                     JsonNode propertyNode = entry.getValue();
                     System.out.println("Propiedad: " + key);
 
-                    // Busca el nodo 'example' en cada propiedad
                     JsonNode exampleNode = propertyNode.get("example");
                     if (exampleNode != null && !exampleNode.isMissing()) {
                         System.out.println("Encontrado 'example' en: " + key);
-                        // Aquí añadirías la lógica para manejar la presencia incorrecta de 'example'
                     } else {
                         addIssue(KEY, translate("OAR031.error-property"), getTrueNode(propertyNode.key()));
                     }
@@ -212,4 +252,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
     protected JsonNode getTrueNode(JsonNode node) {
         return externalRefNode == null ? node : externalRefNode;
     }
+}
+
+ a {
+    
 }
