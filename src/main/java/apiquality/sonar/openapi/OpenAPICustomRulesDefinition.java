@@ -44,22 +44,27 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
         new RuleMetadataLoader(getPath(OPERATIONS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getOperationsChecks());
         new RuleMetadataLoader(getPath(PARAMETERS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getParametersChecks());
         new RuleMetadataLoader(getPath(APIM_WSO2_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getWSO2Checks());
-
-        // Carga específica para reglas plantilla "regex"
         new RuleMetadataLoader(getPath(REGEX_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getRegexChecks());
 
-        // Marcar como plantilla la regla específica dentro del grupo "regex", si es necesario
         markAsTemplate(repository, "OAR112");
+        markAsDeactivated(repository, "OAR086");
+        markAsDeactivated(repository, "OAR031");
 
         repository.done();
     }
 
     private void markAsTemplate(NewRepository repository, String ruleKey) {
-        // Asegúrate de que la regla exista antes de intentar marcarla como plantilla
         if (repository.rule(ruleKey) != null) {
             repository.rule(ruleKey).setTemplate(true);
         }
     }
+
+    private void markAsDeactivated(NewRepository repository, String ruleKey) {
+        if (repository.rule(ruleKey) != null) {
+            repository.rule(ruleKey).setActivatedByDefault(false);
+        }
+    }
+
 
     private String getPath(String group) {
         String lang = I18nContext.getLang();
