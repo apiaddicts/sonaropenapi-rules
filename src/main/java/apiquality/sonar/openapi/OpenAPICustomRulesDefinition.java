@@ -26,7 +26,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
     private static final String OPERATIONS_GROUP = "operations";
     private static final String PARAMETERS_GROUP = "parameters";
     private static final String APIM_WSO2_GROUP = "apim/wso2";
-    private static final String REGEX_GROUP = "regex"; // Nueva categoría para reglas plantilla
+    private static final String REGEX_GROUP = "regex"; 
 
     @Override
     public void define(Context context) {
@@ -47,8 +47,6 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
         new RuleMetadataLoader(getPath(REGEX_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getRegexChecks());
 
         markAsTemplate(repository, "OAR112");
-        markAsDeactivated(repository, "OAR086");
-        markAsDeactivated(repository, "OAR031");
 
         repository.done();
     }
@@ -56,12 +54,6 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
     private void markAsTemplate(NewRepository repository, String ruleKey) {
         if (repository.rule(ruleKey) != null) {
             repository.rule(ruleKey).setTemplate(true);
-        }
-    }
-
-    private void markAsDeactivated(NewRepository repository, String ruleKey) {
-        if (repository.rule(ruleKey) != null) {
-            repository.rule(ruleKey).setActivatedByDefault(false);
         }
     }
 
