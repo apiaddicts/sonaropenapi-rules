@@ -9,6 +9,7 @@ import apiquality.sonar.openapi.checks.BaseCheck;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.PARAMETER, OpenApi3Grammar.SCHEMA);
+        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.PARAMETER, OpenApi3Grammar.SCHEMA, OpenApi31Grammar.SCHEMA);
     }
 
     @Override
@@ -52,14 +53,14 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
             JsonNode fieldNode = propertiesNode.get(field);
             
             if (fieldNode == null || fieldNode.isMissing()) {
-                continue;  // if the field doesn't exist in the properties, skip to the next one
+                continue;  
             }
             
             JsonNode typeNode = fieldNode.get("type");
             String type = typeNode.isMissing() ? null : typeNode.getTokenValue();
             
             if (!"string".equals(type)) {
-                continue;  // if the type isn't a string, skip to the next one
+                continue;  
             }
             
             JsonNode formatNode = fieldNode.get("format");

@@ -6,6 +6,7 @@ import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -72,14 +73,14 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
         if (node.getType() == OpenApi2Grammar.PATH) {
             visitPathV2Node(node);
-        } else if (node.getType() == OpenApi3Grammar.PATH) {
+        } else if (node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH){
             visitPathV3Node(node);
         }
     }

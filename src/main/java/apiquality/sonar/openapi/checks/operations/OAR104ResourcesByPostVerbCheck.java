@@ -7,6 +7,7 @@ import org.sonar.check.RuleProperty;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Set;
@@ -43,7 +44,7 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
 
     private JsonNode findParentPathNode(JsonNode node) {
         JsonNode parent = (JsonNode) node.getParent();
-        while (parent != null && !(parent.getType() == OpenApi2Grammar.PATH || parent.getType() == OpenApi3Grammar.PATH)) {
+        while (parent != null && !(parent.getType() == OpenApi2Grammar.PATH || parent.getType() == OpenApi3Grammar.PATH || parent.getType() == OpenApi31Grammar.PATH)) {
             parent = (JsonNode) parent.getParent();
         }
         return parent;

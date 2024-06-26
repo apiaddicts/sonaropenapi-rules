@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
@@ -48,39 +49,28 @@ public class OAR023TotalParameterCheck extends BaseCheck {
     private String parameterName = PARAM_NAME;
 
     private Set<String> paths;
-    private JsonNode rootNode;  // Variable de instancia para almacenar el nodo raíz
-
+    private JsonNode rootNode;  
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
     }
 
     @Override
     protected void visitFile(JsonNode root) {
-        this.rootNode = root;  // Almacenamos el nodo raíz
+        this.rootNode = root;  
         paths = parsePaths(pathsStr);
-        System.out.println("Visiting file...");
-        System.out.println("Parsing paths...");
         super.visitFile(root);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        System.out.println("Visiting node: " + node.key().getTokenValue());
         if ("get".equals(node.key().getTokenValue())) {
-            System.out.println("It's a GET operation");
 
             String path = getPath(node);
-            System.out.println("Extracting path...\nPath found: " + path);
 
             boolean hasParameter = hasParameterInNode(node);
 
-            System.out.println("Checking if should include path: " + path);
             if (shouldIncludePath(path) && !hasParameter) {
-                System.out.println("Issue added for path: " + path);
-                System.out.println("Checking conditions for adding issue...");
-                System.out.println("Should include path: " + shouldIncludePath(path));
-                System.out.println("Has parameter: " + hasParameter);
                 addIssue(KEY, translate(MESSAGE, PARAM_NAME), node.key());
             }
         }
@@ -89,7 +79,6 @@ public class OAR023TotalParameterCheck extends BaseCheck {
     private boolean hasParameterInNode(JsonNode node) {
         JsonNode parametersNode = node.get("parameters");
         if (parametersNode != null) {
-            System.out.println("Parameters found");
 
             for (JsonNode parameterNode : parametersNode.elements()) {
                 if (isRefParameter(parameterNode) && hasNamedRefParameter(parameterNode)) {
@@ -105,7 +94,6 @@ public class OAR023TotalParameterCheck extends BaseCheck {
     private boolean isRefParameter(JsonNode parameterNode) {
         JsonNode refNode = parameterNode.get("$ref");
         if (refNode != null) {
-            System.out.println("Detected a $ref parameter node");
             return true;
         }
         return false;
@@ -123,7 +111,6 @@ public class OAR023TotalParameterCheck extends BaseCheck {
     }
 
     private boolean hasDirectParameter(JsonNode parameterNode) {
-        System.out.println("Processing a direct parameter node");
         JsonNode nameNode = parameterNode.get("name");
         JsonNode inNode = parameterNode.get("in");
         return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
@@ -131,9 +118,9 @@ public class OAR023TotalParameterCheck extends BaseCheck {
 
     private String getPath(JsonNode node) {
         StringBuilder pathBuilder = new StringBuilder();
-        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
         if (pathNode != null) {
-            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH) {
+            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH && pathNode.getType() != OpenApi31Grammar.PATH) {
                 pathNode = pathNode.getParent();
             }
             pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());
@@ -174,13 +161,10 @@ public class OAR023TotalParameterCheck extends BaseCheck {
                 return null; 
             }
             currentNode = currentNode.get(part);
-            System.out.println("Navigating to: " + part);
         }
     
         if (currentNode == null) {
-            System.out.println("Resolved reference node is null for ref: " + refValue);
         } else {
-            System.out.println("Resolved reference node for ref: " + refValue + " is: " + currentNode.toString());
         }
     
         return currentNode;

@@ -10,6 +10,7 @@ import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
@@ -74,7 +75,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
     }
 
     @Override
@@ -85,11 +86,11 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
     private void visitPathNode(JsonNode node) {
         String path = node.key().getTokenValue();
         if (exclusion.contains(path)) return;
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                 .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) // responses
+                .flatMap(n -> n.properties().stream()) 
                 .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) // response
+                .flatMap(n -> n.properties().stream()) 
                 .collect(Collectors.toList());
         for (JsonNode responseNode : allResponses) {
             String statusCode = responseNode.key().getTokenValue();
@@ -108,7 +109,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
                     if (externalRefManagement) externalRefNode = null; 
                     continue;
                 }
-                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { //estudiar funcion lamda
+                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { 
                     if (!mediaType.toLowerCase().contains("json")) return;
                     visitSchemaNode(mediaTypeNode, statusCode);
                 });
@@ -150,7 +151,6 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             });
 
             schemaNode = properties.get(rootProperty);
-            System.out.println("RootProperty: " + rootProperty);
             properties = getAllProperties(properties.get(rootProperty));
         }
         

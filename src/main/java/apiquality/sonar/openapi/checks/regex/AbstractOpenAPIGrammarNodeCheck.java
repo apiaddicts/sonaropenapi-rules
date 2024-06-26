@@ -3,6 +3,7 @@ package apiquality.sonar.openapi.checks.regex;
 import java.util.Set;
 
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import apiquality.sonar.openapi.checks.BaseCheck;
 
