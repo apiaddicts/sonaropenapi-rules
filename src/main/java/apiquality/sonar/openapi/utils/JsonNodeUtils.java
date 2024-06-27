@@ -54,10 +54,8 @@ public class JsonNodeUtils {
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                System.out.println("REFERENCIA INTERNA");
-                return false;  // Resolve internal references normally
+                return false;  
             } else {
-                System.out.println("REFERENCIA EXTERNA");
                 return true;
             }
         }
