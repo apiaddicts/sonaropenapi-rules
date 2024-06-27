@@ -8,18 +8,18 @@ paths:
       responses:
         '200':
           description: Ok
-  /resources/{r_id}:
-    post: # Noncompliant {{OAR104: Operation not recommended for resource path: resources/{r_id}}}
+  /resources/me/cars:
+    post: 
       responses:
         '200':
           description: Ok
   /resources/get: 
-    post:  
+    post:  # Noncompliant {{OAR104: Operation not recommended for resource path: resources/get}}
       responses:
         '200':
           description: Ok
   /resources/hola:  
-    post:  
+    post:  # Noncompliant {{OAR104: Operation not recommended for resource path: resources/hola}}
       responses:
         '200':
           description: Ok
@@ -29,7 +29,7 @@ paths:
         '200':
           description: Ok
   /resources/me: 
-    post: # Noncompliant {{OAR104: Operation not recommended for resource path: resources/me}}
+    post: 
       responses:
         '200':
           description: Ok

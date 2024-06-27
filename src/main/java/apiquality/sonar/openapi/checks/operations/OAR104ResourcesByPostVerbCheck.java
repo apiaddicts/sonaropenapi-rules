@@ -74,13 +74,8 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
                                .toArray(String[]::new);
         if (parts.length == 0) return true;
     
-        String lastPart = parts[parts.length - 1];
-        if (isVariable(lastPart)) {
-            return false;  
-        }
-    
-        for (String part : parts) {
-            if (!isVariable(part) && reservedWords.contains(part.toLowerCase())) {
+        for (int i = 0; i < parts.length - 1; i++) {
+            if (!isVariable(parts[i]) && !isSpecialVariable(parts[i]) && !isVariable(parts[i + 1]) && !isSpecialVariable(parts[i + 1])) {
                 return false;
             }
         }
@@ -90,6 +85,10 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
     
     private boolean isVariable(String part) {
         return part.startsWith("{") && part.endsWith("}");
+    }
+
+    private boolean isSpecialVariable(String part) {
+        return "me".equalsIgnoreCase(part);
     }
 
     private String formatMessage(String path) {

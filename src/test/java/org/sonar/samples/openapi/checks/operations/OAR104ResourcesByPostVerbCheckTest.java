@@ -26,7 +26,7 @@ public class OAR104ResourcesByPostVerbCheckTest extends BaseCheckTest {
 
     @Test
     public void verifyInV3() {
-        verifyV3("plain");
+        verifyV3("plain.yaml");
     }
 
     @Override
