@@ -26,7 +26,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
     private static final String OPERATIONS_GROUP = "operations";
     private static final String PARAMETERS_GROUP = "parameters";
     private static final String APIM_WSO2_GROUP = "apim/wso2";
-    private static final String REGEX_GROUP = "regex"; // Nueva categoría para reglas plantilla
+    private static final String REGEX_GROUP = "regex"; 
 
     @Override
     public void define(Context context) {
@@ -44,22 +44,19 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
         new RuleMetadataLoader(getPath(OPERATIONS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getOperationsChecks());
         new RuleMetadataLoader(getPath(PARAMETERS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getParametersChecks());
         new RuleMetadataLoader(getPath(APIM_WSO2_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getWSO2Checks());
-
-        // Carga específica para reglas plantilla "regex"
         new RuleMetadataLoader(getPath(REGEX_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getRegexChecks());
 
-        // Marcar como plantilla la regla específica dentro del grupo "regex", si es necesario
         markAsTemplate(repository, "OAR112");
 
         repository.done();
     }
 
     private void markAsTemplate(NewRepository repository, String ruleKey) {
-        // Asegúrate de que la regla exista antes de intentar marcarla como plantilla
         if (repository.rule(ruleKey) != null) {
             repository.rule(ruleKey).setTemplate(true);
         }
     }
+
 
     private String getPath(String group) {
         String lang = I18nContext.getLang();

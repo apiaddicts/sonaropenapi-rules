@@ -18,7 +18,7 @@ import static apiquality.sonar.openapi.utils.JsonNodeUtils.*;
 @Rule(key = OAR031ExamplesCheck.KEY)
 public class OAR031ExamplesCheck extends BaseCheck {
 
-    protected JsonNode externalRefNode= null;
+    protected JsonNode externalRefNode = null;
     public static final String KEY = "OAR031";
 
     @Override
@@ -30,29 +30,33 @@ public class OAR031ExamplesCheck extends BaseCheck {
     public void visitNode(JsonNode node) {
         if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
-        }else{
+        } else if (node.getType().equals(OpenApi2Grammar.RESPONSES) || node.getType().equals(OpenApi2Grammar.SCHEMA)) {
             visitV2Node(node);
+        } else {
+            visitV3Node(node);
         }
     }
 
     private void visitV2Node(JsonNode node) {
         AstNodeType type = node.getType();
-        if ( type.equals(OpenApi2Grammar.RESPONSES) || type.equals(OpenApi3Grammar.RESPONSES)) {
+        if (type.equals(OpenApi2Grammar.RESPONSES)) {
             List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
-            for (JsonNode jsonNode : responseCodes) {
-                if (!jsonNode.key().getTokenValue().equals("204")) {
-                    JsonNode responseNode = jsonNode.resolve();
-                    if ( responseNode.getType().equals(OpenApi3Grammar.RESPONSE) ) {
-                        visitRequestBodyOrResponseV3Node(responseNode);
-                    } else {
+            for (JsonNode responseNode : responseCodes) {
+                if (!responseNode.key().getTokenValue().equals("204")) {
+                    if (!responseNode.key().getTokenValue().equals("204")) {
+                        boolean externalRefManagement = false;
+                        if (isExternalRef(responseNode) && externalRefNode == null) {
+                            externalRefNode = responseNode;
+                            externalRefManagement = true;
+                        }
+                        responseNode = resolve(responseNode);
                         visitResponseV2Node(responseNode);
+                        if (externalRefManagement) externalRefNode = null; 
                     }
                 }
             }
-        } else if ( type.equals(OpenApi2Grammar.SCHEMA) || type.equals(OpenApi3Grammar.SCHEMA) ) {
+        } else if (type.equals(OpenApi2Grammar.SCHEMA)) {
             visitSchemaNode(node);
-        }  else if ( type.equals(OpenApi3Grammar.REQUEST_BODY) ) {
-            visitRequestBodyOrResponseV3Node(node);
         }
     }
 
@@ -62,21 +66,26 @@ public class OAR031ExamplesCheck extends BaseCheck {
         }
     }
 
-    private void visitSchemaNode(JsonNode node) {
-        JsonNode parentNode = (JsonNode) node.getParent().getParent();
-
-        if ( parentNode.getType().equals(OpenApi3Grammar.PARAMETER) ) {
-            if (node.get("example").isMissing() && parentNode.get("example").isMissing() && parentNode.get("examples").isMissing()) {
-                addIssue(KEY, translate("OAR031.error-parameter"), parentNode);
+    private void visitV3Node(JsonNode node) {
+        AstNodeType type = node.getType();
+        if (type.equals(OpenApi3Grammar.RESPONSES)) {
+            List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
+            for (JsonNode responseNode : responseCodes) {
+                if (!responseNode.key().getTokenValue().equals("204")) {
+                    boolean externalRefManagement = false;
+                    if (isExternalRef(responseNode) && externalRefNode == null) {
+                        externalRefNode = responseNode;
+                        externalRefManagement = true;
+                    }
+                    responseNode = resolve(responseNode);
+                    visitRequestBodyOrResponseV3Node(responseNode);
+                    if (externalRefManagement) externalRefNode = null; 
+                } 
             }
-        } else if ( parentNode.getType().equals(OpenApi3Grammar.SCHEMA_PROPERTIES) || 
-            parentNode.getType().toString().equals("BLOCK_MAPPING") || parentNode.getType().toString().equals("FLOW_MAPPING") ) {
-            JsonNode type = getType(node);
-            if (!isObjectType(type) && !type.isMissing() && !isArrayType(type)) {
-                if (node.get("example").isMissing()) {
-                    addIssue(KEY, translate("OAR031.error-property"), node.key());
-                }
-            }
+        } else if (type.equals(OpenApi3Grammar.SCHEMA)) {
+            visitSchemaNode(node);
+        } else if (type.equals(OpenApi3Grammar.REQUEST_BODY)) {
+            visitRequestBodyOrResponseV3Node(node);
         }
     }
 
@@ -91,66 +100,83 @@ public class OAR031ExamplesCheck extends BaseCheck {
                 hasSchemaExample = true;
             }
             if (!hasSchemaExample && mediaTypeNode.get("examples").isMissing() && mediaTypeNode.get("example").isMissing()) {
-                if ( type.equals(OpenApi3Grammar.REQUEST_BODY) ) {
-                    addIssue(KEY, translate("OAR031.error-request"), node.key());
+                if (type.equals(OpenApi3Grammar.REQUEST_BODY)) {
+                    addIssue(KEY, translate("OAR031.error-request"), getTrueNode(node.key()));
                 } else {
-                    addIssue(KEY, translate("OAR031.error-response"), node.key());
+                    addIssue(KEY, translate("OAR031.error-response"), getTrueNode(node.key()));
                 }
             }
-            
+        }
+    }
+
+    private void visitSchemaNode(JsonNode node) {
+        JsonNode parentNode = (JsonNode) node.getParent().getParent();
+
+        if (parentNode.getType().equals(OpenApi3Grammar.PARAMETER)) {
+            if (node.get("example").isMissing() && parentNode.get("example").isMissing() && parentNode.get("examples").isMissing()) {
+                addIssue(KEY, translate("OAR031.error-parameter"), parentNode);
+            }
+        } else if (parentNode.getType().equals(OpenApi3Grammar.SCHEMA_PROPERTIES) || 
+            parentNode.getType().toString().equals("BLOCK_MAPPING") || parentNode.getType().toString().equals("FLOW_MAPPING")) {
+            JsonNode type = getType(node);
+            if (!isObjectType(type) && !type.isMissing() && !isArrayType(type)) {
+                if (node.get("example").isMissing()) {
+                    addIssue(KEY, translate("OAR031.error-property"), node.key());
+                }
+            }
         }
     }
 
     private void visitPathNode(JsonNode node) {
         List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
                 .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) 
+                .flatMap(n -> n.properties().stream())
                 .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) 
+                .flatMap(n -> n.properties().stream())
                 .collect(Collectors.toList());
-                for (JsonNode responseNode : allResponses) {
-                    boolean externalRefManagement = false;
-                        if (isExternalRef(responseNode) && externalRefNode == null) {
-                            externalRefNode = responseNode;
-                            externalRefManagement = true;
-                        }
-                    responseNode = resolve(responseNode);
-        
-                    if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
-                        visitSchemaNode2(responseNode);
-                    } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
-                        JsonNode content = responseNode.at("/content");
-                        if (content.isMissing()) {
-                            if (externalRefManagement) externalRefNode = null; 
-                            continue;
-                        }
-                        content.propertyMap().forEach((mediaType, mediaTypeNode) -> { //estudiar funcion lamda
-                            if (!mediaType.toLowerCase().contains("json")) return;
-                            visitSchemaNode2(mediaTypeNode);
-                        });
-                    }
-                    if (externalRefManagement) externalRefNode = null; 
+        for (JsonNode responseNode : allResponses) {
+            boolean externalRefManagement = false;
+            if (isExternalRef(responseNode) && externalRefNode == null) {
+                externalRefNode = responseNode;
+                externalRefManagement = true;
+            }
+            responseNode = resolve(responseNode);
+
+            if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
+                visitSchemaNode2(responseNode);
+            } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                JsonNode content = responseNode.at("/content");
+                if (content.isMissing()) {
+                    if (externalRefManagement) externalRefNode = null;
+                    continue;
                 }
+                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { // estudiar función lambda
+                    if (!mediaType.toLowerCase().contains("json")) return;
+                    visitSchemaNode2(mediaTypeNode);
+                });
+            }
+            if (externalRefManagement) externalRefNode = null;
+        }
     }
 
     private void visitSchemaNode2(JsonNode responseNode) {
         JsonNode schemaNode = responseNode.value().get("schema");
-    
+
         if (schemaNode.isMissing()) {
             System.out.println("visitSchemaNode: El nodo del esquema no está disponible.");
             return;
         }
-    
+
         boolean externalRefManagement = false;
         if (isExternalRef(schemaNode) && externalRefNode == null) {
             externalRefNode = schemaNode;
             externalRefManagement = true;
             System.out.println("visitSchemaNode: Gestionando referencia externa para el esquema.");
         }
-    
+
         System.out.println("visitSchemaNode: Resolviendo el nodo del esquema.");
         schemaNode = resolve(schemaNode);
-    
+
         // Inspecciona si el nodo del esquema tiene propiedades
         JsonNode propertiesNode = schemaNode.get("properties");
         if (propertiesNode != null && !propertiesNode.isMissing() && propertiesNode.isObject()) {
@@ -160,7 +186,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
                     String key = entry.getKey();
                     JsonNode propertyNode = entry.getValue();
                     System.out.println("Propiedad: " + key);
-    
+
                     // Busca el nodo 'example' en cada propiedad
                     JsonNode exampleNode = propertyNode.get("example");
                     if (exampleNode != null && !exampleNode.isMissing()) {
@@ -176,13 +202,14 @@ public class OAR031ExamplesCheck extends BaseCheck {
         } else {
             System.out.println("visitSchemaNode: El nodo de propiedades no está disponible o no contiene propiedades.");
         }
-    
+
         if (externalRefManagement) {
             externalRefNode = null;
             System.out.println("visitSchemaNode: Reinicio de la gestión de la referencia externa.");
         }
     }
-    protected JsonNode getTrueNode (JsonNode node){
-        return externalRefNode== null ? node : externalRefNode;
+
+    protected JsonNode getTrueNode(JsonNode node) {
+        return externalRefNode == null ? node : externalRefNode;
     }
 }
