@@ -19,7 +19,7 @@ public class OAR085OpenAPIVersionCheck extends BaseCheck {
 
     public static final String KEY = "OAR085";
     private static final String MESSAGE = "OAR085.error";
-    private static final String DEFAULT_VALID_VERSIONS = "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1";
+    private static final String DEFAULT_VALID_VERSIONS = "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1.0";
 
     @RuleProperty(
             key = "valid-versions",
