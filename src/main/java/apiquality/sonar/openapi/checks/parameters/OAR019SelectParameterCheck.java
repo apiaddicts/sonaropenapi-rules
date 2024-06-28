@@ -120,7 +120,7 @@ public class OAR019SelectParameterCheck extends BaseCheck {
         StringBuilder pathBuilder = new StringBuilder();
         AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
         if (pathNode != null) {
-            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH) {
+            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH && pathNode.getType() != OpenApi31Grammar.PATH) {
                 pathNode = pathNode.getParent();
             }
             pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());
