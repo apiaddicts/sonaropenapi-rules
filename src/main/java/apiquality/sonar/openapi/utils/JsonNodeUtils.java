@@ -67,7 +67,6 @@ public class JsonNodeUtils {
     // TODO errorMessage sustituir por split de almohadilla, despues un split de barras, (si el split de almohadilla nos haya dado un valor)(bucle for, iterar el array y luego rootnode = valor del array) 
     private static JsonNode resolveExternalRef(String url) {
         String content = retriveExternalRefContent(url);   
-        System.out.println("HOLAAA: " + content); 
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
         YamlParser parser = OpenApiParser.createGeneric(configuration);
     
@@ -140,7 +139,6 @@ public class JsonNodeUtils {
         conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
     }
 
-    // Método para acceder al contenido de la última respuesta
     public static String getLastFetchedContent() {
         return lastFetchedContent;
     }

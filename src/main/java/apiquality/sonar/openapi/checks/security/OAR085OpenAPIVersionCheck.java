@@ -37,8 +37,6 @@ public class OAR085OpenAPIVersionCheck extends BaseCheck {
 
         String version = getVersion(swaggerNode, openapiNode);
         
-        System.out.println("OpenAPI Version: " + version); 
-
         if (version == null || !validVersions.contains(version)) {
             addIssue(KEY, translate(MESSAGE, version), root.key());
         }
