@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import apiquality.sonar.openapi.checks.BaseCheck;
 
@@ -23,17 +24,16 @@ public class OAR092RequestBodyOnlyRefCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi3Grammar.PATHS.equals(node.getType())) {
+        if (OpenApi3Grammar.PATHS.equals(node.getType()) || OpenApi31Grammar.PATHS.equals(node.getType())) {
             visitPathsNode(node);
         }
     }
 
     private void visitPathsNode(JsonNode pathsNode) {
-        for (JsonNode pathNode : pathsNode.propertyMap().values()) { // Iterate through each path
-            for (JsonNode operationNode : pathNode.propertyMap().values()) { // Iterate through each operation in the path
+        for (JsonNode pathNode : pathsNode.propertyMap().values()) {
+            for (JsonNode operationNode : pathNode.propertyMap().values()) { 
                 JsonNode requestBody = operationNode.get("requestBody");
                 
-                // Verificar si el requestBody no es null y no es un nodo MISSING
                 if (requestBody != null && !isMissingNode(requestBody)) {
                     checkRequestBody(requestBody);
                 }
@@ -43,13 +43,11 @@ public class OAR092RequestBodyOnlyRefCheck extends BaseCheck {
 
     private void checkRequestBody(JsonNode requestBody) {
 
-        // Check if requestBody has properties other than $ref
         if (!requestBody.propertyMap().keySet().equals(Collections.singleton("$ref"))) {
             addIssue(KEY, translate(MESSAGE), requestBody.key());
         }
     }
 
-    // Método adicional para comprobar si el nodo es MISSING
     private boolean isMissingNode(JsonNode node) {
         return "null".equals(node.getTokenValue());
     }

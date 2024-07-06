@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
@@ -51,7 +52,7 @@ public class OAR028FilterParameterCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER);
+        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER);
     }
 
     @Override
@@ -79,9 +80,9 @@ public class OAR028FilterParameterCheck extends BaseCheck {
 
     private String getPath(JsonNode node) {
         StringBuilder pathBuilder = new StringBuilder();
-        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
         if (pathNode != null) {
-            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH) {
+            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH && pathNode.getType() != OpenApi31Grammar.PATH) {
                 pathNode = pathNode.getParent();
             }
             pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());

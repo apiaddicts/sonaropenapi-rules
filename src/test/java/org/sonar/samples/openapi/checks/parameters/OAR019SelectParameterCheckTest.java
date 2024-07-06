@@ -17,6 +17,7 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
         check = new OAR019SelectParameterCheck();
         v2Path = getV2Path("parameters");
         v3Path = getV3Path("parameters");
+        v31Path = getV31Path("parameters");
     }
 
     @Test
@@ -57,6 +58,26 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3WithRef() {
         verifyV3("with-ref");
+    }
+
+    @Test
+    public void verifyInV31() {
+        verifyV31("plain");
+    }
+
+    @Test
+    public void verifyInV31Excluded() {
+        verifyV31("excluded");
+    }
+
+    @Test
+    public void verifyInV31Without() {
+        verifyV31("plain-without");
+    }
+
+    @Test
+    public void verifyInV31WithRef() {
+        verifyV31("with-ref");
     }
 
     @Override

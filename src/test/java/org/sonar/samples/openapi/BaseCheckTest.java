@@ -29,6 +29,7 @@ public abstract class BaseCheckTest {
     protected OpenApiCheck check;
     protected String v2Path;
     protected String v3Path;
+    protected String v31Path;
 
     protected String getV2Path(String prefix) {
         return "src/test/resources/checks/v2/" + prefix + "/" + ruleName + "/";
@@ -38,24 +39,42 @@ public abstract class BaseCheckTest {
         return "src/test/resources/checks/v3/" + prefix + "/" + ruleName + "/";
     }
 
+    protected String getV31Path(String prefix) {
+        return "src/test/resources/checks/v31/" + prefix + "/" + ruleName + "/";
+    }
+
     protected void verifyV2(String file) {
-        verify(file, true);
+        verify(file, true, false, false);
     }
 
     protected void verifyV3(String file) {
-        verify(file, false);
+        verify(file, false, true, false);
     }
 
-    private void verify(String file, boolean isV2) {
-        file = (isV2 ? v2Path : v3Path) + file;
-        if (file.contains(".")) {
-            LOG.info("Testing file : " + file);
-            ExtendedOpenApiCheckVerifier.verify(file, check, isV2);
+    protected void verifyV31(String file) {
+        verify(file, false, false, true);
+    }
+
+    private void verify(String file, boolean isV2, boolean isV3, boolean isV31) {
+        String filePath;
+        if (isV2) {
+            filePath = v2Path + file;
+        } else if (isV31) {
+            filePath = v31Path + file;
+        } else if (isV3) {
+            filePath = v3Path + file;
         } else {
-            LOG.info("Testing file : " + file + ".yaml");
-            ExtendedOpenApiCheckVerifier.verify(file + ".yaml", check, isV2);
-            LOG.info("Testing file : " + file + ".json");
-            ExtendedOpenApiCheckVerifier.verify(file + ".json", check, isV2);
+            throw new IllegalArgumentException("At least one version flag must be set to true.");
+        }
+
+        if (filePath.contains(".")) {
+            LOG.info("Testing file : " + filePath);
+            ExtendedOpenApiCheckVerifier.verify(filePath, check, isV2, isV3, isV31);
+        } else {
+            LOG.info("Testing file : " + filePath + ".yaml");
+            ExtendedOpenApiCheckVerifier.verify(filePath + ".yaml", check, isV2, isV3, isV31);
+            LOG.info("Testing file : " + filePath + ".json");
+            ExtendedOpenApiCheckVerifier.verify(filePath + ".json", check, isV2, isV3, isV31);
         }
     }
 

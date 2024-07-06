@@ -6,6 +6,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -50,7 +51,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSES);
+		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.RESPONSES);
 	}
 
 	@Override

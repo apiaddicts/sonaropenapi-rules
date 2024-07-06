@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -25,7 +26,7 @@ public abstract class AbstractResourceLevelCheck extends BaseCheck {
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+		return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
 	}
 
 	@Override

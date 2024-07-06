@@ -5,6 +5,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -23,12 +24,12 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.RESPONSES, OpenApi3Grammar.SCHEMA, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.RESPONSES, OpenApi3Grammar.SCHEMA, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.SCHEMA, OpenApi31Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi31Grammar.REQUEST_BODY, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
+        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
         } else if (node.getType().equals(OpenApi2Grammar.RESPONSES) || node.getType().equals(OpenApi2Grammar.SCHEMA)) {
             visitV2Node(node);
