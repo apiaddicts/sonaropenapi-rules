@@ -164,7 +164,6 @@ public class OAR031ExamplesCheck extends BaseCheck {
         JsonNode schemaNode = responseNode.value().get("schema");
 
         if (schemaNode.isMissing()) {
-            System.out.println("visitSchemaNode: El nodo del esquema no está disponible.");
             return;
         }
 
@@ -172,13 +171,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
         if (isExternalRef(schemaNode) && externalRefNode == null) {
             externalRefNode = schemaNode;
             externalRefManagement = true;
-            System.out.println("visitSchemaNode: Gestionando referencia externa para el esquema.");
         }
-
-        System.out.println("visitSchemaNode: Resolviendo el nodo del esquema.");
         schemaNode = resolve(schemaNode);
 
-        // Inspecciona si el nodo del esquema tiene propiedades
         JsonNode propertiesNode = schemaNode.get("properties");
         if (propertiesNode != null && !propertiesNode.isMissing() && propertiesNode.isObject()) {
             Map<String, JsonNode> properties = propertiesNode.propertyMap();
@@ -186,27 +181,17 @@ public class OAR031ExamplesCheck extends BaseCheck {
                 for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
                     String key = entry.getKey();
                     JsonNode propertyNode = entry.getValue();
-                    System.out.println("Propiedad: " + key);
-
-                    // Busca el nodo 'example' en cada propiedad
                     JsonNode exampleNode = propertyNode.get("example");
                     if (exampleNode != null && !exampleNode.isMissing()) {
-                        System.out.println("Encontrado 'example' en: " + key);
-                        // Aquí añadirías la lógica para manejar la presencia incorrecta de 'example'
                     } else {
                         addIssue(KEY, translate("OAR031.error-property"), getTrueNode(propertyNode.key()));
                     }
                 }
-            } else {
-                System.out.println("visitSchemaNode: No properties found in properties node.");
             }
-        } else {
-            System.out.println("visitSchemaNode: El nodo de propiedades no está disponible o no contiene propiedades.");
         }
 
         if (externalRefManagement) {
             externalRefNode = null;
-            System.out.println("visitSchemaNode: Reinicio de la gestión de la referencia externa.");
         }
     }
 

@@ -71,43 +71,4 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
             }
         }
     }
-
-
-
-
-   /*  @Override
-    public void validate(String type, String format, String properties, JsonNode typeNode, JsonNode propertiesNode) {
-        System.out.println("holaAAATYPEEE: " + typeNode.getTokenValue());
-        List<JsonNode> propertyChildren = propertiesNode.getJsonChildren();
-        List<JsonNode> matchingProperties = new ArrayList<>();
-
-        for (JsonNode propertyChild : propertyChildren) {
-
-            String propertyName = propertyChild.key().getTokenValue();
-            if (fieldsList.contains(propertyName)) {
-                matchingProperties.add(propertyChild);
-            }
-        }
-
-        for (JsonNode matchingProperty : matchingProperties) {
-            JsonNode typeNode2 = matchingProperty.key().get("type");
-            System.out.println("TYPE: " + typeNode2);
-            JsonNode formatNode = matchingProperty.key().get("format");
-            System.out.println("FORMAT: " + formatNode);
-            if (formatNode == null) {
-                addIssue(KEY, translate(MESSAGE), matchingProperty.key());
-            } else {
-                String propertyFormat = formatNode.getTokenValue();
-                if (!isValidStringFormat(propertyFormat)) {
-                    addIssue(KEY, translate(MESSAGE), matchingProperty.key());
-                }
-            }
-        }
-    }
-    
-
-    private boolean isValidStringFormat(String format) {
-        return "binary".equals(format) || "byte".equals(format);
-    }
-    */
 }

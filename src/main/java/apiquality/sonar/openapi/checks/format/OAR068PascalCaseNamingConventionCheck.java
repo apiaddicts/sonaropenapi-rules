@@ -35,12 +35,9 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
     public void visitNode(JsonNode node) {
         if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType())) {
             visitPathsNode(node);
-            System.out.println("HOLA");
         }
         if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
-            System.out.println("ADIOS");
-
         }
     }
 
@@ -165,7 +162,6 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
             JsonNode schemaNode = responseNode.value().get("schema");
         
             if (schemaNode.isMissing()) {
-                System.out.println("visitSchemaNode: El nodo del esquema no está disponible.");
                 return;
             }
         
@@ -173,13 +169,10 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
             if (isExternalRef(schemaNode) && externalRefNode == null) {
                 externalRefNode = schemaNode;
                 externalRefManagement = true;
-                System.out.println("visitSchemaNode: Gestionando referencia externa para el esquema.");
             }
         
-            System.out.println("visitSchemaNode: Resolviendo el nodo del esquema.");
             schemaNode = resolve(schemaNode);
         
-            // Inspecciona si el nodo del esquema tiene propiedades
             JsonNode propertiesNode = schemaNode.get("properties");
             if (propertiesNode != null && !propertiesNode.isMissing() && propertiesNode.isObject()) {
                 Map<String, JsonNode> properties = propertiesNode.propertyMap();
@@ -187,21 +180,13 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
                     for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
                         String propertyName = entry.getKey();
                         JsonNode propertyNode = entry.getValue();
-                        System.out.println("Propiedad: " + propertyName);  // Imprime el nombre de cada propiedad
-        
-                        // Realiza operaciones específicas con cada nombre de propiedad
                         validateNamingConvention(propertyName, getTrueNode(propertyNode));
                     }
-                } else {
-                    System.out.println("visitSchemaNode: No properties found in properties node.");
                 }
-            } else {
-                System.out.println("visitSchemaNode: El nodo de propiedades no está disponible o no contiene propiedades.");
             }
         
             if (externalRefManagement) {
                 externalRefNode = null;
-                System.out.println("visitSchemaNode: Reinicio de la gestión de la referencia externa.");
             }
         }
         protected JsonNode getTrueNode (JsonNode node){
