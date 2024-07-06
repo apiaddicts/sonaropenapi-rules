@@ -56,7 +56,7 @@ public class OAR098LongBasePathCheck extends BaseCheck {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         if (pathParts.size() > 2) {
-            addIssue(KEY, translate("OAR098.error-path-long"), node.value());  // Utilizamos el mismo mensaje de OAR042 ya que es el mismo criterio
+            addIssue(KEY, translate("OAR098.error-path-long"), node.value());  
         }
     }
 }
