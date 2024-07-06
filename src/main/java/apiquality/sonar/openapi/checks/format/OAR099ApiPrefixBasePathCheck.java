@@ -56,7 +56,7 @@ public class OAR099ApiPrefixBasePathCheck extends BaseCheck {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         if (!pathParts.isEmpty() && (!pathParts.get(0).startsWith("api-") || pathParts.get(0).length() == 4)) {
-            addIssue(KEY, translate("OAR099.error-prefix"), node.value());  // Utilizamos el mismo mensaje de OAR042 ya que es el mismo criterio
+            addIssue(KEY, translate("OAR099.error-prefix"), node.value());  
         }
     }
 }

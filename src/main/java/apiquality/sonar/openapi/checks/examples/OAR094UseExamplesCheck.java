@@ -41,8 +41,7 @@ public class OAR094UseExamplesCheck extends BaseCheck {
         if (node.propertyMap().containsKey("example")) {
             addIssue(KEY, translate(MESSAGE), node.propertyMap().get("example").key());
             return; 
-        }
-        
+        }        
         // Recurse into children
         for (JsonNode child : node.propertyMap().values()) {
             deepSearchForExample(child);
@@ -50,7 +49,7 @@ public class OAR094UseExamplesCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream()) 
                 .map(JsonNode::value)

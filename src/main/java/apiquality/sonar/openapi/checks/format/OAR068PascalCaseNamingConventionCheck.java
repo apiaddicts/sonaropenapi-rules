@@ -127,7 +127,7 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
         }
 
         private void visitPathNode(JsonNode node) {
-            List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+            List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                     .map(JsonNode::value)
                     .flatMap(n -> n.properties().stream()) 
                     .map(JsonNode::value)

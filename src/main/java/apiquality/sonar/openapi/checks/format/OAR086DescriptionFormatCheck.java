@@ -86,7 +86,7 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream()) 
                 .map(JsonNode::value)
@@ -160,7 +160,6 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
                 JsonNode operationDescription = operationNode.get("description");
                 checkDescriptionFormat(operationDescription);
     
-                // Check descriptions in responses
                 JsonNode responsesNode = operationNode.get("responses");                
                 if (responsesNode != null) {
                     for (JsonNode responseNode : responsesNode.propertyMap().values()) {

@@ -129,7 +129,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream())
                 .map(JsonNode::value)

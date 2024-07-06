@@ -38,20 +38,16 @@ public abstract class AbstractOpenAPIGrammarNodeCheck extends BaseCheck {
     private void checkInfoNodes(JsonNode rootNode){
         JsonNode infoNode = rootNode.get("info");
 
-        // Ya has comenzado con estos nodos
         JsonNode titleNode = infoNode.get("title");
         JsonNode descriptionNode = infoNode.get("description");
 
-        // Continuamos con los demás nodos permitidos en el objeto info
         JsonNode termsOfServiceNode = infoNode.get("termsOfService");
         
-        // Contact es un objeto, así que puedes querer verificar sus propiedades individualmente
         JsonNode contactNode = infoNode.get("contact");
         JsonNode contactNameNode = contactNode != null ? contactNode.get("name") : null;
         JsonNode contactUrlNode = contactNode != null ? contactNode.get("url") : null;
         JsonNode contactEmailNode = contactNode != null ? contactNode.get("email") : null;
 
-        // License también es un objeto
         JsonNode licenseNode = infoNode.get("license");
         JsonNode licenseNameNode = licenseNode != null ? licenseNode.get("name") : null;
         JsonNode licenseUrlNode = licenseNode != null ? licenseNode.get("url") : null;

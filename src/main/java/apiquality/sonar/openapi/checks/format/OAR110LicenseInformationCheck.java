@@ -34,7 +34,6 @@ public class OAR110LicenseInformationCheck extends BaseCheck {
             return;
         }
 
-        // Esta es una aproximación basada en tu implementación de getJsonChildren.
         List<JsonNode> infoChildren = infoNode.getJsonChildren();
 
         for (JsonNode child : infoChildren) {

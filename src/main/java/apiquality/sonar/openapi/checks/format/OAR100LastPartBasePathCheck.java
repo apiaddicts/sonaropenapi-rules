@@ -56,7 +56,7 @@ public class OAR100LastPartBasePathCheck extends BaseCheck {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         if (pathParts.size() > 1 && (!pathParts.get(pathParts.size() - 1).toLowerCase().startsWith("v") || !isInteger(pathParts.get(pathParts.size() - 1).substring(1)))) {
-            addIssue(KEY, translate("OAR100.error-version"), node.value());  // Usamos el mismo mensaje de OAR042 porque es el mismo criterio
+            addIssue(KEY, translate("OAR100.error-version"), node.value());  
         }
     }
 
