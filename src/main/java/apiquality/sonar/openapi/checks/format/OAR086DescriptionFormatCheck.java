@@ -4,6 +4,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import static apiquality.sonar.openapi.utils.JsonNodeUtils.*;
 
@@ -27,19 +28,19 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi2Grammar.PATHS, OpenApi3Grammar.PATHS, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi2Grammar.PATHS, OpenApi3Grammar.PATHS, OpenApi31Grammar.PATHS, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.ROOT.equals(node.getType()) || OpenApi3Grammar.ROOT.equals(node.getType())) {
+        if (OpenApi2Grammar.ROOT.equals(node.getType()) || OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi31Grammar.ROOT.equals(node.getType())) {
             checkInfoDescription(node);
             checkDefinitionsDescription(node);
         }
-        if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType())) {
+        if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType())|| OpenApi31Grammar.PATHS.equals(node.getType())) {
             visitPathsNode(node);
         }
-        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
+        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
         }
     }
@@ -85,7 +86,7 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream()) 
                 .map(JsonNode::value)
@@ -120,7 +121,6 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
         JsonNode schemaNode = responseNode.value().get("schema");
     
         if (schemaNode.isMissing()) {
-            System.out.println("visitSchemaNode: El nodo del esquema no está disponible.");
             return;
         }
     
@@ -128,10 +128,8 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
         if (isExternalRef(schemaNode) && externalRefNode == null) {
             externalRefNode = schemaNode;
             externalRefManagement = true;
-            System.out.println("visitSchemaNode: Gestionando referencia externa para el esquema.");
         }
     
-        System.out.println("visitSchemaNode: Resolviendo el nodo del esquema.");
         schemaNode = resolve(schemaNode);
     
         Map<String, JsonNode> properties = schemaNode.propertyMap();
@@ -139,21 +137,15 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
             for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
                 String key = entry.getKey();
                 JsonNode propertyNode = entry.getValue();
-                System.out.println("Clave: " + key + " Valor: " + propertyNode.stringValue());  // Imprime el contenido de la clave y su valor básico.
     
-                // Verifica si la clave contiene la palabra 'description'
                 if (key.contains("description")) {  
-                    System.out.println("visitSchemaNode: Verificando formato de descripción para la propiedad '" + key + "'.");
-                    checkDescriptionFormat(propertyNode);  // Usa propertyNode directamente ya que contiene la descripción
+                    checkDescriptionFormat(propertyNode); 
                 }
             }
-        } else {
-            System.out.println("visitSchemaNode: No properties found in schema node.");
         }
     
         if (externalRefManagement) {
             externalRefNode = null;
-            System.out.println("visitSchemaNode: Reinicio de la gestión de la referencia externa.");
         }
     }
     
@@ -168,7 +160,6 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
                 JsonNode operationDescription = operationNode.get("description");
                 checkDescriptionFormat(operationDescription);
     
-                // Check descriptions in responses
                 JsonNode responsesNode = operationNode.get("responses");                
                 if (responsesNode != null) {
                     for (JsonNode responseNode : responsesNode.propertyMap().values()) {

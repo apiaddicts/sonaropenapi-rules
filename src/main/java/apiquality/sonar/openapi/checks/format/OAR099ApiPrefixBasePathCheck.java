@@ -5,6 +5,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -22,7 +23,7 @@ public class OAR099ApiPrefixBasePathCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.SERVER);
+        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.SERVER, OpenApi31Grammar.SERVER);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class OAR099ApiPrefixBasePathCheck extends BaseCheck {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         if (!pathParts.isEmpty() && (!pathParts.get(0).startsWith("api-") || pathParts.get(0).length() == 4)) {
-            addIssue(KEY, translate("OAR099.error-prefix"), node.value());  // Utilizamos el mismo mensaje de OAR042 ya que es el mismo criterio
+            addIssue(KEY, translate("OAR099.error-prefix"), node.value());  
         }
     }
 }

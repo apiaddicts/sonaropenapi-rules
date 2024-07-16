@@ -2,6 +2,7 @@ package apiquality.sonar.openapi.utils;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.openapi.OpenApiConfiguration;
 import org.apiaddicts.apitools.dosonarapi.openapi.parser.OpenApiParser;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
@@ -21,7 +22,6 @@ import com.sonar.sslr.api.AstNodeType;
 public class JsonNodeUtils {
 
     private JsonNodeUtils() {
-        // Utility class
     }
 
     public static final String PROPERTIES = "properties";
@@ -54,10 +54,8 @@ public class JsonNodeUtils {
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                System.out.println("REFERENCIA INTERNA");
-                return false;  // Resolve internal references normally
+                return false;  
             } else {
-                System.out.println("REFERENCIA EXTERNA");
                 return true;
             }
         }
@@ -69,7 +67,6 @@ public class JsonNodeUtils {
     // TODO errorMessage sustituir por split de almohadilla, despues un split de barras, (si el split de almohadilla nos haya dado un valor)(bucle for, iterar el array y luego rootnode = valor del array) 
     private static JsonNode resolveExternalRef(String url) {
         String content = retriveExternalRefContent(url);   
-        System.out.println("HOLAAA: " + content); 
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
         YamlParser parser = OpenApiParser.createGeneric(configuration);
     
@@ -142,7 +139,6 @@ public class JsonNodeUtils {
         conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
     }
 
-    // Método para acceder al contenido de la última respuesta
     public static String getLastFetchedContent() {
         return lastFetchedContent;
     }
@@ -189,6 +185,6 @@ public class JsonNodeUtils {
 
     public static boolean isOperation(JsonNode node) {
         AstNodeType type = node.getType();
-        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION);
+        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION) || type.equals(OpenApi31Grammar.OPERATION);
     }
 }

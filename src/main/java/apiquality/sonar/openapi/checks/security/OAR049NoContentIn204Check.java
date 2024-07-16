@@ -24,6 +24,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -36,7 +37,7 @@ public class OAR049NoContentIn204Check extends BaseCheck {
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
-    return Sets.newHashSet(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION);
+    return Sets.newHashSet(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
   }
 
   @Override
@@ -59,6 +60,6 @@ public class OAR049NoContentIn204Check extends BaseCheck {
 
   private static boolean hasContent(JsonNode effective) {
     return effective.getType() instanceof OpenApi2Grammar && !effective.get("schema").isMissing()
-        || effective.getType() instanceof OpenApi3Grammar && ! effective.get("content").isMissing();
+        || effective.getType() instanceof OpenApi3Grammar && ! effective.get("content").isMissing() || effective.getType() instanceof OpenApi31Grammar && ! effective.get("content").isMissing();
   }
 }

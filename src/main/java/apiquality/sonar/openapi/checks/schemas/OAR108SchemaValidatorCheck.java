@@ -7,6 +7,7 @@ import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -121,28 +122,22 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
     private String determineExampleType(JsonNode node) {
         String value = node.stringValue().trim();
     
-        // Verifica si el valor es numérico.
         if (value.matches("-?\\d+\\.\\d+")) {
-            // Si el valor tiene un punto, se clasifica como 'number'.
             return "number";
         } else if (value.matches("-?\\d+")) {
-            // Si el valor es numérico pero no tiene un punto, se clasifica como 'integer'.
             return "integer";
         }
     
-        // Verifica si es un valor booleano.
         if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
             return "boolean";
         }
     
-        // Verifica si el valor es un objeto o un array.
         if (node.isObject()) {
             return "object";
         } else if (node.isArray()) {
             return "array";
         }
     
-        // Si no es ninguno de los anteriores, asume que es una cadena.
         return "string";
     }
 }

@@ -5,6 +5,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -23,12 +24,12 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.RESPONSES, OpenApi3Grammar.SCHEMA, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.RESPONSES, OpenApi3Grammar.SCHEMA, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.SCHEMA, OpenApi31Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi31Grammar.REQUEST_BODY, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
+        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
         } else if (node.getType().equals(OpenApi2Grammar.RESPONSES) || node.getType().equals(OpenApi2Grammar.SCHEMA)) {
             visitV2Node(node);
@@ -128,7 +129,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) // operations
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream())
                 .map(JsonNode::value)
@@ -163,7 +164,6 @@ public class OAR031ExamplesCheck extends BaseCheck {
         JsonNode schemaNode = responseNode.value().get("schema");
 
         if (schemaNode.isMissing()) {
-            System.out.println("visitSchemaNode: El nodo del esquema no está disponible.");
             return;
         }
 
@@ -171,13 +171,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
         if (isExternalRef(schemaNode) && externalRefNode == null) {
             externalRefNode = schemaNode;
             externalRefManagement = true;
-            System.out.println("visitSchemaNode: Gestionando referencia externa para el esquema.");
         }
-
-        System.out.println("visitSchemaNode: Resolviendo el nodo del esquema.");
         schemaNode = resolve(schemaNode);
 
-        // Inspecciona si el nodo del esquema tiene propiedades
         JsonNode propertiesNode = schemaNode.get("properties");
         if (propertiesNode != null && !propertiesNode.isMissing() && propertiesNode.isObject()) {
             Map<String, JsonNode> properties = propertiesNode.propertyMap();
@@ -185,27 +181,17 @@ public class OAR031ExamplesCheck extends BaseCheck {
                 for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
                     String key = entry.getKey();
                     JsonNode propertyNode = entry.getValue();
-                    System.out.println("Propiedad: " + key);
-
-                    // Busca el nodo 'example' en cada propiedad
                     JsonNode exampleNode = propertyNode.get("example");
                     if (exampleNode != null && !exampleNode.isMissing()) {
-                        System.out.println("Encontrado 'example' en: " + key);
-                        // Aquí añadirías la lógica para manejar la presencia incorrecta de 'example'
                     } else {
                         addIssue(KEY, translate("OAR031.error-property"), getTrueNode(propertyNode.key()));
                     }
                 }
-            } else {
-                System.out.println("visitSchemaNode: No properties found in properties node.");
             }
-        } else {
-            System.out.println("visitSchemaNode: El nodo de propiedades no está disponible o no contiene propiedades.");
         }
 
         if (externalRefManagement) {
             externalRefNode = null;
-            System.out.println("visitSchemaNode: Reinicio de la gestión de la referencia externa.");
         }
     }
 

@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
@@ -38,8 +39,10 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
         return ImmutableSet.of(
             OpenApi2Grammar.PATH,
             OpenApi3Grammar.PATH,
+            OpenApi31Grammar.PATH,
             OpenApi2Grammar.OPERATION,
-            OpenApi3Grammar.OPERATION
+            OpenApi3Grammar.OPERATION,
+            OpenApi31Grammar.OPERATION
         );
     }
 
@@ -59,9 +62,9 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
     public void visitNode(JsonNode node) {
         if (hasGlobalSecurity) return;  
 
-        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH)) {
+        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH)) {
             visitOperationNode(node);
-        } else if (node.is(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION)) {
+        } else if (node.is(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION)) {
             visitOperationNode(node);
         }
     }
