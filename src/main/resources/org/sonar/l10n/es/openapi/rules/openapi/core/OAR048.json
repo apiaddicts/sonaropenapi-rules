@@ -1,0 +1,13 @@
+{
+  "title": "OAR048 - AtMostOneBodyParameter - Como mucho solo se puede definir un parámetro de tipo body.",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30mn"
+  },
+  "tags": [
+    "core"
+  ],
+  "defaultSeverity": "BLOCKER"
+}

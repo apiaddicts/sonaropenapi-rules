@@ -1,0 +1,160 @@
+<p>POST creation responses must have a Location header with the reference to the new resource.</p>
+<h2>Noncompliant Code Example (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/pets": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+swagger: "2.0"
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    post:
+      responses:
+        201:
+          description: Created
+</pre>
+<h2>Compliant Solution (OpenAPI 2)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "swagger": "2.0", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/pets": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Created", 
+                        "headers": {
+                            "Location": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+swagger: "2.0"
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    post:
+      responses:
+        201:
+          description: Created
+          headers:
+            Location:
+              type: string
+</pre>
+<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.0", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/pets": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+openapi: 3.0.0
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    post:
+      responses:
+        201:
+          description: Created
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<h3>JSON</h3>
+<pre>
+{
+    "openapi": "3.0.0", 
+    "info": {
+        "title": "Swagger Petstore", 
+        "version": "1.0.0"
+    }, 
+    "paths": {
+        "/pets": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Created", 
+                        "headers": {
+                            "Location": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+<h3>YAML</h3>
+<pre>
+openapi: 3.0.0
+info:
+  title: Swagger Petstore
+  version: 1.0.0
+paths:
+  /pets:
+    post:
+      responses:
+        201:
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+</pre>

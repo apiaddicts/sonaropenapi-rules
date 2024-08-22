@@ -1,0 +1,13 @@
+{
+  "title": "OAR053 - ResponseHeaders - Hay cabeceras de respuesta obligatorias y otras que no están permitidas",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "MAJOR"
+}

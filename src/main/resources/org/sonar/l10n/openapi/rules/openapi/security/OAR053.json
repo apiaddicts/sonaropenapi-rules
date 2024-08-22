@@ -1,0 +1,13 @@
+{
+  "title": "OAR053 - ResponseHeaders - There are mandatory response headers and others that are not allowed",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "vulnerability"
+  ],
+  "defaultSeverity": "MAJOR"
+}
