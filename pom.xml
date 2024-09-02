@@ -41,7 +41,7 @@
     <dependency>
       <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-front-end</artifactId>
-      <version>${sonaropenapi.version}</version>
+      <version>1.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
@@ -75,7 +75,7 @@
     <dependency>
       <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-test-tools</artifactId>
-      <version>${sonaropenapi.version}</version>
+      <version>1.1.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
