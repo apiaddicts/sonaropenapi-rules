@@ -20,12 +20,14 @@ paths:
             type: string
             format: date
           required: false
+          description: Especifica el parámetro.
         - name: hasta
           in: query
           schema:
             type: string
             format: date
           required: false
+          description: Especifica el parámetro.
       responses:
         '200':
           description: OK.

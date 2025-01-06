@@ -159,7 +159,15 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
             for (JsonNode operationNode : pathNode.propertyMap().values()) {
                 JsonNode operationDescription = operationNode.get("description");
                 checkDescriptionFormat(operationDescription);
-    
+
+                JsonNode parametersNode = operationNode.get("parameters");
+                if (parametersNode != null && parametersNode.isArray()) {
+                    for (JsonNode parameter : parametersNode.elements()) {
+                        JsonNode parameterDescription = parameter.get("description");
+                        checkDescriptionFormat(parameterDescription);
+                    }
+                }
+
                 JsonNode responsesNode = operationNode.get("responses");                
                 if (responsesNode != null) {
                     for (JsonNode responseNode : responsesNode.propertyMap().values()) {
