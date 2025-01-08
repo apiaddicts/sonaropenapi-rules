@@ -10,6 +10,28 @@
         "get": {
           "summary": "lista de mascotas.",
           "description": "", # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
+          "parameters": [
+              {
+                "name": "desde",
+                "in": "query",
+                "schema": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "required": false,
+                "description": "describe init time" # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
+              },
+              {
+                "name": "hasta",
+                "in": "query",
+                "schema": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "required": false,
+                "description": "descibe parameter" # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
+              }
+            ],
           "responses": {
             "200": {
               "description": "una lista de mascotas." # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
