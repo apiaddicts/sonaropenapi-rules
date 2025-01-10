@@ -1,0 +1,13 @@
+{
+  "title": "OAR113 - CustomField - Field or extension must be at the assigned location",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}

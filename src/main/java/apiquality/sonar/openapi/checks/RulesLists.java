@@ -46,7 +46,8 @@ public final class RulesLists {
             OAR050ProvideOpSummaryCheck.class,
             OAR051DescriptionDiffersSummaryCheck.class,
             OAR110LicenseInformationCheck.class,
-            OAR111ContactInformationCheck.class
+            OAR111ContactInformationCheck.class,
+            OAR113CustomFieldCheck.class
         );
     }
 

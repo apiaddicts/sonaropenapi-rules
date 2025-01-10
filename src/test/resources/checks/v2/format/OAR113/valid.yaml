@@ -1,0 +1,24 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Sample API"
+  x-custom-example: "example value"
+paths:
+  /example:
+    get:
+      description: "Get example"
+      responses:
+        "200":
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/ExampleObject"
+definitions:
+  ExampleObject:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  x-custom-example:
+    type: object

@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": { # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
+    "version": "1.0.0",
+    "title": "Sample API"
+  },
+  "paths": {
+    "/example": {
+      "get": {
+        "description": "Get example",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/ExampleObject"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ExampleObject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "x-extension-field": "example"
+    }
+  }
+}
