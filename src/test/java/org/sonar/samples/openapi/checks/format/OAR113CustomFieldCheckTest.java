@@ -45,8 +45,8 @@ public class OAR113CustomFieldCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(3);
-        assertParameterProperties("fieldName", "x-extension-example", RuleParamType.STRING);
-        assertParameterProperties("fieldLocation", "info", RuleParamType.STRING);
+        assertNumberOfParameters(2);
+        assertParameterProperties("fieldName", "x-custom-example", RuleParamType.STRING);
+        assertParameterProperties("fieldLocation", "path", RuleParamType.STRING);
     }
 }

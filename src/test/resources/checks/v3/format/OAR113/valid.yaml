@@ -2,7 +2,6 @@ openapi: "3.0.0"
 info:
   version: "1.0.0"
   title: "Sample API"
-  x-custom-example: "example value"
 paths:
   /example:
     get:
@@ -14,6 +13,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExampleObject"
+    x-custom-example: "example"
 components:
   schemas:
     ExampleObject:
@@ -23,5 +23,3 @@ components:
           type: string
         name:
           type: string
-  x-custom-example: "example"
-

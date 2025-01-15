@@ -12,6 +12,7 @@ paths:
           description: "Successful response"
           schema:
             $ref: "#/definitions/ExampleObject"
+    x-custom-example: "example"
 definitions:
   ExampleObject:
     type: object
@@ -20,5 +21,3 @@ definitions:
         type: string
       name:
         type: string
-  x-custom-example:
-    type: object

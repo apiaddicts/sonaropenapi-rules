@@ -2,8 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Sample API",
-    "x-custom-example": "example value"
+    "title": "Sample API"
   },
   "paths": {
     "/example": {
@@ -16,14 +15,13 @@
               "$ref": "#/definitions/ExampleObject"
             }
           }
-        }
-      }
+        },
+        "x-custom-example": "example"
+      },
+      "x-custom-example": "example"
     }
   },
   "definitions": {
-    "x-custom-example": {
-      "type": "object"
-    },
     "ExampleObject": {
       "type": "object",
       "properties": {

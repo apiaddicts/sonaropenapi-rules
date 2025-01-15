@@ -3,7 +3,6 @@
   "info": {
     "version": "1.0.0",
     "title": "Sample API",
-    "x-custom-example": "example value"
   },
   "paths": {
     "/example": {
@@ -21,11 +20,11 @@
             }
           }
         }
-      }
+      },
+      "x-custom-example": "example value"
     }
   },
   "components": {
-    "x-custom-example": "example",
     "schemas": {
       "ExampleObject": {
         "type": "object",

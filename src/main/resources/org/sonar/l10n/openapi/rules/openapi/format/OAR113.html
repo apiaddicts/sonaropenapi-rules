@@ -28,7 +28,7 @@
 <h2>Noncompliant Solution (OpenAPI 2)</h2>
 <pre>
     swagger: "2.0"
-    info: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
+    info:
       version: "1.0.0"
       title: "Sample API"
     paths:
@@ -55,7 +55,7 @@
 </pre>
 <h2>Noncompliant Solution location (OpenAPI 2)</h2>
 <pre>
-    swagger: "2.0" # Noncompliant {{OAR113: The location definitions is not present.}}
+    swagger: "2.0"
     info:
       version: "1.0.0"
       title: "Sample API"
@@ -103,7 +103,7 @@
 <h2>Noncompliant Solution (OpenAPI 3)</h2>
 <pre>
     openapi: "3.0.0"
-    info: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
+    info:
       version: "1.0.0"
       title: "Sample API"
     paths:
@@ -117,7 +117,7 @@
                 application/json:
                   schema:
                     $ref: "#/components/schemas/ExampleObject"
-    components: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
+    components:
       schemas:
         ExampleObject:
           type: object

@@ -1,7 +1,11 @@
 package apiquality.sonar.openapi.checks.format;
 
 import apiquality.sonar.openapi.checks.BaseCheck;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
@@ -20,10 +24,8 @@ import static apiquality.sonar.openapi.utils.JsonNodeUtils.resolve;
 public class OAR113CustomFieldCheck extends BaseCheck {
 
     public static final String KEY = "OAR113";
-    protected JsonNode externalRefNode= null;
-    private static final String MESSAGE = "OAR113.error";
     private static final String DEFAULT_FIELD_NAME = "x-custom-example";
-    private static final String DEFAULT_FIELD_LOCATION = "info";
+    private static final String DEFAULT_FIELD_LOCATION = "path";
 
     @RuleProperty(
             key = "fieldName",
@@ -42,83 +44,95 @@ public class OAR113CustomFieldCheck extends BaseCheck {
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(
-                OpenApi2Grammar.ROOT,
-                OpenApi2Grammar.INFO,
                 OpenApi2Grammar.PATHS,
-                OpenApi2Grammar.DEFINITIONS,
-                OpenApi3Grammar.ROOT,
-                OpenApi3Grammar.INFO,
+                OpenApi2Grammar.PATH,
+                OpenApi2Grammar.OPERATION,
+                OpenApi2Grammar.PARAMETER,
+                OpenApi2Grammar.RESPONSE,
+                OpenApi2Grammar.SCHEMA,
+                OpenApi2Grammar.HEADER,
                 OpenApi3Grammar.PATHS,
+                OpenApi3Grammar.PATH,
                 OpenApi3Grammar.COMPONENTS,
-                OpenApi31Grammar.ROOT,
-                OpenApi31Grammar.INFO,
+                OpenApi3Grammar.OPERATION,
+                OpenApi3Grammar.PARAMETER,
+                OpenApi3Grammar.RESPONSE,
+                OpenApi3Grammar.SCHEMA,
+                OpenApi3Grammar.HEADER,
+                OpenApi31Grammar.OPERATION,
                 OpenApi31Grammar.PATHS,
-                OpenApi31Grammar.COMPONENTS);
+                OpenApi31Grammar.PATH,
+                OpenApi31Grammar.COMPONENTS,
+                OpenApi31Grammar.PARAMETER,
+                OpenApi31Grammar.RESPONSE,
+                OpenApi31Grammar.SCHEMA,
+                OpenApi31Grammar.HEADER
+        );
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.ROOT.equals(node.getType())) {
-            if(fieldLocation.equals("components")){
-                fieldLocation = "definitions";
+        String[] locations = fieldLocation.split(",");
+        if (OpenApi3Grammar.PARAMETER.equals(node.getType()) || OpenApi2Grammar.PARAMETER.equals(node.getType()) ){
+            System.out.println(node.key().getTokenValue());
+
+        }
+        manageOperationAndResponse(node,locations);
+        analyzePathNodes(node,locations);
+
+
+    }
+
+    private void manageOperationAndResponse(JsonNode node, String[] locations){
+        if (OpenApi2Grammar.OPERATION.equals(node.getType()) || OpenApi3Grammar.OPERATION.equals(node.getType()) || OpenApi31Grammar.OPERATION.equals(node.getType())){
+            if (node.key().getTokenValue().equals("get") && (Arrays.asList(locations).contains("operation_get") || Arrays.asList(locations).contains("operation") )){
+                checkRequiredFieldInNode(node);
             }
-            checkRequiredFieldInNode(node);
-        }else if (OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi31Grammar.ROOT.equals(node.getType())){
-            if(fieldLocation.equals("definitions")){
-                fieldLocation = "components";
+            if (node.key().getTokenValue().equals("post") && (Arrays.asList(locations).contains("operation_post") || Arrays.asList(locations).contains("operation") )){
+                checkRequiredFieldInNode(node);
             }
-            checkRequiredFieldInNode(node);
+        }
+        if (OpenApi2Grammar.RESPONSE.equals(node.getType()) || OpenApi3Grammar.RESPONSE.equals(node.getType()) || OpenApi31Grammar.RESPONSE.equals(node.getType())){
+            if (node.key().getTokenValue().equals("200") && (Arrays.asList(locations).contains("response_200") || Arrays.asList(locations).contains("response"))){
+                checkRequiredFieldInNode(node);
+            }
+            if (node.key().getTokenValue().equals("400") && (Arrays.asList(locations).contains("response_400") || Arrays.asList(locations).contains("response"))){
+                checkRequiredFieldInNode(node);
+            }
+        }
+        if(OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())){
+            if(Arrays.asList(locations).contains("path"))
+                checkRequiredFieldInNode(node);
+        }
+        if(OpenApi2Grammar.SCHEMA.equals(node.getType()) || OpenApi3Grammar.SCHEMA.equals(node.getType()) || OpenApi31Grammar.SCHEMA.equals(node.getType())){
+            if(Arrays.asList(locations).contains("schema"))
+                checkRequiredFieldInNode(node);
+        }
+        if(OpenApi2Grammar.HEADER.equals(node.getType()) || OpenApi3Grammar.HEADER.equals(node.getType()) || OpenApi31Grammar.HEADER.equals(node.getType())){
+            if(Arrays.asList(locations).contains("header"))
+                checkRequiredFieldInNode(node);
+        }
+        if(OpenApi2Grammar.PARAMETER.equals(node.getType()) || OpenApi3Grammar.PARAMETER.equals(node.getType()) || OpenApi31Grammar.PARAMETER.equals(node.getType())){
+            if(Arrays.asList(locations).contains("parameter"))
+                checkRequiredFieldInNode(node);
         }
 
+    }
+
+    private void  analyzePathNodes(JsonNode node, String[] locations){
+        if(Arrays.asList(locations).contains(node.key().getTokenValue())){
+            checkRequiredFieldInNode(node);
+        }
     }
 
     private void checkRequiredFieldInNode(JsonNode rootNode) {
-        JsonNode targetNode = resolveTargetNode(rootNode, fieldLocation);
-
-        boolean externalRefManagement = false;
-        if (isExternalRef(rootNode) && externalRefNode == null) {
-            externalRefNode = rootNode;
-            externalRefManagement = true;
-        }
-
-        targetNode = resolve(targetNode);
-
-        if (targetNode == null || targetNode.isMissing()) {
-            addIssue(KEY, translate("OAR113.error-found",fieldLocation), targetNode);
-            return;
-        }
-
         if (isExtension(fieldName)) {
-            checkExtension(targetNode, fieldName);
+            checkExtension(rootNode, fieldName);
         } else {
-            checkStandardField(targetNode, fieldName);
+            checkStandardField(rootNode, fieldName);
         }
-        if (externalRefManagement) externalRefNode = null;
     }
 
-    private JsonNode resolveTargetNode(JsonNode rootNode, String location) {
-        if (location == null || location.isEmpty()) {
-            return rootNode;
-        }
-        String[] pathParts = location.split("\\.");
-        JsonNode currentNode = rootNode;
-
-        for (String part : pathParts) {
-
-            if (currentNode == null) {
-                return null;
-            }
-            currentNode = currentNode.get(part);
-        }
-        return currentNode;
-    }
-
-
-    private JsonNode getNodesV2(JsonNode node, String location){
-        JsonNode currentNode = node;
-        currentNode = currentNode.get(location);
-        return currentNode;
-    }
 
     private boolean isExtension(String field) {
         return field != null && field.startsWith("x-");

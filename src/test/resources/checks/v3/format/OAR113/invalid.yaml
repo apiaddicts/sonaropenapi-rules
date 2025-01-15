@@ -1,9 +1,9 @@
 openapi: "3.0.0"
-info: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
+info:
   version: "1.0.0"
   title: "Sample API"
 paths:
-  /example:
+  /example: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
     get:
       description: "Get example"
       responses:
@@ -13,14 +13,4 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExampleObject"
-components:
-  schemas:
-    ExampleObject:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      x-extension-field: "example"
 
