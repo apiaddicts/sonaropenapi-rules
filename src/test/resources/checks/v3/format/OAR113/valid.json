@@ -7,9 +7,11 @@
   "paths": {
     "/example": {
       "get": {
+        "x-custom-example": "example value",
         "description": "Get example",
         "responses": {
           "200": {
+            "x-custom-example": "example value",
             "description": "Successful response",
             "content": {
               "application/json": {

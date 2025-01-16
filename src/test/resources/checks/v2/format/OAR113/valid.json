@@ -10,6 +10,7 @@
         "description": "Get example",
         "responses": {
           "200": {
+            "x-custom-example": "example",
             "description": "Successful response",
             "schema": {
               "$ref": "#/definitions/ExampleObject"

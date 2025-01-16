@@ -31,7 +31,7 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
 
     @Test
     public void verifyInV2Without() {
-        verifyV2("plain-without2");
+        verifyV2("plain-without");
     }
 
     @Test

@@ -5,9 +5,11 @@ info:
 paths:
   /example:
     get:
+      x-custom-example: "example"
       description: "Get example"
       responses:
         "200":
+          x-custom-example: "example"
           description: "Successful response"
           content:
             application/json:

@@ -6,18 +6,13 @@ info:
 paths:
   /example:
     get:
+      x-custom-example: "example"
       description: "Get example"
       responses:
         "200":
+          x-custom-example: "example"
           description: "Successful response"
           schema:
             $ref: "#/definitions/ExampleObject"
     x-custom-example: "example"
-definitions:
-  ExampleObject:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
+

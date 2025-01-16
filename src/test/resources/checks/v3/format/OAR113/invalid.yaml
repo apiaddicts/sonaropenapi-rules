@@ -4,10 +4,10 @@ info:
   title: "Sample API"
 paths:
   /example: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
-    get:
+    get: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
       description: "Get example"
       responses:
-        "200":
+        "200": # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
           description: "Successful response"
           content:
             application/json:

@@ -15,8 +15,6 @@ public class OAR113CustomFieldCheckTest extends BaseCheckTest {
         check = new OAR113CustomFieldCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
-
-        System.out.println(v2Path);
     }
 
 
@@ -47,6 +45,6 @@ public class OAR113CustomFieldCheckTest extends BaseCheckTest {
     public void verifyParameters() {
         assertNumberOfParameters(2);
         assertParameterProperties("fieldName", "x-custom-example", RuleParamType.STRING);
-        assertParameterProperties("fieldLocation", "path", RuleParamType.STRING);
+        assertParameterProperties("fieldLocation", "path,operation_get,response_200", RuleParamType.STRING);
     }
 }
