@@ -1,0 +1,145 @@
+<p>Field or extension must be at the assigned location</p>
+<h2>Compliant Solution (OpenAPI 2)</h2>
+<pre>
+    swagger: "2.0"
+    info:
+      version: "1.0.0"
+      title: "Sample API"
+      x-custom-example: "example value"
+    paths:
+      /example:
+        get:
+          description: "Get example"
+          responses:
+            "200":
+              description: "Successful response"
+              schema:
+                $ref: "#/definitions/ExampleObject"
+    definitions:
+      ExampleObject:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+        x-extension-field: "example"
+</pre>
+<h2>Noncompliant Solution (OpenAPI 2)</h2>
+<pre>
+    swagger: "2.0"
+    info:
+      version: "1.0.0"
+      title: "Sample API"
+    paths:
+      /example:
+        get:
+          description: "Get example"
+          responses:
+            "200":
+              description: "Successful response"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ExampleObject"
+    definitions: # Noncompliant {{OAR113: Field or extension x-custom-example must be at the assigned location}}
+      schemas:
+        ExampleObject:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+          x-extension-field: "example"
+</pre>
+<h2>Noncompliant Solution location (OpenAPI 2)</h2>
+<pre>
+    swagger: "2.0"
+    info:
+      version: "1.0.0"
+      title: "Sample API"
+    paths:
+      /example:
+        get:
+          description: "Get example"
+          responses:
+            "200":
+              description: "Successful response"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ExampleObject"
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<pre>
+    openapi: "3.0.0"
+    info:
+      version: "1.0.0"
+      title: "Sample API"
+      x-extension-example: "example value"
+    paths:
+      /example:
+        get:
+          description: "Get example"
+          responses:
+            "200":
+              description: "Successful response"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ExampleObject"
+    components:
+      schemas:
+        ExampleObject:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+          x-extension-field: "example"
+</pre>
+<h2>Noncompliant Solution (OpenAPI 3)</h2>
+<pre>
+    openapi: "3.0.0"
+    info:
+      version: "1.0.0"
+      title: "Sample API"
+    paths:
+      /example:
+        get:
+          description: "Get example"
+          responses:
+            "200":
+              description: "Successful response"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/ExampleObject"
+    components:
+      schemas:
+        ExampleObject:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+          x-extension-field: "example"
+</pre>
+<h2>Noncompliant Solution location (OpenAPI 3)</h2>
+<pre>
+    openapi: "3.0.0" # Noncompliant {{OAR113: The location components is not present.}}
+    info:
+      version: "1.0.0"
+      title: "Sample API"
+    paths:
+      /example:
+        get:
+          description: "Get example"
+          responses:
+            "200":
+              description: "Successful response"
+
+</pre>

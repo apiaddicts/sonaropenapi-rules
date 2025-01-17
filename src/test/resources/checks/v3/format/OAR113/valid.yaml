@@ -1,0 +1,27 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Sample API"
+paths:
+  /example:
+    get:
+      x-custom-example: "example"
+      description: "Get example"
+      responses:
+        "200":
+          x-custom-example: "example"
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleObject"
+    x-custom-example: "example"
+components:
+  schemas:
+    ExampleObject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
