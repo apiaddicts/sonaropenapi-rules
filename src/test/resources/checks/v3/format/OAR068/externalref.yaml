@@ -35,8 +35,8 @@ paths:
           content:
             application/json:
               schema: # Noncompliant {{OAR068: RequestBody and Responses schema property names must be compliant with the PascalCase naming convention}} 
-                $ref: >-  
-                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/bc8a6999-da3f-4709-abdc-aac6dedff91c/user.yaml#/datosUsuario
+                $ref: >-
+                  https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR068.yaml#/datosUsuario
         '400':
           description: Bad Request.
           headers:
@@ -47,8 +47,8 @@ paths:
           content:
             application/json:
               schema: # Noncompliant {{OAR068: RequestBody and Responses schema property names must be compliant with the PascalCase naming convention}}
-                $ref: >- 
-                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
+                $ref: >-
+                  https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR086.yaml#/ErrorMessage
               example:  
                 error:
                   status: '400'
