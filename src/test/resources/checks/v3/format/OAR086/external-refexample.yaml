@@ -47,7 +47,7 @@ paths:
             application/json:
               schema:
                 $ref: >- # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
-                  https://api-gateway.apiquality.io/api_apiquality_dev/v1/models/afcda940-7868-4ed3-8002-b5754b35cb26/error-message.yaml#/errorMessage
+                  https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR086.yaml#/ErrorMessage
               example:
                 error:
                   status: '400'
