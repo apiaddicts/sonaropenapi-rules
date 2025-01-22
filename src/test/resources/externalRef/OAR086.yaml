@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  title: Error Message API
+  version: 1.0.0
+paths:
+  /errors:
+    get:
+      summary: Listado de mensajes de error.
+      description: Recupera una lista de mensajes de error disponibles.
+      responses:
+        '200':
+          description: Una lista de mensajes de error.
+          content:
+            application/json:
+              schema:
+
+components:
+  schemas:
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código único del mensaje de error.
+        message:
+          type: string
+          description: Detalle del mensaje de error.
+        timestamp:
+          type: string
+          format: date-time
+          description: Marca de tiempo en que ocurrió el error.
+      description: representa la estructura de un mensaje de error
