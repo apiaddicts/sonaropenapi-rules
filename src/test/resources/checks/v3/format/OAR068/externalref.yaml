@@ -34,7 +34,7 @@ paths:
                 type: string
           content:
             application/json:
-              schema: # Noncompliant {{OAR068: RequestBody and Responses schema property names must be compliant with the PascalCase naming convention}} 
+              schema:
                 $ref: >-
                   https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR068.yaml#/datosUsuario
         '400':
@@ -46,7 +46,7 @@ paths:
                 type: string
           content:
             application/json:
-              schema: # Noncompliant {{OAR068: RequestBody and Responses schema property names must be compliant with the PascalCase naming convention}}
+              schema:
                 $ref: >-
                   https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR086.yaml#/ErrorMessage
               example:  

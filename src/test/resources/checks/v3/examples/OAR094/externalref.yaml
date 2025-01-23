@@ -35,7 +35,7 @@ paths:
           content:
             application/json:
               schema:              
-                $ref: >-  # Noncompliant {{OAR094: It is recommended to use examples instead of example as some tools like microcks use this section of the definition}}
+                $ref: >-
                   https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR094.yaml#/datosUsuario
         '400':
           description: Bad Request.
