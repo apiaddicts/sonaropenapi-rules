@@ -35,7 +35,8 @@ paths:
           content:
             application/json:
               schema:              
-                $ref: 'https://api.swaggerhub.com/domains/santalucia/errores-domain-oas3/1.0#/components/responses/error_400'
+                $ref: >- # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
+                  https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR086.yaml#/components/schemas/datosUsuario
         '400':
           description: Bad Request.
           headers:
@@ -47,7 +48,7 @@ paths:
             application/json:
               schema:
                 $ref: >- # Noncompliant {{OAR086: Descriptions must begin with a capital letter, end with a period and not be empty}}
-                  https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR086.yaml#/ErrorMessage
+                  https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR086.yaml#/components/schemas/ErrorMessage
               example:
                 error:
                   status: '400'

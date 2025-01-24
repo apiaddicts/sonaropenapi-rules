@@ -16,6 +16,16 @@ paths:
 
 components:
   schemas:
+    datosUsuario:
+      type: object
+      description: representa al error
+      properties:
+        id:
+          type: string
+          description: identificador único del usuario.
+        nombre:
+          type: string
+          description: nombre del usuario.
     ErrorMessage:
       type: object
       properties:

@@ -17,22 +17,10 @@ paths:
                   $ref: '#/components/schemas/Pet'
 
 components:
-  schemas:
-    Pet:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Daisy
-        animalType:
-          type: string
-          example: Dog
-    ErrorMessage:
-      type: object
-      properties:
-        code:
-          type: string
-          example: ERR001
-        message:
-          type: string
-          example: Ocurrió un error inesperado.
+  responses:
+    server_error_response:
+      description: Default error response
+      content:
+        application/json:
+          schema:
+            type: object
