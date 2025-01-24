@@ -23,8 +23,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
         '400':
-          $ref: >-  
-              https://api.swaggerhub.com/domains/santalucia/errores-domain-oas3/1.0#/components/responses/error_400
+          $ref: >- # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+            https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR031.yaml#/components/responses/server_error_response
   /users/{userId}:
     get:
       summary: Get a user by ID
@@ -47,8 +47,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
         '400':
-          $ref: >-  
-              https://api.swaggerhub.com/domains/santalucia/errores-domain-oas3/1.0#/components/responses/error_400
+          $ref: >- # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+            https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR031.yaml#/components/responses/server_error_response
 components:
   schemas:
     User:

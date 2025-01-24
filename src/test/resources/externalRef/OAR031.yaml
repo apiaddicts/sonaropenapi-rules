@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info:
+  title: API con Example
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      summary: Devuelve una lista de mascotas
+      responses:
+        '200':
+          description: Lista exitosa de mascotas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+
+components:
+  responses:
+    server_error_response:
+      description: Default error response
+      content:
+        application/json:
+          schema:
+            type: object
