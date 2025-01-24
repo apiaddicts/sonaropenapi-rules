@@ -1,30 +1,38 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
-  title: API Example
+  title: API con Example
   version: 1.0.0
 paths:
-  /example:
+  /pets:
     get:
-      summary: Example endpoint
+      summary: Devuelve una lista de mascotas
       responses:
         '200':
-          description: OK.
+          description: Lista exitosa de mascotas
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  datosUsuario:
-                    type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
 
 components:
   schemas:
-    datosUsuario:
+    Pet:
       type: object
       properties:
-        id:
+        name:
           type: string
-          description: Identificador único del usuario.
-        nombre:
+          example: Daisy
+        animalType:
           type: string
-          description: Nombre del usuario.
+          example: Dog
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: string
+          example: ERR001
+        message:
+          type: string
+          example: Ocurrió un error inesperado.
