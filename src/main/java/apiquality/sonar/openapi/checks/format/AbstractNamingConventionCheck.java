@@ -10,7 +10,7 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
 	
 	private static final String CAMEL_REGEX = "[a-z]+([A-Z][a-z]+)*([A-Z])?";
 	private static final String SNAKE_REGEX = "^[a-z0-9_$]*$";
-	private static final String KEBAB_REGEX = "^[a-z0-9-]*$";
+	private static final String KEBAB_REGEX = "^[a-z0-9-.]*$";
 	private static final String UPPER_CAMEL_REGEX = "[A-Z]+([a-z]+)*([A-Z])?";
 	private static final String PASCAL_REGEX = "^[A-Z][a-z]*(?:[A-Z][a-z]*)*$";
 
