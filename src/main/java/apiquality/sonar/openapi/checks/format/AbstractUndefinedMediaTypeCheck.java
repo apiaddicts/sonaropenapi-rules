@@ -21,7 +21,7 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
 
 	private String key;
 	private String section;
-
+	protected JsonNode externalRefNode = null;
 	private boolean globalDefinesMediaTypes = false;
 
 	public AbstractUndefinedMediaTypeCheck(String key, String section) {
@@ -66,8 +66,14 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
             List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
             for (JsonNode jsonNode : responseCodes) {
                 if (!jsonNode.key().getTokenValue().equals("204")) {
-                    JsonNode responseNode = jsonNode.resolve();
-                    visitContentNode(responseNode);
+					boolean externalRefManagement = false;
+					if (isExternalRef(jsonNode) && externalRefNode == null) {
+						externalRefNode = jsonNode;
+						externalRefManagement = true;
+					}
+					jsonNode = resolve(jsonNode);
+					visitContentNode(jsonNode);
+					if (externalRefManagement) externalRefNode = null;
                 }
             }
 		}

@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Pets API - Components
+  version: 1.0.0
+  description: Reusable components for the Pets API.
+components:
+  requestBodies:
+    CreatePetRequest:
+      description: Request body for creating a pet.
+      required: true
+      content:
+        application: {}
+    CreatePetRequest2:
+      description: Request body for updating a pet.
+      required: true
+      content:
+        application/json: {}
+  responses:
+    SuccessResponse:
+      description: Successful response.
+      content:
+        'application/json': {}

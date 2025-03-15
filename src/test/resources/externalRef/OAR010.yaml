@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: Pets API - Responses
+  version: 1.0.0
+  description: Reusable responses for the Pets API.
+components:
+  responses:
+    SuccessResponse:
+      description: Successful response.
+      content:
+        application/json: {}
+        application/xml: {}

@@ -26,6 +26,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 	private String key;
 	private String section;
 	private String message;
+	protected JsonNode externalRefNode = null;
 
 	@RuleProperty(
 			key = "media-type-exceptions",
@@ -104,8 +105,14 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
             List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
             for (JsonNode jsonNode : responseCodes) {
                 if (!jsonNode.key().getTokenValue().equals("204")) {
-                    JsonNode responseNode = jsonNode.resolve();
-                    visitContentNode(responseNode);
+					boolean externalRefManagement = false;
+					if (isExternalRef(jsonNode) && externalRefNode == null) {
+						externalRefNode = jsonNode;
+						externalRefManagement = true;
+					}
+					jsonNode = resolve(jsonNode);
+					visitContentNode(jsonNode);
+					if (externalRefManagement) externalRefNode = null;
                 }
             }
 		}

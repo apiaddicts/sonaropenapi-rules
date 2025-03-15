@@ -29,15 +29,22 @@ import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static apiquality.sonar.openapi.utils.JsonNodeUtils.*;
 
 @Rule(key = OAR044MediaTypeCheck.CHECK_KEY)
 public class OAR044MediaTypeCheck extends BaseCheck {
   protected static final String CHECK_KEY = "OAR044";
   protected static final String MESSAGE_V2 = "OAR044.error.v2";
   protected static final String MESSAGE_V3 = "OAR044.error.v3";
+  protected JsonNode externalRefNode = null;
+
 
   @VisibleForTesting
   static final Pattern MIME_TYPE_PATTERN = Pattern.compile("[a-zA-Z.0-9][a-zA-Z.0-9!#$&-_^+]+/[a-zA-Z.0-9][a-zA-Z.0-9!#$&-_^+]+(; charset=[a-zA-Z0-9-_]+)?");
@@ -46,7 +53,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
-    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE);
+    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION,OpenApi3Grammar.PATH, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE);
   }
 
   @Override
@@ -74,8 +81,37 @@ public class OAR044MediaTypeCheck extends BaseCheck {
   private void visitOpenApi3(JsonNode node) {
     if (node.getType() == OpenApi3Grammar.PARAMETER) {
       verifyParameterContent(node);
-    } else {
-      verifyContent(node);
+    }
+
+    if (node.getType() == OpenApi3Grammar.RESPONSES) {
+        List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
+        for (JsonNode jsonNode : responseCodes) {
+          if (!jsonNode.key().getTokenValue().equals("204")) {
+            boolean externalRefManagement = false;
+            if (isExternalRef(jsonNode) && externalRefNode == null) {
+              externalRefNode = jsonNode;
+              externalRefManagement = true;
+            }
+            jsonNode = resolve(jsonNode);
+            verifyContent(jsonNode);
+            if (externalRefManagement) externalRefNode = null;
+          }
+        }
+    }
+
+    if (node.getType() == OpenApi3Grammar.OPERATION) {
+      String operation = node.key().getTokenValue().toLowerCase();
+      if (operation.equals("post") || operation.equals("put") || operation.equals("patch")) {
+        JsonNode requestBodyNode = node.at("/requestBody");
+          boolean externalRefManagement = false;
+          if (isExternalRef(requestBodyNode) && externalRefNode == null) {
+            externalRefNode = requestBodyNode;
+            externalRefManagement = true;
+          }
+        requestBodyNode = resolve(requestBodyNode);
+          verifyContent(requestBodyNode);
+          if (externalRefManagement) externalRefNode = null;
+      }
     }
   }
 
