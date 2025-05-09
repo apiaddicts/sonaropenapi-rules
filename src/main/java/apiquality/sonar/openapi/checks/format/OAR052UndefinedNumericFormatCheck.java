@@ -1,7 +1,7 @@
-package org.sonar.samples.openapi.checks.format;
+package apiquality.sonar.openapi.checks.format;
 
-import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.sonar.check.Rule;
 
 @Rule(key = OAR052UndefinedNumericFormatCheck.KEY)
 public class OAR052UndefinedNumericFormatCheck extends AbstractFormatCheck {
@@ -11,7 +11,7 @@ public class OAR052UndefinedNumericFormatCheck extends AbstractFormatCheck {
 
 	@Override
 	public void validate(String type, String format, JsonNode typeNode) {
-		if ( ("integer".equals(type) || "number".equals(type)) && format == null) {
+		if (("integer".equals(type) || "number".equals(type)) && format == null) {
 			addIssue(KEY, translate(MESSAGE), typeNode.key());
 		}
 	}
