@@ -7,7 +7,7 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.format.OAR088RefParamCheck;
+import apiaddicts.sonar.openapi.checks.format.OAR088RefParamCheck;
 
 public class OAR088RefParamCheckTest extends BaseCheckTest {
 

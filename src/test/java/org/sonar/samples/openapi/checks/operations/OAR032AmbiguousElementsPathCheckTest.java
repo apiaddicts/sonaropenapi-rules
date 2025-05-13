@@ -7,7 +7,7 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.operations.OAR032AmbiguousElementsPathCheck;
+import apiaddicts.sonar.openapi.checks.operations.OAR032AmbiguousElementsPathCheck;
 
 public class OAR032AmbiguousElementsPathCheckTest extends BaseCheckTest {
 

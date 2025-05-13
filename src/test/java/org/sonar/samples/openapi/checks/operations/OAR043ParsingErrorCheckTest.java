@@ -21,7 +21,7 @@ package org.sonar.samples.openapi.checks.operations;
 
 import com.sonar.sslr.api.RecognitionException;
 
-import apiquality.sonar.openapi.checks.operations.OAR043ParsingErrorCheck;
+import apiaddicts.sonar.openapi.checks.operations.OAR043ParsingErrorCheck;
 
 import org.junit.Test;
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiFile;

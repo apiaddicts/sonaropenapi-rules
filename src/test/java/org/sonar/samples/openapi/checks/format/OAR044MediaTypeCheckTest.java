@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.format.OAR044MediaTypeCheck;
+import apiaddicts.sonar.openapi.checks.format.OAR044MediaTypeCheck;
 
 public class OAR044MediaTypeCheckTest extends BaseCheckTest {
 

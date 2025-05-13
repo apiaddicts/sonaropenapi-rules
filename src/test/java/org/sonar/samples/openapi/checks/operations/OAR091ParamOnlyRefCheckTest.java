@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.operations.OAR091ParamOnlyRefCheck;
+import apiaddicts.sonar.openapi.checks.operations.OAR091ParamOnlyRefCheck;
 
 public class OAR091ParamOnlyRefCheckTest extends BaseCheckTest {
 
