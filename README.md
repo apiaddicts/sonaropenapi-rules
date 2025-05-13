@@ -20,7 +20,7 @@ This repository contains a set of custom SonarQube rules specifically designed t
 |---|---|
 |  [CloudAppi](https://cloudappi.net/)  | Apification and generation of microservices |
 | [Madrid Digital](https://www.comunidad.madrid/servicios/sede-electronica/madrid-digital/)  | Generation of microservices  |
-| [apiaddicts](https://apiquality.io/)  | Generation of microservices  |
+| [Apiquality](https://apiquality.io/)  | Generation of microservices  |
 
 # 👩🏽‍💻  Contribute to ApiAddicts 
 
