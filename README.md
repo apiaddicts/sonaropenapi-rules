@@ -20,7 +20,7 @@ This repository contains a set of custom SonarQube rules specifically designed t
 |---|---|
 |  [CloudAppi](https://cloudappi.net/)  | Apification and generation of microservices |
 | [Madrid Digital](https://www.comunidad.madrid/servicios/sede-electronica/madrid-digital/)  | Generation of microservices  |
-| [apiaddicts](https://apiaddicts.io/)  | Generation of microservices  |
+| [apiaddicts](https://apiquality.io/)  | Generation of microservices  |
 
 # 👩🏽‍💻  Contribute to ApiAddicts 
 
@@ -100,5 +100,5 @@ This plugin is supported by SonarQube versions greater or equal to `6.7.4`
 ## 💛 Sponsors
 <img src="https://apiaddicts.cloudappi.net/web/image/4248/LOGOCloudappi2020Versiones-01.png" alt="cloudappi" width="150"/>
 <img src="https://www.comunidad.madrid/sites/default/files/styles/block_teaser_image/public/img/logos-simbolos/logo_centrado_md.png?itok=4rTUhmcj" alt="md" width="150"/>
-<img src="https://apiaddicts.io/wp-content/uploads/2022/09/cropped-logo-apiaddicts-principal-1-170x70.png" height = "75">
+<img src="https://apiquality.io/wp-content/uploads/2022/09/cropped-logo-apiquality-principal-1-170x70.png" height = "75">
 <img src="https://apiaddicts-web.s3.eu-west-1.amazonaws.com/wp-content/uploads/2022/03/17155736/cropped-APIAddicts-logotipo_rojo.png" height = "75">
