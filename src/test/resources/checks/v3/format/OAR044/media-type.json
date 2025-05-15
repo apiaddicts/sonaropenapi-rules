@@ -18,7 +18,12 @@
         "parameters" : [ {
           "name" : "someParam",
           "in" : "query",
-        }, {
+          "content" : {
+            "application" : { }, # Noncompliant {{OAR044: Declared mime type should conform to RFC6838}}
+            "text/plain" : { }
+          }
+        }, 
+        {
           "name" : "otherParam",
           "in" : "path"
         } ]

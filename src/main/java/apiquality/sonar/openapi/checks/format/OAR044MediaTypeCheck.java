@@ -53,7 +53,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
-    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION,OpenApi3Grammar.PATH, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE);
+    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE);
   }
 
   @Override
@@ -103,14 +103,14 @@ public class OAR044MediaTypeCheck extends BaseCheck {
       String operation = node.key().getTokenValue().toLowerCase();
       if (operation.equals("post") || operation.equals("put") || operation.equals("patch")) {
         JsonNode requestBodyNode = node.at("/requestBody");
-          boolean externalRefManagement = false;
-          if (isExternalRef(requestBodyNode) && externalRefNode == null) {
-            externalRefNode = requestBodyNode;
-            externalRefManagement = true;
-          }
+        boolean externalRefManagement = false;
+        if (isExternalRef(requestBodyNode) && externalRefNode == null) {
+          externalRefNode = requestBodyNode;
+          externalRefManagement = true;
+        }
         requestBodyNode = resolve(requestBodyNode);
-          verifyContent(requestBodyNode);
-          if (externalRefManagement) externalRefNode = null;
+        verifyContent(requestBodyNode);
+        if (externalRefManagement) externalRefNode = null;
       }
     }
   }

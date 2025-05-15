@@ -102,9 +102,9 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 		}
 
 		if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
-            List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
-            for (JsonNode jsonNode : responseCodes) {
-                if (!jsonNode.key().getTokenValue().equals("204")) {
+      List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
+      for (JsonNode jsonNode : responseCodes) {
+        if (!jsonNode.key().getTokenValue().equals("204")) {
 					boolean externalRefManagement = false;
 					if (isExternalRef(jsonNode) && externalRefNode == null) {
 						externalRefNode = jsonNode;
@@ -113,8 +113,8 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 					jsonNode = resolve(jsonNode);
 					visitContentNode(jsonNode);
 					if (externalRefManagement) externalRefNode = null;
-                }
-            }
+        }
+      }
 		}
 	}
 
