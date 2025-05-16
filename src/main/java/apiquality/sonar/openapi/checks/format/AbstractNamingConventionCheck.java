@@ -1,16 +1,17 @@
 package apiquality.sonar.openapi.checks.format;
 
+import apiquality.sonar.openapi.checks.BaseCheck;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import apiquality.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 public abstract class AbstractNamingConventionCheck extends BaseCheck {
 	
 	private static final String CAMEL_REGEX = "[a-z]+([A-Z][a-z]+)*([A-Z])?";
 	private static final String SNAKE_REGEX = "^[a-z0-9_$]*$";
-	private static final String KEBAB_REGEX = "^[a-z0-9-.]*$";
+	private static final String KEBAB_REGEX = "^[a-z0-9-]*$";
 	private static final String UPPER_CAMEL_REGEX = "[A-Z]+([a-z]+)*([A-Z])?";
 	private static final String PASCAL_REGEX = "^[A-Z][a-z]*(?:[A-Z][a-z]*)*$";
 
