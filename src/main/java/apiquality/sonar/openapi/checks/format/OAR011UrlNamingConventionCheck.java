@@ -13,7 +13,6 @@ import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @Rule(key = OAR011UrlNamingConventionCheck.KEY)
 public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionCheck {
@@ -22,7 +21,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	private static final String MESSAGE = "OAR011.error";
 
 	private static final String NAMING_CONVENTION = KEBAB_CASE;
-	private static final Pattern KEBAB_SEGMENT = Pattern.compile("^[a-z0-9]+([-.][a-z0-9]+)*$");
+	private static final String KEBAB_SEGMENT ="^[a-z0-9-.]*$";
 
 	@RuleProperty(
 			key = "naming-convention",
@@ -101,12 +100,10 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	}
 
 	private boolean isKebabCaseWithDots(String path) {
-		String[] segments = path.replaceAll("^/+", "").split("/");
-		for (String segment : segments) {
-			if (segment.isEmpty()) return false;
-			if (segment.startsWith(".") || segment.endsWith(".")) return false;
-			if (!KEBAB_SEGMENT.matcher(segment).matches()) return false;
-		}
-		return true;
+    if (path.contains("/")) {
+        path = path.replaceAll("\\{[^}{]*}", "");
+    }
+		String transformed = path.replaceAll("/", "-");
+		return transformed.matches(KEBAB_SEGMENT);
 	}
 }
