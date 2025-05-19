@@ -2,6 +2,7 @@ package apiaddicts.sonar.openapi.checks.format;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
+
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
@@ -20,7 +21,8 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	private static final String MESSAGE = "OAR011.error";
 
 	private static final String NAMING_CONVENTION = KEBAB_CASE;
-	
+	private static final String KEBAB_SEGMENT ="^[a-z0-9-.]*$";
+
 	@RuleProperty(
 			key = "naming-convention",
 			description = "Naming convention (snake_case, kebab-case, camelCase or UpperCamelCase).",
@@ -83,5 +85,25 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	private void visitPathNode(JsonNode node) {
 		String path = node.key().getTokenValue();
 		validateNamingConvention(path, node.key());
+	}
+
+	@Override
+	protected void validateNamingConvention(String name, JsonNode nameNode) {
+		if (nameExceptions.contains(name)) return;
+		if (KEBAB_CASE.equalsIgnoreCase(namingConvention)) {
+			if (!isKebabCaseWithDots(name)) {
+				addIssue(KEY, translate(MESSAGE, KEBAB_CASE), nameNode.key());
+			}
+			return;
+		}
+		super.validateNamingConvention(name, nameNode);
+	}
+
+	private boolean isKebabCaseWithDots(String path) {
+		if (path.contains("/")) {
+			path = path.replaceAll("\\{[^}{]*}", "");
+		}
+		String transformed = path.replace("/", "-");
+		return transformed.matches(KEBAB_SEGMENT);
 	}
 }
