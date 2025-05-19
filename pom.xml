@@ -13,6 +13,21 @@
     <name>Apiaddicts</name>
     <url>https://apiaddicts.org</url>
   </organization>
+  <url>https://github.com/apiaddicts/sonaropenapi-rules/tree/master</url>
+  <developers>
+    <developer>
+      <id>AP</id>
+      <name>Adrian Palanques</name>
+      <email>adrian.palanques@cloudappi.net</email>
+      <organization>Cloudappi</organization>
+    </developer>
+    <developer>
+      <id>AT</id>
+      <name>Aldo Torres</name>
+      <email>aldo.torres.pe@cloudappi.net</email>
+      <organization>Cloudappi</organization>
+    </developer>
+  </developers>
   <licenses>
     <license>
       <name>GNU LGPL 3</name>
