@@ -1,14 +1,13 @@
 package org.sonar.samples.openapi;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Repository;
 
-import apiquality.sonar.openapi.I18nContext;
-import apiquality.sonar.openapi.OpenAPICustomRulesDefinition;
-import apiquality.sonar.openapi.checks.RulesLists;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import apiaddicts.sonar.openapi.I18nContext;
+import apiaddicts.sonar.openapi.OpenAPICustomRulesDefinition;
+import apiaddicts.sonar.openapi.checks.RulesLists;
 
 public class OpenAPICustomRulesDefinitionTest {
 

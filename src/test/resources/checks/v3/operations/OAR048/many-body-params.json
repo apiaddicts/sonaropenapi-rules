@@ -1,0 +1,75 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "the default response"
+          }
+        }
+      },
+      "post": { # Noncompliant {{OAR048: An operation can have at most one body parameter}}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otherParam": {
+                    "type": "string"
+                  }
+                },
+                "required": ["otherParam"]
+              }
+            }
+          }
+        },
+        "x-extraRequestBody": {
+          "description": "Simulated second body param (invalid by spec)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "toto": {
+                    "type": "string"
+                  }
+                },
+                "required": ["toto"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "the default response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Used": {
+        "type": "string"
+      }
+    }
+  }
+}

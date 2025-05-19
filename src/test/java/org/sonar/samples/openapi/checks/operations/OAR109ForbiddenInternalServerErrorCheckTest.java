@@ -5,7 +5,8 @@ import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
-import apiquality.sonar.openapi.checks.operations.OAR109ForbiddenInternalServerErrorCheck;
+
+import apiaddicts.sonar.openapi.checks.operations.OAR109ForbiddenInternalServerErrorCheck;
 
 public class OAR109ForbiddenInternalServerErrorCheckTest extends BaseCheckTest {
 

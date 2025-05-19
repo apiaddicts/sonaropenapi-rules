@@ -7,7 +7,7 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.format.OAR009DefaultRequestMediaTypeCheck;
+import apiaddicts.sonar.openapi.checks.format.OAR009DefaultRequestMediaTypeCheck;
 
 public class OAR009DefaultRequestMediaTypeCheckTest extends BaseCheckTest {
 

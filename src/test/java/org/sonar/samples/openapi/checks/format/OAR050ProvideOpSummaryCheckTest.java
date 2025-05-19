@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.format.OAR050ProvideOpSummaryCheck;
+import apiaddicts.sonar.openapi.checks.format.OAR050ProvideOpSummaryCheck;
 
 public class OAR050ProvideOpSummaryCheckTest extends BaseCheckTest {
 
