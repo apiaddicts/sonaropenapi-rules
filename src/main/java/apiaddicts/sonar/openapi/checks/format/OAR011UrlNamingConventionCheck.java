@@ -100,10 +100,10 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	}
 
 	private boolean isKebabCaseWithDots(String path) {
-    if (path.contains("/")) {
-        path = path.replaceAll("\\{[^}{]*}", "");
-    }
-		String transformed = path.replaceAll("/", "-");
+		if (path.contains("/")) {
+			path = path.replaceAll("\\{[^}{]*}", "");
+		}
+		String transformed = path.replace("/", "-");
 		return transformed.matches(KEBAB_SEGMENT);
 	}
 }
