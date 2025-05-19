@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
   <artifactId>sonaropenapi-rules-community</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Community Rules</name>
@@ -185,7 +185,7 @@
         <configuration>
           <pluginKey>openapi-custom</pluginKey>
           <pluginName>OpenAPI Custom</pluginName>
-          <pluginClass>apiquality.sonar.openapi.OpenAPICustomPlugin</pluginClass>
+          <pluginClass>apiaddicts.sonar.openapi.OpenAPICustomPlugin</pluginClass>
           <skipDependenciesPackaging>true</skipDependenciesPackaging>
           <sonarLintSupported>true</sonarLintSupported>
           <sonarQubeMinVersion>${sonarQubeMinVersion}</sonarQubeMinVersion>
@@ -286,4 +286,3 @@
   </profiles>
 
 </project>
-

@@ -5,7 +5,8 @@ import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
-import apiquality.sonar.openapi.checks.format.OAR099ApiPrefixBasePathCheck;
+
+import apiaddicts.sonar.openapi.checks.format.OAR099ApiPrefixBasePathCheck;
 
 public class OAR099ApiPrefixBasePathCheckTest extends BaseCheckTest {
 

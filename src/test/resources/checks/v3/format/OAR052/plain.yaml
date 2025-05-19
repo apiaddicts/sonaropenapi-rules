@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /invoices:
+    get:
+      responses:
+        '200':
+          description: A invoice.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                  product_id:
+                    type: integer # Noncompliant {{OAR052: Numeric types requires a format}}
+                  line:
+                    type: integer # Noncompliant {{OAR052: Numeric types requires a format}}
+                  price:
+                    type: number # Noncompliant {{OAR052: Numeric types requires a format}}

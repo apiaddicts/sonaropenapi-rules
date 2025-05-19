@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.security.OAR049NoContentIn204Check;
+import apiaddicts.sonar.openapi.checks.security.OAR049NoContentIn204Check;
 
 public class OAR049NoContentIn204CheckTest extends BaseCheckTest {
 

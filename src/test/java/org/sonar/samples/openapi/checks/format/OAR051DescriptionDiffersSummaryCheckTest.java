@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.format.OAR051DescriptionDiffersSummaryCheck;
+import apiaddicts.sonar.openapi.checks.format.OAR051DescriptionDiffersSummaryCheck;
 
 public class OAR051DescriptionDiffersSummaryCheckTest extends BaseCheckTest {
 

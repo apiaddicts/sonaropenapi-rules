@@ -5,11 +5,6 @@ info:
 paths:
   /pets:
     get:
-      requestBody:
-        content:
-          'application': {}   # Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}
-#         ^^^^^^^^^^^^^
-          'text/*': {}
       responses:
         '200':
           description: some operation
@@ -24,6 +19,10 @@ paths:
         - name: otherParam
           in: path
     post:
+      requestBody:
+        content:
+          'application': { } # Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}
+          'text/*': { }
       responses:
          '200':
            description: some operation
