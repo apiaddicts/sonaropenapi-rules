@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.apim.wso2.OAR005UndefinedWso2ScopeUseCheck;
+import apiaddicts.sonar.openapi.checks.apim.wso2.OAR005UndefinedWso2ScopeUseCheck;
 
 public class OAR005UndefinedWso2ScopeUseCheckTest extends BaseCheckTest {
 

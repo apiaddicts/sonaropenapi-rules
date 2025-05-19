@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.schemas.OAR108SchemaValidatorCheck;
+import apiaddicts.sonar.openapi.checks.schemas.OAR108SchemaValidatorCheck;
 
 public class OAR108SchemaValidatorCheckTest extends BaseCheckTest {
 

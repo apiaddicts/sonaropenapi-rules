@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.security.OAR078VerbsSecurityCheck;
+import apiaddicts.sonar.openapi.checks.security.OAR078VerbsSecurityCheck;
 
 public class OAR078VerbsSecurityCheckTest extends BaseCheckTest {
     

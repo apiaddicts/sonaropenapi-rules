@@ -1,6 +1,6 @@
 
 
-# 🛠️ sonaropenapi-rules  ![Release](https://img.shields.io/badge/release-1.2.0-purple) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)  [![License: LGPL v3](https://img.shields.io/badge/license-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) 
+# 🛠️ sonaropenapi-rules  ![Release](https://img.shields.io/badge/release-1.2.1-purple) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)  [![License: LGPL v3](https://img.shields.io/badge/license-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) 
 
 This repository contains a set of custom SonarQube rules specifically designed to analyze and improve the quality of OpenAPI specifications. By integrating these rules, teams can ensure best practices, maintainability, and consistency in their API definitions.
 

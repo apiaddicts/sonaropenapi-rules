@@ -7,7 +7,7 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.security.OAR083ForbiddenQueryParamsCheck;
+import apiaddicts.sonar.openapi.checks.security.OAR083ForbiddenQueryParamsCheck;
 
 public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
 

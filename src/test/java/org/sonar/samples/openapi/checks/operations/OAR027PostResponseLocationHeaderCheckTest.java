@@ -6,7 +6,7 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.samples.openapi.BaseCheckTest;
 
-import apiquality.sonar.openapi.checks.operations.OAR027PostResponseLocationHeaderCheck;
+import apiaddicts.sonar.openapi.checks.operations.OAR027PostResponseLocationHeaderCheck;
 
 public class OAR027PostResponseLocationHeaderCheckTest extends BaseCheckTest {
 
