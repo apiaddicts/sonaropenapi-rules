@@ -16,10 +16,14 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import com.sonar.sslr.api.AstNodeType;
 
 public class JsonNodeUtils {
+
+    private static final Logger LOG = Logger.getLogger(JsonNodeUtils.class.getName());
 
     private JsonNodeUtils() {
     }
@@ -62,9 +66,6 @@ public class JsonNodeUtils {
         return false;
     }
 
-    // TODO sacar el charset de la respuesta que me da la url (contentype logs)
-    // TODO Gestion de errores si la url no funciona
-    // TODO errorMessage sustituir por split de almohadilla, despues un split de barras, (si el split de almohadilla nos haya dado un valor)(bucle for, iterar el array y luego rootnode = valor del array) 
     private static JsonNode resolveExternalRef(String url) {
         String content = retriveExternalRefContent(url);   
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
@@ -110,7 +111,7 @@ public class JsonNodeUtils {
                 return "Error: Response code " + responseCode;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Error parsing external ref " + ref , e);
             return "Error: " + e.getMessage();
         } finally {
             if (conn != null) {
@@ -136,7 +137,8 @@ public class JsonNodeUtils {
         int responseCode = conn.getResponseCode();
         InputStream errorStream = conn.getErrorStream();
         String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
-        conn.getHeaderFields().forEach((key, value) -> System.out.println(key + ": " + value));
+        conn.getHeaderFields().forEach((key, value) -> LOG.info("Header " + key + ": " + value));
+        LOG.log(Level.SEVERE, "Error resolving external ref " + responseCode + " " + errorResponse);
     }
 
     public static String getLastFetchedContent() {
