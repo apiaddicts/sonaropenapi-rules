@@ -1,0 +1,33 @@
+openapi: 3.0.0
+info:
+  title: Pets API - Responses
+  version: 1.0.0
+  description: Reusable responses for the Pets API.
+components:
+  responses:
+    SuccessResponse:
+      description: Successful response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PetResponse'
+  schemas:
+    PetResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+        type:
+          type: string
+        status:
+          type: string
+      example:
+        id: "123"
+        name: "Buddy"
+        age: 2
+        type: "dog"
+        status: "available"
