@@ -1,15 +1,14 @@
 package apiaddicts.sonar.openapi.checks.security;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
+import java.util.Set;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-
-import java.util.Set;
 
 @Rule(key = OAR074NumericParameterIntegrityCheck.KEY)
 public class OAR074NumericParameterIntegrityCheck extends BaseCheck {
@@ -45,12 +44,11 @@ public class OAR074NumericParameterIntegrityCheck extends BaseCheck {
                 JsonNode minNode = schemaNode.get("minimum");
                 JsonNode maxNode = schemaNode.get("maximum");
                 JsonNode formatNode = schemaNode.get("format");
-
-                boolean lacksLengthRestriction = (minNode.isMissing() && !maxNode.isMissing()) || (!minNode.isMissing() && maxNode.isMissing()); 
-                boolean formatAlone = !formatNode.isMissing() && minNode.isMissing() && maxNode.isMissing();
-                boolean allMissing = minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing();
-                boolean lacksRestriction = lacksLengthRestriction || allMissing;
-                if (!formatAlone && lacksRestriction) {
+                
+                boolean hasMin = minNode != null && !minNode.isMissing();
+                boolean hasMax = maxNode != null && !maxNode.isMissing();
+                boolean hasFormat = formatNode != null && !formatNode.isMissing();
+                if (!hasMin && !hasMax && !hasFormat) {
                     addIssue(KEY, translate(MESSAGE), typeNode);
                 }
             }
@@ -69,11 +67,10 @@ public class OAR074NumericParameterIntegrityCheck extends BaseCheck {
             JsonNode maxNode = node.get("maximum");
             JsonNode formatNode = node.get("format");
 
-            boolean lacksLengthRestriction = (minNode.isMissing() && !maxNode.isMissing()) || (!minNode.isMissing() && maxNode.isMissing()); 
-            boolean formatAlone = !formatNode.isMissing() && minNode.isMissing() && maxNode.isMissing();
-            boolean allMissing = minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing();
-            boolean lacksRestriction = lacksLengthRestriction || allMissing;
-            if (!formatAlone && lacksRestriction) {
+            boolean hasMin = minNode != null && !minNode.isMissing();
+            boolean hasMax = maxNode != null && !maxNode.isMissing();
+            boolean hasFormat = formatNode != null && !formatNode.isMissing();
+            if (!hasMin && !hasMax && !hasFormat) {
                 addIssue(KEY, translate(MESSAGE), typeNode);
             }
         }

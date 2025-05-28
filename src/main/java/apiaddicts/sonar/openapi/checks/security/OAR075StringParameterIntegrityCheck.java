@@ -1,15 +1,14 @@
 package apiaddicts.sonar.openapi.checks.security;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
+import java.util.Set;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-
-import java.util.Set;
 
 @Rule(key = OAR075StringParameterIntegrityCheck.KEY)
 public class OAR075StringParameterIntegrityCheck extends BaseCheck {
@@ -46,9 +45,20 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
                 JsonNode enumNode = schemaNode.get("enum");
                 JsonNode formatNode = schemaNode.get("format");
 
-                boolean lacksLengthRestriction = minLengthNode.isMissing() != maxLengthNode.isMissing();  
-                boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing() && formatNode.isMissing())); 
-                if (lacksRestriction) {
+                boolean hasMinLength = minLengthNode != null && !minLengthNode.isMissing();
+                boolean hasMaxLength = maxLengthNode != null && !maxLengthNode.isMissing();
+                boolean hasPattern = patternNode != null && !patternNode.isMissing();
+                boolean hasEnum = enumNode != null && !enumNode.isMissing();
+                boolean hasFormat = formatNode != null && !formatNode.isMissing();
+                boolean hasLengthRestrictions = hasMinLength && hasMaxLength;
+
+                boolean inconsistentLength = (hasMinLength && !hasMaxLength) || (!hasMinLength && hasMaxLength);
+
+                boolean hasAnyRestriction = hasPattern || hasEnum || hasFormat || hasLengthRestrictions;
+                if (inconsistentLength) {
+                    addIssue(KEY, translate(MESSAGE), typeNode);
+                }
+                if (!hasAnyRestriction) {
                     addIssue(KEY, translate(MESSAGE), typeNode);
                 }
             }
@@ -67,9 +77,21 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
             JsonNode enumNode = node.get("enum");
             JsonNode formatNode = node.get("format");
 
-            boolean lacksLengthRestriction = minLengthNode.isMissing() != maxLengthNode.isMissing();  
-            boolean lacksRestriction = (lacksLengthRestriction || (patternNode.isMissing() && enumNode.isMissing() && formatNode.isMissing())); 
-            if (lacksRestriction) {
+            boolean hasMinLength = minLengthNode != null && !minLengthNode.isMissing();
+            boolean hasMaxLength = maxLengthNode != null && !maxLengthNode.isMissing();
+            boolean hasPattern = patternNode != null && !patternNode.isMissing();
+            boolean hasEnum = enumNode != null && !enumNode.isMissing();
+            boolean hasFormat = formatNode != null && !formatNode.isMissing();
+            boolean hasLengthRestrictions = hasMinLength && hasMaxLength;
+
+            boolean inconsistentLength = (hasMinLength && !hasMaxLength) || (!hasMinLength && hasMaxLength);
+
+            boolean hasAnyRestriction = hasPattern || hasEnum || hasFormat || hasLengthRestrictions;
+
+            if (inconsistentLength) {
+                addIssue(KEY, translate(MESSAGE), typeNode);
+            }
+            if (!hasAnyRestriction) {
                 addIssue(KEY, translate(MESSAGE), typeNode);
             }
         }
