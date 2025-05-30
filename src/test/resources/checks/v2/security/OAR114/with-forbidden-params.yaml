@@ -1,0 +1,15 @@
+swagger: "2.0"
+info:
+  title: Forbidden Header Test
+  version: "1.0"
+paths:
+  /example:
+    get:
+      responses:
+        "200":
+          description: OK
+          headers:
+            Authorization: # Noncompliant {{OAR033: Header not allowed}}
+              description: Forbidden header
+              schema:
+                type: string

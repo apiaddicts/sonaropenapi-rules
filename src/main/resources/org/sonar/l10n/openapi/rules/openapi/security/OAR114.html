@@ -1,0 +1,82 @@
+<h2>Normative - API Definition</h2>
+<p>Overriding certain headers or allowing any headers to be set and not specifying required headers can cause some vulnerabilities in the API.</p>
+<h2>Noncompliant Code Example (OpenAPI 2)</h2>
+<pre>
+  swagger: "2.0"
+  info:
+    version: 1.0.0
+    title: Swagger Petstore
+  paths:
+    /pets:
+      get:
+        responses:
+          200:
+            description: Ok
+            headers: 
+              Authorization: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR033: Header not allowed}}</span>
+                description: Forbidden header
+                schema:
+                  type: string
+</pre>
+<h2>Compliant Solution (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-api-key:
+              description: Mandatory header
+              schema:
+                type: string
+            traceId:
+              description: Optional but allowed
+              schema:
+                type: string
+</pre>
+<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<pre>
+  openapi: "3.0.0"
+  info:
+    version: 1.0.0
+    title: Swagger Petstore
+  paths:
+    /pets:
+      get:
+        responses:
+          200:
+            description: Ok
+             headers: 
+              Authorization: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR033: Header not allowed}}</span>
+                description: Forbidden header
+                schema:
+                  type: string
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<pre>
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-api-key:
+              description: Mandatory header
+              schema:
+                type: string
+            traceId:
+              description: Optional but allowed
+              schema:
+                type: string
+</pre>
