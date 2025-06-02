@@ -8,10 +8,10 @@
     "/example": {
       "get": {
         "responses": {
-          "200": {
+          "200": { # Noncompliant {{OAR114: Headers [x-api-key] are required}}
             "description": "OK",
             "headers": {
-              "Authorization": { # Noncompliant {{OAR033: Header not allowed}}
+              "Authorization": { # Noncompliant {{OAR114: Header not allowed}}
                 "description": "Forbidden header",
                 "schema": {
                   "type": "string"

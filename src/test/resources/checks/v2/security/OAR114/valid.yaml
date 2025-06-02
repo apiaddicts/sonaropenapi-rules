@@ -10,10 +10,8 @@ paths:
           description: OK
           headers:
             x-api-key:
+              type: string
               description: Mandatory header
-              schema:
-                type: string
             traceId:
+              type: string
               description: Optional but allowed
-              schema:
-                type: string

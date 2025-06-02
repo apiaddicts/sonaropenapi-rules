@@ -53,10 +53,8 @@ public class OAR114HttpResponseHeadersChecksTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(4);
+        assertNumberOfParameters(2);
         assertParameterProperties("mandatory-headers", "x-api-key", RuleParamType.STRING);
-        assertParameterProperties("forbidden-headers", "Accept, Content-Type, Authorization", RuleParamType.STRING);
-        // assertParameterProperties("allowed-headers", "x-api-key, traceId, dateTime", RuleParamType.STRING);
-        // assertParameterProperties("path-exclusions", "/status", RuleParamType.STRING);
+        assertParameterProperties("allowed-headers", "x-api-key, traceId, dateTime", RuleParamType.STRING);
     }
 }
