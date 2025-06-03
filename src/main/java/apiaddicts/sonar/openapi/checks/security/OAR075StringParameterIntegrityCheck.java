@@ -28,7 +28,6 @@ public class OAR075StringParameterIntegrityCheck extends BaseCheck {
     )
     private String parameterIntegrityStr = PARAMETER_INTEGRITY;
 
-    private Set<String> parameterIntegrity = new HashSet<>();
 
     private Set<String> getActiveIntegrityChecks() {
         return Arrays.stream(parameterIntegrityStr.split(","))
