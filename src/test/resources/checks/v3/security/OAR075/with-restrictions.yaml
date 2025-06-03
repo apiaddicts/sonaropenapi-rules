@@ -14,6 +14,7 @@ paths:
             minLength: 5
             maxLength: 120
             format: date
+            enum: ['admin', 'user', 'guest']
       responses:
         '200':
           description: Un usuario
