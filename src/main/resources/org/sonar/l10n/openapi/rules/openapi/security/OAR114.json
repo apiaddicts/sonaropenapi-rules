@@ -1,0 +1,13 @@
+{
+  "title": "OAR114 - HttpResponseHeaders - There are mandatory request headers and others that are not allowed",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "safety"
+  ],
+  "defaultSeverity": "CRITICAL"
+}

@@ -92,7 +92,8 @@ public final class RulesLists {
             OAR085OpenAPIVersionCheck.class,
 			OAR096ForbiddenResponseCheck.class,
             OAR045DefinedResponseCheck.class,
-            OAR049NoContentIn204Check.class
+            OAR049NoContentIn204Check.class,
+            OAR114HttpResponseHeadersChecks.class
         );
     }
 
