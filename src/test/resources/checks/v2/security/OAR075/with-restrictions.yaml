@@ -13,6 +13,7 @@ paths:
           minLength: 10
           maxLength: 100
           enum: ['admin', 'user', 'guest']
+          format: date
       responses:
         '200':
           description: Un usuario

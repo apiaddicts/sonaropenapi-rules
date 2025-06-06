@@ -9,7 +9,7 @@ paths:
         - name: id
           in: path
           required: true
-          type: string  # Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction}}
+          type: string  # Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}
       responses:
         '200':
           description: Un usuario

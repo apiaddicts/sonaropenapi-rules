@@ -15,7 +15,8 @@
               "type": "string",
               "minLength": 10,
               "maxLength": 100,
-              "enum": ["admin", "user", "guest"]
+              "enum": ["admin", "user", "guest"],
+              "format": "date"
             }
           ],
           "responses": {
