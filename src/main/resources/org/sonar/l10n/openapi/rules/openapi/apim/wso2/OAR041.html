@@ -30,3 +30,34 @@ paths:
       x-scope: read
       x-aut-type: "Application &amp; Application User"
 </pre>
+<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<pre>
+openapi: "3.0.0"
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+    - name: read
+      key: read
+      roles: READ_ROLE
+      description: Allows users to view records
+paths:
+  /pets:
+    get:
+      x-scope: read
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<pre>
+openapi: "3.0.0"
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+    - name: read
+      key: read
+      roles: READ_ROLE
+      description: Allows users to view records
+paths:
+  /pets:
+    get:
+      x-scope: read
+      x-aut-type: "Application &amp; Application User"
+</pre>
