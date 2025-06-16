@@ -1,4 +1,4 @@
-<p>String parameters should have minimum length, maximum length, regular expression, or enum restriction.</p>
+<p>String parameters should have minimum length, maximum length, regular expression,format or enum restriction.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
   swagger: '2.0'
@@ -12,7 +12,7 @@
           - name: id
             in: path
             required: true
-            type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction}}</span>
+            type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}</span>
         responses:
           '200':
             description: Un usuario
@@ -56,7 +56,7 @@
             in: path
             required: true
             schema:
-              type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction}}</span>
+              type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}</span>
         responses:
           '200':
             description: Un usuario

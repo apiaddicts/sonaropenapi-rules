@@ -1,5 +1,5 @@
 {
-    "title": "OAR075 - StringParameterIntegrityCheck - String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction",
+    "title": "OAR075 - StringParameterIntegrityCheck - String parameters should have minLength, maxLength, pattern (regular expression),format or enum restriction",
     "type": "VULNERABILITY",
     "status": "ready",
     "remediation": {

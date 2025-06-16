@@ -16,7 +16,8 @@
                 "type": "string",
                 "minLength": 5,
                 "maxLength": 120,
-                "pattern": "^[a-zA-Z0-9]+$"
+                "format": "date",
+                "enum": ["admin", "user", "guest"]
               }
             }
           ],
