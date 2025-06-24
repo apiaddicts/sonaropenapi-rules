@@ -15,11 +15,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.sonar.check.RuleProperty;
 
 @Rule(key = OAR098LongBasePathCheck.KEY)
 public class OAR098LongBasePathCheck extends BaseCheck {
 
     public static final String KEY = "OAR098";
+
+    private static final int LONG_BASE_PATH = 2;
+
+    @RuleProperty(key = "long-base-path", description = "long of the path in the basepath keywork value", defaultValue = "" + LONG_BASE_PATH )
+	private static int long_base_path = LONG_BASE_PATH;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -55,7 +61,9 @@ public class OAR098LongBasePathCheck extends BaseCheck {
     private void validatePath(String path, JsonNode node) {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
-        if (pathParts.size() > 2) {
+        if (pathParts.size() > long_base_path) {
+            System.out.println(pathParts.size());
+            System.out.println(long_base_path);
             addIssue(KEY, translate("OAR098.error-path-long"), node.value());  
         }
     }
