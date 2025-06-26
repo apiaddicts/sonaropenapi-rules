@@ -1,0 +1,13 @@
+{
+  "title": "OAR115 - VerifyRequiredFields - the data in the required field must exist in schema parameters",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}
