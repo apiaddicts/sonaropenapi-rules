@@ -1,0 +1,83 @@
+<p>The data in the required field must exist in schema parameters</p>
+<h2>Noncompliant Solution (OpenAPI 2)</h2>
+<pre>
+    swagger: "2.0"
+info:
+  title: API de ejemplo
+  version: "1.0.0"
+paths: {}
+definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    required:
+      - code
+      - message
+      - otherfield # Noncompliant {{OAR115: This value does not exist, it must be defined in the schema properties}}
+
+</pre>
+<h2>Compliant Solution (OpenAPI 2)</h2>
+<pre>
+    swagger: "2.0"
+info:
+  title: API de ejemplo
+  version: "1.0.0"
+paths: {}
+definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    required:
+      - code
+      - message
+</pre>
+<h2>Noncompliant Solution (OpenAPI 3)</h2>
+<pre>
+   openapi: 3.0.0
+info:
+  title: API de ejemplo
+  version: "1.0.0"
+paths: {}
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - code
+        - message
+        - otherfield # Noncompliant {{OAR115: This value does not exist, it must be defined in the schema properties}}
+
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<pre>
+    openapi: 3.0.3
+info:
+  title: API de ejemplo
+  version: "1.0.0"
+paths: {}
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - code
+        - message
+</pre>
