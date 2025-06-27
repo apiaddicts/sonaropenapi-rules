@@ -1,12 +1,12 @@
 package org.sonar.samples.openapi.checks.format;
 
+import apiaddicts.sonar.openapi.checks.format.OAR098LongBasePathCheck;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.samples.openapi.BaseCheckTest;
-
-import apiaddicts.sonar.openapi.checks.format.OAR098LongBasePathCheck;
 
 public class OAR098LongBasePathCheckTest extends BaseCheckTest {
 
@@ -45,6 +45,7 @@ public class OAR098LongBasePathCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(0);
+        assertNumberOfParameters(1);
+        assertParameterProperties("long-base-path", "2", RuleParamType.INTEGER);
     }
 }

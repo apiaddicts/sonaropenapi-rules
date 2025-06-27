@@ -1,25 +1,30 @@
 package apiaddicts.sonar.openapi.checks.format;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-import org.sonar.check.Rule;
-import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
 
 @Rule(key = OAR098LongBasePathCheck.KEY)
 public class OAR098LongBasePathCheck extends BaseCheck {
 
     public static final String KEY = "OAR098";
+
+    private static final int LONG_BASE_PATH = 2;
+
+    @RuleProperty(key = "long-base-path", description = "long of the path in the basepath keywork value", defaultValue = "" + LONG_BASE_PATH )
+	private static int basePahtLength = LONG_BASE_PATH;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -55,7 +60,7 @@ public class OAR098LongBasePathCheck extends BaseCheck {
     private void validatePath(String path, JsonNode node) {
         List<String> pathParts = Stream.of(path.split("/")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
-        if (pathParts.size() > 2) {
+        if (pathParts.size() > basePahtLength) {
             addIssue(KEY, translate("OAR098.error-path-long"), node.value());  
         }
     }
