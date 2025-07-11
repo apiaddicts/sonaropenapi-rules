@@ -1,22 +1,24 @@
 package apiaddicts.sonar.openapi.checks.operations;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-import org.sonar.check.Rule;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-
-import java.util.Set;
-import java.util.stream.Stream;
+import org.sonar.check.Rule;
 
 @Rule(key = OAR017ResourcePathCheck.KEY)
 public class OAR017ResourcePathCheck extends BaseCheck {
 
 	public static final String KEY = "OAR017";
 	private static final String MESSAGE = "OAR017.error";
+	public static final Set<String> EXCLUDE_PATTERNS = new HashSet<>(Arrays.asList("get", "me", "search"));
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
@@ -42,6 +44,10 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 
 		for (int i = 0; i < parts.length; i++) {
 		boolean currentIsVariable = isVariable(parts[i]);
+
+			if(!currentIsVariable && EXCLUDE_PATTERNS.contains(parts[i])){
+				twoOrMoreVariablesInARow = false;
+			}
 
 			if (previousWasVariable && currentIsVariable) {
 				twoOrMoreVariablesInARow = true;
