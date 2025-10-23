@@ -5,7 +5,7 @@
     "title" : "Swagger Petstore"
   },
   "paths" : {
-    "/one" : {
+    "/one/me" : { # Noncompliant {{OAR017: Pattern 'me' not allowed}}
       "get" : {
         "responses" : {
           "200" : {
