@@ -1,12 +1,11 @@
 package apiaddicts.sonar.openapi.checks.operations;
 
+import apiaddicts.sonar.openapi.BaseCheckTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
-import apiaddicts.sonar.openapi.BaseCheckTest;
-
-import apiaddicts.sonar.openapi.checks.operations.OAR017ResourcePathCheck;
+import org.sonar.api.server.rule.RuleParamType;
 
 public class OAR017ResourcePathCheckTest extends BaseCheckTest {
 
@@ -31,6 +30,12 @@ public class OAR017ResourcePathCheckTest extends BaseCheckTest {
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR017 - ResourcePath - Resource path should alternate static and parametrized parts", RuleType.BUG, Severity.MAJOR, tags("operations"));
+    }
+
+    @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(1);
+        assertParameterProperties("exclude_patterns", "get,me,search", RuleParamType.STRING);
     }
 
 }
