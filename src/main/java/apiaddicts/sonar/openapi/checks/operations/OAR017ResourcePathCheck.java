@@ -19,7 +19,6 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 	public static final String KEY = "OAR017";
 	private static final String MESSAGE = "OAR017.error";
 	private static final String MESSAGE_PATTERN = "OAR017.error-patterns";
-	// public static final Set<String> EXCLUDE_PATTERNS = new HashSet<>(Arrays.asList("get", "me", "search"));
 	public static final String EXCLUDE_PATTERNS = "get,me,search";
 
 	@RuleProperty(
