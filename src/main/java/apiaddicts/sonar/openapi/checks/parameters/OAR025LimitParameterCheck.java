@@ -1,22 +1,19 @@
 package apiaddicts.sonar.openapi.checks.parameters;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
+import com.google.common.collect.ImmutableSet;
+import com.sonar.sslr.api.AstNode;
+import com.sonar.sslr.api.AstNodeType;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-
-import com.google.common.collect.ImmutableSet;
-import com.sonar.sslr.api.AstNode;
-import com.sonar.sslr.api.AstNodeType;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 @Rule(key = OAR025LimitParameterCheck.KEY)
 public class OAR025LimitParameterCheck extends BaseCheck {
@@ -71,7 +68,7 @@ public class OAR025LimitParameterCheck extends BaseCheck {
 
             boolean hasParameter = hasParameterInNode(node);
 
-            if (shouldIncludePath(path) && !hasParameter) {
+            if (shouldIncludePath(path) && !hasParameter && !isSingleResourcePath(path)) {
                 addIssue(KEY, translate(MESSAGE, PARAM_NAME), node.key());
             }
         }
@@ -169,5 +166,9 @@ public class OAR025LimitParameterCheck extends BaseCheck {
         }
     
         return currentNode;
+    }
+
+    private boolean isSingleResourcePath(String path) {
+        return path.matches(".*/\\{[^/]+\\}$");
     }
 }
