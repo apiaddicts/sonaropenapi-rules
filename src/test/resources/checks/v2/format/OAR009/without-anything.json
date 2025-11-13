@@ -6,7 +6,7 @@
   },
   "paths": {
     "/pets": {
-      "get": { # Noncompliant {{OAR009: Should indicate the default request media type}}
+      "post": { # Noncompliant {{OAR009: Should indicate the default request media type}}
         "responses": {
           "200": {
             "description": "Ok"
