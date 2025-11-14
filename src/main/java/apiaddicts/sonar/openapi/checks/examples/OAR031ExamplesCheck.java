@@ -1,20 +1,23 @@
 package apiaddicts.sonar.openapi.checks.examples;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.getType;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isArrayType;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isObjectType;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isOperation;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-import org.sonar.check.Rule;
-import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
+import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.sonar.check.Rule;
 
 @Rule(key = OAR031ExamplesCheck.KEY)
 public class OAR031ExamplesCheck extends BaseCheck {
@@ -52,7 +55,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
                         }
                         responseNode = resolve(responseNode);
                         visitResponseV2Node(responseNode);
-                        if (externalRefManagement) externalRefNode = null; 
+                        if (externalRefManagement) {
+                            externalRefNode = null;
+                        }
                     }
                 }
             }
@@ -80,8 +85,10 @@ public class OAR031ExamplesCheck extends BaseCheck {
                     }
                     responseNode = resolve(responseNode);
                     visitRequestBodyOrResponseV3Node(responseNode);
-                    if (externalRefManagement) externalRefNode = null; 
-                } 
+                    if (externalRefManagement) {
+                        externalRefNode = null;
+                    }
+                }
             }
         } else if (type.equals(OpenApi3Grammar.SCHEMA)) {
             visitSchemaNode(node);
@@ -92,7 +99,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     private void visitRequestBodyOrResponseV3Node(JsonNode node) {
         JsonNode content = node.at("/content");
-        if (content.isMissing()) return;
+        if (content.isMissing()) {
+            return;
+        }
         for (JsonNode mediaTypeNode : content.propertyMap().values()) {
             AstNodeType type = node.getType();
             JsonNode schemaNode = mediaTypeNode.get("schema");
@@ -117,8 +126,13 @@ public class OAR031ExamplesCheck extends BaseCheck {
             if (node.get("example").isMissing() && parentNode.get("example").isMissing() && parentNode.get("examples").isMissing()) {
                 addIssue(KEY, translate("OAR031.error-parameter"), parentNode);
             }
-        } else if (parentNode.getType().equals(OpenApi3Grammar.SCHEMA_PROPERTIES) || 
-            parentNode.getType().toString().equals("BLOCK_MAPPING") || parentNode.getType().toString().equals("FLOW_MAPPING")) {
+        } else if (parentNode.getType().equals(OpenApi3Grammar.SCHEMA_PROPERTIES)
+                || parentNode.getType().toString().equals("BLOCK_MAPPING") || parentNode.getType().toString().equals("FLOW_MAPPING")) {
+            JsonNode schemaParent = (JsonNode) parentNode.getParent().getParent();
+            if (schemaParent != null && !schemaParent.get("allOf").isMissing()) {
+                return;
+            }
+
             JsonNode type = getType(node);
             if (!isObjectType(type) && !type.isMissing() && !isArrayType(type)) {
                 if (node.get("example").isMissing()) {
@@ -129,7 +143,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
+        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode))
                 .map(JsonNode::value)
                 .flatMap(n -> n.properties().stream())
                 .map(JsonNode::value)
@@ -148,15 +162,21 @@ public class OAR031ExamplesCheck extends BaseCheck {
             } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
                 JsonNode content = responseNode.at("/content");
                 if (content.isMissing()) {
-                    if (externalRefManagement) externalRefNode = null;
+                    if (externalRefManagement) {
+                        externalRefNode = null;
+                    }
                     continue;
                 }
                 content.propertyMap().forEach((mediaType, mediaTypeNode) -> { // estudiar función lambda
-                    if (!mediaType.toLowerCase().contains("json")) return;
-                    visitSchemaNode2(mediaTypeNode);
+                    if (!mediaType.toLowerCase().contains("json")) {
+                        return;
+                    }
+                    visitSchemaNode(mediaTypeNode);
                 });
             }
-            if (externalRefManagement) externalRefNode = null;
+            if (externalRefManagement) {
+                externalRefNode = null;
+            }
         }
     }
 
