@@ -6,7 +6,7 @@
   },
   "paths": {
     "/pets": {
-      "get": { # Noncompliant {{OAR006: Section consumes is mandatory}}
+      "post": { # Noncompliant {{OAR006: Section consumes is mandatory}}
         "responses": {
           "200": {
             "description": "Ok"

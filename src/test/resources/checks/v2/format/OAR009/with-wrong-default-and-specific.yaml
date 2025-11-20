@@ -6,14 +6,14 @@ consumes:
   - application/xml
 paths:
   /pets:
-    get:
+    post:
       consumes: # Noncompliant {{OAR009: Should indicate the default request media type}}
         - application/xml
       responses:
         200:
           description: Ok
   /owners:
-    get:
+    post:
       consumes:
         - application/json
       responses:

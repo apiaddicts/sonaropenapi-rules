@@ -1,22 +1,21 @@
 package apiaddicts.sonar.openapi.checks.format;
 
+import apiaddicts.sonar.openapi.checks.BaseCheck;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNode;
 import com.sonar.sslr.api.AstNodeType;
-import org.sonar.check.RuleProperty;
-import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
+import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.sonar.check.RuleProperty;
 
 public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
@@ -74,18 +73,23 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
     }
 
     private void visitV2Node(JsonNode node) {
-        JsonNode sectionNode = node.get(section);
-        boolean definesMimeTypes = !sectionNode.isMissing();
-
-        if (definesMimeTypes) {
-            if (!supportsDefaultMimeTypeV2(node)) {
-                addIssue(key, message, sectionNode.key());
-            }
-        } else {
-            if (!globalSupportsDefaultMimeType) {
-                addIssue(key, message, node.key());
-            }
-        }
+        if(node.getType() == OpenApi2Grammar.OPERATION){
+          String operation = node.key().getTokenValue().toLowerCase();
+					if (operation.equals("post") || operation.equals("put") || operation.equals("patch")){
+						JsonNode sectionNode = node.get(section);
+						boolean definesMimeTypes = !sectionNode.isMissing();
+		
+						if (definesMimeTypes) {
+								if (!supportsDefaultMimeTypeV2(node)) {
+										addIssue(key, message, sectionNode.key());
+								}
+						} else {
+								if (!globalSupportsDefaultMimeType) {
+										addIssue(key, message, node.key());
+								}
+						}
+					}
+				}
     }
 
     private void visitV3Node(JsonNode node) {

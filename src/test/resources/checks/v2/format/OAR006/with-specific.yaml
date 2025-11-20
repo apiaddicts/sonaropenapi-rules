@@ -5,7 +5,7 @@ info:
 
 paths:
   /pets:
-    get:
+    post:
       consumes:
         - application/json
       responses:

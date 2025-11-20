@@ -9,7 +9,7 @@
   ],
   "paths": {
     "/pets": {
-      "get": {
+      "post": {
         "consumes": [
           "application/xml"
         ],
