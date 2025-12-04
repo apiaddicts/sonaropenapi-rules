@@ -1,14 +1,12 @@
 package apiaddicts.sonar.openapi.checks.format;
 
 import apiaddicts.sonar.openapi.checks.BaseCheck;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
+import apiaddicts.sonar.openapi.utils.MediaTypeUtils;
+
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
@@ -48,52 +46,49 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
     }
 
     private void visitV2Node(JsonNode node) {
-        if(node.getType() == OpenApi2Grammar.OPERATION){
-          String operation = node.key().getTokenValue().toLowerCase();
-					if (operation.equals("post") || operation.equals("put") || operation.equals("patch")){
-						if (!globalDefinesMediaTypes && !definesMimeTypesV2(node)) {
-								addIssue(key, translate(MESSAGE, section), node.key());
-						}
-					}
+        if (node.getType() == OpenApi2Grammar.OPERATION) {
+            String operation = node.key().getTokenValue().toLowerCase();
+
+            if ((operation.equals("post") || operation.equals("put") || operation.equals("patch"))
+                && !globalDefinesMediaTypes
+                && !definesMimeTypesV2(node)) {
+
+                addIssue(key, translate(MESSAGE, section), node.key());
+            }
         }
     }
 
     private void visitV3Node(JsonNode node) {
         if (node.getType() == OpenApi3Grammar.OPERATION && section.equals("consumes")) {
-            String operation = node.key().getTokenValue().toLowerCase();
-            if (operation.equals("post") || operation.equals("put") || operation.equals("patch")) {
-                visitContentNode(node);
-            }
+            handleConsumesOperation(node);
+            return;
         }
 
         if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
-            List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
-            for (JsonNode jsonNode : responseCodes) {
-                if (!jsonNode.key().getTokenValue().equals("204")) {
-                    boolean externalRefManagement = false;
-                    if (isExternalRef(jsonNode) && externalRefNode == null) {
-                        externalRefNode = jsonNode;
-                        externalRefManagement = true;
-                    }
-                    jsonNode = resolve(jsonNode);
-                    visitContentNode(jsonNode);
-                    if (externalRefManagement) externalRefNode = null;
-                }
-            }
+            MediaTypeUtils.handleProducesResponses(node, externalRefNode, this::visitContentNode);
+        }
+    }
+
+    private void handleConsumesOperation(JsonNode node) {
+        String operation = node.key().getTokenValue().toLowerCase();
+
+        if (operation.equals("post") || operation.equals("put") || operation.equals("patch")) {
+            visitContentNode(node);
         }
     }
 
     private void visitContentNode(JsonNode node) {
         JsonNode contentNode;
+
         if (section.equals("consumes")) {
             JsonNode requestBodyNode = node.at("/requestBody");
             if (requestBodyNode.isMissing() || requestBodyNode.isNull()) {
                 addIssue(key, translate(MESSAGE, "requestBody"), node.key());
                 return;
             }
-            contentNode = resolve(requestBodyNode).at("/content");
+            contentNode = MediaTypeUtils.getContentNode(node, section);
         } else {
-            contentNode = node.at("/content");
+            contentNode = MediaTypeUtils.getContentNode(node, section);
         }
 
         if (!globalDefinesMediaTypes && !definesMimeTypesV3(contentNode)) {

@@ -1,8 +1,8 @@
 package apiaddicts.sonar.openapi.checks.format;
 
 import apiaddicts.sonar.openapi.checks.BaseCheck;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
+import apiaddicts.sonar.openapi.utils.MediaTypeUtils;
+
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNode;
 import com.sonar.sslr.api.AstNodeType;
@@ -73,63 +73,58 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
     }
 
     private void visitV2Node(JsonNode node) {
-        if(node.getType() == OpenApi2Grammar.OPERATION){
-          String operation = node.key().getTokenValue().toLowerCase();
-					if (operation.equals("post") || operation.equals("put") || operation.equals("patch")){
-						JsonNode sectionNode = node.get(section);
-						boolean definesMimeTypes = !sectionNode.isMissing();
-		
-						if (definesMimeTypes) {
-								if (!supportsDefaultMimeTypeV2(node)) {
-										addIssue(key, message, sectionNode.key());
-								}
-						} else {
-								if (!globalSupportsDefaultMimeType) {
-										addIssue(key, message, node.key());
-								}
-						}
-					}
-				}
+        if (node.getType() != OpenApi2Grammar.OPERATION) return;
+
+        String operation = node.key().getTokenValue().toLowerCase();
+        if (!(operation.equals("post") || operation.equals("put") || operation.equals("patch"))) return;
+
+        JsonNode sectionNode = node.get(section);
+        boolean definesMimeTypes = !sectionNode.isMissing();
+
+        if (definesMimeTypes) {
+            if (!supportsDefaultMimeTypeV2(node)) {
+                addIssue(key, message, sectionNode.key());
+            }
+            return;
+        }
+
+        if (!globalSupportsDefaultMimeType) {
+            addIssue(key, message, node.key());
+        }
     }
 
     private void visitV3Node(JsonNode node) {
+
         if (node.getType() == OpenApi3Grammar.OPERATION && section.equals("consumes")) {
-            String operation = node.key().getTokenValue().toLowerCase();
-            if (operation.equals("post") || operation.equals("put") || operation.equals("patch")) {
-                visitContentNode(node);
-            } else {
-                JsonNode requestBodyNode = node.at("/requestBody");
-                if (!requestBodyNode.isMissing()) {
-                    addIssue(key, translate("OAR010.error-request-body-not-allowed", operation.toUpperCase()), node.key());
-                }
-            }
+            handleConsumesOperation(node);
+            return;
         }
 
         if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
-            List<JsonNode> responseCodes = node.properties().stream().collect(Collectors.toList());
-            for (JsonNode jsonNode : responseCodes) {
-                if (!jsonNode.key().getTokenValue().equals("204")) {
-                    boolean externalRefManagement = false;
-                    if (isExternalRef(jsonNode) && externalRefNode == null) {
-                        externalRefNode = jsonNode;
-                        externalRefManagement = true;
-                    }
-                    jsonNode = resolve(jsonNode);
-                    visitContentNode(jsonNode);
-                    if (externalRefManagement) externalRefNode = null;
-                }
-            }
+            MediaTypeUtils.handleProducesResponses(node, externalRefNode, this::visitContentNode);
+        }
+    }
+
+    private void handleConsumesOperation(JsonNode node) {
+        String operation = node.key().getTokenValue().toLowerCase();
+        boolean allowsBody = operation.equals("post") || operation.equals("put") || operation.equals("patch");
+
+        if (allowsBody) {
+            visitContentNode(node);
+            return;
+        }
+
+        JsonNode requestBodyNode = node.at("/requestBody");
+        if (!requestBodyNode.isMissing()) {
+            addIssue(key,
+                translate("OAR010.error-request-body-not-allowed", operation.toUpperCase()),
+                node.key());
         }
     }
 
     private void visitContentNode(JsonNode node) {
-        JsonNode contentNode;
-        if (section.equals("consumes")) {
-            JsonNode requestBodyNode = node.at("/requestBody");
-            contentNode = resolve(requestBodyNode).at("/content");
-        } else {
-            contentNode = node.at("/content");
-        }
+        JsonNode contentNode = MediaTypeUtils.getContentNode(node, section);
+
         boolean definesMimeTypes = !contentNode.isMissing();
         if (definesMimeTypes) {
             if (!supportsDefaultMimeTypeV3(contentNode)) {

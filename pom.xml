@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
   <artifactId>sonaropenapi-rules-community</artifactId>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Community Rules</name>
@@ -148,17 +148,18 @@
         </dependencies>
       </plugin>
 
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.13</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
+        <!-- To release to Maven central -->
+        <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.8.0</version>
+            <extensions>true</extensions>
+            <configuration>
+                <publishingServerId>ossrh</publishingServerId>
+                <autoPublish>true</autoPublish>
+                <waitUntil>published</waitUntil>
+            </configuration>
+        </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
