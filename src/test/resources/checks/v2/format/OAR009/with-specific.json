@@ -6,7 +6,7 @@
   },
   "paths": {
     "/pets": {
-      "get": {
+      "post": {
         "consumes": [
           "application/json"
         ],
@@ -18,7 +18,7 @@
       }
     },
     "/owners": {
-      "get": {
+      "post": {
         "consumes": [ # Noncompliant {{OAR009: Should indicate the default request media type}}
           "application/xml"
         ],

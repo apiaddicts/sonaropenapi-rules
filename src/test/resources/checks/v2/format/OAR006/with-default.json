@@ -9,7 +9,7 @@
   ],
   "paths": {
     "/pets": {
-      "get": {
+      "post": {
         "responses": {
           "200": {
             "description": "Ok"

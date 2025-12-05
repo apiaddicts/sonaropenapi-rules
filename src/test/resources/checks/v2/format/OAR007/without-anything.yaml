@@ -4,7 +4,7 @@ info:
   title: Swagger Petstore
 paths:
   /pets:
-    get: # Noncompliant {{OAR007: Section produces is mandatory}}
+    post: # Noncompliant {{OAR007: Section produces is mandatory}}
       responses:
         200:
           description: Ok
