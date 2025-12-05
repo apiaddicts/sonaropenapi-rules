@@ -129,7 +129,19 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
         return pathBuilder.toString();
     }
 
+    private boolean isPathWithParameter(String path) {
+        String[] segments = path.split("/");
+        if (segments.length == 0) return false;
+
+        String last = segments[segments.length - 1].trim();
+        return last.matches("^\\{[^}]+\\}$");
+    }
+
     private boolean shouldIncludePath(String path) {
+        if (isPathWithParameter(path)) {
+            return false;
+        }
+
         if (pathCheckStrategy.equals("/exclude")) {
             return !paths.contains(path);
         } else if (pathCheckStrategy.equals("/include")) {
