@@ -129,7 +129,7 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
         return pathBuilder.toString();
     }
 
-    private boolean isPathWithParameter(String path) {
+    private boolean endsWithPathParam(String path) {
         String[] segments = path.split("/");
         if (segments.length == 0) return false;
 
@@ -138,7 +138,7 @@ public class OAR022OrderbyParameterCheck extends BaseCheck {
     }
 
     private boolean shouldIncludePath(String path) {
-        if (isPathWithParameter(path)) {
+        if (endsWithPathParam(path)) {
             return false;
         }
 
