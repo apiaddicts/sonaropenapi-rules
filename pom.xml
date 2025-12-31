@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
   <artifactId>sonaropenapi-rules-community</artifactId>
-  <version>1.2.4</version>
+  <version>1.2.5</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Community Rules</name>
