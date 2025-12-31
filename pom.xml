@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
   <artifactId>sonaropenapi-rules-community</artifactId>
-  <version>1.2.4</version>
+  <version>1.2.5</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Community Rules</name>
@@ -25,6 +25,12 @@
       <id>AT</id>
       <name>Aldo Torres</name>
       <email>aldo.torres.pe@cloudappi.net</email>
+      <organization>Cloudappi</organization>
+    </developer>
+    <developer>
+      <id>MH</id>
+      <name>Melsy Huamani</name>
+      <email>melsy.huamani.pe@cloudappi.net</email>
       <organization>Cloudappi</organization>
     </developer>
   </developers>
@@ -155,7 +161,7 @@
             <version>0.8.0</version>
             <extensions>true</extensions>
             <configuration>
-                <publishingServerId>ossrh</publishingServerId>
+                <publishingServerId>central</publishingServerId>
                 <autoPublish>true</autoPublish>
                 <waitUntil>published</waitUntil>
             </configuration>

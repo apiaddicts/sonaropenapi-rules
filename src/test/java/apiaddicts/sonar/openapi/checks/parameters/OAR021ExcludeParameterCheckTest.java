@@ -40,6 +40,11 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2PathEndingWithParam() {
+        verifyV3("with-param");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("plain");
     }
@@ -57,6 +62,11 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3WithRef() {
         verifyV3("with-ref");
+    }
+
+    @Test
+    public void verifyInV3PathEndingWithParam() {
+        verifyV3("with-param");
     }
 
     @Override
