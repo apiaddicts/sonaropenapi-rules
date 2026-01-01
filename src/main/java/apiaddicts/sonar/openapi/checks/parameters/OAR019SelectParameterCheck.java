@@ -68,12 +68,24 @@ public class OAR019SelectParameterCheck extends BaseCheck {
 
             String path = getPath(node);
 
+            if (endsWithPathParam(path)) {
+                return;
+            }
+
             boolean hasParameter = hasParameterInNode(node);
 
             if (shouldIncludePath(path) && !hasParameter) {
                 addIssue(KEY, translate(MESSAGE, PARAM_NAME), node.key());
             }
         }
+    }
+
+    private boolean endsWithPathParam(String path) {
+        String[] segments = path.split("/");
+        if (segments.length == 0) return false;
+
+        String last = segments[segments.length - 1].trim();
+        return last.matches("^\\{[^}]+\\}$");
     }
 
     private boolean hasParameterInNode(JsonNode node) {
