@@ -41,6 +41,11 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2PathEndingWithParam() {
+        verifyV3("with-param");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("plain");
     }
@@ -78,6 +83,11 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV31WithRef() {
         verifyV31("with-ref");
+    }
+
+    @Test
+    public void verifyInV3PathEndingWithParam() {
+        verifyV3("with-param");
     }
 
     @Override
