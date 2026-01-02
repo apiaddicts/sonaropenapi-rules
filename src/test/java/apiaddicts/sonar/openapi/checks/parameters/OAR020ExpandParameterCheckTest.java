@@ -66,9 +66,8 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(3);
+        assertNumberOfParameters(2);
         assertParameterProperties("paths", "/examples", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
-        assertParameterProperties("parameterName", "$expand", RuleParamType.STRING);
     }
 }

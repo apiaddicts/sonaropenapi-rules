@@ -18,9 +18,14 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected static final String DEFAULT_PATH = "/examples";
     protected static final String PATH_STRATEGY = "/include";
+
+    protected final String ruleKey;
+    protected final String messageKey;
+    protected final String parameterName;
+    protected final boolean applyToParameterizedPaths;
+
     protected Set<String> paths;
     protected JsonNode rootNode;
-
 
     @RuleProperty(
         key = "paths",
@@ -36,9 +41,17 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     )
     protected String pathCheckStrategy = PATH_STRATEGY;
 
-    protected String parameterName;
-
-    protected abstract String getDefaultParameterName();
+    protected AbstractQueryParameterCheck(
+        String ruleKey,
+        String messageKey,
+        String parameterName,
+        boolean applyToParameterizedPaths
+    ) {
+        this.ruleKey = ruleKey;
+        this.messageKey = messageKey;
+        this.parameterName = parameterName;
+        this.applyToParameterizedPaths = applyToParameterizedPaths;
+    }
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -47,13 +60,32 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        this.rootNode = root;  
+        this.rootNode = root;
         paths = parsePaths(pathsStr);
-
-        if (parameterName == null || parameterName.isEmpty()) {
-            parameterName = getDefaultParameterName();
-        }
         super.visitFile(root);
+    }
+
+    @Override
+    public void visitNode(JsonNode node) {
+        if (!"get".equals(node.key().getTokenValue())) {
+            return;
+        }
+
+        String path = getPath(node);
+
+        if (!applyToParameterizedPaths && endsWithPathParam(path)) {
+            return;
+        }
+
+        boolean hasParameter = hasParameterInNode(node);
+
+        if (shouldIncludePath(path) && !hasParameter) {
+            addIssue(
+                ruleKey,
+                translate(messageKey, parameterName),
+                node.key()
+            );
+        }
     }
 
     protected boolean hasParameterInNode(JsonNode node) {
@@ -73,11 +105,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     }
 
     protected boolean isRefParameter(JsonNode parameterNode) {
-        JsonNode refNode = parameterNode.get("$ref");
-        if (refNode != null) {
-            return true;
-        }
-        return false;
+        return parameterNode.get("$ref") != null;
     }
 
     protected boolean hasNamedRefParameter(JsonNode parameterNode) {
@@ -112,13 +140,21 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     protected boolean shouldIncludePath(String path) {
         if (pathCheckStrategy.equals("/exclude")) {
             return !paths.contains(path);
-        } else if (pathCheckStrategy.equals("/include")) {
+        } else if (pathCheckStrategy.equals(PATH_STRATEGY)) {
             return paths.contains(path);
         }
         return false;
     }
 
-      protected Set<String> parsePaths(String pathsStr) {
+    protected boolean endsWithPathParam(String path) {
+        String[] segments = path.split("/");
+        if (segments.length == 0) return false;
+
+        String last = segments[segments.length - 1].trim();
+        return last.matches("^\\{[^}]+\\}$");
+    }
+
+    protected Set<String> parsePaths(String pathsStr) {
         if (!pathsStr.trim().isEmpty()) {
             return Arrays.stream(pathsStr.split(","))
                 .map(String::trim)
@@ -145,13 +181,5 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         }
 
         return currentNode;
-    }
-
-    protected boolean endsWithPathParam(String path) {
-        String[] segments = path.split("/");
-        if (segments.length == 0) return false;
-
-        String last = segments[segments.length - 1].trim();
-        return last.matches("^\\{[^}]+\\}$");
     }
 }

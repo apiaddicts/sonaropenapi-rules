@@ -97,10 +97,8 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(3);
-        assertParameterProperties("parameterName", "$select", RuleParamType.STRING);
+        assertNumberOfParameters(2);
         assertParameterProperties("paths", "/examples", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
-        
     }
 }
