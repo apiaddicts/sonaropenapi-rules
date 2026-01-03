@@ -1,0 +1,15 @@
+swagger: "2.0"
+info:
+  title: Swagger Petstore
+  version: "1.0.0"
+paths:
+  /examples/{id}:
+    get:
+      responses:
+        200:
+          description: OK
+  /examples/{id}/items/{id}:
+    get:
+      responses:
+        200:
+          description: OK

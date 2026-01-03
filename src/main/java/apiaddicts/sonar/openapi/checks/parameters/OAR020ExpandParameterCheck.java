@@ -14,7 +14,7 @@ public class OAR020ExpandParameterCheck extends AbstractQueryParameterCheck {
             KEY,
             MESSAGE,
             PARAM_NAME,
-            true
+            false
         );
     }
 
