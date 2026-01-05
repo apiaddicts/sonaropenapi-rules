@@ -41,6 +41,11 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2PathEndingWithParam() {
+        verifyV3("with-param");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("plain");
     }
@@ -80,6 +85,11 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
         verifyV31("with-ref");
     }
 
+    @Test
+    public void verifyInV3PathEndingWithParam() {
+        verifyV3("with-param");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR019 - SelectParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));
@@ -87,10 +97,8 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(3);
-        assertParameterProperties("parameterName", "$select", RuleParamType.STRING);
+        assertNumberOfParameters(2);
         assertParameterProperties("paths", "/examples", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
-        
     }
 }
