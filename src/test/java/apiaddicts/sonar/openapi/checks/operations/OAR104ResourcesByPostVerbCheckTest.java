@@ -19,10 +19,10 @@ public class OAR104ResourcesByPostVerbCheckTest extends BaseCheckTest {
         v3Path = getV3Path("operations");
     }
 
-    /*@Test
+    @Test
     public void verifyInV2() {
-        verifyV2("plain");
-    }*/
+        verifyV2("plain.yaml");
+    }
 
     @Test
     public void verifyInV3() {
@@ -37,6 +37,6 @@ public class OAR104ResourcesByPostVerbCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("words-to-exclude", "me", RuleParamType.STRING);
+        assertParameterProperties("words-to-exclude", "me,search", RuleParamType.STRING);
     }
 }
