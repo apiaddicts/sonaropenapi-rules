@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
     - OAR019 - SelectParameterCheck
+    - OAR020 - ExpandParameterCheck
 
 ## [1.2.5] - 2025-12-31
 
