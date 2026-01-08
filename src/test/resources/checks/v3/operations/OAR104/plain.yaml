@@ -9,17 +9,17 @@ paths:
         '200':
           description: Ok
   /resources/me/cars:
-    post: 
+    post:
       responses:
         '200':
           description: Ok
-  /resources/get: 
+  /resources/get:
     post:  # Noncompliant {{OAR104: Operation not recommended for resource path: resources/get}}
       responses:
         '200':
           description: Ok
-  /resources/hola:  
-    post:  # Noncompliant {{OAR104: Operation not recommended for resource path: resources/hola}}
+  /resources/hello:
+    post:  # Noncompliant {{OAR104: Operation not recommended for resource path: resources/hello}}
       responses:
         '200':
           description: Ok
@@ -28,8 +28,13 @@ paths:
       responses:
         '200':
           description: Ok
-  /resources/me: 
-    post: 
+  /resources/me:
+    post:
+      responses:
+        '200':
+          description: Ok
+  /resources/search:
+    post:
       responses:
         '200':
           description: Ok

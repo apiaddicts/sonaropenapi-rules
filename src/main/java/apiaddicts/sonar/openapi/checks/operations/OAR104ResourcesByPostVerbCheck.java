@@ -20,7 +20,7 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
 
     public static final String KEY = "OAR104";
     private static final String MESSAGE = "OAR104.error";
-    private static final String RESERVED_WORDS = "me";
+    private static final String RESERVED_WORDS = "me,search";
 
     @RuleProperty(
         key = "words-to-exclude",
@@ -74,22 +74,22 @@ public class OAR104ResourcesByPostVerbCheck extends BaseCheck {
                                .filter(p -> !p.trim().isEmpty())
                                .toArray(String[]::new);
         if (parts.length == 0) return true;
-    
+
         for (int i = 0; i < parts.length - 1; i++) {
             if (!isVariable(parts[i]) && !isSpecialVariable(parts[i]) && !isVariable(parts[i + 1]) && !isSpecialVariable(parts[i + 1])) {
                 return false;
             }
         }
-    
+
         return true;
     }
-    
+
     private boolean isVariable(String part) {
         return part.startsWith("{") && part.endsWith("}");
     }
 
     private boolean isSpecialVariable(String part) {
-        return "me".equalsIgnoreCase(part);
+        return reservedWords.contains(part.toLowerCase());
     }
 
     private String formatMessage(String path) {
