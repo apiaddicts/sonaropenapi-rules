@@ -21,10 +21,10 @@ import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
 public abstract class AbstractSchemaCheck extends BaseCheck {
 
-    protected String key;
+    private String key;
     protected JsonNode externalRefNode= null;
 
-    public AbstractSchemaCheck(String key) {
+    protected AbstractSchemaCheck(String key) {
         this.key = key;
     }
 

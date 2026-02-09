@@ -25,7 +25,7 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
 	private String key;
 	private String message;
 	protected String namingConvention = SNAKE_CASE;
-    protected Set<String> nameExceptions = new HashSet<>();
+  protected Set<String> nameExceptions = new HashSet<>();
 
 	protected AbstractNamingConventionCheck(String key, String message, String namingConvention) {
 		this.key = key;
@@ -33,7 +33,7 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
         this.namingConvention = namingConvention;
 	}
 
-    protected AbstractNamingConventionCheck(String key, String message, String namingConvention, Set<String> nameExceptions) {
+  protected AbstractNamingConventionCheck(String key, String message, String namingConvention, Set<String> nameExceptions) {
 		this.key = key;
 		this.message = message;
         this.namingConvention = namingConvention;
@@ -103,5 +103,4 @@ public abstract class AbstractNamingConventionCheck extends BaseCheck {
         return name.matches(PASCAL_REGEX);
     }
 
-    
 }

@@ -16,13 +16,15 @@ import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
 public abstract class AbstractExplicitResponseCheck extends AbstractSchemaCheck {
 
+    private String key;
     protected final String responseCode;
 
-    public AbstractExplicitResponseCheck(String key, String responseCode) {
+    protected AbstractExplicitResponseCheck(String key, String responseCode) {
         super(key);
+        this.key = key;
         this.responseCode = responseCode;
     }
-    
+
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(OpenApi2Grammar.RESPONSES, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.RESPONSES);
