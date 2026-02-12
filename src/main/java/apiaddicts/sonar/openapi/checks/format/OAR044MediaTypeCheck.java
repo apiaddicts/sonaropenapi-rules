@@ -48,9 +48,19 @@ public class OAR044MediaTypeCheck extends BaseCheck {
 
 
   @VisibleForTesting
-  static final Pattern MIME_TYPE_PATTERN = Pattern.compile("[a-zA-Z.0-9][a-zA-Z.0-9!#$&-_^+]+/[a-zA-Z.0-9][a-zA-Z.0-9!#$&-_^+]+(; charset=[a-zA-Z0-9-_]+)?");
+  static final Pattern MIME_TYPE_PATTERN = Pattern.compile(
+      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+/" +
+      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+" +
+      "(; charset=[a-zA-Z0-9_\\-]+)?"
+  );
   @VisibleForTesting
-  static final Pattern MEDIA_RANGE_PATTERN = Pattern.compile("[a-zA-Z.0-9][a-zA-Z.0-9!#$&-_^+]+/(\\*|[a-zA-Z.0-9][a-zA-Z.0-9!#$&-_^+]+(; charset=[a-zA-Z0-9-_]+)?)");
+  static final Pattern MEDIA_RANGE_PATTERN = Pattern.compile(
+      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+/" +
+      "(\\*|" +
+      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+" +
+      "(; charset=[a-zA-Z0-9_\\-]+)?" +
+      ")"
+  );
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
@@ -84,16 +94,19 @@ public class OAR044MediaTypeCheck extends BaseCheck {
 
     if (type == OpenApi3Grammar.PARAMETER) {
       verifyParameterContent(node);
+
     } else if (type == OpenApi3Grammar.RESPONSES) {
       node.properties().forEach(responseNode -> {
         if (!"204".equals(responseNode.key().getTokenValue())) {
-          handleExternalRef(responseNode, resolved -> verifyContent(resolved));
+          handleExternalRef(responseNode, this::verifyContent);
         }
       });
+
     } else if (type == OpenApi3Grammar.OPERATION) {
       String op = node.key().getTokenValue().toLowerCase();
+
       if (new HashSet<>(Arrays.asList("post", "put", "patch")).contains(op)) {
-          handleExternalRef(node.at("/requestBody"), resolved -> verifyContent(resolved));
+        handleExternalRef(node.at("/requestBody"), this::verifyContent);
       }
     }
   }

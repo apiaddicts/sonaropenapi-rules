@@ -122,10 +122,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
             }
 
             JsonNode type = getType(node);
-            if (!isObjectType(type) && !type.isMissing() && !isArrayType(type)) {
-                if (node.get(EXAMPLE).isMissing()) {
-                    addIssue(KEY, translate("OAR031.error-property"), node.key());
-                }
+            if (!isObjectType(type) && !type.isMissing() && !isArrayType(type) && node.get(EXAMPLE).isMissing()) {
+                addIssue(KEY, translate("OAR031.error-property"), node.key());
             }
         }
     }

@@ -68,8 +68,8 @@ public class OAR113CustomFieldCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        Set locations = new HashSet<>(Arrays.asList(fieldLocation.split(",")));
-        manageOperationAndResponse(node,locations);
+        Set<String> locations = new HashSet<>(Arrays.asList(fieldLocation.split(",")));
+        manageOperationAndResponse(node, locations);
     }
 
     private void manageOperationAndResponse(JsonNode node, Set<String> locations) {
