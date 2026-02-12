@@ -27,6 +27,9 @@ public class OAR028FilterParameterCheck extends BaseCheck {
     private static final String PATH_STRATEGY = "/include";
     private static final String PARAM_NAME = "$filter";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     @RuleProperty(
         key = "paths",
         description = "List of explicit paths to include/exclude from this rule separated by comma",
@@ -91,9 +94,9 @@ public class OAR028FilterParameterCheck extends BaseCheck {
     }
 
     private boolean shouldExcludePath(String path) {
-        if (pathCheckStrategy.equals("/exclude")) {
+        if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return !paths.contains(path);
-        } else if (pathCheckStrategy.equals("/include")) {
+        } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
             return paths.contains(path);
         }
         return false;

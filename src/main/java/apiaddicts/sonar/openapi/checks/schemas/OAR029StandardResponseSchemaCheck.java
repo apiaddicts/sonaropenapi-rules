@@ -84,38 +84,28 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
     }
 
     private void visitPathNode(JsonNode node) {
-        String path = node.key().getTokenValue();
-        if (exclusion.contains(path)) return;
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
-                .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) 
-                .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) 
-                .collect(Collectors.toList());
-        for (JsonNode responseNode : allResponses) {
-            String statusCode = responseNode.key().getTokenValue();
-            boolean externalRefManagement = false;
-                if (isExternalRef(responseNode) && externalRefNode == null) {
-                    externalRefNode = responseNode;
-                    externalRefManagement = true;
-                }
-            responseNode = resolve(responseNode);
+        if (exclusion.contains(node.key().getTokenValue())) return;
 
-            if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
-                visitSchemaNode(responseNode, statusCode);
-            } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
-                JsonNode content = responseNode.at("/content");
-                if (content.isMissing()) {
-                    if (externalRefManagement) externalRefNode = null; 
-                    continue;
-                }
-                content.propertyMap().forEach((mediaType, mediaTypeNode) -> { 
-                    if (!mediaType.toLowerCase().contains("json")) return;
-                    visitSchemaNode(mediaTypeNode, statusCode);
+        node.properties().stream()
+            .filter(prop -> isOperation(prop))
+            .map(JsonNode::value)
+            .map(operation -> operation.get("responses"))
+            .filter(responses -> !responses.isMissing())
+            .flatMap(responses -> responses.properties().stream())
+            .forEach(propResponse -> {
+                String statusCode = propResponse.key().getTokenValue();
+                handleExternalRef(propResponse.value(), resolved -> {
+                    if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
+                        visitSchemaNode(resolved, statusCode);
+                    } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                        resolved.at("/content").propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                            if (mediaType.toLowerCase().contains("json")) {
+                                visitSchemaNode(mediaTypeNode, statusCode);
+                            }
+                        });
+                    }
                 });
-            }
-            if (externalRefManagement) externalRefNode = null; 
-        }
+            });
     }
 
     private void visitSchemaNode(JsonNode responseNode, String statusCode) {
@@ -153,7 +143,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             schemaNode = properties.get(rootProperty);
             properties = getAllProperties(properties.get(rootProperty));
         }
-        
+
         if (successCode) {
             validateRootProperties(requiredOnSuccess, properties, schemaNode);
         } else {
@@ -163,24 +153,45 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         if (externalRefManagement) externalRefNode = null; 
     }
 
-    private void validateRootProperties(JSONArray requiredPropertiesJSONArray, Map<String, JsonNode> properties, JsonNode parentNode) {
-        if (requiredPropertiesJSONArray != null && requiredPropertiesJSONArray.length() > 0) {
-            Set<String> requiredProperties = requiredPropertiesJSONArray.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-            requiredProperties.forEach(propertyName -> {
-                JSONObject propertySchema = (responseSchemaProperties != null && responseSchemaProperties.has(propertyName)) ? responseSchemaProperties.getJSONObject(propertyName) : null;
-                if (propertyName.equals(dataProperty)) {
-                    String propertyType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
-                    if (propertyType == null || propertyType.trim().isEmpty() || propertyType.equals("any")) propertyType = TYPE_ANY;
-                    validateProperty(properties, propertyName, propertyType, parentNode.key()).ifPresent(node -> {
-                        Map<String, JsonNode> allProp = getAllProperties(node);
-                        if (allProp.isEmpty() && !parentNode.get("type").getTokenValue().equals("array")) {
-                            addIssue(KEY, translate("OAR029.error-required-one-property", propertyName), getTrueNode(node.key()));
-                        }
-                    });
+    private void validateRootProperties(JSONArray requiredPropsArray, Map<String, JsonNode> properties, JsonNode parentNode) {
+        if (requiredPropsArray == null || requiredPropsArray.isEmpty()) return;
+
+        requiredPropsArray.toList().stream()
+            .map(String::valueOf)
+            .forEach(name -> {
+                JSONObject propSchema = (responseSchemaProperties != null && responseSchemaProperties.has(name)) 
+                    ? responseSchemaProperties.getJSONObject(name) : null;
+
+                if (name.equals(dataProperty)) {
+                    validateDataProperty(name, propSchema, properties, parentNode);
                 } else {
-                    validateProperties(propertyName, propertySchema, parentNode);
+                    validateProperties(name, propSchema, parentNode);
                 }
             });
+    }
+
+    private void validateDataProperty(String name, JSONObject schema, Map<String, JsonNode> properties, JsonNode parent) {
+        String type = (schema != null && schema.has("type")) ? schema.getString("type") : TYPE_ANY;
+        if ("any".equals(type)) type = TYPE_ANY;
+
+        validateProperty(properties, name, type, parent.key()).ifPresent(node -> {
+            boolean isArray = "array".equals(parent.get("type").getTokenValue());
+            if (getAllProperties(node).isEmpty() && !isArray) {
+                addIssue(KEY, translate("OAR029.error-required-one-property", name), getTrueNode(node.key()));
+            }
+        });
+    }
+
+    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
+        boolean setExternal = false;
+        if (isExternalRef(node) && externalRefNode == null) {
+            externalRefNode = node;
+            setExternal = true;
+        }
+        try {
+            action.accept(resolve(node));
+        } finally {
+            if (setExternal) externalRefNode = null;
         }
     }
 }

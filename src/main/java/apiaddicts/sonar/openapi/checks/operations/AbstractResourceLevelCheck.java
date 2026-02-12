@@ -20,7 +20,7 @@ public abstract class AbstractResourceLevelCheck extends BaseCheck {
 
 	private String key;
 
-	public AbstractResourceLevelCheck(String key) {
+	protected AbstractResourceLevelCheck(String key) {
 		this.key = key;
 	}
 

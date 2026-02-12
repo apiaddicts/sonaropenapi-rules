@@ -5,7 +5,6 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
@@ -16,9 +15,6 @@ import org.sonar.check.RuleProperty;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
 
 @Rule(key = OAR113CustomFieldCheck.KEY)
 public class OAR113CustomFieldCheck extends BaseCheck {
@@ -72,52 +68,33 @@ public class OAR113CustomFieldCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        Set locations = new HashSet<>(Arrays.asList(fieldLocation.split(",")));
-        manageOperationAndResponse(node,locations);
+        Set<String> locations = new HashSet<>(Arrays.asList(fieldLocation.split(",")));
+        manageOperationAndResponse(node, locations);
     }
 
-    private void manageOperationAndResponse(JsonNode node, Set<String> locations){
-        if (OpenApi2Grammar.OPERATION.equals(node.getType()) || OpenApi3Grammar.OPERATION.equals(node.getType()) || OpenApi31Grammar.OPERATION.equals(node.getType())){
-            String operation = node.key().getTokenValue().toLowerCase();
-            if (locations.contains("operation")) {
+    private void manageOperationAndResponse(JsonNode node, Set<String> locations) {
+        AstNodeType type = node.getType();
+        String nodeKey = node.key().getTokenValue();
+
+        if (isType(type, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION)) {
+            String op = nodeKey.toLowerCase();
+            if (locations.contains("operation") || locations.contains("operation_" + op)) {
                 checkRequiredFieldInNode(node);
             }
-            locations.stream()
-                    .filter(location -> location.startsWith("operation_"))
-                    .map(location -> location.substring("operation_".length()))
-                    .filter(verb -> verb.equals(operation))
-                    .findFirst()
-                    .ifPresent(match -> checkRequiredFieldInNode(node));
-        }
-        if (OpenApi2Grammar.RESPONSE.equals(node.getType()) || OpenApi3Grammar.RESPONSE.equals(node.getType()) || OpenApi31Grammar.RESPONSE.equals(node.getType())){
-            String response = node.key().getTokenValue();
-            if (locations.contains("response")) {
+        } else if (isType(type, OpenApi2Grammar.RESPONSE, OpenApi3Grammar.RESPONSE, OpenApi31Grammar.RESPONSE)) {
+            if (locations.contains("response") || locations.contains("response_" + nodeKey)) {
                 checkRequiredFieldInNode(node);
             }
-            locations.stream()
-                    .filter(location -> location.startsWith("response_"))
-                    .map(location -> location.substring("response_".length()))
-                    .filter(verb -> verb.equals(response))
-                    .findFirst()
-                    .ifPresent(match -> checkRequiredFieldInNode(node));
-        }
-        if(OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())){
-            verifyParameter(node,locations,"path");
-        }
-        if(OpenApi2Grammar.SCHEMA.equals(node.getType()) || OpenApi3Grammar.SCHEMA.equals(node.getType()) || OpenApi31Grammar.SCHEMA.equals(node.getType())){
-            verifyParameter(node,locations,"schema");
-        }
-        if(OpenApi2Grammar.HEADER.equals(node.getType()) || OpenApi3Grammar.HEADER.equals(node.getType()) || OpenApi31Grammar.HEADER.equals(node.getType())){
-            verifyParameter(node,locations,"header");
-        }
-        if(OpenApi2Grammar.PARAMETER.equals(node.getType()) || OpenApi3Grammar.PARAMETER.equals(node.getType()) || OpenApi31Grammar.PARAMETER.equals(node.getType())){
-            verifyParameter(node,locations,"parameter");
         }
 
-        if(locations.contains(node.key().getTokenValue())){
+        else if (isType(type, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH)) verifyParameter(node, locations, "path");
+        else if (isType(type, OpenApi2Grammar.SCHEMA, OpenApi3Grammar.SCHEMA, OpenApi31Grammar.SCHEMA)) verifyParameter(node, locations, "schema");
+        else if (isType(type, OpenApi2Grammar.HEADER, OpenApi3Grammar.HEADER, OpenApi31Grammar.HEADER)) verifyParameter(node, locations, "header");
+        else if (isType(type, OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER)) verifyParameter(node, locations, "parameter");
+
+        if (locations.contains(nodeKey)) {
             checkRequiredFieldInNode(node);
         }
-
     }
 
     private void verifyParameter(JsonNode node,Set<String> locations ,String target){
@@ -136,6 +113,10 @@ public class OAR113CustomFieldCheck extends BaseCheck {
 
     private boolean isExtension(String field) {
         return field != null && field.startsWith("x-");
+    }
+
+    private boolean isType(AstNodeType nodeType, AstNodeType... types) {
+        return Arrays.asList(types).contains(nodeType);
     }
 
     private void checkExtension(JsonNode node, String extension) {

@@ -22,16 +22,16 @@ public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventi
 	public static final String KEY = "OAR012";
 	private static final String MESSAGE = "OAR012.error";
 
-	private static Set<String> nameExceptions = new HashSet<>(
+	private static Set<String> namExceptions = new HashSet<>(
 			Arrays.asList("$init", "$start", "$limit", "$total", "$expand", "$orderby", "$select", "$exclude", "$filter"));
 
 	private static final String NAMING_CONVENTION = SNAKE_CASE;
 
 	@RuleProperty(key = "naming-convention", description = "Naming convention (snake_case, kebab-case, camelCase or UpperCamelCase).", defaultValue = NAMING_CONVENTION)
-	private static String namingConvention = NAMING_CONVENTION;
+	private static String namConvention = NAMING_CONVENTION;
 
 	public OAR012ParameterNamingConventionCheck() {
-		super(KEY, MESSAGE, namingConvention, nameExceptions);
+		super(KEY, MESSAGE, namConvention, namExceptions);
 	}
 
 	@Override

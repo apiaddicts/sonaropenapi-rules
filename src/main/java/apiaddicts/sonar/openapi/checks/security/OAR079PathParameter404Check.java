@@ -24,6 +24,9 @@ public class OAR079PathParameter404Check extends BaseCheck {
     private static final String DEFAULT_PATH = "/status";
     private static final String PATH_STRATEGY = "/exclude";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     @RuleProperty(
             key = "paths",
             description = "List of explicit paths to include/exclude from this rule separated by comma",
@@ -58,26 +61,20 @@ public class OAR079PathParameter404Check extends BaseCheck {
 
     private void visitOperationNode(JsonNode node) {
         String currentPath = getCurrentPath(node);
-        if (pathCheckStrategy.equals("/exclude")) {
-            if (paths.contains(currentPath)) {
-                return;
-            }
-        } else if (pathCheckStrategy.equals("/include")) {
-            if (!paths.contains(currentPath)) {
-                return;
-            }
-        }
+        boolean isExcluded = PATH_STRATEGY_EXCLUDE.equals(pathCheckStrategy) && paths.contains(currentPath);
+        boolean isNotIncluded = PATH_STRATEGY_INCLUDE.equals(pathCheckStrategy) && !paths.contains(currentPath);
 
-        JsonNode responsesNode = node.get("responses");
+        if (isExcluded || isNotIncluded) return;
+
         JsonNode parametersNode = node.get("parameters");
-        if (parametersNode != null && parametersNode.isArray()) {
-            for (JsonNode parameterNode : parametersNode.elements()) {
-                if (isPathParameter(parameterNode)) {
-                    JsonNode responsesNode404 = responsesNode.get("404");
-                    if (responsesNode404.isMissing()) {
-                        addIssue(KEY, translate(MESSAGE), responsesNode.key());
-                        break;
-                    }
+        if (parametersNode == null || !parametersNode.isArray()) return;
+
+        for (JsonNode parameterNode : parametersNode.elements()) {
+            if (isPathParameter(parameterNode)) {
+                JsonNode responsesNode = node.get("responses");
+                if (responsesNode.get("404").isMissing()) {
+                    addIssue(KEY, translate(MESSAGE), responsesNode.key());
+                    break;
                 }
             }
         }

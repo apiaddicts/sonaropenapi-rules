@@ -26,6 +26,9 @@ public class OAR084ForbiddenFormatsInQueryCheck extends BaseCheck {
     private static final String DEFAULT_PATH = "/examples";
     private static final String PATH_STRATEGY = "/include";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     @RuleProperty(
             key = "forbidden-query-formats",
             description = "List of forbidden query params separated by comma",
@@ -71,62 +74,53 @@ public class OAR084ForbiddenFormatsInQueryCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH) {
+        AstNodeType type = node.getType();
+
+        if (type == OpenApi2Grammar.PATH || type == OpenApi3Grammar.PATH || type == OpenApi31Grammar.PATH) {
             currentPath = node.key().getTokenValue();
-        } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION) {
-            if (shouldExcludePath()) {
-                return;
+            return;
+        }
+
+        String op = node.key().getTokenValue().toLowerCase();
+        boolean isMethod = ImmutableSet.of("get", "post", "put", "patch", "delete").contains(op);
+
+        if (shouldExcludePath() || !isMethod) return;
+
+        JsonNode params = node.get("parameters");
+        if (params == null || params.isMissing() || params.isNull()) return;
+
+        validateParameters(params, type == OpenApi2Grammar.OPERATION);
+    }
+
+    private void validateParameters(JsonNode params, boolean isV2) {
+        List<JsonNode> violations = new ArrayList<>();
+
+        params.elements().forEach(param -> {
+            JsonNode in = param.get("in");
+            if (in == null || !"query".equals(in.getTokenValue())) return;
+
+            JsonNode formatNode = isV2 ? param.get("format") : param.get("schema").get("format");
+
+            if (formatNode != null && !formatNode.isMissing() && !formatNode.isNull() 
+                && forbiddenQueryFormats.contains(formatNode.getTokenValue())) {
+                violations.add(formatNode);
             }
+        });
 
-            String operationType = node.key().getTokenValue();
-            if (!ImmutableSet.of("get", "post", "put", "patch", "delete").contains(operationType.toLowerCase())) {
-                return;
-            }
-
-            JsonNode parametersNode = node.get("parameters");
-            if (parametersNode == null || parametersNode.isNull()) {
-                return;
-            }
-            
-            List<JsonNode> forbiddenFormatNodes = new ArrayList<>();
-
-            parametersNode.elements().forEach(parameterNode -> {
-                JsonNode inNode = parameterNode.get("in");
-                if (inNode != null && "query".equals(inNode.getTokenValue())) {
-                    JsonNode formatNode;
-
-                    if (node.getType() == OpenApi2Grammar.OPERATION) {
-                        formatNode = parameterNode.get("format");
-                    } else {
-                        JsonNode schemaNode = parameterNode.get("schema");
-                        if (schemaNode == null || schemaNode.isNull()) {
-                            return;
-                        }
-                        formatNode = schemaNode.get("format");
-                    }
-
-                    if (formatNode != null && !formatNode.isNull() && forbiddenQueryFormats.contains(formatNode.getTokenValue())) {
-                        forbiddenFormatNodes.add(formatNode);
-                    }
-                }
-            });
-
-            if (!forbiddenFormatNodes.isEmpty()) {
-                String forbiddenFormatsStr = forbiddenFormatNodes.stream()
+        if (!violations.isEmpty()) {
+            String forbiddenStr = violations.stream()
                     .map(JsonNode::getTokenValue)
+                    .distinct()
                     .collect(Collectors.joining(", "));
 
-                for (JsonNode formatNode : forbiddenFormatNodes) {
-                    addIssue(KEY, translate(MESSAGE, forbiddenFormatsStr), formatNode);
-                }
-            }
+            violations.forEach(node -> addIssue(KEY, translate(MESSAGE, forbiddenStr), node));
         }
     }
 
     private boolean shouldExcludePath() {
-        if ("/exclude".equals(pathCheckStrategy)) {
+        if (PATH_STRATEGY_EXCLUDE.equals(pathCheckStrategy)) {
             return paths.contains(currentPath);
-        } else if ("/include".equals(pathCheckStrategy)) {
+        } else if (PATH_STRATEGY_INCLUDE.equals(pathCheckStrategy)) {
             return !paths.contains(currentPath);
         }
         return false;

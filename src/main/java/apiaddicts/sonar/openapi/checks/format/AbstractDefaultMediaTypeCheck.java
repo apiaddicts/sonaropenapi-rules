@@ -43,7 +43,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
     private boolean globalSupportsDefaultMimeType = false;
 
-    public AbstractDefaultMediaTypeCheck(String key, String section, String message) {
+    protected AbstractDefaultMediaTypeCheck(String key, String section, String message) {
         this.key = key;
         this.section = section;
         this.message = translate(message);

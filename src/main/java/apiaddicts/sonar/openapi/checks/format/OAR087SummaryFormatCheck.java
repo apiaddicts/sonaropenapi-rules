@@ -16,6 +16,7 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
 
     public static final String KEY = "OAR087";
     private static final String MESSAGE = "OAR087.error";
+    private static final String SUMMARY = "summary";
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -36,7 +37,7 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
     private void checkInfoSummary(JsonNode rootNode) {
         JsonNode infoNode = rootNode.get("info");
         if (infoNode != null) {
-            checkSummaryFormat(infoNode.get("summary"));
+            checkSummaryFormat(infoNode.get(SUMMARY));
         }
     }
 
@@ -44,7 +45,7 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
         JsonNode definitionsNode = rootNode.get("definitions");
         if (definitionsNode != null) {
             for (JsonNode definition : definitionsNode.propertyMap().values()) {
-                checkSummaryFormat(definition.get("summary"));
+                checkSummaryFormat(definition.get(SUMMARY));
             }
         }
         
@@ -53,7 +54,7 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
             JsonNode schemasNode = componentsNode.get("schemas");
             if (schemasNode != null) {
                 for (JsonNode schema : schemasNode.propertyMap().values()) {
-                    checkSummaryFormat(schema.get("summary"));
+                    checkSummaryFormat(schema.get(SUMMARY));
                 }
             }
         }
@@ -62,7 +63,7 @@ public class OAR087SummaryFormatCheck extends BaseCheck {
     protected void visitPathsNode(JsonNode pathsNode) {
         for (JsonNode pathNode : pathsNode.propertyMap().values()) {
             for (JsonNode operationNode : pathNode.propertyMap().values()) {
-                checkSummaryFormat(operationNode.get("summary"));
+                checkSummaryFormat(operationNode.get(SUMMARY));
             }
         }
     }

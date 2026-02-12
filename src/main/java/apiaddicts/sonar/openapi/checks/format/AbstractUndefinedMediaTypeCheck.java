@@ -21,7 +21,7 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
     protected JsonNode externalRefNode = null;
     private boolean globalDefinesMediaTypes = false;
 
-    public AbstractUndefinedMediaTypeCheck(String key, String section) {
+    protected AbstractUndefinedMediaTypeCheck(String key, String section) {
         this.key = key;
         this.section = section;
     }
