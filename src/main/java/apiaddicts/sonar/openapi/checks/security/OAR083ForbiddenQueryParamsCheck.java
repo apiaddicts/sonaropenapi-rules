@@ -24,6 +24,9 @@ public class OAR083ForbiddenQueryParamsCheck extends BaseCheck {
     private static final String DEFAULT_PATH = "/examples";
     private static final String PATH_STRATEGY = "/include";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     @RuleProperty(
             key = "forbidden-query-params",
             description = "List of forbidden query params separated by comma",
@@ -69,43 +72,47 @@ public class OAR083ForbiddenQueryParamsCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH) {
+        AstNodeType type = node.getType();
+
+        if (type == OpenApi2Grammar.PATH || type == OpenApi3Grammar.PATH || type == OpenApi31Grammar.PATH) {
             currentPath = node.key().getTokenValue();
-        } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION) {
-            if (shouldExcludePath()) {
-                return;
-            }
+            return;
+        }
 
-            String operationType = node.key().getTokenValue();
-            if (!ImmutableSet.of("get", "post", "put", "patch", "delete").contains(operationType.toLowerCase())) {
-                return;
-            }
+        String operationType = node.key().getTokenValue().toLowerCase();
+        boolean isMethod = ImmutableSet.of("get", "post", "put", "patch", "delete").contains(operationType);
 
-            JsonNode parametersNode = node.get("parameters");
-            if (parametersNode == null || parametersNode.isNull()) {
-                return;
+        if (shouldExcludePath() || !isMethod) return;
+
+        JsonNode params = node.get("parameters");
+        if (params == null || params.isMissing() || params.isNull()) return;
+
+        validateParameters(params);
+    }
+
+    private void validateParameters(JsonNode parametersNode) {
+        Set<String> queryParams = new HashSet<>();
+        parametersNode.elements().forEach(parameterNode -> {
+            JsonNode in = parameterNode.get("in");
+            JsonNode name = parameterNode.get("name");
+            if (in != null && "query".equals(in.getTokenValue()) && name != null && !name.isNull()) {
+                queryParams.add(name.getTokenValue());
             }
-            Set<String> queryParams = new HashSet<>();
-            parametersNode.elements().forEach(parameterNode -> {
-                JsonNode inNode = parameterNode.get("in");
-                if (inNode != null && "query".equals(inNode.getTokenValue())) {
-                    JsonNode nameNode = parameterNode.get("name");
-                    if (nameNode != null && !nameNode.isNull()) {
-                        queryParams.add(nameNode.getTokenValue());
-                    }
-                }
-            });
-            String forbiddenParamsStr = forbiddenQueryParams.stream().filter(queryParams::contains).collect(Collectors.joining(", "));
-            if (!forbiddenParamsStr.isEmpty()) {
-                addIssue(KEY, translate(MESSAGE, forbiddenParamsStr), parametersNode.key());
-            }
+        });
+
+        String forbidden = forbiddenQueryParams.stream()
+                .filter(queryParams::contains)
+                .collect(Collectors.joining(", "));
+
+        if (!forbidden.isEmpty()) {
+            addIssue(KEY, translate(MESSAGE, forbidden), parametersNode.key());
         }
     }
 
     private boolean shouldExcludePath() {
-        if ("/exclude".equals(pathCheckStrategy)) {
+        if (PATH_STRATEGY_EXCLUDE.equals(pathCheckStrategy)) {
             return paths.contains(currentPath);
-        } else if ("/include".equals(pathCheckStrategy)) {
+        } else if (PATH_STRATEGY_INCLUDE.equals(pathCheckStrategy)) {
             return !paths.contains(currentPath);
         }
         return false;

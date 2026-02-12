@@ -38,37 +38,43 @@ public class VerbPathMatcher {
     public static final String GET_WORD_PATH = SLASH + GET_WORD;
     public static final String DELETE_WORD_PATH = SLASH + DELETE_WORD;
 
-    public static final String GET_ALL_1ST_LEVEL = ";get:^" + COLLECTION_PATH + "$";
-    public static final String GET_ALL_2ND_LEVEL = ";get:^" + COLLECTION_PATH_2ND + "$";
-    public static final String GET_ALL_3RD_LEVEL = ";get:^" + COLLECTION_PATH_3RD + "$";
+    public static final String VERB_GET = ";get:^";
+    public static final String VERB_POST = ";post:^";
+    public static final String VERB_PUT = ";put:^";
+    public static final String VERB_PATCH = ";patch:^";
+    public static final String VERB_DELETE = ";delete:^";
 
-    public static final String GET_ONE_1ST_LEVEL = ";get:^" + ELEMENT_PATH + "$";
-    public static final String GET_ONE_2ND_LEVEL = ";get:^" + ELEMENT_PATH_2ND + "$";
-    public static final String GET_ONE_3RD_LEVEL = ";get:^" + ELEMENT_PATH_3RD + "$";
+    public static final String GET_ALL_1ST_LEVEL = VERB_GET + COLLECTION_PATH + "$";
+    public static final String GET_ALL_2ND_LEVEL = VERB_GET + COLLECTION_PATH_2ND + "$";
+    public static final String GET_ALL_3RD_LEVEL = VERB_GET + COLLECTION_PATH_3RD + "$";
 
-    public static final String POST_1ST_LEVEL = ";post:^" + COLLECTION_PATH + "$";
-    public static final String POST_2ND_LEVEL = ";post:^" + COLLECTION_PATH_2ND + "$";
-    public static final String POST_3RD_LEVEL = ";post:^" + COLLECTION_PATH_3RD + "$";
+    public static final String GET_ONE_1ST_LEVEL = VERB_GET + ELEMENT_PATH + "$";
+    public static final String GET_ONE_2ND_LEVEL = VERB_GET + ELEMENT_PATH_2ND + "$";
+    public static final String GET_ONE_3RD_LEVEL = VERB_GET + ELEMENT_PATH_3RD + "$";
 
-    public static final String POST_GET_1ST_LEVEL = ";post:^" + COLLECTION_PATH + GET_WORD_PATH + "$";
-    public static final String POST_GET_2ND_LEVEL = ";post:^" + COLLECTION_PATH_2ND + GET_WORD_PATH + "$";
-    public static final String POST_GET_3RD_LEVEL = ";post:^" + COLLECTION_PATH_2ND + GET_WORD_PATH + "$";
+    public static final String POST_1ST_LEVEL = VERB_POST + COLLECTION_PATH + "$";
+    public static final String POST_2ND_LEVEL = VERB_POST + COLLECTION_PATH_2ND + "$";
+    public static final String POST_3RD_LEVEL = VERB_POST + COLLECTION_PATH_3RD + "$";
 
-    public static final String POST_DELETE_1ST_LEVEL = ";post:^" + COLLECTION_PATH + DELETE_WORD_PATH + "$";
-    public static final String POST_DELETE_2ND_LEVEL = ";post:^" + COLLECTION_PATH_2ND + DELETE_WORD_PATH + "$";
-    public static final String POST_DELETE_3RD_LEVEL = ";post:^" + COLLECTION_PATH_2ND + DELETE_WORD_PATH + "$";
+    public static final String POST_GET_1ST_LEVEL = VERB_POST + COLLECTION_PATH + GET_WORD_PATH + "$";
+    public static final String POST_GET_2ND_LEVEL = VERB_POST + COLLECTION_PATH_2ND + GET_WORD_PATH + "$";
+    public static final String POST_GET_3RD_LEVEL = VERB_POST + COLLECTION_PATH_2ND + GET_WORD_PATH + "$";
 
-    public static final String PUT_1ST_LEVEL = ";put:^" + ELEMENT_PATH + "$";
-    public static final String PUT_2ND_LEVEL = ";put:^" + ELEMENT_PATH_2ND + "$";
-    public static final String PUT_3RD_LEVEL = ";put:^" + ELEMENT_PATH_3RD + "$";
+    public static final String POST_DELETE_1ST_LEVEL = VERB_POST + COLLECTION_PATH + DELETE_WORD_PATH + "$";
+    public static final String POST_DELETE_2ND_LEVEL = VERB_POST + COLLECTION_PATH_2ND + DELETE_WORD_PATH + "$";
+    public static final String POST_DELETE_3RD_LEVEL = VERB_POST + COLLECTION_PATH_2ND + DELETE_WORD_PATH + "$";
 
-    public static final String PATCH_1ST_LEVEL = ";patch:^" + ELEMENT_PATH + "$";
-    public static final String PATCH_2ND_LEVEL = ";patch:^" + ELEMENT_PATH_2ND + "$";
-    public static final String PATCH_3RD_LEVEL = ";patch:^" + ELEMENT_PATH_3RD + "$";
+    public static final String PUT_1ST_LEVEL = VERB_PUT + ELEMENT_PATH + "$";
+    public static final String PUT_2ND_LEVEL = VERB_PUT + ELEMENT_PATH_2ND + "$";
+    public static final String PUT_3RD_LEVEL = VERB_PUT + ELEMENT_PATH_3RD + "$";
 
-    public static final String DELETE_1ST_LEVEL = ";delete:^" + ELEMENT_PATH + "$";
-    public static final String DELETE_2ND_LEVEL = ";delete:^" + ELEMENT_PATH_2ND + "$";
-    public static final String DELETE_3RD_LEVEL = ";delete:^" + ELEMENT_PATH_3RD + "$";
+    public static final String PATCH_1ST_LEVEL = VERB_PATCH + ELEMENT_PATH + "$";
+    public static final String PATCH_2ND_LEVEL = VERB_PATCH + ELEMENT_PATH_2ND + "$";
+    public static final String PATCH_3RD_LEVEL = VERB_PATCH + ELEMENT_PATH_3RD + "$";
+
+    public static final String DELETE_1ST_LEVEL = VERB_DELETE + ELEMENT_PATH + "$";
+    public static final String DELETE_2ND_LEVEL = VERB_DELETE + ELEMENT_PATH_2ND + "$";
+    public static final String DELETE_3RD_LEVEL = VERB_DELETE + ELEMENT_PATH_3RD + "$";
 
     private Map<String, List<PatternGroup>> patternsByVerb;
     private Map<String, Set<String>> exclusionsByVerb;

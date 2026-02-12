@@ -24,42 +24,51 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     private String key;
     protected JsonNode externalRefNode= null;
 
+    private static final String GENERIC_PROPERTY_MISSING = "generic.property-missing";
+    private static final String ITEMS = "items";
+    private static final String PROPERTIES = "properties";
+
     protected AbstractSchemaCheck(String key) {
         this.key = key;
     }
 
+    private <T> T handleExternalRef(JsonNode node, java.util.function.Function<JsonNode, T> action) {
+        boolean setExternal = false;
+        if (isExternalRef(node) && externalRefNode == null) {
+            externalRefNode = node;
+            setExternal = true;
+        }
+        try {
+            return action.apply(resolve(node));
+        } finally {
+            if (setExternal) externalRefNode = null;
+        }
+    }
+
     protected Map<String, JsonNode> getAllProperties(JsonNode schemaNode) {
         final Map<String, JsonNode> properties = new HashMap<>();
-    
+
         JsonNode propertiesNode = getProperties(schemaNode);
         if (!propertiesNode.isMissing()) {
-            Map<String, JsonNode> baseProperties = getProperties(schemaNode).propertyMap();
-            properties.putAll(baseProperties);
+            properties.putAll(propertiesNode.propertyMap());
         }
-    
+
         JsonNode allOfNode = schemaNode.get("allOf");
         if (!allOfNode.isMissing()) {
             for (JsonNode element : allOfNode.elements()) {
-                boolean externalRefManagement = false;
-                if (isExternalRef(element) && externalRefNode == null) {
-                    externalRefNode = element;
-                    externalRefManagement = true;
-                }
-    
-                element = resolve(element);
-                properties.putAll(getAllProperties(element));
-    
-                if (externalRefManagement) externalRefNode = null;  
+                handleExternalRef(element, resolved -> {
+                    properties.putAll(getAllProperties(resolved));
+                    return null;
+                });
             }
         }
-    
         return properties;
     }
-    
+
 
     protected Optional<JsonNode> validateProperty(Map<String, JsonNode> properties, String propertyName, String propertyType, JsonNode parentNode) {
         if (!properties.containsKey(propertyName)) {
-            addIssue(key, translate("generic.property-missing", propertyName), getTrueNode(parentNode));
+            addIssue(key, translate(GENERIC_PROPERTY_MISSING, propertyName), getTrueNode(parentNode));
             return Optional.empty();
         }
         JsonNode prop = properties.get(propertyName);
@@ -67,45 +76,31 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected Optional<JsonNode> validateProperty(JsonNode properties, String propertyName, String propertyType) {
-        boolean externalRefManagment= false;
-        if (isExternalRef(properties) && externalRefNode== null){
-            externalRefNode= properties;
-            externalRefManagment= true;
-        }
-        properties = resolve(properties);
-
-        if (properties.propertyNames().isEmpty()) {
-            addIssue(key, translate("generic.property-missing", propertyName), getTrueNode(properties));
-            if(externalRefManagment) externalRefNode=null;
-            return Optional.empty();
-        }
-
-        JsonNode prop = properties.get(propertyName);
-        if(externalRefManagment) externalRefNode=null;
-        return validateProperty(prop, propertyName, propertyType, getTrueNode(properties.key()));
+        return handleExternalRef(properties, resolvedProps -> {
+            if (resolvedProps.propertyNames().isEmpty()) {
+                addIssue(key, translate(GENERIC_PROPERTY_MISSING, propertyName), getTrueNode(resolvedProps));
+                return Optional.empty();
+            }
+            JsonNode prop = resolvedProps.get(propertyName);
+            return validateProperty(prop, propertyName, propertyType, getTrueNode(resolvedProps.key()));
+        });
     }
 
     protected Optional<JsonNode> validateProperty(JsonNode prop, String propertyName, String propertyType, JsonNode parentNode) {
         if (prop.isMissing()) {
-            addIssue(key, translate("generic.property-missing", propertyName), getTrueNode(parentNode));
+            addIssue(key, translate(GENERIC_PROPERTY_MISSING, propertyName), getTrueNode(parentNode));
             return Optional.empty();
-        } else {
-            boolean externalRefManagment= false;
-            if (isExternalRef(prop) && externalRefNode== null){
-                externalRefNode= prop;
-                externalRefManagment= true;
-            }
-            prop = resolve(prop);
-            JsonNode type = getType(prop);
+        }
+
+        return handleExternalRef(prop, resolvedProp -> {
+            JsonNode type = getType(resolvedProp);
             if (!isType(type, propertyType)) {
-                JsonNode errorNode = (type.isMissing() ? prop : type.key());
+                JsonNode errorNode = (type.isMissing() ? resolvedProp : type.key());
                 addIssue(key, translate("generic.property-wrong-type", propertyName, propertyType), getTrueNode(errorNode));
-                if(externalRefManagment) externalRefNode=null;
                 return Optional.empty();
             }
-            if(externalRefManagment) externalRefNode=null;
-        }
-        return Optional.of(prop);
+            return Optional.of(resolvedProp);
+        });
     }
 
     protected void validateRequiredProperties(JsonNode schema, Set<String> requiredValues, String requiredStr) {
@@ -118,41 +113,29 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     protected Optional<JsonNode> validateItems(JsonNode prop, String iType) {
-        boolean externalRefManagment= false;
-        if (isExternalRef(prop) && externalRefNode== null){
-            externalRefNode= prop;
-            externalRefManagment= true;
+        return handleExternalRef(prop, resolvedProp -> {
+            if (!isType(getType(resolvedProp), TYPE_ARRAY)) {
+                return Optional.empty();
             }
-        prop = resolve(prop);
-        JsonNode type = getType(prop);
-        if (isType(type, TYPE_ARRAY)) {
-            JsonNode itemsSchema = prop.get("items");
-            if (isExternalRef(itemsSchema) && externalRefNode== null){
-                externalRefNode= itemsSchema;
-                externalRefManagment= true;
-            }
-            itemsSchema = resolve(itemsSchema);
-            String propertyName = prop.key().getTokenValue();
-            if (itemsSchema.isMissing()) {
-                addIssue(key, translate("generic.property-items-missing", propertyName, iType), getTrueNode(prop.key()) );//estudiar ? y : 
-            } else {
-                JsonNode itemsType = getType(itemsSchema);
-                if (!isType(itemsType, iType)) {
-                    JsonNode errorNode = (itemsType.isMissing() ? itemsSchema : itemsType.key());
-                    addIssue(key, translate("generic.property-items-wrong-type", propertyName, iType), getTrueNode(errorNode));
-                    if(externalRefManagment) externalRefNode=null;
+
+            JsonNode itemsSchema = resolvedProp.get(ITEMS);
+            return handleExternalRef(itemsSchema, resolvedItems -> {
+                String propName = resolvedProp.key().getTokenValue();
+
+                if (resolvedItems.isMissing()) {
+                    addIssue(key, translate("generic.property-items-missing", propName, iType), getTrueNode(resolvedProp.key()));
                     return Optional.empty();
-                } else {
-                    if(externalRefManagment) externalRefNode=null;
-                    return Optional.of(itemsSchema);
                 }
-            }
-            if(externalRefManagment) externalRefNode=null;
-        }
-        if(externalRefManagment) externalRefNode=null;
-        return Optional.empty();
+                JsonNode itemsType = getType(resolvedItems);
+                if (!isType(itemsType, iType)) {
+                    JsonNode errorNode = itemsType.isMissing() ? resolvedItems : itemsType.key();
+                    addIssue(key, translate("generic.property-items-wrong-type", propName, iType), getTrueNode(errorNode));
+                    return Optional.empty();
+                }
+                return Optional.of(resolvedItems);
+            });
+        });
     }
-    
 
     protected void validateEnumValues(JsonNode property, Set<String> expected) {
         Set<String> found = getEnumValues(property);
@@ -172,17 +155,13 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         Map<String, JsonNode> propertyMap = getAllProperties(propertiesNode);
         String schemaType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
         if (schemaType == null || schemaType.trim().isEmpty() || schemaType.equals("any")) schemaType = TYPE_ANY;
-        if (schemaType.equals(TYPE_ANY) && propertySchema.has("properties")) schemaType = TYPE_OBJECT;
+        if (schemaType.equals(TYPE_ANY) && propertySchema.has(PROPERTIES)) schemaType = TYPE_OBJECT;
 
         if (schemaType != null && !schemaType.trim().isEmpty()) {
             if (schemaType.equals(TYPE_OBJECT)) {
-                validateProperty(propertyMap, propertyName, TYPE_OBJECT, propertiesNode.key()).ifPresent(propertyNode -> {                    
-                    validateObject(propertySchema, propertyNode);
-                });
+                validateProperty(propertyMap, propertyName, TYPE_OBJECT, propertiesNode.key()).ifPresent(propertyNode -> validateObject(propertySchema, propertyNode));
             } else if (schemaType.equals(TYPE_ARRAY)) {
-                validateProperty(propertyMap, propertyName, TYPE_ARRAY, propertiesNode.key()).ifPresent(propertyNode -> {
-                    validateArray(propertySchema, propertyNode);
-                });
+                validateProperty(propertyMap, propertyName, TYPE_ARRAY, propertiesNode.key()).ifPresent(propertyNode -> validateArray(propertySchema, propertyNode));
             } else {
                 validateProperty(propertyMap, propertyName, schemaType, propertiesNode.key());
             }
@@ -191,7 +170,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
     private void validateObject(JSONObject propertySchema, JsonNode propertyNode) {
         JSONArray schemaRequired = (propertySchema != null && propertySchema.has("required")) ? propertySchema.getJSONArray("required") : null;
-        JSONObject schemaProperties = (propertySchema != null && propertySchema.has("properties")) ? propertySchema.getJSONObject("properties") : null;
+        JSONObject schemaProperties = (propertySchema != null && propertySchema.has(PROPERTIES)) ? propertySchema.getJSONObject(PROPERTIES) : null;
 
         if (schemaProperties != null && !schemaProperties.keySet().isEmpty()) {
             List<String> sortedSchemaProperties = new ArrayList<>(schemaProperties.keySet());
@@ -201,7 +180,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                 validateProperties(childProperty, childPropertySchema, propertyNode);
             });
         }
-        
+
         if (schemaRequired != null && schemaRequired.length() > 0 ) {
             Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
             validateRequiredProperties(propertyNode, requiredProperties, String.join(", ", requiredProperties));
@@ -209,11 +188,11 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
     }
 
     private void validateArray(JSONObject propertySchema, JsonNode propertyNode) {
-        JSONObject schemaItems = (propertySchema != null && propertySchema.has("items")) ? propertySchema.getJSONObject("items") : null;
+        JSONObject schemaItems = (propertySchema != null && propertySchema.has(ITEMS)) ? propertySchema.getJSONObject(ITEMS) : null;
         String itemsType = (schemaItems != null && schemaItems.has("type")) ? schemaItems.getString("type") : TYPE_ANY;
         if (itemsType == null || itemsType.trim().isEmpty() || itemsType.equals("any")) itemsType = TYPE_ANY;
-        if (itemsType.equals(TYPE_ANY) && schemaItems.has("properties")) itemsType = TYPE_OBJECT;
-        
+        if (itemsType.equals(TYPE_ANY) && schemaItems.has(PROPERTIES)) itemsType = TYPE_OBJECT;
+
         if (itemsType.equals(TYPE_OBJECT)) {
             validateItems(propertyNode, itemsType).ifPresent(itemNode -> {
                 validateObject(schemaItems, itemNode);

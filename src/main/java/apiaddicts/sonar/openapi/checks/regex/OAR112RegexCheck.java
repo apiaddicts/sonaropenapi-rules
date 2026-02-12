@@ -24,6 +24,8 @@ public class OAR112RegexCheck extends BaseCheck {
     private static final String ERROR_MESSAGE = "The field must start with an uppercase letter.";
     private static final String VALIDATION = "^[A-Z].*";
 
+    private static final String DESCRIPTION = "description";
+
     @RuleProperty(
         key = "Node",
         description = "Specify the sections of the OpenAPI document to be validated. This defines the scope for the regular expression validation.",
@@ -86,37 +88,44 @@ public class OAR112RegexCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        List<String> pathSegments = Arrays.asList(nodes.split("/"));
-        String[] pathSegmentsArray = nodes.split("/");
+        String[] nodeSegments = nodes.split("/");
+        List<String> pathSegments = Arrays.asList(nodeSegments);
+        AstNodeType type = node.getType();
 
-        if (pathSegments.contains("info") && (OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi2Grammar.ROOT.equals(node.getType()))){
+        boolean isPathRoot = nodeSegments.length > 1 && "paths".equals(nodeSegments[0]);
+        boolean isMethod = isPathRoot && Arrays.asList("get", "post", "put", "patch", "delete")
+                .contains(nodeSegments[1].toLowerCase());
+
+        if (pathSegments.contains("info") && isType(type, OpenApi3Grammar.ROOT, OpenApi2Grammar.ROOT)) {
             handleInfoSection(node, pathSegments);
-        } else if (pathSegments.contains("servers") && (OpenApi3Grammar.SERVER.equals(node.getType()))) {
-            handleServerNode(node, pathSegments); 
-        } else if (pathSegmentsArray.length > 1 && "paths".equals(pathSegmentsArray[0]) &&
-        (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
-        pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) &&
-        (OpenApi3Grammar.OPERATION.equals(node.getType()) || OpenApi2Grammar.OPERATION.equals(node.getType()))) {
+        } else if (pathSegments.contains("servers") && type.equals(OpenApi3Grammar.SERVER)) {
+            handleServerNode(node, pathSegments);
+        } else if (isMethod && isType(type, OpenApi3Grammar.OPERATION, OpenApi2Grammar.OPERATION)) {
             handleOperationsNode(node, pathSegments);
-        } else if ((pathSegments.contains("tags")) && (OpenApi3Grammar.TAG.equals(node.getType()) || OpenApi2Grammar.TAG.equals(node.getType()))) {
+        } else if (pathSegments.contains("tags") && isType(type, OpenApi3Grammar.TAG, OpenApi2Grammar.TAG)) {
             handleTagsNode(node, pathSegments);
-        } else if ((pathSegments.contains("externalDocs")) && (OpenApi3Grammar.EXTERNAL_DOC.equals(node.getType()) || OpenApi2Grammar.EXTERNAL_DOC.equals(node.getType()))) {
+        } else if (pathSegments.contains("externalDocs") && isType(type, OpenApi3Grammar.EXTERNAL_DOC, OpenApi2Grammar.EXTERNAL_DOC)) {
             handleExternalDocsNode(node, pathSegments);
-        } else if (pathSegmentsArray.length > 2 && "paths".equals(pathSegmentsArray[0]) &&
-        (pathSegmentsArray[1].equals("get") || pathSegmentsArray[1].equals("post") || pathSegmentsArray[1].equals("put") || 
-        pathSegmentsArray[1].equals("patch") || pathSegmentsArray[1].equals("delete")) && "parameters".equals(pathSegmentsArray[2]) && 
-        (OpenApi3Grammar.PARAMETER.equals(node.getType()) || OpenApi2Grammar.PARAMETERS.equals(node.getType()))) {
+        } else if (isMethod && nodeSegments.length > 2 && "parameters".equals(nodeSegments[2])
+                && isType(type, OpenApi3Grammar.PARAMETER, OpenApi2Grammar.PARAMETERS)) {
             handleParametersNode(node, pathSegments);
         }
     }
 
+    private boolean isType(AstNodeType target, AstNodeType... types) {
+        for (AstNodeType t : types) {
+            if (t.equals(target)) return true;
+        }
+        return false;
+    }
+
     private void handleInfoSection(JsonNode node, List<String> pathSegments) {
         JsonNode infoNode = node.get("info");
-        validateSection(infoNode, pathSegments, Arrays.asList("title", "description", "termsOfService", "contact", "license", "version"));
+        validateSection(infoNode, pathSegments, Arrays.asList("title", DESCRIPTION, "termsOfService", "contact", "license", "version"));
     }
 
     private void handleServerNode(JsonNode serverNode, List<String> pathSegments) {
-        validateSection(serverNode, pathSegments, Arrays.asList("url", "description"));
+        validateSection(serverNode, pathSegments, Arrays.asList("url", DESCRIPTION));
     }
 
     private void handleOperationsNode(JsonNode operationsNode, List<String> pathSegments) {
@@ -126,7 +135,7 @@ public class OAR112RegexCheck extends BaseCheck {
                 String statusCodeToCheck = segment4;
                 JsonNode responseNode = responsesNode.get(statusCodeToCheck);
                 if (responseNode != null && !responseNode.isMissing()) {
-                    JsonNode descriptionNode = responseNode.get("description");
+                    JsonNode descriptionNode = responseNode.get(DESCRIPTION);
                     if (descriptionNode != null && !descriptionNode.isMissing() && !descriptionNode.getTokenValue().matches(valid)) {
                         addIssue(KEY, errorMessage, descriptionNode.key());
                     }
@@ -134,18 +143,18 @@ public class OAR112RegexCheck extends BaseCheck {
             }
         }
         else{
-            validateSection(operationsNode, pathSegments, Arrays.asList("summary", "description", "operationId"));
+            validateSection(operationsNode, pathSegments, Arrays.asList("summary", DESCRIPTION, "operationId"));
         }
     }
 
     private void handleParametersNode(JsonNode parametersNode, List<String> pathSegments){
-        validateSection(parametersNode, pathSegments, Arrays.asList("description"));
+        validateSection(parametersNode, pathSegments, Arrays.asList(DESCRIPTION));
     }
     private void handleTagsNode(JsonNode tagsNode, List<String> pathSegments) {
-        validateSection(tagsNode, pathSegments, Arrays.asList("name", "description"));   
+        validateSection(tagsNode, pathSegments, Arrays.asList("name", DESCRIPTION));
     }
     private void handleExternalDocsNode(JsonNode externalDocNode, List<String> pathSegments) {
-        validateSection(externalDocNode, pathSegments, Arrays.asList("url", "description"));   
+        validateSection(externalDocNode, pathSegments, Arrays.asList("url", DESCRIPTION));
     }
 
     private void validateSection(JsonNode parentNode, List<String> pathSegments, List<String> keysToValidate) {
@@ -159,7 +168,7 @@ public class OAR112RegexCheck extends BaseCheck {
     private void validateNodeWithRegex(JsonNode parentNode, String childKey, String validation) {
         JsonNode childNode = parentNode.get(childKey);
         boolean validationAsBoolean = "true".equals(validation) || "false".equals(validation);
-    
+
         if (validationAsBoolean && "false".equals(validation)) {
             if (!(childNode == null || childNode instanceof MissingNode)) {
                 addIssue(KEY, errorMessage, childNode.key());

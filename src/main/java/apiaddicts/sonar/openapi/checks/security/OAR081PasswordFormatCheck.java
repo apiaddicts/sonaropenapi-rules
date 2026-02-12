@@ -13,10 +13,12 @@ import java.util.Set;
 @Rule(key = OAR081PasswordFormatCheck.KEY)
 public class OAR081PasswordFormatCheck extends BaseCheck {
 
-    
     public static final String KEY = "OAR081";
     private static final String MESSAGE = "OAR081.error";
-    
+
+    private static final String PROPERTIES = "properties";
+    private static final String SCHEMA = "schema";
+
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(OpenApi2Grammar.PATHS, OpenApi2Grammar.DEFINITIONS, OpenApi3Grammar.PATHS, OpenApi3Grammar.COMPONENTS, OpenApi31Grammar.PATHS, OpenApi31Grammar.COMPONENTS);
@@ -43,7 +45,7 @@ public class OAR081PasswordFormatCheck extends BaseCheck {
 
     private void visitDefinitionsNode(JsonNode definitionsNode) {
         for (JsonNode schemaNode : definitionsNode.propertyMap().values()) {
-            JsonNode propertiesNode = schemaNode.get("properties");
+            JsonNode propertiesNode = schemaNode.get(PROPERTIES);
             if (!propertiesNode.isMissing()) {
                 validatePasswordFormat(propertiesNode);
             }
@@ -59,61 +61,54 @@ public class OAR081PasswordFormatCheck extends BaseCheck {
     }
 
     private void validateOperationNode(JsonNode operationNode) {
-    JsonNode parametersNode = operationNode.get("parameters");
-    if (!parametersNode.isMissing()) {
-        for (JsonNode parameterNode : parametersNode.elements()) {
-            if ("body".equals(parameterNode.get("in").getTokenValue())) {
-                validateRequestBody(parameterNode);
+        JsonNode parametersNode = operationNode.get("parameters");
+        if (!parametersNode.isMissing()) {
+            for (JsonNode parameterNode : parametersNode.elements()) {
+                if ("body".equals(parameterNode.get("in").getTokenValue())) {
+                    validateRequestBody(parameterNode);
+                }
             }
-        }
-    }
-    else {
-        validateRequestBody(operationNode.get("requestBody"));
-    }
-    validateResponses(operationNode.get("responses"));
-}
-
-private void validateRequestBody(JsonNode requestBodyNode) {
-    if (!requestBodyNode.isMissing()) {
-        JsonNode schemaNode = requestBodyNode.get("schema");
-        if (!schemaNode.isMissing()) {
-            validatePasswordFormat(schemaNode.get("properties"));
         }
         else {
-            JsonNode contentNode = requestBodyNode.get("content");
-            if (!contentNode.isMissing()) {
-                for (JsonNode mediaTypeNode : contentNode.propertyMap().values()) {
-                    schemaNode = mediaTypeNode.get("schema");
-                    if (!schemaNode.isMissing()) {
-                        validatePasswordFormat(schemaNode.get("properties"));
-                    }
-                }
-            }
+            validateRequestBody(operationNode.get("requestBody"));
         }
+        validateResponses(operationNode.get("responses"));
     }
-}
 
-private void validateResponses(JsonNode responsesNode) {
-    if (!responsesNode.isMissing()) {
+    private void validateRequestBody(JsonNode requestBodyNode) {
+        if (requestBodyNode.isMissing()) return;
+
+        JsonNode schemaNode = requestBodyNode.get(SCHEMA);
+        if (!schemaNode.isMissing()) {
+            validatePasswordFormat(schemaNode.get(PROPERTIES));
+        } else {
+            validateContentNode(requestBodyNode.get("content"));
+        }
+    }
+
+    private void validateResponses(JsonNode responsesNode) {
+        if (responsesNode.isMissing()) return;
+
         for (JsonNode responseNode : responsesNode.propertyMap().values()) {
-            JsonNode schemaNode = responseNode.get("schema");
+            JsonNode schemaNode = responseNode.get(SCHEMA);
             if (!schemaNode.isMissing()) {
-                validatePasswordFormat(schemaNode.get("properties"));
-            }
-            else {
-                JsonNode contentNode = responseNode.get("content");
-                if (!contentNode.isMissing()) {
-                    for (JsonNode mediaTypeNode : contentNode.propertyMap().values()) {
-                        schemaNode = mediaTypeNode.get("schema");
-                        if (!schemaNode.isMissing()) {
-                            validatePasswordFormat(schemaNode.get("properties"));
-                        }
-                    }
-                }
+                validatePasswordFormat(schemaNode.get(PROPERTIES));
+            } else {
+                validateContentNode(responseNode.get("content"));
             }
         }
     }
-}
+
+    private void validateContentNode(JsonNode contentNode) {
+        if (contentNode.isMissing()) return;
+
+        for (JsonNode mediaTypeNode : contentNode.propertyMap().values()) {
+            JsonNode schemaNode = mediaTypeNode.get(SCHEMA);
+            if (!schemaNode.isMissing()) {
+                validatePasswordFormat(schemaNode.get(PROPERTIES));
+            }
+        }
+    }
 
     private void validatePasswordFormat(JsonNode propertiesNode) {
         if (!propertiesNode.isMissing()) {

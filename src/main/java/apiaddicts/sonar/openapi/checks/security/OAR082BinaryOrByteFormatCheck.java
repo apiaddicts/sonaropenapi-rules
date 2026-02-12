@@ -43,31 +43,21 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
     }
 
     private void visitV2Node(JsonNode node) {
-        JsonNode propertiesNode = node.get("properties");
-        
-        if (propertiesNode == null || propertiesNode.isMissing()) {
-            return;
-        }
-        
+        JsonNode properties = node.get("properties");
+        if (properties == null || properties.isMissing()) return;
+
         for (String field : fieldsList) {
-            JsonNode fieldNode = propertiesNode.get(field);
-            
-            if (fieldNode == null || fieldNode.isMissing()) {
-                continue;  
-            }
-            
+            JsonNode fieldNode = properties.get(field);
+            if (fieldNode == null || fieldNode.isMissing()) continue;
+
             JsonNode typeNode = fieldNode.get("type");
             String type = typeNode.isMissing() ? null : typeNode.getTokenValue();
-            
-            if (!"string".equals(type)) {
-                continue;  
-            }
-            
-            JsonNode formatNode = fieldNode.get("format");
-            String format = formatNode.isMissing() ? null : formatNode.getTokenValue();
-    
-            if (format == null || (!"binary".equals(format) && !"byte".equals(format))) {
-                addIssue(KEY, translate(MESSAGE), typeNode.key());
+
+            if ("string".equals(type)) {
+                String format = fieldNode.get("format").getTokenValue();
+                if (!"binary".equals(format) && !"byte".equals(format)) {
+                    addIssue(KEY, translate(MESSAGE), typeNode.key());
+                }
             }
         }
     }

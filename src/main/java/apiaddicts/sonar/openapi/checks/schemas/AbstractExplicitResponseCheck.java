@@ -8,9 +8,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
@@ -36,27 +34,34 @@ public abstract class AbstractExplicitResponseCheck extends AbstractSchemaCheck 
     }
 
     protected void visitResponsesNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream()
-                .map(JsonNode::value)
-                .collect(Collectors.toList());
-
-        for (JsonNode responseNode : allResponses) {
-            if (!responseCode.equals(responseNode.key().getTokenValue())) continue;
-            responseNode = resolve(responseNode);
-            if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
-                visitV2ExplicitNode(responseNode);
-            } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
-                JsonNode content = responseNode.at("/content");
-                if (content.isMissing()) {
-                    if (key.equals("OAR038")) {
-                        visitV2ExplicitNode(responseNode);
-                    }
-                    continue;
-                }
-                for (JsonNode mediaTypeNode : content.propertyMap().values()) {
-                    visitV2ExplicitNode(mediaTypeNode);
-                }
+        for (JsonNode responseNode : node.propertyMap().values()) {
+            if (!responseCode.equals(responseNode.key().getTokenValue())) {
+                continue;
             }
+
+            JsonNode resolved = resolve(responseNode);
+            AstNodeType type = resolved.getType();
+
+            if (OpenApi2Grammar.RESPONSE.equals(type)) {
+                visitV2ExplicitNode(resolved);
+            }
+
+            else if (OpenApi3Grammar.RESPONSE.equals(type) || OpenApi31Grammar.RESPONSE.equals(type)) {
+                handleV3Response(resolved);
+            }
+        }
+    }
+
+    private void handleV3Response(JsonNode responseNode) {
+        JsonNode content = responseNode.at("/content");
+        if (content.isMissing()) {
+            if ("OAR038".equals(key)) {
+                visitV2ExplicitNode(responseNode);
+            }
+            return;
+        }
+        for (JsonNode mediaTypeNode : content.propertyMap().values()) {
+            visitV2ExplicitNode(mediaTypeNode);
         }
     }
 

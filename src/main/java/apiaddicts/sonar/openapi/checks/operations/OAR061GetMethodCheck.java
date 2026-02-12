@@ -25,6 +25,9 @@ public class OAR061GetMethodCheck extends BaseCheck {
     private static final String DEFAULT_PATH = "/status, /another";
     private static final String PATH_STRATEGY = "/exclude";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     @RuleProperty(
             key = "mandatory-response-codes",
             description = "List of allowed response codes. Or separated",
@@ -99,9 +102,9 @@ public class OAR061GetMethodCheck extends BaseCheck {
     }
 
     private boolean shouldExcludePath() {
-        if (pathCheckStrategy.equals("/exclude")) {
+        if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return exclusion.contains(currentPath);
-        } else if (pathCheckStrategy.equals("/include")) {
+        } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
             return !exclusion.contains(currentPath);
         }
         return false;
