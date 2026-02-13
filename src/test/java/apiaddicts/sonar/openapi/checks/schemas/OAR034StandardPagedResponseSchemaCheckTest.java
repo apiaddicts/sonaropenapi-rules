@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.schemas.OAR034StandardPagedResponseSchemaCheck;
-
 public class OAR034StandardPagedResponseSchemaCheckTest extends BaseCheckTest {
 
     @Before
@@ -24,10 +22,10 @@ public class OAR034StandardPagedResponseSchemaCheckTest extends BaseCheckTest {
         verifyV2("valid");
     }
 
-    /*@Test
+    @Test
     public void verifyInV2AllOf() {
         verifyV2("valid-all-of");
-    }*/
+    }
 
     @Test
     public void verifyInV2WithoutPaging() {
@@ -69,10 +67,10 @@ public class OAR034StandardPagedResponseSchemaCheckTest extends BaseCheckTest {
         verifyV3("valid");
     }
 
-    /*@Test
+    @Test
     public void verifyInV3AllOf() {
         verifyV3("valid-all-of");
-    }*/
+    }
 
     @Test
     public void verifyInV3WithoutPaging() {

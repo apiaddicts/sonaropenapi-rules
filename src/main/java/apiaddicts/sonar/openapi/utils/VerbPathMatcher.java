@@ -17,9 +17,7 @@ public class VerbPathMatcher {
 
     public static final String STATIC_PATH_PART_REGEX = "[^\\/{}]*";
     public static final String DYNAMIC_PATH_PART_REGEX = "\\{" + STATIC_PATH_PART_REGEX + "\\}";
-    
-    /* Uncomment if is section me not allowed
-    public static final String DYNAMIC_OR_ME_PATH_PART_REGEX = DYNAMIC_PATH_PART_REGEX;*/
+
     public static final String DYNAMIC_OR_ME_PATH_PART_REGEX = "(" + DYNAMIC_PATH_PART_REGEX + "|\\bme\\b)";
 
     public static final String ONLY_ONE_ME_REGEX = "(?!.*\\bme\\b.*\\bme\\b).*\\bme\\b.*";
@@ -31,7 +29,7 @@ public class VerbPathMatcher {
 
     public static final String COLLECTION_PATH_2ND = ELEMENT_PATH + COLLECTION_PATH;
     public static final String COLLECTION_PATH_3RD = ELEMENT_PATH + ELEMENT_PATH + COLLECTION_PATH;
-    
+
     public static final String ELEMENT_PATH_2ND = ELEMENT_PATH + ELEMENT_PATH;
     public static final String ELEMENT_PATH_3RD = ELEMENT_PATH + ELEMENT_PATH + ELEMENT_PATH;
 

@@ -5,8 +5,6 @@ import org.junit.Test;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinition.Repository;
 
-import apiaddicts.sonar.openapi.I18nContext;
-import apiaddicts.sonar.openapi.OpenAPICustomRulesDefinition;
 import apiaddicts.sonar.openapi.checks.RulesLists;
 
 public class OpenAPICustomRulesDefinitionTest {

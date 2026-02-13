@@ -27,9 +27,7 @@ public class ExtendedOpenApiCheckVerifier {
     private List<TestIssue> expectedIssues = new ArrayList<TestIssue>();
 
     public ExtendedOpenApiCheckVerifier() {
-      /**
-       * Intentionally empty: no initialization required at construction time.
-       */
+      // Intentional blank
     }
 
     public static List<PreciseIssue> scanFileForIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31) {
@@ -254,6 +252,7 @@ public class ExtendedOpenApiCheckVerifier {
             this.verifier = verifier;
         }
 
+        @Override
         protected void visitToken(Token token) {
             Iterator<Trivia> var2 = token.getTrivia().iterator();
 

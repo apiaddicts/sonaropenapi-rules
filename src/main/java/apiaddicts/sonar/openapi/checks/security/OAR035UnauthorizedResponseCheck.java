@@ -33,14 +33,14 @@ public class OAR035UnauthorizedResponseCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
     }
 
-	@Override
-	protected void visitFile(JsonNode root) {
+    @Override
+    protected void visitFile(JsonNode root) {
         expectedCodes = Arrays.stream(expectedCodesStr.split(",")).map(String::trim).collect(Collectors.toSet());
         hasGlobalSecurity = hasSecurity(root);
-	}
+    }
 
     @Override
     public void visitNode(JsonNode node) {
@@ -50,13 +50,11 @@ public class OAR035UnauthorizedResponseCheck extends BaseCheck {
     private void validateSecurityResponse(JsonNode node) {
         JsonNode responsesNode = node.get("responses");
         Set<String> currentCodes = responsesNode.properties().stream().map(JsonNode::key).map(JsonNode::getTokenValue).collect(Collectors.toSet());
-		Set<String> copyExpectedCodes = expectedCodes.stream().collect(Collectors.toSet());
+        Set<String> copyExpectedCodes = expectedCodes.stream().collect(Collectors.toSet());
         copyExpectedCodes.removeAll(currentCodes);
-        if (hasSecurity(node)) {
+        if (hasSecurity(node) || hasGlobalSecurity) {
             validateExpectedCodes(copyExpectedCodes, responsesNode);
-		} else if (hasGlobalSecurity) {
-            validateExpectedCodes(copyExpectedCodes, responsesNode);
-		}
+        }
     }
 
     private void validateExpectedCodes(Set<String> copyExpectedCodes, JsonNode responsesNode) {
@@ -65,9 +63,8 @@ public class OAR035UnauthorizedResponseCheck extends BaseCheck {
         }
     }
 
-	private boolean hasSecurity(JsonNode node) {
-		JsonNode security = node.get("security");
-		if (security.isMissing() || security.isNull() || security.elements() == null || security.elements().isEmpty()) return false;
-        return true;
-	}
+    private boolean hasSecurity(JsonNode node) {
+        JsonNode security = node.get("security");
+        return !security.isMissing() && !security.isNull() && !security.elements().isEmpty();
+    }
 }
