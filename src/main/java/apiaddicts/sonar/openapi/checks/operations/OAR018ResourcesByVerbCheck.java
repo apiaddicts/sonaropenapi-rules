@@ -7,7 +7,6 @@ import org.sonar.check.RuleProperty;
 import apiaddicts.sonar.openapi.utils.VerbPathMatcher;
 import static apiaddicts.sonar.openapi.utils.VerbPathMatcher.*;
 
-
 @Rule(key = OAR018ResourcesByVerbCheck.KEY)
 public class OAR018ResourcesByVerbCheck extends AbstractVerbPathCheck {
 

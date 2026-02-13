@@ -7,22 +7,20 @@ import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 public class OAR076NumericFormatCheck extends AbstractFormatCheck2 {
 
     public static final String KEY = "OAR076";
-	private static final String MESSAGE = "OAR076.error";
+    private static final String MESSAGE = "OAR076.error";
 
     @Override
     public void validate(String type, String format, JsonNode typeNode) {
+        boolean isInvalid = false;
+
         if ("integer".equals(type)) {
-            if (format == null) {
-                addIssue(KEY, translate(MESSAGE), typeNode.key());
-            } else if (!isValidIntegerFormat(format)) {
-                addIssue(KEY, translate(MESSAGE), typeNode.key());
-            }
+            isInvalid = !isValidIntegerFormat(format);
         } else if ("number".equals(type)) {
-            if (format == null) {
-                addIssue(KEY, translate(MESSAGE), typeNode.key());
-            } else if (!isValidNumberFormat(format)) {
-                addIssue(KEY, translate(MESSAGE  ), typeNode.key());
-            }
+            isInvalid = !isValidNumberFormat(format);
+        }
+
+        if (isInvalid) {
+            addIssue(KEY, translate(MESSAGE), typeNode.key());
         }
     }
 

@@ -1,7 +1,6 @@
 package apiaddicts.sonar.openapi.checks.schemas;
 
 import com.sonar.sslr.api.AstNode;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
@@ -13,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 public abstract class AbstractSchemaCheck extends BaseCheck {
 
     private String key;
-    protected JsonNode externalRefNode= null;
+    protected JsonNode externalRefNode = null;
 
     private static final String GENERIC_PROPERTY_MISSING = "generic.property-missing";
     private static final String ITEMS = "items";
@@ -65,7 +65,6 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         return properties;
     }
 
-
     protected Optional<JsonNode> validateProperty(Map<String, JsonNode> properties, String propertyName, String propertyType, JsonNode parentNode) {
         if (!properties.containsKey(propertyName)) {
             addIssue(key, translate(GENERIC_PROPERTY_MISSING, propertyName), getTrueNode(parentNode));
@@ -94,12 +93,13 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
 
         return handleExternalRef(prop, resolvedProp -> {
             JsonNode type = getType(resolvedProp);
-            if (!isType(type, propertyType)) {
-                JsonNode errorNode = (type.isMissing() ? resolvedProp : type.key());
-                addIssue(key, translate("generic.property-wrong-type", propertyName, propertyType), getTrueNode(errorNode));
-                return Optional.empty();
-            }
-            return Optional.of(resolvedProp);
+            if (isType(type, propertyType)) return Optional.of(resolvedProp);
+            if (matchesTypeViaAllOf(resolvedProp, propertyType)) return Optional.of(resolvedProp);
+
+            JsonNode errorNode = type.isMissing() ? resolvedProp : type.key();
+            addIssue(key, translate("generic.property-wrong-type", propertyName, propertyType), getTrueNode(errorNode));
+
+            return Optional.empty();
         });
     }
 
@@ -151,11 +151,27 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                 .stream().map(AstNode::getTokenValue).collect(Collectors.toSet());
     }
 
+    private boolean matchesTypeViaAllOf(JsonNode node, String expectedType) {
+        JsonNode allOf = node.get("allOf");
+        if (allOf.isMissing()) return false;
+
+        for (JsonNode element : allOf.elements()) {
+            Boolean match = handleExternalRef(element, resolved -> {
+                JsonNode resolvedType = getType(resolved);
+                return isType(resolvedType, expectedType);
+            });
+
+            if (Boolean.TRUE.equals(match)) return true;
+        }
+        return false;
+    }
+
     protected void validateProperties(String propertyName, JSONObject propertySchema, JsonNode propertiesNode) {
         Map<String, JsonNode> propertyMap = getAllProperties(propertiesNode);
         String schemaType = (propertySchema != null && propertySchema.has("type")) ? propertySchema.getString("type") : TYPE_ANY;
         if (schemaType == null || schemaType.trim().isEmpty() || schemaType.equals("any")) schemaType = TYPE_ANY;
-        if (schemaType.equals(TYPE_ANY) && propertySchema.has(PROPERTIES)) schemaType = TYPE_OBJECT;
+
+        if (Objects.equals(TYPE_ANY, schemaType) && propertySchema != null && propertySchema.has(PROPERTIES)) schemaType = TYPE_OBJECT;
 
         if (schemaType != null && !schemaType.trim().isEmpty()) {
             if (schemaType.equals(TYPE_OBJECT)) {
@@ -182,7 +198,7 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         }
 
         if (schemaRequired != null && schemaRequired.length() > 0 ) {
-            Set<String> requiredProperties = schemaRequired.toList().stream().map(element -> (String) element).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+            Set<String> requiredProperties = schemaRequired.toList().stream().map(String.class::cast).sorted().collect(Collectors.toCollection(LinkedHashSet::new));
             validateRequiredProperties(propertyNode, requiredProperties, String.join(", ", requiredProperties));
         }
     }
@@ -191,16 +207,12 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         JSONObject schemaItems = (propertySchema != null && propertySchema.has(ITEMS)) ? propertySchema.getJSONObject(ITEMS) : null;
         String itemsType = (schemaItems != null && schemaItems.has("type")) ? schemaItems.getString("type") : TYPE_ANY;
         if (itemsType == null || itemsType.trim().isEmpty() || itemsType.equals("any")) itemsType = TYPE_ANY;
-        if (itemsType.equals(TYPE_ANY) && schemaItems.has(PROPERTIES)) itemsType = TYPE_OBJECT;
+        if (Objects.equals(TYPE_ANY, itemsType) && schemaItems != null && schemaItems.has(PROPERTIES)) itemsType = TYPE_OBJECT;
 
-        if (itemsType.equals(TYPE_OBJECT)) {
-            validateItems(propertyNode, itemsType).ifPresent(itemNode -> {
-                validateObject(schemaItems, itemNode);
-            });
-        } else if (itemsType.equals(TYPE_ARRAY)) {
-            validateItems(propertyNode, itemsType).ifPresent(itemNode -> {
-                validateArray(schemaItems, itemNode);
-            });
+        if (TYPE_OBJECT.equals(itemsType)) {
+            validateItems(propertyNode, itemsType).ifPresent(itemNode -> validateObject(schemaItems, itemNode));
+        } else if (TYPE_ARRAY.equals(itemsType)) {
+            validateItems(propertyNode, itemsType).ifPresent(itemNode -> validateArray(schemaItems, itemNode));
         } else {
             validateItems(propertyNode, itemsType);
         }
@@ -210,4 +222,3 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         return externalRefNode== null ? node : externalRefNode;
     }
 }
-

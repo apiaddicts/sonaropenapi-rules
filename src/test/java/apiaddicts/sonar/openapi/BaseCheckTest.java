@@ -6,9 +6,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
 
-import apiaddicts.sonar.openapi.I18nContext;
-import apiaddicts.sonar.openapi.OpenAPICustomRulesDefinition;
-
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiCheck;
 
 import java.util.Arrays;

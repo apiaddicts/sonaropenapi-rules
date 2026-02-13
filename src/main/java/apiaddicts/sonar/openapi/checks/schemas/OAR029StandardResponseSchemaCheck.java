@@ -14,8 +14,6 @@ import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,13 +33,13 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             defaultValue = RESPONSE_SCHEMA
     )
     private String responseSchemaStr = RESPONSE_SCHEMA;
-    private JSONObject responseSchema;
-    private JSONArray requiredOnSuccess = null;
-    private JSONArray requiredOnError = null;
-    private JSONArray requiredAlways = null;
-    private JSONObject responseSchemaProperties = null;
-    private String dataProperty = null;
-    private String rootProperty = null;
+
+    private JSONArray requiredOnSuccess;
+    private JSONArray requiredOnError;
+    private JSONArray requiredAlways;
+    private JSONObject responseSchemaProperties;
+    private String dataProperty;
+    private String rootProperty;
 
     private static final String DEFAULT_EXCLUSION = "/status";
     @RuleProperty(
@@ -61,7 +59,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         exclusion = Arrays.stream(exclusionStr.split(",")).map(String::trim).collect(Collectors.toSet());
 
         try {
-            responseSchema = new JSONObject(responseSchemaStr);
+            JSONObject responseSchema = new JSONObject(responseSchemaStr);
             requiredOnSuccess = (responseSchema.has("requiredOnSuccess")) ? responseSchema.getJSONArray("requiredOnSuccess") : null;
             requiredOnError = (responseSchema.has("requiredOnError")) ? responseSchema.getJSONArray("requiredOnError") : null;
             requiredAlways = (responseSchema.has("requiredAlways")) ? responseSchema.getJSONArray("requiredAlways") : null;
@@ -69,7 +67,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             dataProperty = (responseSchema.has("dataProperty")) ? responseSchema.getString("dataProperty") : null;
             rootProperty = (responseSchema.has("rootProperty")) ? responseSchema.getString("rootProperty") : null;
         } catch (JSONException err) {
-			addIssue(KEY, "Error parsing Standard Response Schemas", getTrueNode(root.key()));
+        addIssue(KEY, "Error parsing Standard Response Schemas", getTrueNode(root.key()));
         }
     }
 
