@@ -32,56 +32,52 @@ public class OAR072NonOKModelResponseCheck extends BaseCheck {
     }
 
     private void visitOperationNode(JsonNode node) {
-    JsonNode responsesNode = node.get("responses");
-    if (responsesNode != null) {
-        for (JsonNode responseNode : responsesNode.propertyMap().values()) {
-            String responseCode = responseNode.key().getTokenValue();
-            if (!ALLOWED_RESPONSE_CODES.contains(responseCode)) {
-                if (node.is(OpenApi2Grammar.OPERATION)) {
-                    checkSwaggerResponse(responseNode);
-                } else if (node.is(OpenApi3Grammar.OPERATION)) {
-                    checkOpenApiResponse(responseNode);
-                } else if (node.is(OpenApi31Grammar.OPERATION)) {
-                    checkOpenApiResponse(responseNode);
+        JsonNode responsesNode = node.get("responses");
+        if (responsesNode != null) {
+            for (JsonNode responseNode : responsesNode.propertyMap().values()) {
+                String responseCode = responseNode.key().getTokenValue();
+                if (!ALLOWED_RESPONSE_CODES.contains(responseCode)) {
+                    if (node.is(OpenApi2Grammar.OPERATION)) {
+                        checkSwaggerResponse(responseNode);
+                    } else if (node.is(OpenApi3Grammar.OPERATION)) {
+                        checkOpenApiResponse(responseNode);
+                    } else if (node.is(OpenApi31Grammar.OPERATION)) {
+                        checkOpenApiResponse(responseNode);
+                    }
                 }
             }
         }
     }
-}
 
     private void checkSwaggerResponse(JsonNode jsonNode) {
         JsonNode schemaNode = jsonNode.get("schema");
-        if (schemaNode != null) {
-            JsonNode propertiesNode = schemaNode.get("properties");
-            if (propertiesNode != null) {
-                JsonNode stackTraceNode = propertiesNode.get("stackTrace");
-                if (stackTraceNode.isMissing()) {
-                    return;
-                } else {
-                    addIssue(KEY, translate(MESSAGE), stackTraceNode.key());
-                }
-            }
+        if (schemaNode == null) return;
+
+        JsonNode propertiesNode = schemaNode.get("properties");
+        if (propertiesNode == null) return;
+
+        JsonNode stackTraceNode = propertiesNode.get("stackTrace");
+        if (stackTraceNode != null && !stackTraceNode.isMissing()) {
+            addIssue(KEY, translate(MESSAGE), stackTraceNode.key());
         }
     }
 
     private void checkOpenApiResponse(JsonNode jsonNode) {
         JsonNode contentNode = jsonNode.get("content");
-        if (contentNode != null) {
-            JsonNode mediaTypeNode = contentNode.get("application/json");
-            if (mediaTypeNode != null) {
-                JsonNode schemaNode = mediaTypeNode.get("schema");
-                if (schemaNode != null) {
-                    JsonNode propertiesNode = schemaNode.get("properties");
-                    if (propertiesNode != null) {
-                        JsonNode stackTraceNode = propertiesNode.get("stackTrace");
-                        if (stackTraceNode.isMissing()) {
-                            return;
-                        } else {
-                            addIssue(KEY, translate(MESSAGE), stackTraceNode.key());
-                        }
-                    }
-                }
-            }
+        if (contentNode == null) return;
+
+        JsonNode mediaTypeNode = contentNode.get("application/json");
+        if (mediaTypeNode == null) return;
+
+        JsonNode schemaNode = mediaTypeNode.get("schema");
+        if (schemaNode == null) return;
+
+        JsonNode propertiesNode = schemaNode.get("properties");
+        if (propertiesNode == null) return;
+
+        JsonNode stackTraceNode = propertiesNode.get("stackTrace");
+        if (stackTraceNode != null && !stackTraceNode.isMissing()) {
+            addIssue(KEY, translate(MESSAGE), stackTraceNode.key());
         }
     }
 }

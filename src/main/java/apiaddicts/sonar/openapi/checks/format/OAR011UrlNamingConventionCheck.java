@@ -27,10 +27,10 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 			key = "naming-convention",
 			description = "Naming convention (snake_case, kebab-case, camelCase or UpperCamelCase).",
 			defaultValue = NAMING_CONVENTION)
-	private static String namingConvention = NAMING_CONVENTION;
+	private static String namConvention = NAMING_CONVENTION;
 
 	public OAR011UrlNamingConventionCheck() {
-		super(KEY, MESSAGE, namingConvention);
+		super(KEY, MESSAGE, namConvention);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	@Override
 	protected void validateNamingConvention(String name, JsonNode nameNode) {
 		if (nameExceptions.contains(name)) return;
-		if (KEBAB_CASE.equalsIgnoreCase(namingConvention)) {
+		if (KEBAB_CASE.equalsIgnoreCase(namConvention)) {
 			if (!isKebabCaseWithDots(name)) {
 				addIssue(KEY, translate(MESSAGE, KEBAB_CASE), nameNode.key());
 			}

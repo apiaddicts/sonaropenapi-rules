@@ -21,7 +21,7 @@ public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
 
     protected VerbPathMatcher matcher;
 
-    public AbstractVerbPathCheck(String key) {
+    protected AbstractVerbPathCheck(String key) {
         super(key);
     }
 

@@ -27,7 +27,6 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.ValidationException;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.ValidationIssue;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,35 +41,40 @@ public class OAR043ParsingErrorCheck extends BaseCheck {
   public void scanFile(OpenApiVisitorContext context) {
     super.scanFile(context);
     RecognitionException parsingException = context.parsingException();
+
     if (parsingException instanceof ValidationException) {
       for (ValidationException issue : ((ValidationException) parsingException).getCauses()) {
         addIssue(CHECK_KEY, issue.formatMessage(), issue.getNode());
       }
     } else if (parsingException != null) {
-      int diff = 1;
-      String msg = parsingException.getMessage();
-      if (parsingException.getCause() != null) {
-        msg = parsingException.getCause().getMessage();
-        diff = 2;
-        if (parsingException.getCause().getCause() != null) {
-          msg = parsingException.getCause().getCause().getMessage();
-          diff = 3;
-        }
-      }
-      Matcher m = PATTERN.matcher(msg);
-      String line = null;
-      String column = null;
-      if (m.find()) line = m.group();
-      if (m.find()) column = m.group();
-      int l = line == null || line.trim().isEmpty() ? 0 : Integer.parseInt(line);
-      l -= diff;
-      if (l < 0) l = 0;
-      addLineIssue(CHECK_KEY, translate("OAR043.error-parser", l, column), l);
+      processRecognitionException(parsingException);
     } else {
-      List<ValidationIssue> issues = context.getIssues();
-      for (ValidationIssue issue : issues) {
+      for (ValidationIssue issue : context.getIssues()) {
         addIssue(CHECK_KEY, issue.formatMessage(), issue.getNode());
       }
     }
+  }
+
+  private void processRecognitionException(RecognitionException parsingException) {
+    Throwable cause = parsingException;
+    int diff = 1;
+
+    if (parsingException.getCause() != null) {
+      cause = parsingException.getCause();
+      diff = 2;
+      if (cause.getCause() != null) {
+        cause = cause.getCause();
+        diff = 3;
+      }
+    }
+
+    Matcher m = PATTERN.matcher(cause.getMessage());
+    String line = m.find() ? m.group() : null;
+    String column = m.find() ? m.group() : null;
+
+    int l = (line == null || line.trim().isEmpty()) ? 0 : Integer.parseInt(line);
+    l = Math.max(0, l - diff);
+
+    addLineIssue(CHECK_KEY, translate("OAR043.error-parser", l, column), l);
   }
 }

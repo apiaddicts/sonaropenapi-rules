@@ -25,6 +25,9 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
     private static final String DEFAULT_PATH = "/examples";
     private static final String PATH_STRATEGY = "/include";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     @RuleProperty(
             key = "mandatory-query-params",
             description = "List of allowed query params separated by comma",
@@ -70,48 +73,50 @@ public class OAR071GetQueryParamsDefinedCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH) {
+        AstNodeType type = node.getType();
+
+        if (isType(type, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH)) {
             currentPath = node.key().getTokenValue();
-        } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION) {
-            if (shouldExcludePath()) {
+            return;
+        }
+
+        if (isType(type, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION)) {
+            if (shouldExcludePath() || !"get".equalsIgnoreCase(node.key().getTokenValue())) {
                 return;
             }
 
-            String operationType = node.key().getTokenValue();
-            if (!"get".equalsIgnoreCase(operationType)) {
-                return;
-            }
-
-            JsonNode parametersNode = node.get("parameters");
-            if (parametersNode == null || parametersNode.isNull()) {
+            JsonNode paramsNode = node.get("parameters");
+            if (paramsNode == null || paramsNode.isNull() || paramsNode.isMissing()) {
                 addIssue(KEY, translate(MESSAGE), node.key());
                 return;
             }
             Set<String> queryParams = new HashSet<>();
-            parametersNode.elements().forEach(parameterNode -> {
-                JsonNode inNode = parameterNode.get("in");
-                if (inNode != null && "query".equals(inNode.getTokenValue())) {
-                    JsonNode nameNode = parameterNode.get("name");
-                    if (nameNode != null && !nameNode.isNull()) {
-                        queryParams.add(nameNode.getTokenValue());
-                    }
+            paramsNode.elements().forEach(p -> {
+                JsonNode in = p.get("in");
+                JsonNode name = p.get("name");
+                if (in != null && "query".equals(in.getTokenValue()) && name != null && !name.isNull()) {
+                    queryParams.add(name.getTokenValue());
                 }
             });
-            boolean allMandatoryParamsDefined = mandatoryQueryParams.stream().allMatch(queryParams::contains);
-            String missingParamsStr = mandatoryQueryParams.stream().filter(p -> !queryParams.contains(p)).collect(Collectors.joining(", "));
-            if (parametersNode == null || parametersNode.isNull() || parametersNode.isMissing()) {
-                return;
-            } 
-            if (!allMandatoryParamsDefined) {
-                addIssue(KEY, translate(MESSAGE, missingParamsStr), parametersNode.key());
+
+            String missing = mandatoryQueryParams.stream()
+                    .filter(p -> !queryParams.contains(p))
+                    .collect(Collectors.joining(", "));
+
+            if (!missing.isEmpty()) {
+                addIssue(KEY, translate(MESSAGE, missing), paramsNode.key());
             }
         }
     }
 
+    private boolean isType(AstNodeType nodeType, AstNodeType... types) {
+        return Arrays.asList(types).contains(nodeType);
+    }
+
     private boolean shouldExcludePath() {
-        if (pathCheckStrategy.equals("/exclude")) {
+        if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return exclusion.contains(currentPath);
-        } else if (pathCheckStrategy.equals("/include")) {
+        } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
             return !exclusion.contains(currentPath);
         }
         return false;

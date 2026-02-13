@@ -12,10 +12,9 @@ import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -25,6 +24,7 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
     protected JsonNode externalRefNode= null;
     public static final String KEY = "OAR086";
     private static final String MESSAGE = "OAR086.error";
+    private static final String DESCRIPTION = "description";
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -45,167 +45,127 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
         }
     }
 
+    protected void visitPathsNode(JsonNode pathsNode) {
+        pathsNode.propertyMap().values().forEach(pathNode ->
+            pathNode.propertyMap().values().forEach(operation -> {
+                checkDescriptionFormat(operation.get(DESCRIPTION));
+
+                operation.get("parameters").elements().forEach(param ->
+                    checkDescriptionFormat(param.get(DESCRIPTION)));
+
+                JsonNode responses = operation.get("responses");
+                if (!responses.isMissing()) {
+                    responses.propertyMap().values().forEach(res ->
+                        handleExternalRef(res, resolved -> checkDescriptionFormat(resolved.get(DESCRIPTION)))
+                    );
+                }
+            })
+        );
+    }
+
     private void checkInfoDescription(JsonNode rootNode) {
         JsonNode infoNode = rootNode.get("info");
         if (infoNode != null) {
-            checkDescriptionFormat(infoNode.get("description"));
+            checkDescriptionFormat(infoNode.get(DESCRIPTION));
         }
     }
 
     
     private void checkDefinitionsDescription(JsonNode rootNode) {
-        JsonNode definitionsNode = rootNode.get("definitions");
-        if (definitionsNode != null) {
-            for (JsonNode definition : definitionsNode.propertyMap().values()) {
-                checkDescriptionFormat(definition.get("description"));
-            }
-        }
-
-        JsonNode componentsNode = rootNode.get("components");
-        if (componentsNode != null && !componentsNode.isMissing()) {
-            JsonNode schemasNode = componentsNode.get("schemas");
-            if (schemasNode != null && !schemasNode.isMissing()) {
-                for (JsonNode schema : schemasNode.propertyMap().values()) {
-                    JsonNode schemaDescription = schema.get("description");
-                    if (schemaDescription != null && !schemaDescription.isMissing()) {
-                        checkDescriptionFormat(schemaDescription);
-                    }
-        
-                    JsonNode properties = schema.get("properties");
-                    if (properties != null && !properties.isMissing()) {
-                        for (JsonNode property : properties.propertyMap().values()) {
-                            JsonNode propertyDescription = property.get("description");
-                            if (propertyDescription != null && !propertyDescription.isMissing()) {
-                                checkDescriptionFormat(propertyDescription);
-                            }
-                        }
-                    }
+        Stream.of(rootNode.get("definitions"), rootNode.at("/components/schemas"))
+            .filter(node -> !node.isMissing())
+            .flatMap(node -> node.propertyMap().values().stream())
+            .forEach(schema -> {
+                checkDescriptionFormat(schema.get(DESCRIPTION));
+                JsonNode props = schema.get("properties");
+                if (!props.isMissing()) {
+                    props.propertyMap().values().forEach(prop -> checkDescriptionFormat(prop.get(DESCRIPTION)));
                 }
-            }
-        }
-    }
-
-    private void visitPathNode(JsonNode node) {
-        List<JsonNode> allResponses = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)) 
-                .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) 
-                .map(JsonNode::value)
-                .flatMap(n -> n.properties().stream()) 
-                .collect(Collectors.toList());
-                for (JsonNode responseNode : allResponses) {
-                    boolean externalRefManagement = false;
-                        if (isExternalRef(responseNode) && externalRefNode == null) {
-                            externalRefNode = responseNode;
-                            externalRefManagement = true;
-                        }
-                    responseNode = resolve(responseNode);
-        
-                    if (responseNode.getType().equals(OpenApi2Grammar.RESPONSE)) {
-                        visitSchemaNode(responseNode);
-                    } else if (responseNode.getType().equals(OpenApi3Grammar.RESPONSE)) {
-                        JsonNode content = responseNode.at("/content");
-                        if (content.isMissing()) {
-                            if (externalRefManagement) externalRefNode = null; 
-                            continue;
-                        }
-                        content.propertyMap().forEach((mediaType, mediaTypeNode) -> { //estudiar funcion lamda
-                            if (!mediaType.toLowerCase().contains("json")) return;
-                            visitSchemaNode(mediaTypeNode);
-                        });
-                    }
-                    if (externalRefManagement) externalRefNode = null; 
-                }
+            });
     }
 
     private void visitSchemaNode(JsonNode responseNode) {
         JsonNode schemaNode = responseNode.value().get("schema");
-    
+
         if (schemaNode.isMissing()) {
             return;
         }
-    
+
         boolean externalRefManagement = false;
         if (isExternalRef(schemaNode) && externalRefNode == null) {
             externalRefNode = schemaNode;
             externalRefManagement = true;
         }
-    
+
         schemaNode = resolve(schemaNode);
-    
+
         Map<String, JsonNode> properties = schemaNode.propertyMap();
         if (!properties.isEmpty()) {
             for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
                 String key = entry.getKey();
                 JsonNode propertyNode = entry.getValue();
-    
-                if (key.contains("description")) {  
-                    checkDescriptionFormat(propertyNode); 
+
+                if (key.contains(DESCRIPTION)) {
+                    checkDescriptionFormat(propertyNode);
                 }
             }
         }
-    
+
         if (externalRefManagement) {
             externalRefNode = null;
         }
     }
-    
-    
-    
 
-    
-
-    protected void visitPathsNode(JsonNode pathsNode) {    
-        for (JsonNode pathNode : pathsNode.propertyMap().values()) {            
-            for (JsonNode operationNode : pathNode.propertyMap().values()) {
-                JsonNode operationDescription = operationNode.get("description");
-                checkDescriptionFormat(operationDescription);
-
-                JsonNode parametersNode = operationNode.get("parameters");
-                if (parametersNode != null && parametersNode.isArray()) {
-                    for (JsonNode parameter : parametersNode.elements()) {
-                        JsonNode parameterDescription = parameter.get("description");
-                        checkDescriptionFormat(parameterDescription);
-                    }
+    private void visitPathNode(JsonNode node) {
+        node.properties().stream()
+            .filter(prop -> isOperation(prop))
+            .map(JsonNode::value)
+            .map(operation -> operation.get("responses"))
+            .filter(responses -> !responses.isMissing())
+            .flatMap(responses -> responses.propertyMap().values().stream())
+            .forEach(response -> handleExternalRef(response, resolved -> {
+                if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
+                    visitSchemaNode(resolved);
+                } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                    resolved.at("/content").propertyMap().forEach((mediaType, mediaTypeNode) -> {
+                        if (mediaType.toLowerCase().contains("json")) visitSchemaNode(mediaTypeNode);
+                    });
                 }
-
-                JsonNode responsesNode = operationNode.get("responses");                
-                if (responsesNode != null) {
-                    for (JsonNode responseNode : responsesNode.propertyMap().values()) {
-                        boolean externalRefManagement = false;
-                        if (isExternalRef(responseNode) && externalRefNode == null) {
-                            externalRefNode = responseNode;
-                            externalRefManagement = true;
-                        }
-                        responseNode= resolve(responseNode);
-                        JsonNode responseDescription = responseNode.get("description");
-                        checkDescriptionFormat(responseDescription);
-                        if (externalRefManagement) externalRefNode = null; 
-                    }
-                }
-            }
-        }
+            }));
     }
-    
-
 
     private void checkDescriptionFormat(JsonNode descriptionNode) {
         if (descriptionNode == null || descriptionNode.isMissing()) {
             return;
         }
-    
+
         String description = descriptionNode.getTokenValue();
         description = description == null ? "" : description.trim();
-    
+
         if (description.isEmpty()) {
             addIssue(KEY, translate(MESSAGE), getTrueNode(descriptionNode));
             return;
         }
-    
+
         if (!Character.isUpperCase(description.charAt(0)) || !description.endsWith(".")) {
             addIssue(KEY, translate(MESSAGE), getTrueNode(descriptionNode));
         }
-    }  
-    
+    }
+
+    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
+        if (node == null || node.isMissing()) return;
+        boolean setExternal = false;
+        if (isExternalRef(node) && externalRefNode == null) {
+            externalRefNode = node;
+            setExternal = true;
+        }
+        try {
+            action.accept(resolve(node));
+        } finally {
+            if (setExternal) externalRefNode = null;
+        }
+    }
+
     protected JsonNode getTrueNode (JsonNode node){
         return externalRefNode== null ? node : externalRefNode;
     }

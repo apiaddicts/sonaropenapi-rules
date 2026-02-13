@@ -30,6 +30,8 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
     private static final String FORBIDDEN_HEADERS = "Accept, Content-Type, Authorization";
     private static final String DEFAULT_EXCLUSION = "/status";
 
+    private static final String PARAMETERS = "parameters";
+
     @RuleProperty(
             key = "mandatory-headers",
             description = "List of mandatory headers. Comma separated",
@@ -90,7 +92,7 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
         if (exclusion.contains(path)) return;
         Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
-            JsonNode parametersNode = operationNode.get("parameters");
+            JsonNode parametersNode = operationNode.get(PARAMETERS);
             List<String> headerNames = listHeaderParameters(parametersNode);
             if (mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
             if (!headerNames.containsAll(mandatoryHeaders)) {
@@ -102,11 +104,11 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
     private void visitPathV3Node(JsonNode node) {
         String path = node.key().getTokenValue();
         if (exclusion.contains(path)) return;
-        JsonNode parametersInPathNode = node.get("parameters");
+        JsonNode parametersInPathNode = node.get(PARAMETERS);
         List<String> headerNamesInPath = listHeaderParameters(parametersInPathNode);
         Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
-            JsonNode parametersInOperationNode = operationNode.get("parameters");
+            JsonNode parametersInOperationNode = operationNode.get(PARAMETERS);
             List<String> headerNamesInOperation = listHeaderParameters(parametersInOperationNode);
             headerNamesInOperation.addAll(headerNamesInPath);
             if (mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;

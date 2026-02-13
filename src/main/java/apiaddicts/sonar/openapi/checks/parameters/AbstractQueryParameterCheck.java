@@ -19,6 +19,9 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     protected static final String DEFAULT_PATH = "/examples";
     protected static final String PATH_STRATEGY = "/include";
 
+    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    private static final String PATH_STRATEGY_INCLUDE = "/include";
+
     protected final String ruleKey;
     protected final String messageKey;
     protected final String parameterName;
@@ -138,9 +141,9 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     }
 
     protected boolean shouldIncludePath(String path) {
-        if (pathCheckStrategy.equals("/exclude")) {
+        if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return !paths.contains(path);
-        } else if (pathCheckStrategy.equals(PATH_STRATEGY)) {
+        } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
             return paths.contains(path);
         }
         return false;

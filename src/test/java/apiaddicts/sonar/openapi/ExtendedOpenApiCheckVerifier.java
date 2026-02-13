@@ -27,6 +27,9 @@ public class ExtendedOpenApiCheckVerifier {
     private List<TestIssue> expectedIssues = new ArrayList<TestIssue>();
 
     public ExtendedOpenApiCheckVerifier() {
+      /**
+       * Intentionally empty: no initialization required at construction time.
+       */
     }
 
     public static List<PreciseIssue> scanFileForIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31) {
