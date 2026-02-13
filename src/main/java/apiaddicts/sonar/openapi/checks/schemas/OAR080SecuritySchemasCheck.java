@@ -60,11 +60,10 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
 
     @Override
     public void visitNode(JsonNode node) {
-        if (hasGlobalSecurity) return;  
+        if (hasGlobalSecurity) return;
 
-        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH)) {
-            visitOperationNode(node);
-        } else if (node.is(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION)) {
+        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH,
+                    OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION)) {
             visitOperationNode(node);
         }
     }

@@ -23,11 +23,7 @@ public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDef
 	}
 
 	public OpenAPICustomProfileDefinition(@Nullable OpenApiCustomRuleRepository[] repositories) {
-    /**
-     * Intentionally empty.
-     * This constructor is required for SonarQube plugin instantiation
-     * and future compatibility with dependency injection.
-     */
+    // Intentional blank
 	}
 
 	@Override

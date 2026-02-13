@@ -52,9 +52,7 @@ public class OAR096ForbiddenResponseCheck extends BaseCheck {
         Set<String> currentCodes = responsesNode.properties().stream().map(JsonNode::key).map(JsonNode::getTokenValue).collect(Collectors.toSet());
         Set<String> copyExpectedCodes = expectedCodes.stream().collect(Collectors.toSet());
         copyExpectedCodes.removeAll(currentCodes);
-        if (hasSecurity(node)) {
-            validateExpectedCodes(copyExpectedCodes, responsesNode);
-        } else if (hasGlobalSecurity) {
+        if (hasSecurity(node) || hasGlobalSecurity) {
             validateExpectedCodes(copyExpectedCodes, responsesNode);
         }
     }
@@ -65,9 +63,9 @@ public class OAR096ForbiddenResponseCheck extends BaseCheck {
         }
     }
 
-	private boolean hasSecurity(JsonNode node) {
-		JsonNode security = node.get("security");
-		if (security.isMissing() || security.isNull() || security.elements() == null || security.elements().isEmpty()) return false;
-        return true;
-	}
+
+    private boolean hasSecurity(JsonNode node) {
+        JsonNode security = node.get("security");
+        return !security.isMissing() && !security.isNull() && !security.elements().isEmpty();
+    }
 }

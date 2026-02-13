@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.examples.OAR031ExamplesCheck;
-
 public class OAR031ExamplesCheckTest extends BaseCheckTest {
 
     @Before

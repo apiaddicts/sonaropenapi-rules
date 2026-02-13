@@ -39,9 +39,10 @@ public class OAR078VerbsSecurityCheck extends BaseCheck {
     public void visitNode(JsonNode node) {
         if (hasGlobalSecurity) return;
 
-        if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH) {
-            visitOperationNode(node);
-        } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION) {
+        Object type = node.getType();
+
+        if (type == OpenApi2Grammar.PATH || type == OpenApi3Grammar.PATH || type == OpenApi31Grammar.PATH ||
+            type == OpenApi2Grammar.OPERATION || type == OpenApi3Grammar.OPERATION || type == OpenApi31Grammar.OPERATION) {
             visitOperationNode(node);
         }
     }
@@ -51,7 +52,7 @@ public class OAR078VerbsSecurityCheck extends BaseCheck {
         if (!SECURITY_VERBS.contains(operationType.toLowerCase())) {
             return;
         }
-        
+
         JsonNode security = node.get("security");
         if (security.isMissing() || security.isNull() || security.elements().isEmpty()) {
             addIssue(KEY, translate(MESSAGE), node.key());

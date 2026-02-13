@@ -26,6 +26,7 @@ public class JsonNodeUtils {
     private static final Logger LOG = Logger.getLogger(JsonNodeUtils.class.getName());
 
     private JsonNodeUtils() {
+		    // Intentional blank
     }
 
     public static final String PROPERTIES = "properties";
@@ -44,35 +45,30 @@ public class JsonNodeUtils {
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                return original.resolve();  
+                return original.resolve();
             } else {
-
                 return resolveExternalRef(ref);
             }
         }
         return original;
-    } 
-    
+    }
+
     public static boolean isExternalRef (JsonNode original){
 
         if (original.isRef()) {
             String ref = original.get("$ref").getTokenValue();
-            if (ref.startsWith("#")) {
-                return false;  
-            } else {
-                return true;
-            }
+            return !ref.startsWith("#");
         }
         return false;
     }
 
     private static JsonNode resolveExternalRef(String url) {
-        String content = retriveExternalRefContent(url);   
+        String content = retriveExternalRefContent(url);
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
         YamlParser parser = OpenApiParser.createGeneric(configuration);
-    
+
         JsonNode rootNode = parser.parse(content);
-    
+
         if (url.contains("#")) {
             String[] parts = url.split("#");
             if (parts.length > 1) {
@@ -85,7 +81,7 @@ public class JsonNodeUtils {
                 }
             }
         }
-    
+
         return rootNode;
     }
 
@@ -98,7 +94,7 @@ public class JsonNodeUtils {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
             conn.connect();
-    
+
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (InputStream is = conn.getInputStream()) {
@@ -111,7 +107,7 @@ public class JsonNodeUtils {
                 return "Error: Response code " + responseCode;
             }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error parsing external ref " + ref , e);
+            LOG.log(Level.SEVERE, String.format("Error parsing external ref %s", ref), e);
             return "Error: " + e.getMessage();
         } finally {
             if (conn != null) {
@@ -120,8 +116,6 @@ public class JsonNodeUtils {
         }
     }
 
-
-    
     private static String readInputStreamToString(InputStream inputStream) throws IOException {
         StringBuilder result = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
@@ -138,7 +132,7 @@ public class JsonNodeUtils {
         InputStream errorStream = conn.getErrorStream();
         String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
         conn.getHeaderFields().forEach((key, value) -> LOG.info("Header " + key + ": " + value));
-        LOG.log(Level.SEVERE, "Error resolving external ref " + responseCode + " " + errorResponse);
+        LOG.log(Level.SEVERE, "Error resolving external ref {0} {1}", new Object[]{responseCode, errorResponse});
     }
 
     public static String getLastFetchedContent() {
