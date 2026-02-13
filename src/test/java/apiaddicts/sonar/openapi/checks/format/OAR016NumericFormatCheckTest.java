@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.format.OAR016NumericFormatCheck;
-
 public class OAR016NumericFormatCheckTest extends BaseCheckTest {
   @Before
     public void init() {

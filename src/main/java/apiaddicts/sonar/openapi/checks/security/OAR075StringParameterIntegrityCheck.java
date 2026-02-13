@@ -4,7 +4,6 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;

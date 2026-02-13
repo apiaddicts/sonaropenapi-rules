@@ -1,15 +1,11 @@
 package apiaddicts.sonar.openapi.checks.format;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
-
-import apiaddicts.sonar.openapi.checks.format.OAR012ParameterNamingConventionCheck;
-
 
 public class OAR012ParameterNamingConventionCheckTest extends BaseCheckTest{
     @Before

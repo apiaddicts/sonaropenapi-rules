@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.parameters.OAR026TotalParameterDefaultValueCheck;
-
 public class OAR026TotalParameterDefaultValueCheckTest extends BaseCheckTest {
 
     @Before

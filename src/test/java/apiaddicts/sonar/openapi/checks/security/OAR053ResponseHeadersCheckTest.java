@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.security.OAR053ResponseHeadersCheck;
-
 public class OAR053ResponseHeadersCheckTest extends BaseCheckTest{
 @Before
         public void init() {

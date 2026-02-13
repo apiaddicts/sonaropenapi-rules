@@ -6,11 +6,8 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.owasp.OAR070BrokenAccessControlCheck;
-
-
 public class OAR070BrokenAccessControlCheckTest extends BaseCheckTest{
-    
+
     @Before
     public void init() {
         ruleName = "OAR070";

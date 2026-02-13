@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.security.OAR035UnauthorizedResponseCheck;
-
 public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
 
     @Before

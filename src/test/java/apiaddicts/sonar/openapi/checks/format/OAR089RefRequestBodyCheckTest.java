@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.format.OAR089RefRequestBodyCheck;
-
 public class OAR089RefRequestBodyCheckTest extends BaseCheckTest {
 
     @Before

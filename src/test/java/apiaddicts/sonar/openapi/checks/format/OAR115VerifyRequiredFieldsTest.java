@@ -1,6 +1,5 @@
 package apiaddicts.sonar.openapi.checks.format;
 
-import apiaddicts.sonar.openapi.checks.format.OAR115VerifyRequiredFields;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;

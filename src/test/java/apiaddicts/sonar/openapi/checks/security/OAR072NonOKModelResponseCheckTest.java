@@ -6,10 +6,8 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.security.OAR072NonOKModelResponseCheck;
-
 public class OAR072NonOKModelResponseCheckTest extends BaseCheckTest {
-    
+
     @Before
     public void init() {
         ruleName = "OAR072";

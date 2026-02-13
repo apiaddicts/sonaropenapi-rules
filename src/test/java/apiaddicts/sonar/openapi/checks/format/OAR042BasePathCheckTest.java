@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.format.OAR042BasePathCheck;
-
 public class OAR042BasePathCheckTest extends BaseCheckTest{
    @Before
     public void init() {
