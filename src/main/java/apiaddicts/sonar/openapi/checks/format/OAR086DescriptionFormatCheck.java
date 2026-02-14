@@ -8,12 +8,12 @@ import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
-
-
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableSet;
@@ -21,10 +21,11 @@ import com.google.common.collect.ImmutableSet;
 @Rule(key = OAR086DescriptionFormatCheck.KEY)
 public class OAR086DescriptionFormatCheck extends BaseCheck {
 
-    protected JsonNode externalRefNode= null;
     public static final String KEY = "OAR086";
     private static final String MESSAGE = "OAR086.error";
     private static final String DESCRIPTION = "description";
+
+    private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -56,7 +57,7 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
                 JsonNode responses = operation.get("responses");
                 if (!responses.isMissing()) {
                     responses.propertyMap().values().forEach(res ->
-                        handleExternalRef(res, resolved -> checkDescriptionFormat(resolved.get(DESCRIPTION)))
+                        handleExternalRef.resolve(res, (Consumer<JsonNode>) resolved -> checkDescriptionFormat(resolved.get(DESCRIPTION)))
                     );
                 }
             })
@@ -70,7 +71,6 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
         }
     }
 
-    
     private void checkDefinitionsDescription(JsonNode rootNode) {
         Stream.of(rootNode.get("definitions"), rootNode.at("/components/schemas"))
             .filter(node -> !node.isMissing())
@@ -86,34 +86,22 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
 
     private void visitSchemaNode(JsonNode responseNode) {
         JsonNode schemaNode = responseNode.value().get("schema");
-
         if (schemaNode.isMissing()) {
             return;
         }
 
-        boolean externalRefManagement = false;
-        if (isExternalRef(schemaNode) && externalRefNode == null) {
-            externalRefNode = schemaNode;
-            externalRefManagement = true;
-        }
-
-        schemaNode = resolve(schemaNode);
-
-        Map<String, JsonNode> properties = schemaNode.propertyMap();
-        if (!properties.isEmpty()) {
-            for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
-                String key = entry.getKey();
-                JsonNode propertyNode = entry.getValue();
-
-                if (key.contains(DESCRIPTION)) {
-                    checkDescriptionFormat(propertyNode);
+        handleExternalRef.resolve(schemaNode, resolvedSchema -> {
+            Map<String, JsonNode> properties = resolvedSchema.propertyMap();
+            if (!properties.isEmpty()) {
+                for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
+                    String key = entry.getKey();
+                    JsonNode propertyNode = entry.getValue();
+                    if (key.contains(DESCRIPTION)) {
+                        checkDescriptionFormat(propertyNode);
+                    }
                 }
             }
-        }
-
-        if (externalRefManagement) {
-            externalRefNode = null;
-        }
+        });
     }
 
     private void visitPathNode(JsonNode node) {
@@ -123,7 +111,7 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
             .map(operation -> operation.get("responses"))
             .filter(responses -> !responses.isMissing())
             .flatMap(responses -> responses.propertyMap().values().stream())
-            .forEach(response -> handleExternalRef(response, resolved -> {
+            .forEach(response -> handleExternalRef.resolve(response, resolved -> {
                 if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode(resolved);
                 } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
@@ -143,31 +131,12 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
         description = description == null ? "" : description.trim();
 
         if (description.isEmpty()) {
-            addIssue(KEY, translate(MESSAGE), getTrueNode(descriptionNode));
+            addIssue(KEY, translate(MESSAGE), handleExternalRef.getTrueNode(descriptionNode));
             return;
         }
 
         if (!Character.isUpperCase(description.charAt(0)) || !description.endsWith(".")) {
-            addIssue(KEY, translate(MESSAGE), getTrueNode(descriptionNode));
+            addIssue(KEY, translate(MESSAGE), handleExternalRef.getTrueNode(descriptionNode));
         }
     }
-
-    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
-        if (node == null || node.isMissing()) return;
-        boolean setExternal = false;
-        if (isExternalRef(node) && externalRefNode == null) {
-            externalRefNode = node;
-            setExternal = true;
-        }
-        try {
-            action.accept(resolve(node));
-        } finally {
-            if (setExternal) externalRefNode = null;
-        }
-    }
-
-    protected JsonNode getTrueNode (JsonNode node){
-        return externalRefNode== null ? node : externalRefNode;
-    }
-
 }

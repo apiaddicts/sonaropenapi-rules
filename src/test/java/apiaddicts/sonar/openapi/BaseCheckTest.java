@@ -115,6 +115,6 @@ public abstract class BaseCheckTest {
 
     protected void assertNumberOfParameters(int numberOfParameters) {
         List<RulesDefinition.Param> params = repository.rule(ruleName).params();
-        assertThat(params.size()).isEqualTo(numberOfParameters);
+        assertThat(params).hasSize(numberOfParameters);
     }
 }

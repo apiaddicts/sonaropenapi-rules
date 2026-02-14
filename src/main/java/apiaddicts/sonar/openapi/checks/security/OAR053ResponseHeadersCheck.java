@@ -1,7 +1,6 @@
 package apiaddicts.sonar.openapi.checks.security;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +17,8 @@ import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 
 import apiaddicts.sonar.openapi.checks.BaseCheck;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
+
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
 @Rule(key = OAR053ResponseHeadersCheck.KEY)
@@ -83,11 +84,9 @@ public class OAR053ResponseHeadersCheck extends BaseCheck {
         String path = node.key().getTokenValue();
         if (exclusion.contains(path))
             return;
-        Collection<JsonNode> operationNodes = node.properties().stream()
-                .filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
-        for (JsonNode operationNode : operationNodes) {
-            visitResponsesNode(operationNode.at("/responses"));
-        }
+        node.properties().stream()
+            .filter(JsonNodeUtils::isOperation)
+            .forEach(operationNode -> visitResponsesNode(operationNode.at("/responses")));
     }
 
     private void visitResponsesNode(JsonNode node) {

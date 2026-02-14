@@ -28,6 +28,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,17 +36,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
-
-
 @Rule(key = OAR044MediaTypeCheck.CHECK_KEY)
 public class OAR044MediaTypeCheck extends BaseCheck {
   protected static final String CHECK_KEY = "OAR044";
   protected static final String MESSAGE_V2 = "OAR044.error.v2";
   protected static final String MESSAGE_V3 = "OAR044.error.v3";
-  protected JsonNode externalRefNode = null;
-
+  private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
   @VisibleForTesting
   static final Pattern MIME_TYPE_PATTERN = Pattern.compile(
@@ -98,7 +94,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
     } else if (type == OpenApi3Grammar.RESPONSES) {
       node.properties().forEach(responseNode -> {
         if (!"204".equals(responseNode.key().getTokenValue())) {
-          handleExternalRef(responseNode, this::verifyContent);
+          handleExternalRef.resolve(responseNode, this::verifyContent);
         }
       });
 
@@ -106,7 +102,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
       String op = node.key().getTokenValue().toLowerCase();
 
       if (new HashSet<>(Arrays.asList("post", "put", "patch")).contains(op)) {
-        handleExternalRef(node.at("/requestBody"), this::verifyContent);
+        handleExternalRef.resolve(node.at("/requestBody"), this::verifyContent);
       }
     }
   }
@@ -120,21 +116,6 @@ public class OAR044MediaTypeCheck extends BaseCheck {
       if (!MIME_TYPE_PATTERN.matcher(key).matches()) {
         addIssue(CHECK_KEY, translate(MESSAGE_V2), keyNode);
       }
-    }
-  }
-
-  private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
-    if (node == null || node.isMissing()) return;
-
-    boolean setExternal = false;
-    if (isExternalRef(node) && externalRefNode == null) {
-      externalRefNode = node;
-      setExternal = true;
-    }
-    try {
-      action.accept(resolve(node));
-    } finally {
-      if (setExternal) externalRefNode = null;
     }
   }
 

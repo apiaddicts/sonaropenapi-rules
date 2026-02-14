@@ -8,6 +8,7 @@ import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
 public class MediaTypeUtils {
 
     private MediaTypeUtils() {
+		    // Intentional blank
     }
 
     public static void handleProducesResponses(JsonNode node, JsonNode externalRefNode, Consumer<JsonNode> visitContentNode) {

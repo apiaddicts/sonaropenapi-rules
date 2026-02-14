@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
+import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
+
 @Rule(key = OAR029StandardResponseSchemaCheck.KEY)
 public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
 
@@ -50,6 +52,8 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
     private String exclusionStr = DEFAULT_EXCLUSION;
     private Set<String> exclusion;
 
+    private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
+
     public OAR029StandardResponseSchemaCheck() {
         super(KEY);
     }
@@ -67,7 +71,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             dataProperty = (responseSchema.has("dataProperty")) ? responseSchema.getString("dataProperty") : null;
             rootProperty = (responseSchema.has("rootProperty")) ? responseSchema.getString("rootProperty") : null;
         } catch (JSONException err) {
-        addIssue(KEY, "Error parsing Standard Response Schemas", getTrueNode(root.key()));
+        addIssue(KEY, "Error parsing Standard Response Schemas", handleExternalRef.getTrueNode(root.key()));
         }
     }
 
@@ -92,7 +96,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             .flatMap(responses -> responses.properties().stream())
             .forEach(propResponse -> {
                 String statusCode = propResponse.key().getTokenValue();
-                handleExternalRef(propResponse.value(), resolved -> {
+                handleExternalRef.resolve(propResponse.value(), resolved -> {
                     if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                         visitSchemaNode(resolved, statusCode);
                     } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
@@ -118,12 +122,8 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
 
         JsonNode schemaNode = responseNode.value().get("schema");
         if (schemaNode.isMissing()) return;
-        boolean externalRefManagement = false;
-        if (isExternalRef(schemaNode) && externalRefNode == null) {
-            externalRefNode = schemaNode;
-            externalRefManagement = true;
-        }
-        schemaNode = resolve(schemaNode);
+
+        schemaNode = handleExternalRef.resolve(schemaNode, resolved -> resolved);
         Map<String, JsonNode> properties = getAllProperties(schemaNode);
 
         if (rootProperty != null) {
@@ -134,7 +134,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateProperty(properties, rootProperty, "object", schemaNode.key()).ifPresent(node -> {
                 Map<String, JsonNode> allProp = getAllProperties(node);
                 if (allProp.isEmpty()) {
-                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), getTrueNode(node.key()));
+                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), handleExternalRef.getTrueNode(node.key()));
                 }
             });
 
@@ -148,7 +148,6 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateRootProperties(requiredOnError, properties, schemaNode);
         }
         validateRootProperties(requiredAlways, properties, schemaNode);
-        if (externalRefManagement) externalRefNode = null; 
     }
 
     private void validateRootProperties(JSONArray requiredPropsArray, Map<String, JsonNode> properties, JsonNode parentNode) {
@@ -175,21 +174,8 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         validateProperty(properties, name, type, parent.key()).ifPresent(node -> {
             boolean isArray = "array".equals(parent.get("type").getTokenValue());
             if (getAllProperties(node).isEmpty() && !isArray) {
-                addIssue(KEY, translate("OAR029.error-required-one-property", name), getTrueNode(node.key()));
+                addIssue(KEY, translate("OAR029.error-required-one-property", name), handleExternalRef.getTrueNode(node.key()));
             }
         });
-    }
-
-    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
-        boolean setExternal = false;
-        if (isExternalRef(node) && externalRefNode == null) {
-            externalRefNode = node;
-            setExternal = true;
-        }
-        try {
-            action.accept(resolve(node));
-        } finally {
-            if (setExternal) externalRefNode = null;
-        }
     }
 }

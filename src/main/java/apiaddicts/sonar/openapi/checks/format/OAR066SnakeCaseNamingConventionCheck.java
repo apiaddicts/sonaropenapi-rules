@@ -7,9 +7,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
+import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
 
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +20,7 @@ public class OAR066SnakeCaseNamingConventionCheck extends AbstractNamingConventi
     private static final String NAMING_CONVENTION = SNAKE_CASE;
     private static final String SCHEMA = "schema";
 
-    protected JsonNode externalRefNode = null;
+    private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
     public OAR066SnakeCaseNamingConventionCheck() {
         super(KEY, MESSAGE, NAMING_CONVENTION);
@@ -41,7 +39,7 @@ public class OAR066SnakeCaseNamingConventionCheck extends AbstractNamingConventi
     }
 
     private void visitPathsNode(JsonNode pathsNode) {
-        pathsNode.propertyMap().values().forEach(pathNode -> 
+        pathsNode.propertyMap().values().forEach(pathNode ->
             pathNode.propertyMap().values().forEach(operationNode -> {
                 JsonNode parameters = operationNode.get("parameters");
                 if (!parameters.isMissing()) {
@@ -49,8 +47,8 @@ public class OAR066SnakeCaseNamingConventionCheck extends AbstractNamingConventi
                             .filter(p -> "body".equals(p.get("in").getTokenValue()))
                             .forEach(this::visitParameterNode);
                 }
-                handleExternalRef(operationNode.get("requestBody"), this::visitRequestBodyNode);
-                handleExternalRef(operationNode.get("responses"), this::visitResponsesNode);
+                handleExternalRef.resolve(operationNode.get("requestBody"), this::visitRequestBodyNode);
+                handleExternalRef.resolve(operationNode.get("responses"), this::visitResponsesNode);
             })
         );
     }
@@ -70,7 +68,6 @@ public class OAR066SnakeCaseNamingConventionCheck extends AbstractNamingConventi
             }
         }
     }
-    
 
     private void visitRequestBodyNode(JsonNode requestBodyNode) {
         JsonNode contentNode = requestBodyNode.get("content");
@@ -102,7 +99,7 @@ public class OAR066SnakeCaseNamingConventionCheck extends AbstractNamingConventi
             }
         }
     }
-    
+
     private void visitSchemaNode(JsonNode schemaNode) {
         Map<String, JsonNode> properties = schemaNode.propertyMap();
         if (properties.containsKey("properties")) {
@@ -113,23 +110,5 @@ public class OAR066SnakeCaseNamingConventionCheck extends AbstractNamingConventi
                 validateNamingConvention(name, nameNode);
             }
         }
-    }
-
-    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
-        if (node == null || node.isMissing()) return;
-        boolean setExternal = false;
-        if (isExternalRef(node) && externalRefNode == null) {
-            externalRefNode = node;
-            setExternal = true;
-        }
-        try {
-            action.accept(resolve(node));
-        } finally {
-            if (setExternal) externalRefNode = null;
-        }
-    }
-
-    protected JsonNode getTrueNode(JsonNode node) {
-        return externalRefNode == null ? node : externalRefNode;
     }
 }

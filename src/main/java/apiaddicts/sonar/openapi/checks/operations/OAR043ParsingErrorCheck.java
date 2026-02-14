@@ -35,7 +35,7 @@ public class OAR043ParsingErrorCheck extends BaseCheck {
 
   public static final String CHECK_KEY = "OAR043";
 
-  private final Pattern PATTERN = Pattern.compile("\\d+");
+  private static final Pattern PATTERN = Pattern.compile("\\d+");
 
   @Override
   public void scanFile(OpenApiVisitorContext context) {

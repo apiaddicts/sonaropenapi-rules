@@ -61,11 +61,9 @@ public class OAR100LastPartBasePathCheck extends BaseCheck {
     }
 
     private static boolean isInteger(String s) {
-        try { 
-            Integer.parseInt(s); 
-        } catch(NumberFormatException e) { 
-            return false; 
-        } catch(NullPointerException e) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException | NullPointerException e) {
             return false;
         }
         return true;

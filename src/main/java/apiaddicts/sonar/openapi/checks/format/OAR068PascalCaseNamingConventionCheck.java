@@ -7,6 +7,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
 import java.util.Map;
@@ -15,12 +16,13 @@ import java.util.Set;
 @Rule(key = OAR068PascalCaseNamingConventionCheck.KEY)
 public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConventionCheck {
 
-    protected JsonNode externalRefNode= null;
     public static final String KEY = "OAR068";
     private static final String MESSAGE = "OAR068.error";
     private static final String NAMING_CONVENTION = PASCAL_CASE;
     private static final String SCHEMA = "schema";
     private static final String PROPERTIES = "properties";
+
+    private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
     public OAR068PascalCaseNamingConventionCheck() {
         super(KEY, MESSAGE, NAMING_CONVENTION);
@@ -42,7 +44,7 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
     }
 
     private void visitPathsNode(JsonNode pathsNode) {
-        pathsNode.propertyMap().values().forEach(pathNode -> 
+        pathsNode.propertyMap().values().forEach(pathNode ->
             pathNode.propertyMap().values().forEach(operationNode -> {
                 JsonNode parameters = operationNode.get("parameters");
                 if (!parameters.isMissing()) {
@@ -50,8 +52,8 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
                             .filter(p -> "body".equals(p.get("in").getTokenValue()))
                             .forEach(this::visitParameterNode);
                 }
-                handleExternalRef(operationNode.get("requestBody"), this::visitRequestBodyNode);
-                handleExternalRef(operationNode.get("responses"), this::visitResponsesNode);
+                handleExternalRef.resolve(operationNode.get("requestBody"), this::visitRequestBodyNode);
+                handleExternalRef.resolve(operationNode.get("responses"), this::visitResponsesNode);
             })
         );
     }
@@ -71,7 +73,6 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
             }
         }
     }
-    
 
     private void visitRequestBodyNode(JsonNode requestBodyNode) {
         JsonNode contentNode = requestBodyNode.get("content");
@@ -123,7 +124,7 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
             .map(operation -> operation.get("responses"))
             .filter(responses -> !responses.isMissing())
             .flatMap(responses -> responses.propertyMap().values().stream())
-            .forEach(response -> handleExternalRef(response, resolved -> {
+            .forEach(response -> handleExternalRef.resolve(response, resolved -> {
                 if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode2(resolved);
                 } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
@@ -145,31 +146,13 @@ public class OAR068PascalCaseNamingConventionCheck extends AbstractNamingConvent
             schemaNode = responseOrMediaTypeNode.value().get(SCHEMA);
         }
 
-        handleExternalRef(schemaNode, schemaResolved -> {
+        handleExternalRef.resolve(schemaNode, schemaResolved -> {
             JsonNode propsNode = schemaResolved.get(PROPERTIES);
             if (!propsNode.isMissing() && propsNode.isObject()) {
                 propsNode.propertyMap().forEach((name, property) ->
-                    validateNamingConvention(name, getTrueNode(property.key()))
+                    validateNamingConvention(name, handleExternalRef.getTrueNode(property.key()))
                 );
             }
         });
-    }
-
-    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
-        if (node == null || node.isMissing()) return;
-        boolean setExternal = false;
-        if (isExternalRef(node) && externalRefNode == null) {
-            externalRefNode = node;
-            setExternal = true;
-        }
-        try {
-            action.accept(resolve(node));
-        } finally {
-            if (setExternal) externalRefNode = null;
-        }
-    }
-
-    protected JsonNode getTrueNode(JsonNode node) {
-        return externalRefNode == null ? node : externalRefNode;
     }
 }
