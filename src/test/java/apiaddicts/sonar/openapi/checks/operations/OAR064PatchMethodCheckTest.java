@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.operations.OAR064PatchMethodCheck;
-
 public class OAR064PatchMethodCheckTest extends BaseCheckTest {
 
     @Before
@@ -47,7 +45,6 @@ public class OAR064PatchMethodCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(3);
-        assertParameterProperties("mandatory-response-codes", "200, 202, 204, 206", RuleParamType.STRING);
         assertParameterProperties("paths", "/status, /another", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }

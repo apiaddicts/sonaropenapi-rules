@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.security.OAR081PasswordFormatCheck;
-
 public class OAR081PasswordFormatCheckTest extends BaseCheckTest {
 
     @Before

@@ -20,11 +20,6 @@ public class OAR109ForbiddenInternalServerErrorCheck extends BaseCheck {
     private static final String MESSAGE = "OAR109.error";
 
     @Override
-    protected void visitFile(JsonNode root) {
-        super.visitFile(root);
-    }
-
-    @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
     }

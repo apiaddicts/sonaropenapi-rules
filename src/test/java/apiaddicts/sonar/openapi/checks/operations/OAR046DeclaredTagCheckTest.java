@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.operations.OAR046DeclaredTagCheck;
-
 public class OAR046DeclaredTagCheckTest extends BaseCheckTest {
 
     @Before

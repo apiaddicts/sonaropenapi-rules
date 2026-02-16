@@ -78,7 +78,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 			path = new URL(server).getPath();
 			validateNamingConvention(path, urlNode.key());
 		} catch (MalformedURLException e) {
-			return;
+      // Intentional blank
 		}
 	}
 

@@ -8,6 +8,8 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
+import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
+
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
 import java.util.Set;
@@ -15,12 +17,12 @@ import java.util.Set;
 @Rule(key = OAR094UseExamplesCheck.KEY)
 public class OAR094UseExamplesCheck extends BaseCheck {
 
-    protected JsonNode externalRefNode= null;
     public static final String KEY = "OAR094";
     private static final String MESSAGE = "OAR094.error";
 
     private static final String EXAMPLE = "example";
 
+    private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -40,9 +42,9 @@ public class OAR094UseExamplesCheck extends BaseCheck {
     private void deepSearchForExample(JsonNode node) {
         if (node.propertyMap().containsKey(EXAMPLE)) {
             addIssue(KEY, translate(MESSAGE), node.propertyMap().get(EXAMPLE).key());
-            return; 
+            return;
         }
-        // Recurse into children
+
         for (JsonNode child : node.propertyMap().values()) {
             deepSearchForExample(child);
         }
@@ -55,7 +57,7 @@ public class OAR094UseExamplesCheck extends BaseCheck {
             .map(operation -> operation.get("responses"))
             .filter(responses -> !responses.isMissing())
             .flatMap(responses -> responses.propertyMap().values().stream())
-            .forEach(response -> handleExternalRef(response, resolved -> {
+            .forEach(response -> handleExternalRef.resolve(response, resolved -> {
                 if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode(resolved);
                 } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
@@ -75,33 +77,16 @@ public class OAR094UseExamplesCheck extends BaseCheck {
         JsonNode schemaNode = responseNode.value().get("schema");
         if (schemaNode.isMissing()) return;
 
-        handleExternalRef(schemaNode, resolvedSchema -> {
+        handleExternalRef.resolve(schemaNode, resolvedSchema -> {
             JsonNode props = resolvedSchema.get("properties");
             if (props.isMissing() || !props.isObject()) return;
 
             props.propertyMap().forEach((key, propertyNode) -> {
                 JsonNode exampleNode = propertyNode.get(EXAMPLE);
                 if (!exampleNode.isMissing()) {
-                    addIssue(KEY, translate(MESSAGE), getTrueNode(exampleNode.key()));
+                    addIssue(KEY, translate(MESSAGE), handleExternalRef.getTrueNode(exampleNode.key()));
                 }
             });
         });
-    }
-
-    private void handleExternalRef(JsonNode node, java.util.function.Consumer<JsonNode> action) {
-        boolean setExternal = false;
-        if (isExternalRef(node) && externalRefNode == null) {
-            externalRefNode = node;
-            setExternal = true;
-        }
-        try {
-            action.accept(resolve(node));
-        } finally {
-            if (setExternal) externalRefNode = null;
-        }
-    }
-
-    protected JsonNode getTrueNode (JsonNode node){
-        return externalRefNode== null ? node : externalRefNode;
     }
 }

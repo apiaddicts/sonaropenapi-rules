@@ -52,8 +52,9 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
     }
 
     private void markAsTemplate(NewRepository repository, String ruleKey) {
-        if (repository.rule(ruleKey) != null) {
-            repository.rule(ruleKey).setTemplate(true);
+        RulesDefinition.NewRule rule = repository.rule(ruleKey);
+        if (rule != null) {
+            rule.setTemplate(true);
         }
     }
 

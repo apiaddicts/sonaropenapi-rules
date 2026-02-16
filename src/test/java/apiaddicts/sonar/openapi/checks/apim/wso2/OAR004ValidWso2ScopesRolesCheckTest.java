@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.apim.wso2.OAR004ValidWso2ScopesRolesCheck;
-
 public class OAR004ValidWso2ScopesRolesCheckTest extends BaseCheckTest {
 
     @Before

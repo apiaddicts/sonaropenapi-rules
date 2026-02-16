@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.operations.OAR106ResourcesByPatchVerbCheck;
-
 public class OAR106ResourcesByPatchVerbCheckTest extends BaseCheckTest {
 
     @Before

@@ -7,6 +7,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 
 import apiaddicts.sonar.openapi.checks.schemas.AbstractSchemaCheck;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
 import apiaddicts.sonar.openapi.utils.VerbPathMatcher;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -14,8 +15,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isOperation;
 
 public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
 
@@ -37,7 +36,7 @@ public abstract class AbstractVerbPathCheck extends AbstractSchemaCheck {
 
     private void visitV2Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(JsonNodeUtils::isOperation).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             String verb = operationNode.key().getTokenValue();
             Optional<VerbPathMatcher.PatternGroup> pg = matcher.matchesWithValues(verb, path);
