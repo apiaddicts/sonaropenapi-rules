@@ -1,6 +1,5 @@
 package apiaddicts.sonar.openapi.checks.security;
 
-import apiaddicts.sonar.openapi.checks.security.OAR075StringParameterIntegrityCheck;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;

@@ -33,7 +33,7 @@ public abstract class AbstractUndefinedMediaTypeCheck extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        globalDefinesMediaTypes = (root.getType() instanceof OpenApi2Grammar) ? definesMimeTypesV2(root) : false;
+        globalDefinesMediaTypes = (root.getType() instanceof OpenApi2Grammar) && definesMimeTypesV2(root);
     }
 
     @Override

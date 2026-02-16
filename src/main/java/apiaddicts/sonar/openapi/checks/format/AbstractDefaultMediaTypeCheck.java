@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNode;
 import com.sonar.sslr.api.AstNodeType;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,7 +59,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
                 .map(String::trim)
                 .map(String::toLowerCase)
                 .collect(Collectors.toSet());
-        globalSupportsDefaultMimeType = (root.getType() instanceof OpenApi2Grammar) ? supportsDefaultMimeTypeV2(root) : false;
+        globalSupportsDefaultMimeType = (root.getType() instanceof OpenApi2Grammar) && supportsDefaultMimeTypeV2(root);
     }
 
     @Override
@@ -138,16 +137,21 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
     private boolean supportsDefaultMimeTypeV2(JsonNode node) {
         JsonNode consumes = node.get(section);
         if (consumes.isMissing() || consumes.isNull()) return false;
-        List<JsonNode> mimeTypeNodes = consumes.elements();
-        if (mimeTypeNodes.stream().map(AstNode::getTokenValue).anyMatch(mediaTypeExceptions::contains)) return true;
-        return mimeTypeNodes.stream().map(AstNode::getTokenValue).anyMatch(defaultMediaType::equals);
+
+        List<String> mimeTypes = consumes.elements().stream()
+                .map(AstNode::getTokenValue)
+                .collect(Collectors.toList());
+
+        return mimeTypes.stream().anyMatch(mediaTypeExceptions::contains) || 
+              mimeTypes.stream().anyMatch(defaultMediaType::equals);
     }
 
     private boolean supportsDefaultMimeTypeV3(JsonNode content) {
         if (content.isMissing() || content.isNull()) return false;
-        Map<String, JsonNode> properties = content.propertyMap();
-        if (properties.entrySet().stream().map(entry -> entry.getKey()).anyMatch(mediaTypeExceptions::contains))
-            return true;
-        return properties.entrySet().stream().map(entry -> entry.getKey()).anyMatch(defaultMediaType::equals);
+
+        Set<String> keys = content.propertyMap().keySet();
+
+        return keys.stream().anyMatch(mediaTypeExceptions::contains) ||
+              keys.stream().anyMatch(defaultMediaType::equals);
     }
 }

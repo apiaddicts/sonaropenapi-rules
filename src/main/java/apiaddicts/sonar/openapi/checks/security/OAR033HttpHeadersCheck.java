@@ -8,6 +8,8 @@ import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
+
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.ArrayList;
@@ -18,8 +20,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isOperation;
 
 @Rule(key = OAR033HttpHeadersCheck.KEY)
 public class OAR033HttpHeadersCheck extends BaseCheck {
@@ -89,12 +89,11 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     private void visitPathV2Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        if (exclusion.contains(path)) return;
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
+        if (exclusion.contains(path) || mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(JsonNodeUtils::isOperation).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             JsonNode parametersNode = operationNode.get(PARAMETERS);
             List<String> headerNames = listHeaderParameters(parametersNode);
-            if (mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
             if (!headerNames.containsAll(mandatoryHeaders)) {
                 addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), operationNode.key());
             }
@@ -103,15 +102,14 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
 
     private void visitPathV3Node(JsonNode node) {
         String path = node.key().getTokenValue();
-        if (exclusion.contains(path)) return;
+        if (exclusion.contains(path) || mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
         JsonNode parametersInPathNode = node.get(PARAMETERS);
         List<String> headerNamesInPath = listHeaderParameters(parametersInPathNode);
-        Collection<JsonNode> operationNodes = node.properties().stream().filter(propertyNode -> isOperation(propertyNode)).collect(Collectors.toList());
+        Collection<JsonNode> operationNodes = node.properties().stream().filter(JsonNodeUtils::isOperation).collect(Collectors.toList());
         for (JsonNode operationNode : operationNodes) {
             JsonNode parametersInOperationNode = operationNode.get(PARAMETERS);
             List<String> headerNamesInOperation = listHeaderParameters(parametersInOperationNode);
             headerNamesInOperation.addAll(headerNamesInPath);
-            if (mandatoryHeaders == null || mandatoryHeaders.isEmpty()) return;
             if (!headerNamesInOperation.containsAll(mandatoryHeaders)) {
                 addIssue(KEY, translate("generic.mandatory-headers", mandatoryHeadersStr), operationNode.key());
             }
@@ -119,9 +117,9 @@ public class OAR033HttpHeadersCheck extends BaseCheck {
     }
 
     private List<String> listHeaderParameters(JsonNode parametersNode) {
-        if (parametersNode.isMissing() || parametersNode.isNull()) return new ArrayList<String>();
+        if (parametersNode.isMissing() || parametersNode.isNull()) return new ArrayList<>();
         List<JsonNode> headerParametersNodes = parametersNode.elements().stream().filter(this::isHeaderParam).collect(Collectors.toList());
-        if (headerParametersNodes.isEmpty()) return new ArrayList<String>();
+        if (headerParametersNodes.isEmpty()) return new ArrayList<>();
         for (JsonNode headerParameterNode : headerParametersNodes) {
             JsonNode headerNameNode = headerParameterNode.resolve().get("name");
             String headerName = headerNameNode.getTokenValue().toLowerCase().trim();

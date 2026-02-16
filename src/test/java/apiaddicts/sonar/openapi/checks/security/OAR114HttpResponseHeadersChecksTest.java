@@ -1,5 +1,4 @@
 package apiaddicts.sonar.openapi.checks.security;
-import apiaddicts.sonar.openapi.checks.security.OAR114HttpResponseHeadersChecks;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;

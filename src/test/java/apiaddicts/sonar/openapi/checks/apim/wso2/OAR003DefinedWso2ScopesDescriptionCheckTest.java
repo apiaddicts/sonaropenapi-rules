@@ -6,8 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.apim.wso2.OAR003DefinedWso2ScopesDescriptionCheck;
-
 public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
 
     @Before

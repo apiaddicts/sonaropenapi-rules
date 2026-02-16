@@ -6,9 +6,6 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.operations.OAR093ResponseOnlyRefCheck;
-
-
 public class OAR093ResponseOnlyRefCheckTest extends BaseCheckTest {
 
     @Before

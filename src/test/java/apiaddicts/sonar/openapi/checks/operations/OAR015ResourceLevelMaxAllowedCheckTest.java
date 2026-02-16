@@ -7,8 +7,6 @@ import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
-import apiaddicts.sonar.openapi.checks.operations.OAR015ResourceLevelMaxAllowedCheck;
-
 public class OAR015ResourceLevelMaxAllowedCheckTest extends BaseCheckTest {
 
     @Before
