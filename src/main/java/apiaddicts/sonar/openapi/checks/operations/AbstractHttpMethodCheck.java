@@ -65,20 +65,28 @@ public abstract class AbstractHttpMethodCheck extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        if (!mandatoryResponseCodesStr.trim().isEmpty()) {
-            mandatoryResponseCodes.addAll(Stream.of(mandatoryResponseCodesStr.split(",")).map(header -> header.toLowerCase().trim()).collect(Collectors.toSet()));
+        if (mandatoryResponseCodesStr != null && !mandatoryResponseCodesStr.trim().isEmpty()) {
+            mandatoryResponseCodes.addAll(
+                    Stream.of(mandatoryResponseCodesStr.split(","))
+                            .map(String::trim)
+                            .collect(Collectors.toSet())
+            );
         }
-        if (!pathsStr.trim().isEmpty()) {
-            exclusion = Arrays.stream(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
-        } else {
-            exclusion = new HashSet<>();
+
+        if (pathsStr != null && !pathsStr.trim().isEmpty()) {
+            exclusion = Arrays.stream(pathsStr.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toSet());
         }
         super.visitFile(root);
     }
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
+        return ImmutableSet.of(
+                OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH,
+                OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION
+        );
     }
 
     @Override
