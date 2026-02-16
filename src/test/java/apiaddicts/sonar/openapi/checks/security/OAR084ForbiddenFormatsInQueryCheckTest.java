@@ -45,7 +45,7 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(3);
-        assertParameterProperties("forbidden-query-formats", "password", RuleParamType.STRING);
+        assertParameterProperties("forbiddenItems", null, RuleParamType.STRING);
         assertParameterProperties("paths", "/examples", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
     }
