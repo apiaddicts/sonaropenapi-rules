@@ -40,7 +40,7 @@ public class OAR096ForbiddenResponseCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("expected-codes", "403", RuleParamType.STRING);
+        assertParameterProperties("expected-codes", null, RuleParamType.STRING);
     }
 
     @Override
