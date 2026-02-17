@@ -36,14 +36,6 @@ public abstract class AbstractForbiddenQueryCheck extends BaseCheck {
     protected Set<String> paths = new HashSet<>();
     protected String currentPath;
 
-    @RuleProperty(
-            key = "forbiddenItems",
-            description = "List of forbidden query params or formats separated by comma",
-            defaultValue = ""
-    )
-    protected String forbiddenItemsStr;
-
-    protected Set<String> forbiddenItems = new HashSet<>();
     protected final String ruleKey;
     protected final String messageKey;
 
@@ -57,11 +49,6 @@ public abstract class AbstractForbiddenQueryCheck extends BaseCheck {
         if (pathsStr != null && !pathsStr.trim().isEmpty()) {
             paths = Stream.of(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
         }
-
-        if (forbiddenItemsStr != null && !forbiddenItemsStr.trim().isEmpty()) {
-            forbiddenItems = Stream.of(forbiddenItemsStr.split(",")).map(String::trim).collect(Collectors.toSet());
-        }
-
         super.visitFile(root);
     }
 
