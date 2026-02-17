@@ -1,10 +1,13 @@
 package apiaddicts.sonar.openapi.checks.security;
 
 import org.sonar.check.Rule;
+
+import apiaddicts.sonar.openapi.checks.format.AbstractFormatCheck;
+
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 @Rule(key = OAR076NumericFormatCheck.KEY)
-public class OAR076NumericFormatCheck extends AbstractFormatCheck2 {
+public class OAR076NumericFormatCheck extends AbstractFormatCheck {
 
     public static final String KEY = "OAR076";
     private static final String MESSAGE = "OAR076.error";

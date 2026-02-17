@@ -46,7 +46,7 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(2);
-        assertParameterProperties("paths", "/status", RuleParamType.STRING);
+        assertParameterProperties("paths", null, RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }
 }
