@@ -2,10 +2,7 @@ package apiaddicts.sonar.openapi.checks.security;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.RuleProperty;
 
@@ -14,27 +11,26 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class AbstractForbiddenQueryCheck extends BaseCheck {
+public abstract class AbstractForbiddenQueryCheck extends AbstractPathAwareOperationCheck {
 
     private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
     private static final String PATH_STRATEGY_INCLUDE = "/include";
 
     @RuleProperty(
-            key = "paths",
-            description = "List of explicit paths to include/exclude from this rule separated by comma",
-            defaultValue = "/examples"
+        key = "paths",
+        description = "List of explicit paths to include/exclude from this rule separated by comma",
+        defaultValue = "/examples"
     )
     protected String pathsStr;
 
     @RuleProperty(
-            key = "pathValidationStrategy",
-            description = "Path validation strategy (include/exclude)",
-            defaultValue = "/include"
+        key = "pathValidationStrategy",
+        description = "Path validation strategy (include/exclude)",
+        defaultValue = "/include"
     )
     protected String pathCheckStrategy;
 
     protected Set<String> paths = new HashSet<>();
-    protected String currentPath;
 
     protected final String ruleKey;
     protected final String messageKey;
@@ -47,30 +43,18 @@ public abstract class AbstractForbiddenQueryCheck extends BaseCheck {
     @Override
     protected void visitFile(JsonNode root) {
         if (pathsStr != null && !pathsStr.trim().isEmpty()) {
-            paths = Stream.of(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
+            paths = Stream.of(pathsStr.split(","))
+                .map(String::trim)
+                .collect(Collectors.toSet());
         }
         super.visitFile(root);
     }
 
     @Override
-    public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(
-                OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH,
-                OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION
-        );
-    }
-
-    @Override
-    public void visitNode(JsonNode node) {
-        AstNodeType type = node.getType();
-
-        if (type == OpenApi2Grammar.PATH || type == OpenApi3Grammar.PATH || type == OpenApi31Grammar.PATH) {
-            currentPath = node.key().getTokenValue();
-            return;
-        }
-
+    protected void handleOperation(JsonNode node, AstNodeType type) {
         String operation = node.key().getTokenValue().toLowerCase();
-        boolean isMethod = ImmutableSet.of("get", "post", "put", "patch", "delete").contains(operation);
+        boolean isMethod = ImmutableSet.of("get", "post", "put", "patch", "delete")
+            .contains(operation);
 
         if (shouldExcludePath() || !isMethod) return;
 
@@ -85,7 +69,8 @@ public abstract class AbstractForbiddenQueryCheck extends BaseCheck {
     private boolean shouldExcludePath() {
         if (PATH_STRATEGY_EXCLUDE.equals(pathCheckStrategy)) {
             return paths.contains(currentPath);
-        } else if (PATH_STRATEGY_INCLUDE.equals(pathCheckStrategy)) {
+        }
+        if (PATH_STRATEGY_INCLUDE.equals(pathCheckStrategy)) {
             return !paths.contains(currentPath);
         }
         return false;
