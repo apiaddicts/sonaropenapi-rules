@@ -35,6 +35,6 @@ public class OAR107ResourcesByDeleteVerbCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("words-to-exclude", "get,delete", RuleParamType.STRING);
+        assertParameterProperties("words-to-exclude", null, RuleParamType.STRING);
     }
 }

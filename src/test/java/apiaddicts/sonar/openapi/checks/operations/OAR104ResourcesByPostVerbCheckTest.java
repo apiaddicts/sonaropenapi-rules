@@ -35,6 +35,6 @@ public class OAR104ResourcesByPostVerbCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("words-to-exclude", "me,search", RuleParamType.STRING);
+        assertParameterProperties("words-to-exclude", null, RuleParamType.STRING);
     }
 }

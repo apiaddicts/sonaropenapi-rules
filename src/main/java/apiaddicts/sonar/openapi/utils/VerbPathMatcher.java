@@ -20,8 +20,6 @@ public class VerbPathMatcher {
 
     public static final String DYNAMIC_OR_ME_PATH_PART_REGEX = "(" + DYNAMIC_PATH_PART_REGEX + "|\\bme\\b)";
 
-    public static final String ONLY_ONE_ME_REGEX = "(?!.*\\bme\\b.*\\bme\\b).*\\bme\\b.*";
-
     public static final String SLASH = "\\/";
 
     public static final String COLLECTION_PATH = SLASH + STATIC_PATH_PART_REGEX;
@@ -74,6 +72,8 @@ public class VerbPathMatcher {
     public static final String DELETE_2ND_LEVEL = VERB_DELETE + ELEMENT_PATH_2ND + "$";
     public static final String DELETE_3RD_LEVEL = VERB_DELETE + ELEMENT_PATH_3RD + "$";
 
+    private static final Pattern ME_WORD_PATTERN = Pattern.compile("\\b" + ME_WORD + "\\b");
+
     private Map<String, List<PatternGroup>> patternsByVerb;
     private Map<String, Set<String>> exclusionsByVerb;
 
@@ -97,8 +97,9 @@ public class VerbPathMatcher {
             List<PatternGroup> patterns = Stream.of(regex).map(rx -> Pattern.compile(rx.trim())).map(p -> new PatternGroup(p, values)).collect(Collectors.toList());
             for (String verb : verbs) {
                 verb = verb.trim();
-                patternsByVerb.putIfAbsent(verb, new LinkedList<>());
-                patternsByVerb.get(verb).addAll(patterns);
+                patternsByVerb
+                        .computeIfAbsent(verb, v -> new LinkedList<>())
+                        .addAll(patterns);
             }
         }
     }
@@ -143,13 +144,18 @@ public class VerbPathMatcher {
         }
 
         public boolean matches(String path) {
-            Pattern mePattern = Pattern.compile(ONLY_ONE_ME_REGEX);
-            Matcher meMatcher = mePattern.matcher(path);
-            if (meMatcher.find()) {
-                return pattern.matcher(path).matches() && meMatcher.matches();
-            } else {
-                return pattern.matcher(path).matches();
+            if (!hasAtMostOneMe(path)) return false;
+
+            return pattern.matcher(path).matches();
+        }
+
+        private boolean hasAtMostOneMe(String path) {
+            Matcher matcher = ME_WORD_PATTERN.matcher(path);
+            int count = 0;
+            while (matcher.find()) {
+                if (++count > 1) return false;
             }
+            return true;
         }
 
         public Set<String> getValues() {
