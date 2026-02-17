@@ -60,8 +60,7 @@ public abstract class AbstractPathResponseCheck extends BaseCheck {
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(
-                OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH,
-                OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION
+            OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION
         );
     }
 
