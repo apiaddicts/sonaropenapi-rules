@@ -9,7 +9,7 @@ paths:
   /mascotas:
     get:
       parameters:
-        - $ref: '#/parameters/idMascotaRef' <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR088: The $ref of a parameter must end with the suffix Param}}</span>
+        - $ref: '#/parameters/idMascotaRef' <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR089: The $ref of a request body must end with the suffix Param}}</span>
       responses:
         '200':
           description: Lista de mascotas
