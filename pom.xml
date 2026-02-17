@@ -75,6 +75,8 @@
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.jacoco.reportPaths>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPaths>
     <sonar.language>java</sonar.language>
+    <sonar.exclusions>**/*.html,**/*.json</sonar.exclusions>
+    <sonar.cpd.exclusions>**/*.html,**/*.json</sonar.cpd.exclusions>
   </properties>
 
 
