@@ -14,7 +14,7 @@ public class OAR083ForbiddenQueryParamsCheck extends AbstractForbiddenQueryCheck
 
     public OAR083ForbiddenQueryParamsCheck() {
         super(KEY, MESSAGE);
-        forbiddenItemsStr = "email, password"; // default
+        forbiddenItemsStr = "email, password";
     }
 
     @Override

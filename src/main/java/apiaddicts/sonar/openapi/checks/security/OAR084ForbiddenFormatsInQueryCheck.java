@@ -1,7 +1,6 @@
 package apiaddicts.sonar.openapi.checks.security;
 
 import org.sonar.check.Rule;
-import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 @Rule(key = OAR084ForbiddenFormatsInQueryCheck.KEY)
@@ -12,7 +11,7 @@ public class OAR084ForbiddenFormatsInQueryCheck extends AbstractForbiddenQueryCh
 
     public OAR084ForbiddenFormatsInQueryCheck() {
         super(KEY, MESSAGE);
-        forbiddenItemsStr = "password"; // default
+        forbiddenItemsStr = "password";
     }
 
     @Override

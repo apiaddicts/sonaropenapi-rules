@@ -54,12 +54,10 @@ public abstract class AbstractForbiddenQueryCheck extends BaseCheck {
 
     @Override
     protected void visitFile(JsonNode root) {
-        // Inicializar paths
         if (pathsStr != null && !pathsStr.trim().isEmpty()) {
             paths = Stream.of(pathsStr.split(",")).map(String::trim).collect(Collectors.toSet());
         }
 
-        // Inicializar forbiddenItems
         if (forbiddenItemsStr != null && !forbiddenItemsStr.trim().isEmpty()) {
             forbiddenItems = Stream.of(forbiddenItemsStr.split(",")).map(String::trim).collect(Collectors.toSet());
         }
