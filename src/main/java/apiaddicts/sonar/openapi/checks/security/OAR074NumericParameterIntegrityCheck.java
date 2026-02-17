@@ -1,81 +1,36 @@
 package apiaddicts.sonar.openapi.checks.security;
 
-import com.google.common.collect.ImmutableSet;
-import com.sonar.sslr.api.AstNodeType;
-import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
-import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-
-import java.util.Set;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 @Rule(key = OAR074NumericParameterIntegrityCheck.KEY)
-public class OAR074NumericParameterIntegrityCheck extends BaseCheck {
+public class OAR074NumericParameterIntegrityCheck extends AbstractTypedParameterIntegrityCheck {
 
     public static final String KEY = "OAR074";
     private static final String MESSAGE = "OAR074.error";
 
-    @Override
-    public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER);
+    public OAR074NumericParameterIntegrityCheck() {
+        super(KEY, MESSAGE);
     }
 
     @Override
-    public void visitNode(JsonNode node) {
-        if (node.getType() instanceof OpenApi2Grammar) {
-            visitSwaggerParameterNode(node);
-        } else {
-            visitParameterNode(node);
-        }
+    protected boolean isTargetType(JsonNode typeNode) {
+        if(typeNode == null || typeNode.isMissing()) return false;
+        String t = typeNode.getTokenValue();
+        return "integer".equals(t) || "number".equals(t) || "float".equals(t);
     }
 
-    public void visitParameterNode(JsonNode node) {
-        JsonNode schemaNode = node.get("schema");
+    @Override
+    protected void validateTypedNode(JsonNode node,JsonNode typeNode) {
+        JsonNode min = node.get("minimum");
+        JsonNode max = node.get("maximum");
+        JsonNode format = node.get("format");
 
-        if (schemaNode != null) {
-            JsonNode typeNode = schemaNode.get("type");
+        boolean lacksPair = (min.isMissing() && !max.isMissing()) || (!min.isMissing() && max.isMissing());
+        boolean formatAlone = !format.isMissing() && min.isMissing() && max.isMissing();
+        boolean allMissing = min.isMissing() && max.isMissing() && format.isMissing();
+        boolean invalid = lacksPair || allMissing;
 
-            boolean isNumericType = typeNode != null && ("integer".equals(typeNode.getTokenValue()) ||
-                "number".equals(typeNode.getTokenValue()) ||
-                "float".equals(typeNode.getTokenValue()));
-
-            if (isNumericType) {
-                JsonNode minNode = schemaNode.get("minimum");
-                JsonNode maxNode = schemaNode.get("maximum");
-                JsonNode formatNode = schemaNode.get("format");
-
-                boolean lacksLengthRestriction = (minNode.isMissing() && !maxNode.isMissing()) || (!minNode.isMissing() && maxNode.isMissing()); 
-                boolean formatAlone = !formatNode.isMissing() && minNode.isMissing() && maxNode.isMissing();
-                boolean allMissing = minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing();
-                boolean lacksRestriction = lacksLengthRestriction || allMissing;
-                if (!formatAlone && lacksRestriction) {
-                    addIssue(KEY, translate(MESSAGE), typeNode);
-                }
-            }
-        }
-    }
-
-    public void visitSwaggerParameterNode(JsonNode node) {
-        JsonNode typeNode = node.get("type");
-
-        boolean isNumericType = typeNode != null && ("integer".equals(typeNode.getTokenValue()) ||
-            "number".equals(typeNode.getTokenValue()) ||
-            "float".equals(typeNode.getTokenValue()));
-
-        if (isNumericType) {
-            JsonNode minNode = node.get("minimum");
-            JsonNode maxNode = node.get("maximum");
-            JsonNode formatNode = node.get("format");
-
-            boolean lacksLengthRestriction = (minNode.isMissing() && !maxNode.isMissing()) || (!minNode.isMissing() && maxNode.isMissing()); 
-            boolean formatAlone = !formatNode.isMissing() && minNode.isMissing() && maxNode.isMissing();
-            boolean allMissing = minNode.isMissing() && maxNode.isMissing() && formatNode.isMissing();
-            boolean lacksRestriction = lacksLengthRestriction || allMissing;
-            if (!formatAlone && lacksRestriction) {
-                addIssue(KEY, translate(MESSAGE), typeNode);
-            }
-        }
+        if(!formatAlone && invalid) addIssue(ruleKey,translate(messageKey),typeNode);
     }
 }
