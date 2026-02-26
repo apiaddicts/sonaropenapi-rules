@@ -1,0 +1,38 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: OAR031 Nested Example False Positive V2
+paths:
+  /profile:
+    put:
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: "apellido@madrid.org"
+              telefono_fijo:
+                type: string
+                example: "600345345"
+              direccion:
+                type: object
+                properties:
+                  calle:
+                    type: string
+                    example: "Calle Indeterminada, 18"
+                  localidad:
+                    type: string
+                    example: "Madrid"
+                  provincia:
+                    type: string
+                    example: "Madrid"
+                  codigo_postal:
+                    type: string
+                    example: "28001"
+      responses:
+        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+          description: OK
