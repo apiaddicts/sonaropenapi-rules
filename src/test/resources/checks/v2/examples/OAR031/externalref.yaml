@@ -1,0 +1,48 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Example API
+host: api.example.com
+basePath: /v1
+schemes:
+  - https
+paths:
+  /users:
+    get:
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          $ref: >- # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+            https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR031.yaml#/components/responses/server_error_response
+  /users/{userId}:
+    get:
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: A single user
+          schema:
+            $ref: '#/definitions/User'
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "123"
+      name:
+        type: string
+        example: "John"
+  Error:
+    type: object
+    properties:
+      message: # Noncompliant {{OAR031: Properties must have an example defined}}
+        type: string
