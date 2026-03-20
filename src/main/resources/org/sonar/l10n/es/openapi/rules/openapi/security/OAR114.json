@@ -1,0 +1,13 @@
+{
+  "title": "OAR114 - HttpResponseHeaders - Existen cabeceras de petición obligatorias y otras que no están permitidas",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "safety"
+  ],
+  "defaultSeverity": "CRITICAL"
+}
