@@ -1,0 +1,13 @@
+{
+  "title": "OAR113 - CustomField - El campo o extensión debe estar en la ubicación asignada",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MINOR"
+}
