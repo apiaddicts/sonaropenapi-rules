@@ -49,7 +49,7 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
     @Override
     protected void visitFile(JsonNode root) {
         JsonNode security = root.get("security");
-        hasGlobalSecurity = !(security.isMissing() || security.isNull() || security.elements().isEmpty());
+        hasGlobalSecurity = !(security.isMissing() || security.elements().isEmpty());
 
         expectedSecuritySchemes = Arrays.stream(expectedSecurityScheme.split(","))
                 .map(String::trim)
@@ -61,11 +61,7 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
     @Override
     public void visitNode(JsonNode node) {
         if (hasGlobalSecurity) return;
-
-        if (node.is(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH,
-                    OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION)) {
-            visitOperationNode(node);
-        }
+        visitOperationNode(node);
     }
 
     private void visitOperationNode(JsonNode node) {
@@ -75,7 +71,7 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
         }
 
         JsonNode security = node.get("security");
-        if (security.isMissing() || security.isNull() || security.elements().isEmpty()) {
+        if (security.isMissing() || security.elements().isEmpty()) {
             addIssue(KEY, translate(MESSAGE), node.key());
             return;
         }

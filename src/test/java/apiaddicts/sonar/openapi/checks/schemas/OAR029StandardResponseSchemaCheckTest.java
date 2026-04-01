@@ -27,6 +27,21 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
         verifyV2("valid-all-of");
     }
 
+    @Test
+    public void verifyInV2ValidAllOfMd() {
+        verifyV2("valid-all-of-md");
+    }
+
+    @Test
+    public void verifyInV2ValidMd() {
+        verifyV2("valid-md");
+    }
+
+
+    @Test
+    public void verifyInV2ValidR() {
+        verifyV2("valid-r");
+    }
 
     @Test
     public void verifyInV3() {
@@ -37,6 +52,22 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
     public void verifyInV3AllOf() {
         verifyV3("valid-all-of");
     }
+
+    @Test
+    public void verifyInV3ValidAllOfMd() {
+        verifyV3("valid-all-of-md");
+    }
+
+    @Test
+    public void verifyInV3ValidMd() {
+        verifyV3("valid-md");
+    }
+
+    @Test
+    public void verifyInV3ValidR() {
+        verifyV3("valid-r");
+    }
+
 
     @Override
     public void verifyParameters() {
