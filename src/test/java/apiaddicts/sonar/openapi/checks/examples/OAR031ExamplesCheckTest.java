@@ -27,6 +27,16 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyvalidV2ExternalRefs() {
+        verifyV2("externalref.yaml");
+    }
+
+    @Test
+    public void verifyInV2NestedProperties() {
+        verifyV2("nested-properties-examples.yaml");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("valid.yaml");
     }
@@ -39,6 +49,11 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
     @Test
     public void verifyvalidV3ExternalRefs() {
         verifyV3("externalref.yaml");
+    }
+
+    @Test
+    public void verifyInV3NestedProperties() {
+        verifyV3("nested-properties-examples.yaml");
     }
 
     @Override

@@ -1,0 +1,82 @@
+<h2>Normativa - Definición de API</h2>
+<p>Sobrescribir ciertas cabeceras, permitir el uso de cualquier cabecera sin restricción o no especificar las cabeceras obligatorias puede causar vulnerabilidades en la API.</p>
+<h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
+<pre>
+  swagger: "2.0"
+  info:
+    version: 1.0.0
+    title: Swagger Petstore
+  paths:
+    /pets:
+      get:
+        responses:
+          200:
+            description: Ok
+            headers: 
+              Authorization: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR033: Header not allowed}}</span>
+                description: Forbidden header
+                schema:
+                  type: string
+</pre>
+<h2>Solución compatible (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-api-key:
+              description: Mandatory header
+              schema:
+                type: string
+            traceId:
+              description: Optional but allowed
+              schema:
+                type: string
+</pre>
+<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
+<pre>
+  openapi: "3.0.0"
+  info:
+    version: 1.0.0
+    title: Swagger Petstore
+  paths:
+    /pets:
+      get:
+        responses:
+          200:
+            description: Ok
+             headers: 
+              Authorization: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR033: Header not allowed}}</span>
+                description: Forbidden header
+                schema:
+                  type: string
+</pre>
+<h2>Solución compatible (OpenAPI 3)</h2>
+<pre>
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-api-key:
+              description: Mandatory header
+              schema:
+                type: string
+            traceId:
+              description: Optional but allowed
+              schema:
+                type: string
+</pre>
