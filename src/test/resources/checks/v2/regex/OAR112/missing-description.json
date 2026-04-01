@@ -1,0 +1,10 @@
+{
+  "swagger" : "2.0",
+  "info" : { # Noncompliant {{OAR112: Expected to find a value but didn't.}}
+    "title" : "Test API",
+    "version" : "1.0.0"
+  },
+  "host" : "api.example.com",
+  "basePath" : "/v1",
+  "paths" : {}
+}

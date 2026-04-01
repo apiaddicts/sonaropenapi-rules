@@ -19,7 +19,7 @@ public class OpenAPICustomProfileDefinitionTest {
 		assertThat(profile).isNotNull();
 		assertThat(profile.language()).isEqualTo("openapi");
 		assertThat(profile.name()).isEqualTo(OpenAPICustomProfileDefinition.MY_COMPANY_WAY);
-		// OAR112 is a template rule and must be excluded from the profile
+
 		assertThat(profile.rules()).hasSize(RulesLists.getAllChecks().size() - 1);
 		assertThat(profile.rules().stream().noneMatch(r -> r.ruleKey().equals("OAR112"))).isTrue();
 	}

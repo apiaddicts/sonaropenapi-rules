@@ -17,8 +17,6 @@ public class OAR080SecuritySchemasCheckTest extends BaseCheckTest {
         v3Path = getV3Path("schemas");
     }
 
-    // ---- V2 tests --------------------------------------------------------
-
     @Test
     public void verifyV2WithSecurity() {
         verifyV2("with-security");
@@ -49,8 +47,6 @@ public class OAR080SecuritySchemasCheckTest extends BaseCheckTest {
         verifyV2("empty-global-security");
     }
 
-    // ---- V3 tests --------------------------------------------------------
-
     @Test
     public void verifyV3WithSecurity() {
         verifyV3("with-security");
@@ -80,8 +76,6 @@ public class OAR080SecuritySchemasCheckTest extends BaseCheckTest {
     public void verifyV3EmptyGlobalSecurity() {
         verifyV3("empty-global-security");
     }
-
-    // ---- Rule metadata ---------------------------------------------------
 
     @Override
     public void verifyRule() {
