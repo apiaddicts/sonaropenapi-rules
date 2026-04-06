@@ -1,0 +1,40 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Sample API"
+securityDefinitions:
+  unknownScheme:
+    type: apiKey
+    name: X-Token
+    in: header
+paths:
+  /users:
+    get: # Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete.}}
+      summary: Get all users
+      security:
+        - unknownScheme: []
+      responses:
+        '200':
+          description: OK
+  /products:
+    post: # Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete.}}
+      summary: Create a new product
+      security:
+        - apiKey: []
+      responses:
+        '200':
+          description: OK
+  /orders:
+    patch: # Noncompliant {{OAR080: The security scheme must be among those allowed by the organization and must be complete.}}
+      summary: Patch an order
+      security:
+        - unknownScheme: []
+      responses:
+        '200':
+          description: OK
+  /items:
+    head:
+      summary: Head items (non-security verb, no issue)
+      responses:
+        '200':
+          description: OK

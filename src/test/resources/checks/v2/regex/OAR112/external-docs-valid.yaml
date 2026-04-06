@@ -1,0 +1,10 @@
+swagger: '2.0'
+info:
+  title: Test API
+  version: 1.0.0
+host: api.example.com
+basePath: /v1
+externalDocs:
+  description: Valid external documentation
+  url: https://example.com
+paths: {}

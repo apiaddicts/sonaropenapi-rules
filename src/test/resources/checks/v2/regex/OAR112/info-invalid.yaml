@@ -1,0 +1,8 @@
+swagger: '2.0'
+info:
+  title: Test API
+  version: 1.0.0
+  description: lowercase description # Noncompliant {{OAR112: The field must start with an uppercase letter.}}
+host: api.example.com
+basePath: /v1
+paths: {}

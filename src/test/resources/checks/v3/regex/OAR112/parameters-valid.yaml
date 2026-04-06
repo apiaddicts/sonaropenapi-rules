@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /test:
+    get:
+      parameters:
+        - name: page
+          in: query
+          description: Valid parameter description
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK

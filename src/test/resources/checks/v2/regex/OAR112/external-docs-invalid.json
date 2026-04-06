@@ -1,0 +1,14 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Test API",
+    "version" : "1.0.0"
+  },
+  "host" : "api.example.com",
+  "basePath" : "/v1",
+  "externalDocs" : {
+    "description" : "lowercase external documentation", # Noncompliant {{OAR112: The field must start with an uppercase letter.}}
+    "url" : "https://example.com"
+  },
+  "paths" : {}
+}
