@@ -71,7 +71,7 @@
     <assertj.version>3.22.0</assertj.version>
 
     <jacoco.maven.plugin.version>0.8.6</jacoco.maven.plugin.version>
-    <sonar.maven.plugin.version>3.7.0.1746</sonar.maven.plugin.version>
+    <sonar.maven.plugin.version>5.5.0.6356</sonar.maven.plugin.version>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <sonar.language>java</sonar.language>
