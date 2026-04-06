@@ -26,7 +26,7 @@ jobs:
     - name: SonarCloud Analysis
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+      run: mvn sonar:sonar -Dsonar.token=$SONAR_TOKEN
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
