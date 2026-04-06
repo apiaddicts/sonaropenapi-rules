@@ -74,6 +74,9 @@
     <sonar.maven.plugin.version>5.5.0.6356</sonar.maven.plugin.version>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.organization>apiaddicts</sonar.organization>
+    <sonar.projectKey>apiaddicts_sonaropenapi-rules</sonar.projectKey>
     <sonar.language>java</sonar.language>
     <sonar.exclusions>**/*.html,**/*.json</sonar.exclusions>
     <sonar.cpd.exclusions>**/*.html,**/*.json</sonar.cpd.exclusions>
