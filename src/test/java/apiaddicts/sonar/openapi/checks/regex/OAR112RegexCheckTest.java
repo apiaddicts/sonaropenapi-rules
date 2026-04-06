@@ -150,6 +150,10 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
         setField("nodes", "info/description");
         setField("valid", "true");
         verifyV3("missing-description");
+
+        setField("valid", "false");
+        verifyV3("info-invalid");
+        verifyV3("minimal");
     }
 
     @Test
@@ -157,6 +161,10 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
         setField("nodes", "info/description");
         setField("valid", "true");
         verifyV2("missing-description");
+
+        setField("valid", "false");
+        verifyV2("info-invalid");
+        verifyV2("minimal");
     }
 
     @Test
