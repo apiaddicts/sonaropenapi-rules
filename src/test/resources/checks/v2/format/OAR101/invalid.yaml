@@ -1,0 +1,6 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+basePath: /wrong/v1 # Noncompliant {{OAR101: The first part of the path is not allowed. Allowed values are: wrong}}
+paths: {}

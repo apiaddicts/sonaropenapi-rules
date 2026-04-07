@@ -9,6 +9,7 @@ import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.YamlParser;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -89,7 +90,7 @@ public class JsonNodeUtils {
 
         HttpURLConnection conn = null;
         try {
-            URL url = new URL(ref);
+            URL url = URI.create(ref).toURL();
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");

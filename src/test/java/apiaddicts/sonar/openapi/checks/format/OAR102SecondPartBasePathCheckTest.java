@@ -23,8 +23,26 @@ public class OAR102SecondPartBasePathCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifySecondPartBasePathLogicInV2() {
+        ((OAR102SecondPartBasePathCheck) check).secondPartValuesStr = "v1";
+
+        verifyV2("invalid");
+        verifyV2("valid-with-values");
+        verifyV2("one-part-path");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("valid");
+    }
+
+    @Test
+    public void verifySecondPartBasePathLogicInV3() {
+        ((OAR102SecondPartBasePathCheck) check).secondPartValuesStr = "v1";
+
+        verifyV3("invalid");
+        verifyV3("valid-with-values");
+        verifyV3("one-part-path");
     }
 
     @Override

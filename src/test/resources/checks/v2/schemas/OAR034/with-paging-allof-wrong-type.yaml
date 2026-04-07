@@ -1,0 +1,21 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /endpoint:
+    get:
+      responses:
+        206:
+          description: Ok
+          schema:
+            $ref: '#/definitions/response'
+
+definitions:
+  response:
+    type: object
+    properties:
+      paging:
+        type: integer # Noncompliant {{OAR034: 'paging' must be of type object}}
+        allOf:
+          - type: integer

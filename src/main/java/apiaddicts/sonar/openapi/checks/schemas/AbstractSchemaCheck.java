@@ -1,6 +1,5 @@
 package apiaddicts.sonar.openapi.checks.schemas;
 
-import com.sonar.sslr.api.AstNode;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
@@ -61,17 +60,6 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         return validateProperty(prop, propertyName, propertyType, parentNode);
     }
 
-    protected Optional<JsonNode> validateProperty(JsonNode properties, String propertyName, String propertyType) {
-        return handleExternalRef.resolve(properties, resolvedProps -> {
-            if (resolvedProps.propertyNames().isEmpty()) {
-                addIssue(key, translate(GENERIC_PROPERTY_MISSING, propertyName), handleExternalRef.getTrueNode(resolvedProps));
-                return Optional.empty();
-            }
-            JsonNode prop = resolvedProps.get(propertyName);
-            return validateProperty(prop, propertyName, propertyType, handleExternalRef.getTrueNode(resolvedProps.key()));
-        });
-    }
-
     protected Optional<JsonNode> validateProperty(JsonNode prop, String propertyName, String propertyType, JsonNode parentNode) {
         if (prop.isMissing()) {
             addIssue(key, translate(GENERIC_PROPERTY_MISSING, propertyName), handleExternalRef.getTrueNode(parentNode));
@@ -122,20 +110,6 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
                 return Optional.of(resolvedItems);
             });
         });
-    }
-
-    protected void validateEnumValues(JsonNode property, Set<String> expected) {
-        Set<String> found = getEnumValues(property);
-        if (!expected.equals(found)) {
-            String propertyName = property.key().getTokenValue();
-            String values = expected.stream().sorted().collect(Collectors.joining(", "));
-            addIssue(key, translate("generic.enum-values", propertyName, values), handleExternalRef.getTrueNode(property.key()));
-        }
-    }
-
-    private Set<String> getEnumValues(JsonNode schema) {
-        return schema.get("enum").elements()
-                .stream().map(AstNode::getTokenValue).collect(Collectors.toSet());
     }
 
     private boolean matchesTypeViaAllOf(JsonNode node, String expectedType) {
@@ -205,7 +179,4 @@ public abstract class AbstractSchemaCheck extends BaseCheck {
         }
     }
 
-    protected JsonNode getTrueNode (JsonNode node){
-        return handleExternalRef.getTrueNode(node);
-    }
 }
