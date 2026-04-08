@@ -28,6 +28,42 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2NoParameters() {
+        verifyV2("no-parameters");
+    }
+
+    @Test
+    public void verifyInV2NonQueryParam() {
+        verifyV2("non-query-param");
+    }
+
+    @Test
+    public void verifyInV2NullFormatParam() {
+        verifyV2("null-format-param");
+    }
+
+    @Test
+    public void verifyPathFilteringStrategiesInV2() {
+        OAR084ForbiddenFormatsInQueryCheck c = (OAR084ForbiddenFormatsInQueryCheck) check;
+
+        c.pathsStr = "/examples";
+        c.pathCheckStrategy = "/exclude";
+        verifyV2("valid-query-formats");
+
+        c.pathCheckStrategy = "/include";
+        verifyV2("valid-query-formats");
+
+        c.pathsStr = "/other";
+        verifyV2("valid-query-formats");
+    }
+
+    @Test
+    public void verifyInV2EmptyForbiddenQueryFormats() {
+        ((OAR084ForbiddenFormatsInQueryCheck) check).forbiddenQueryFormatsStr = "";
+        verifyV2("valid-query-formats");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("valid-query-formats");
     }
@@ -35,6 +71,42 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3ForbiddenQueryFormats() {
         verifyV3("forbidden-query-formats");
+    }
+
+    @Test
+    public void verifyInV3NoParameters() {
+        verifyV3("no-parameters");
+    }
+
+    @Test
+    public void verifyInV3NonQueryParam() {
+        verifyV3("non-query-param");
+    }
+
+    @Test
+    public void verifyInV3NullFormatParam() {
+        verifyV3("null-format-param");
+    }
+
+    @Test
+    public void verifyPathFilteringStrategiesInV3() {
+        OAR084ForbiddenFormatsInQueryCheck c = (OAR084ForbiddenFormatsInQueryCheck) check;
+
+        c.pathsStr = "/examples";
+        c.pathCheckStrategy = "/exclude";
+        verifyV3("valid-query-formats");
+
+        c.pathCheckStrategy = "/include";
+        verifyV3("valid-query-formats");
+
+        c.pathsStr = "/other";
+        verifyV3("valid-query-formats");
+    }
+
+    @Test
+    public void verifyInV3EmptyForbiddenQueryFormats() {
+        ((OAR084ForbiddenFormatsInQueryCheck) check).forbiddenQueryFormatsStr = "";
+        verifyV3("valid-query-formats");
     }
 
     @Override

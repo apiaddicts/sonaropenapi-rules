@@ -23,8 +23,26 @@ public class OAR101FirstPartBasePathCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyFirstPartBasePathLogicInV2() {
+        ((OAR101FirstPartBasePathCheck) check).firstPartValuesStr = "api-seguros";
+
+        verifyV2("invalid");
+        verifyV2("valid-with-values");
+        verifyV2("empty-path");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("valid");
+    }
+
+    @Test
+    public void verifyFirstPartBasePathLogicInV3() {
+        ((OAR101FirstPartBasePathCheck) check).firstPartValuesStr = "api-seguros";
+
+        verifyV3("invalid");
+        verifyV3("valid-with-values");
+        verifyV3("empty-path");
     }
 
 

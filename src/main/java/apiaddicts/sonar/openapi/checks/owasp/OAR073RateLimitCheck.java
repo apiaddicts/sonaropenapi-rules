@@ -20,7 +20,7 @@ public class OAR073RateLimitCheck extends AbstractPathResponseCheck {
     @Override
     protected void validateOperation(JsonNode node, String currentPath) {
         JsonNode responsesNode = node.get("responses");
-        if (responsesNode != null && responsesNode.get("429").isMissing()) {
+        if (responsesNode.get("429").isMissing()) {
             addIssue(ruleKey, translate(messageKey), responsesNode.key());
         }
     }

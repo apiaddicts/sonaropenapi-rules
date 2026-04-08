@@ -1,0 +1,8 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Compliant API
+paths:
+  /items:
+    get:
+      summary: Get a list of items with no responses key

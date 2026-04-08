@@ -1,0 +1,17 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  parameters:
+    filterParam:
+      in: query
+      name: other
+      schema:
+        type: string
+paths:
+  /examples:
+    get:
+      responses:
+        200:
+          description: Ok

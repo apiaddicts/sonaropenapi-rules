@@ -1,6 +1,6 @@
 
 
-# 🛠️ sonaropenapi-rules  ![Release](https://img.shields.io/badge/release-1.3.4-purple) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)  [![License: LGPL v3](https://img.shields.io/badge/license-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) 
+# 🛠️ sonaropenapi-rules  ![Release](https://img.shields.io/badge/release-1.3.5-purple) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white)  [![License: LGPL v3](https://img.shields.io/badge/license-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) 
 
 This repository contains a set of custom SonarQube rules specifically designed to analyze and improve the quality of OpenAPI specifications. By integrating these rules, teams can ensure best practices, maintainability, and consistency in their API definitions.
 
@@ -31,7 +31,14 @@ Feel free to drop by and greet us on our GitHub discussion or Discord chat. You 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/apiaddicts)
 
 
-# 📑 Getting started 
+# 📑 Getting started
+
+## ⚠️ Prerequisites
+
+Before using this plugin, you must install the base **OpenAPI plugin** for SonarQube: 
+📦 [`sonar-openapi-plugin`](https://central.sonatype.com/artifact/org.apiaddicts.apitools.dosonarapi/sonar-openapi-plugin/versions)
+
+> Make sure to install the **latest available version** of the plugin and that it is properly loaded in your SonarQube instance before adding this rules plugin.
 
 ## 🔍 Configure scanner
 

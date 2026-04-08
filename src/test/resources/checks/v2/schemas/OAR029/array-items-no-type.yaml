@@ -1,0 +1,20 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Test
+paths:
+  /test:
+    get:
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  description: has properties but no explicit type # Noncompliant {{OAR029: 'items' items must be of type object}}
+                  properties:
+                    id:
+                      type: string

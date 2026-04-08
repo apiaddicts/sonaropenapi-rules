@@ -1,0 +1,17 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: My API
+paths:
+  /examples/{id}:
+    get:
+      summary: Get an item
+      parameters:
+        - name: id
+          in: path
+          type: string
+          format: password
+          required: true
+      responses:
+        200:
+          description: An item

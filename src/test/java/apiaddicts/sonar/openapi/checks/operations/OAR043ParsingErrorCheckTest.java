@@ -21,41 +21,100 @@ package apiaddicts.sonar.openapi.checks.operations;
 
 import com.sonar.sslr.api.RecognitionException;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiFile;
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiVisitorContext;
 import org.apiaddicts.apitools.dosonarapi.api.PreciseIssue;
+import apiaddicts.sonar.openapi.I18nContext;
+import apiaddicts.sonar.openapi.checks.BaseCheck;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 public class OAR043ParsingErrorCheckTest {
 
+  @BeforeClass
+  public static void setupLang() throws Exception {
+    I18nContext.setLang("en");
+    Field field = BaseCheck.class.getDeclaredField("resourceBundle");
+    field.setAccessible(true);
+    field.set(null, null);
+  }
+
   @Test
-  public void reports_parsing_errors() {
-    OpenApiVisitorContext context = new OpenApiVisitorContext(new TestFile(), new RecognitionException(3, "Parsing exception message"));
+  public void reports_parsing_errors_no_cause_no_numbers() {
+    OpenApiVisitorContext context = new OpenApiVisitorContext(new TestFile(),
+        new RecognitionException(3, "Parsing exception message"));
     OAR043ParsingErrorCheck check = new OAR043ParsingErrorCheck();
 
     List<PreciseIssue> issues = check.scanFileForIssues(context);
 
-    assertThat(issues)
-        .extracting(i -> i.primaryLocation().startLine(), i -> i.primaryLocation().message())
-        .contains(tuple(0, "OAR043: Error parsing line 0 column null"));
+    assertThat(issues).hasSize(1);
+    assertThat(issues.get(0).primaryLocation().startLine()).isZero();
+    assertThat(issues.get(0).primaryLocation().message()).isEqualTo("OAR043: Error parsing line 0 column null");
+  }
+
+  @Test
+  public void reports_parsing_errors_with_numbers_in_message() {
+    OpenApiVisitorContext context = new OpenApiVisitorContext(new TestFile(),
+        new RecognitionException(0, "Error at line 5 column 10"));
+    OAR043ParsingErrorCheck check = new OAR043ParsingErrorCheck();
+
+    List<PreciseIssue> issues = check.scanFileForIssues(context);
+
+    assertThat(issues).hasSize(1);
+    assertThat(issues.get(0).primaryLocation().startLine()).isEqualTo(4);
+  }
+
+  @Test
+  public void reports_parsing_errors_with_one_cause() {
+    RuntimeException cause = new RuntimeException("Error at line 10 column 3");
+    RecognitionException ex = new RecognitionException(0, "outer") {
+      @Override public synchronized Throwable getCause() { return cause; }
+    };
+    OpenApiVisitorContext context = new OpenApiVisitorContext(new TestFile(), ex);
+    OAR043ParsingErrorCheck check = new OAR043ParsingErrorCheck();
+
+    List<PreciseIssue> issues = check.scanFileForIssues(context);
+
+    assertThat(issues).hasSize(1);
+    assertThat(issues.get(0).primaryLocation().startLine()).isEqualTo(8);
+  }
+
+  @Test
+  public void reports_parsing_errors_with_two_causes() {
+    RuntimeException deepCause = new RuntimeException("Error at line 15 column 5");
+    RuntimeException shallowCause = new RuntimeException("wrapper") {
+      @Override public synchronized Throwable getCause() { return deepCause; }
+    };
+    RecognitionException ex = new RecognitionException(0, "outer") {
+      @Override public synchronized Throwable getCause() { return shallowCause; }
+    };
+    OpenApiVisitorContext context = new OpenApiVisitorContext(new TestFile(), ex);
+    OAR043ParsingErrorCheck check = new OAR043ParsingErrorCheck();
+
+    List<PreciseIssue> issues = check.scanFileForIssues(context);
+
+    assertThat(issues).hasSize(1);
+    assertThat(issues.get(0).primaryLocation().startLine()).isEqualTo(12);
+  }
+
+  @Test
+  public void reports_no_issues_when_no_exception_and_no_issues() {
+    OpenApiVisitorContext context = new OpenApiVisitorContext(new TestFile(), null);
+    OAR043ParsingErrorCheck check = new OAR043ParsingErrorCheck();
+
+    List<PreciseIssue> issues = check.scanFileForIssues(context);
+
+    assertThat(issues).isEmpty();
   }
 
   private static class TestFile implements OpenApiFile {
-
-    @Override
-    public String content() {
-      return null;
-    }
-
-    @Override
-    public String fileName() {
-      return null;
-    }
+    @Override public String content() { return null; }
+    @Override public String fileName() { return null; }
   }
 }
 

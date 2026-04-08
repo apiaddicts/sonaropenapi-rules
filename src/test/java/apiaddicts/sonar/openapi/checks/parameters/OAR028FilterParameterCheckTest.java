@@ -1,13 +1,25 @@
 package apiaddicts.sonar.openapi.checks.parameters;
 
+import java.lang.reflect.Field;
+import org.junit.BeforeClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
+import apiaddicts.sonar.openapi.I18nContext;
+import apiaddicts.sonar.openapi.checks.BaseCheck;
 
 public class OAR028FilterParameterCheckTest extends BaseCheckTest {
+
+    @BeforeClass
+    public static void setupLang() throws Exception {
+        I18nContext.setLang("en");
+        Field field = BaseCheck.class.getDeclaredField("resourceBundle");
+        field.setAccessible(true);
+        field.set(null, null);
+    }
 
     @Before
     public void init() {
@@ -44,6 +56,47 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3Without() {
         verifyV3("plain-without");
+    }
+
+    @Test
+    public void verifyInV2ExcludeStrategy() {
+        setField("pathCheckStrategy", "/exclude");
+        setField("pathsStr", "/examples");
+        verifyV2("exclude-noncompliant");
+    }
+
+    @Test
+    public void verifyInV3ExcludeStrategy() {
+        setField("pathCheckStrategy", "/exclude");
+        setField("pathsStr", "/examples");
+        verifyV3("exclude-noncompliant");
+    }
+
+    @Test
+    public void verifyInV2EmptyPaths() {
+        setField("pathsStr", "");
+        verifyV2("plain");
+    }
+
+    @Test
+    public void verifyInV3EmptyPaths() {
+        setField("pathsStr", "");
+        verifyV3("plain");
+    }
+
+    @Test
+    public void verifyInV3ComponentsParam() {
+        verifyV3("components-param");
+    }
+
+    private void setField(String name, String value) {
+        try {
+            java.lang.reflect.Field f = OAR028FilterParameterCheck.class.getDeclaredField(name);
+            f.setAccessible(true);
+            f.set(check, value);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

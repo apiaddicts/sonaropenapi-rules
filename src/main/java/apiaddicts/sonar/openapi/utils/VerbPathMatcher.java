@@ -119,10 +119,6 @@ public class VerbPathMatcher {
         }
     }
 
-    public boolean matches(String verb, String path) {
-        return matchesWithValues(verb, path).isPresent();
-    }
-
     public Optional<VerbPathMatcher.PatternGroup> matchesWithValues(String verb, String path) {
         if (exclusionsByVerb.getOrDefault(verb, Collections.emptySet()).contains(path)) return Optional.empty();
         return patternsByVerb.getOrDefault(verb, Collections.emptyList())
@@ -145,16 +141,14 @@ public class VerbPathMatcher {
 
         public boolean matches(String path) {
             if (!hasAtMostOneMe(path)) return false;
-
             return pattern.matcher(path).matches();
         }
 
         private boolean hasAtMostOneMe(String path) {
             Matcher matcher = ME_WORD_PATTERN.matcher(path);
             int count = 0;
-            while (matcher.find()) {
+            while (matcher.find())
                 if (++count > 1) return false;
-            }
             return true;
         }
 

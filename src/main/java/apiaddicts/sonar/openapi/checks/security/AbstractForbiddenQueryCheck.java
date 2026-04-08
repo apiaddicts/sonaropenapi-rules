@@ -59,7 +59,7 @@ public abstract class AbstractForbiddenQueryCheck extends AbstractPathAwareOpera
         if (shouldExcludePath() || !isMethod) return;
 
         JsonNode parameters = node.get("parameters");
-        if (parameters == null || parameters.isMissing() || parameters.isNull()) return;
+        if (parameters.isMissing() || parameters.isNull()) return;
 
         validateParameters(parameters, type == OpenApi2Grammar.OPERATION);
     }

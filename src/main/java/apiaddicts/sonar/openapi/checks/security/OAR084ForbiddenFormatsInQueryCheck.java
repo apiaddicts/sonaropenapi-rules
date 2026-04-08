@@ -35,11 +35,11 @@ public class OAR084ForbiddenFormatsInQueryCheck extends AbstractForbiddenQueryCh
 
         parametersNode.elements().forEach(param -> {
             JsonNode in = param.get("in");
-            if (in == null || !"query".equals(in.getTokenValue())) return;
+            if (!"query".equals(in.getTokenValue())) return;
 
             JsonNode formatNode = isV2 ? param.get("format") : param.get("schema").get("format");
 
-            if (formatNode != null && !formatNode.isMissing() && !formatNode.isNull() &&
+            if (!formatNode.isMissing() && !formatNode.isNull() &&
                     forbiddenQueryFormats.contains(formatNode.getTokenValue())) {
                 addIssue(KEY, translate(MESSAGE, formatNode.getTokenValue()), formatNode);
             }
