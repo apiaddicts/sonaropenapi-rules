@@ -37,6 +37,26 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
         verifyV3("no-bad-request404");
     }
 
+    @Test
+    public void verifyInV2NoParameters() {
+        verifyV2("no-parameters");
+    }
+
+    @Test
+    public void verifyInV2QueryParamOnly() {
+        verifyV2("query-param-only");
+    }
+
+    @Test
+    public void verifyInV3NoParameters() {
+        verifyV3("no-parameters");
+    }
+
+    @Test
+    public void verifyInV3QueryParamOnly() {
+        verifyV3("query-param-only");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR079 - PathParameter404 - Paths parameters, should have not found (404) response",
