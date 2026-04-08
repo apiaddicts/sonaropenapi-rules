@@ -1,0 +1,50 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /endpoint:
+    get:
+      responses:
+        206:
+          description: Ok
+          schema:
+            $ref: '#/definitions/response'
+
+definitions:
+  response:
+    type: object
+    properties:
+      paging:
+        type: object
+        properties:
+          start:
+            type: integer
+          limit:
+            type: integer
+          total:
+            type: integer
+          numPages:
+            type: integer
+          links:
+            type: object
+            properties:
+              self:
+                type: object
+                properties:
+                  href:
+                    type: string
+              previous:
+                type: object
+                properties:
+                  href:
+                    type: string
+              next:
+                type: object
+                properties:
+                  href:
+                    type: string
+            required:
+              - self
+              - previous
+              - next

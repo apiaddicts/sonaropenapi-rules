@@ -28,6 +28,42 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2NoParameters() {
+        verifyV2("no-parameters");
+    }
+
+    @Test
+    public void verifyInV2NullNameParam() {
+        verifyV2("null-name-param");
+    }
+
+    @Test
+    public void verifyInV2OptionsOperation() {
+        verifyV2("options-operation");
+    }
+
+    @Test
+    public void verifyPathFilteringStrategiesInV2() {
+        OAR083ForbiddenQueryParamsCheck c = (OAR083ForbiddenQueryParamsCheck) check;
+
+        c.pathsStr = "/examples";
+        c.pathCheckStrategy = "/exclude";
+        verifyV2("valid-query-params");
+
+        c.pathCheckStrategy = "/include";
+        verifyV2("valid-query-params");
+
+        c.pathsStr = "/other";
+        verifyV2("valid-query-params");
+    }
+
+    @Test
+    public void verifyInV2EmptyForbiddenQueryParams() {
+        ((OAR083ForbiddenQueryParamsCheck) check).forbiddenQueryParamsStr = "";
+        verifyV2("valid-query-params");
+    }
+
+    @Test
     public void verifyInV3() {
         verifyV3("valid-query-params");
     }
@@ -35,6 +71,43 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3ForbiddenQueryParams() {
         verifyV3("forbidden-query-params");
+    }
+
+    @Test
+    public void verifyInV3NoParameters() {
+        verifyV3("no-parameters");
+    }
+
+    @Test
+    public void verifyInV3NullNameParam() {
+        verifyV3("null-name-param");
+    }
+
+    @Test
+    public void verifyInV3OptionsOperation() {
+        verifyV3("options-operation");
+    }
+
+    @Test
+    public void verifyPathFilteringStrategiesInV3() {
+        OAR083ForbiddenQueryParamsCheck c = (OAR083ForbiddenQueryParamsCheck) check;
+
+        c.pathsStr = "/examples";
+        c.pathCheckStrategy = "/exclude";
+        verifyV3("valid-query-params");
+
+        c.pathsStr = "/items";
+        c.pathCheckStrategy = "/include";
+        verifyV3("valid-query-params");
+
+        c.pathsStr = "/other";
+        verifyV3("valid-query-params");
+    }
+
+    @Test
+    public void verifyInV3EmptyForbiddenQueryParams() {
+        ((OAR083ForbiddenQueryParamsCheck) check).forbiddenQueryParamsStr = "";
+        verifyV3("valid-query-params");
     }
 
     @Override

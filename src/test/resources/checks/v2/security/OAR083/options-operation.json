@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My API"
+  },
+  "paths": {
+    "/examples": {
+      "options": {
+        "summary": "Options for the resource",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Test"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "object"
+                },
+                "payload": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

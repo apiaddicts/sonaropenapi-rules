@@ -6,6 +6,13 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
+import apiaddicts.sonar.openapi.ExtendedOpenApiCheckVerifier;
+import org.apiaddicts.apitools.dosonarapi.api.PreciseIssue;
+
+import java.io.File;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OAR034StandardPagedResponseSchemaCheckTest extends BaseCheckTest {
 
@@ -105,6 +112,25 @@ public class OAR034StandardPagedResponseSchemaCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3WithoutPaginationRequiredFields() {
         verifyV3("without-pagination-required-fields");
+    }
+
+    @Test
+    public void verifyInV2WithPagingNoType() {
+        List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                new File(v2Path + "with-paging-no-type.yaml"), check, true, false, false);
+        assertThat(issues).isNotEmpty();
+    }
+
+    @Test
+    public void verifyInV2WithPagingAllofWrongType() {
+        verifyV2("with-paging-allof-wrong-type.yaml");
+    }
+
+    @Test
+    public void verifyInV2WithoutPagingRequiredKey() {
+        List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                new File(v2Path + "without-paging-required-key.yaml"), check, true, false, false);
+        assertThat(issues).isNotEmpty();
     }
 
     @Override

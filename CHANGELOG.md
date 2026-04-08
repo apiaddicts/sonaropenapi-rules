@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.5] - 2026-04-08
+
+### Fixed
+    - OAR102 - SecondPartBasePathCheck Test
+    - OAR101 - FirstPartBasePathCheck Test
+    - OAR034 - StandardPagedResponseSchemaCheck Test
+    - OAR029 - StandardResponseSchemaCheck Test
+    - OAR083 - ForbiddenQueryParamsCheck Test
+    - OAR084 - ForbiddenFormatsInQueryCheck Test
+    - OAR043 - ParsingErrorCheck Test
+    - OAR028 - FilterParameterCheck Test
+    - OAR073 - RateLimitCheck Test
+    - OAR079 - PathParameter404Check Test
+
+    - AbstractSchemaCheck
+    - AbstractForbiddenQueryCheck
+    - AbstractPathResponseCheck
+    - VerbPathMatcher
+
 ## [1.3.4] - 2026-04-01
 
 ### Fixed

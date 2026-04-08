@@ -1,0 +1,13 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "servers": [
+    {
+      "url": "http://petstore.swagger.io/wrong/v1" # Noncompliant {{OAR101: The first part of the path is not allowed. Allowed values are: wrong}}
+    }
+  ],
+  "paths": {}
+}

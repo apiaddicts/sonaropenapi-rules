@@ -1,0 +1,20 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Test
+paths:
+  /test:
+    get:
+      responses:
+        "200":
+          description: ok
+          schema: # Noncompliant {{OAR029: 'extra' property is missing}}
+            type: object
+            properties:
+              payload:
+                type: object
+                properties:
+                  id:
+                    type: string
+              status:
+                type: object

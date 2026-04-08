@@ -1,0 +1,24 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Test
+paths:
+  /test:
+    get:
+      responses:
+        "100":
+          description: info
+        "200":
+          description: ok
+          schema:
+            type: object
+            properties:
+              status:
+                type: object
+        "400":
+          description: error
+          schema:
+            type: object
+            properties:
+              status:
+                type: object

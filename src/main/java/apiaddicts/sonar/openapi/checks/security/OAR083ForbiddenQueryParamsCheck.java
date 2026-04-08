@@ -36,7 +36,7 @@ public class OAR083ForbiddenQueryParamsCheck extends AbstractForbiddenQueryCheck
 
         Set<String> queryParams = parametersNode.elements().stream()
                 .map(p -> p.get("name"))
-                .filter(n -> n != null && !n.isNull())
+                .filter(n -> !n.isNull())
                 .map(JsonNode::getTokenValue)
                 .collect(Collectors.toSet());
 

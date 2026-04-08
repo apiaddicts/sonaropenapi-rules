@@ -1,0 +1,28 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My API"
+  },
+  "paths": {
+    "/examples/{id}": {
+      "get": {
+        "summary": "Get an item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "password"
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "An item" }
+        }
+      }
+    }
+  }
+}
