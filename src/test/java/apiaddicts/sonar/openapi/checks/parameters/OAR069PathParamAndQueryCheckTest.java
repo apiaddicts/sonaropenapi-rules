@@ -14,6 +14,8 @@ public class OAR069PathParamAndQueryCheckTest extends BaseCheckTest {
         check = new OAR069PathParamAndQueryCheck();
         v2Path = getV2Path("parameters");
         v3Path = getV3Path("parameters");
+        v31Path = getV31Path("parameters");
+        v32Path = getV32Path("parameters");
     }
 
     @Test
@@ -30,10 +32,26 @@ public class OAR069PathParamAndQueryCheckTest extends BaseCheckTest {
     public void verifyInV3BadRequest() {
         verifyV3("bad-request400");
     }
+    @Test
+    public void verifyInV31BadRequest() {
+        verifyV31("bad-request400");
+    }
+    @Test
+    public void verifyInV32BadRequest() {
+        verifyV32("bad-request400");
+    }
 
     @Test
     public void verifyInV3NoBadRequest() {
         verifyV3("no-bad-request400");
+    }
+    @Test
+    public void verifyInV31NoBadRequest() {
+        verifyV31("no-bad-request400");
+    }
+    @Test
+    public void verifyInV32NoBadRequest() {
+        verifyV32("no-bad-request400");
     }
 
     @Override

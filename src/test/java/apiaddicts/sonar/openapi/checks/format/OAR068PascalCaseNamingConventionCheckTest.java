@@ -14,6 +14,8 @@ public class OAR068PascalCaseNamingConventionCheckTest extends BaseCheckTest {
         check = new OAR068PascalCaseNamingConventionCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -30,13 +32,37 @@ public class OAR068PascalCaseNamingConventionCheckTest extends BaseCheckTest {
         verifyV3("pascal-case-error");
     }
     @Test
+    public void verifyInV31() {
+        verifyV31("pascal-case-error");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("pascal-case-error");
+    }
+    @Test
     public void verifyvalidV3() {
         verifyV3("valid");
+    }
+    @Test
+    public void verifyvalidV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyvalidV32() {
+        verifyV32("valid");
     }
 
     @Test
     public void verifyvalidV3ExternalRefs() {
         verifyV3("externalref.yaml");
+    }
+    @Test
+    public void verifyvalidV31ExternalRefs() {
+        verifyV31("externalref.yaml");
+    }
+    @Test
+    public void verifyvalidV32ExternalRefs() {
+        verifyV32("externalref.yaml");
     }
 
     @Override

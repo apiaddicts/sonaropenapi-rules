@@ -14,6 +14,8 @@ public class OAR110LicenseInformationCheckTest extends BaseCheckTest {
         check = new OAR110LicenseInformationCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -24,6 +26,14 @@ public class OAR110LicenseInformationCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3() {
         verifyV3("valid");
+    }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
     }
 
 

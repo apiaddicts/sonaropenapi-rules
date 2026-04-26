@@ -1,0 +1,20 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json: {}
+  /owners:
+    get:
+      responses:
+        200:
+          description: Ok
+          content: # Noncompliant {{OAR010: Should indicate the default response media type}}
+            application/xml: {}

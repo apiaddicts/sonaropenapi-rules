@@ -1,0 +1,12 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "Test API",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://api.example.com",
+    "description" : "lowercase server description" # Noncompliant {{OAR112: The field must start with an uppercase letter.}}
+  } ],
+  "paths" : {}
+}

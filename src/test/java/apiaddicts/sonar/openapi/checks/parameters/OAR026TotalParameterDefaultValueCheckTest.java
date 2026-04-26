@@ -14,6 +14,8 @@ public class OAR026TotalParameterDefaultValueCheckTest extends BaseCheckTest {
         check = new OAR026TotalParameterDefaultValueCheck();
         v2Path = getV2Path("parameters");
         v3Path = getV3Path("parameters");
+        v31Path = getV31Path("parameters");
+        v32Path = getV32Path("parameters");
     }
 
     @Test
@@ -104,6 +106,14 @@ public class OAR026TotalParameterDefaultValueCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3WithoutParameters() {
         verifyV3("without-parameters");
+    }
+    @Test
+    public void verifyInV31WithoutParameters() {
+        verifyV31("without-parameters");
+    }
+    @Test
+    public void verifyInV32WithoutParameters() {
+        verifyV32("without-parameters");
     }
 
     @Override

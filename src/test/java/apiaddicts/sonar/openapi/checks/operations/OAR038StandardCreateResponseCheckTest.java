@@ -15,6 +15,8 @@ public class OAR038StandardCreateResponseCheckTest extends BaseCheckTest {
         check = new OAR038StandardCreateResponseCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -51,30 +53,78 @@ public class OAR038StandardCreateResponseCheckTest extends BaseCheckTest {
     public void verifyInV3WithOneProperty() {
         verifyV3("valid-one-property");
     }
+    @Test
+    public void verifyInV31WithOneProperty() {
+        verifyV31("valid-one-property");
+    }
+    @Test
+    public void verifyInV32WithOneProperty() {
+        verifyV32("valid-one-property");
+    }
 
     @Test
     public void verifyInV3WithMultipleProperties() {
         verifyV3("valid-multiple-properties");
+    }
+    @Test
+    public void verifyInV31WithMultipleProperties() {
+        verifyV31("valid-multiple-properties");
+    }
+    @Test
+    public void verifyInV32WithMultipleProperties() {
+        verifyV32("valid-multiple-properties");
     }
 
     @Test
     public void verifyInV3WithoutProperties() {
         verifyV3("without-properties");
     }
+    @Test
+    public void verifyInV31WithoutProperties() {
+        verifyV31("without-properties");
+    }
+    @Test
+    public void verifyInV32WithoutProperties() {
+        verifyV32("without-properties");
+    }
 
     @Test
     public void verifyInV3WithPropertiesEmpty() {
         verifyV3("with-properties-empty");
+    }
+    @Test
+    public void verifyInV31WithPropertiesEmpty() {
+        verifyV31("with-properties-empty");
+    }
+    @Test
+    public void verifyInV32WithPropertiesEmpty() {
+        verifyV32("with-properties-empty");
     }
 
     @Test
     public void verifyInV3WithoutData() {
         verifyV3("without-data");
     }
+    @Test
+    public void verifyInV31WithoutData() {
+        verifyV31("without-data");
+    }
+    @Test
+    public void verifyInV32WithoutData() {
+        verifyV32("without-data");
+    }
 
     @Test
     public void verifyInV3WithoutSchema() {
         verifyV3("without-schema");
+    }
+    @Test
+    public void verifyInV31WithoutSchema() {
+        verifyV31("without-schema");
+    }
+    @Test
+    public void verifyInV32WithoutSchema() {
+        verifyV32("without-schema");
     }
 
     @Override

@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+    description: Valid server description
+paths: {}

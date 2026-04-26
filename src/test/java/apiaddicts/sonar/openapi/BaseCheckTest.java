@@ -27,6 +27,7 @@ public abstract class BaseCheckTest {
     protected String v2Path;
     protected String v3Path;
     protected String v31Path;
+    protected String v32Path;
 
     protected String getV2Path(String prefix) {
         return "src/test/resources/checks/v2/" + prefix + "/" + ruleName + "/";
@@ -40,24 +41,34 @@ public abstract class BaseCheckTest {
         return "src/test/resources/checks/v31/" + prefix + "/" + ruleName + "/";
     }
 
+    protected String getV32Path(String prefix) {
+        return "src/test/resources/checks/v32/" + prefix + "/" + ruleName + "/";
+    }
+
     protected void verifyV2(String file) {
-        verify(file, true, false, false);
+        verify(file, true, false, false, false);
     }
 
     protected void verifyV3(String file) {
-        verify(file, false, true, false);
+        verify(file, false, true, false, false);
     }
 
     protected void verifyV31(String file) {
-        verify(file, false, false, true);
+        verify(file, false, false, true, false);
     }
 
-    private void verify(String file, boolean isV2, boolean isV3, boolean isV31) {
+    protected void verifyV32(String file) {
+        verify(file, false, false, false, true);
+    }
+
+    private void verify(String file, boolean isV2, boolean isV3, boolean isV31, boolean isV32) {
         String filePath;
         if (isV2) {
             filePath = v2Path + file;
         } else if (isV31) {
             filePath = v31Path + file;
+        } else if (isV32) {
+            filePath = v32Path + file;
         } else if (isV3) {
             filePath = v3Path + file;
         } else {
@@ -66,12 +77,12 @@ public abstract class BaseCheckTest {
 
         if (filePath.contains(".")) {
             LOG.info("Testing file : " + filePath);
-            ExtendedOpenApiCheckVerifier.verify(filePath, check, isV2, isV3, isV31);
+            ExtendedOpenApiCheckVerifier.verify(filePath, check, isV2, isV3, isV31, isV32);
         } else {
             LOG.info("Testing file : " + filePath + ".yaml");
-            ExtendedOpenApiCheckVerifier.verify(filePath + ".yaml", check, isV2, isV3, isV31);
+            ExtendedOpenApiCheckVerifier.verify(filePath + ".yaml", check, isV2, isV3, isV31, isV32);
             LOG.info("Testing file : " + filePath + ".json");
-            ExtendedOpenApiCheckVerifier.verify(filePath + ".json", check, isV2, isV3, isV31);
+            ExtendedOpenApiCheckVerifier.verify(filePath + ".json", check, isV2, isV3, isV31, isV32);
         }
     }
 

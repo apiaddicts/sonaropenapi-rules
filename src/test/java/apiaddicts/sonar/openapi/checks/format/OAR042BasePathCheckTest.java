@@ -13,6 +13,8 @@ public class OAR042BasePathCheckTest extends BaseCheckTest{
         check = new OAR042BasePathCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -44,15 +46,39 @@ public class OAR042BasePathCheckTest extends BaseCheckTest{
     public void verifyIncorrectVersionV3() {
         verifyV3("incorrect-version");
     }
+    @Test
+    public void verifyIncorrectVersionV31() {
+        verifyV31("incorrect-version");
+    }
+    @Test
+    public void verifyIncorrectVersionV32() {
+        verifyV32("incorrect-version");
+    }
 
     @Test
     public void verifyTooLongV3() {
         verifyV3("too-long");
     }
+    @Test
+    public void verifyTooLongV31() {
+        verifyV31("too-long");
+    }
+    @Test
+    public void verifyTooLongV32() {
+        verifyV32("too-long");
+    }
   
     @Test
     public void verifyTooShortV3() {
         verifyV3("too-short");
+    }
+    @Test
+    public void verifyTooShortV31() {
+        verifyV31("too-short");
+    }
+    @Test
+    public void verifyTooShortV32() {
+        verifyV32("too-short");
     }
 
 

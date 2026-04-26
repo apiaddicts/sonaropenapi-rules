@@ -15,6 +15,8 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
         check = new OAR079PathParameter404Check();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
     public void verifyInV3BadRequest() {
         verifyV3("bad-request404");
     }
+    @Test
+    public void verifyInV31BadRequest() {
+        verifyV31("bad-request404");
+    }
+    @Test
+    public void verifyInV32BadRequest() {
+        verifyV32("bad-request404");
+    }
 
     @Test
     public void verifyInV3NoBadRequest() {
         verifyV3("no-bad-request404");
+    }
+    @Test
+    public void verifyInV31NoBadRequest() {
+        verifyV31("no-bad-request404");
+    }
+    @Test
+    public void verifyInV32NoBadRequest() {
+        verifyV32("no-bad-request404");
     }
 
     @Test
@@ -51,10 +69,26 @@ public class OAR079PathParameter404CheckTest extends BaseCheckTest {
     public void verifyInV3NoParameters() {
         verifyV3("no-parameters");
     }
+    @Test
+    public void verifyInV31NoParameters() {
+        verifyV31("no-parameters");
+    }
+    @Test
+    public void verifyInV32NoParameters() {
+        verifyV32("no-parameters");
+    }
 
     @Test
     public void verifyInV3QueryParamOnly() {
         verifyV3("query-param-only");
+    }
+    @Test
+    public void verifyInV31QueryParamOnly() {
+        verifyV31("query-param-only");
+    }
+    @Test
+    public void verifyInV32QueryParamOnly() {
+        verifyV32("query-param-only");
     }
 
     @Override

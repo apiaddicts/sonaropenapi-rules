@@ -27,6 +27,8 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
         check = new OAR028FilterParameterCheck();
         v2Path = getV2Path("parameters");
         v3Path = getV3Path("parameters");
+        v31Path = getV31Path("parameters");
+        v32Path = getV32Path("parameters");
     }
 
     @Test
@@ -47,15 +49,39 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("plain");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("plain");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("plain");
+    }
 
     @Test
     public void verifyInV3Excluded() {
         verifyV3("excluded");
     }
+    @Test
+    public void verifyInV31Excluded() {
+        verifyV31("excluded");
+    }
+    @Test
+    public void verifyInV32Excluded() {
+        verifyV32("excluded");
+    }
 
     @Test
     public void verifyInV3Without() {
         verifyV3("plain-without");
+    }
+    @Test
+    public void verifyInV31Without() {
+        verifyV31("plain-without");
+    }
+    @Test
+    public void verifyInV32Without() {
+        verifyV32("plain-without");
     }
 
     @Test
@@ -71,6 +97,14 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
         setField("pathsStr", "/examples");
         verifyV3("exclude-noncompliant");
     }
+    @Test
+    public void verifyInV31ExcludeStrategy() {
+        verifyV31("exclude-noncompliant");
+    }
+    @Test
+    public void verifyInV32ExcludeStrategy() {
+        verifyV32("exclude-noncompliant");
+    }
 
     @Test
     public void verifyInV2EmptyPaths() {
@@ -83,10 +117,26 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
         setField("pathsStr", "");
         verifyV3("plain");
     }
+    @Test
+    public void verifyInV31EmptyPaths() {
+        verifyV31("plain");
+    }
+    @Test
+    public void verifyInV32EmptyPaths() {
+        verifyV32("plain");
+    }
 
     @Test
     public void verifyInV3ComponentsParam() {
         verifyV3("components-param");
+    }
+    @Test
+    public void verifyInV31ComponentsParam() {
+        verifyV31("components-param");
+    }
+    @Test
+    public void verifyInV32ComponentsParam() {
+        verifyV32("components-param");
     }
 
     private void setField(String name, String value) {

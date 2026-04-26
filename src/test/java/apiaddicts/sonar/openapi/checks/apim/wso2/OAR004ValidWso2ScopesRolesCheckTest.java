@@ -15,6 +15,8 @@ public class OAR004ValidWso2ScopesRolesCheckTest extends BaseCheckTest {
         check = new OAR004ValidWso2ScopesRolesCheck();
         v2Path = getV2Path("apim/wso2");
         v3Path = getV3Path("apim/wso2");
+        v31Path = getV31Path("apim");
+        v32Path = getV32Path("apim");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR004ValidWso2ScopesRolesCheckTest extends BaseCheckTest {
     public void verifyInV3WithValidRoles() {
         verifyV3("with-valid-roles");
     }
+    @Test
+    public void verifyInV31WithValidRoles() {
+        verifyV31("with-valid-roles");
+    }
+    @Test
+    public void verifyInV32WithValidRoles() {
+        verifyV32("with-valid-roles");
+    }
 
     @Test
     public void verifyInV3WithInvalidRoles() {
         verifyV3("with-invalid-roles");
+    }
+    @Test
+    public void verifyInV31WithInvalidRoles() {
+        verifyV31("with-invalid-roles");
+    }
+    @Test
+    public void verifyInV32WithInvalidRoles() {
+        verifyV32("with-invalid-roles");
     }
 
     @Override

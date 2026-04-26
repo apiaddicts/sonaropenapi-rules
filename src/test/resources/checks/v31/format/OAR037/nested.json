@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/invoices": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "A invoice.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nested": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string", # Noncompliant {{OAR037: String types requires a valid format}}
+                          "format": "YYYY-MM-DD"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

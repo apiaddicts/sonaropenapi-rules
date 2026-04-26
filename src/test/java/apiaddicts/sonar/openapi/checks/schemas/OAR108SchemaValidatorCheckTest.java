@@ -14,6 +14,8 @@ public class OAR108SchemaValidatorCheckTest extends BaseCheckTest {
         check = new OAR108SchemaValidatorCheck();
         v2Path = getV2Path("schemas");
         v3Path = getV3Path("schemas");
+        v31Path = getV31Path("schemas");
+        v32Path = getV32Path("schemas");
     }
 
     @Test
@@ -30,10 +32,26 @@ public class OAR108SchemaValidatorCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3Invalid() {
         verifyV3("invalid");
+    }
+    @Test
+    public void verifyInV31Invalid() {
+        verifyV31("invalid");
+    }
+    @Test
+    public void verifyInV32Invalid() {
+        verifyV32("invalid");
     }
 
     @Override

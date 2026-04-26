@@ -30,16 +30,16 @@ public class ExtendedOpenApiCheckVerifier {
       // Intentional blank
     }
 
-    public static List<PreciseIssue> scanFileForIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31) {
+    public static List<PreciseIssue> scanFileForIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31, boolean isV32) {
         return check.scanFileForIssues(TestOpenApiVisitorRunner.createContext(file, isV2, isV3, isV31));
     }
 
-    public static void verify(String path, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31) {
+    public static void verify(String path, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31, boolean isV32) {
         ExtendedOpenApiCheckVerifier verifier = new ExtendedOpenApiCheckVerifier();
         OpenApiVisitor collector = new ExtendedOpenApiCheckVerifier.ExpectedIssueCollector(verifier);
         File file = new File(path);
         TestOpenApiVisitorRunner.scanFileForComments(file, isV2, isV3, isV31, new OpenApiVisitor[]{collector});
-        Iterator<PreciseIssue> actualIssues = getActualIssues(file, check, isV2, isV3, isV31);
+        Iterator<PreciseIssue> actualIssues = getActualIssues(file, check, isV2, isV3, isV31, isV32);
         verifier.checkIssues(actualIssues);
         if (actualIssues.hasNext()) {
             PreciseIssue issue = (PreciseIssue) actualIssues.next();
@@ -112,8 +112,8 @@ public class ExtendedOpenApiCheckVerifier {
         return Ordering.natural().sortedCopy(result);
     }
 
-    private static Iterator<PreciseIssue> getActualIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31) {
-        List<PreciseIssue> issues = scanFileForIssues(file, check, isV2, isV3, isV31);
+    private static Iterator<PreciseIssue> getActualIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31, boolean isV32) {
+        List<PreciseIssue> issues = scanFileForIssues(file, check, isV2, isV3, isV31, isV32);
         List<PreciseIssue> sortedIssues = Ordering.natural().onResultOf(ExtendedOpenApiCheckVerifier::line).sortedCopy(issues);
         return sortedIssues.iterator();
     }

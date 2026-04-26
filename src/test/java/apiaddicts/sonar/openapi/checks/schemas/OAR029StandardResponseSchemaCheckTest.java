@@ -24,6 +24,8 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
         v2Path = getV2Path("schemas");
         v3Path = getV3Path("schemas");
         v31Path = getV31Path("schemas");
+        v32Path = getV32Path("schemas");
+        v31Path = getV31Path("schemas");
     }
 
     @Test
@@ -96,25 +98,65 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3AllOf() {
         verifyV3("valid-all-of");
+    }
+    @Test
+    public void verifyInV31AllOf() {
+        verifyV31("valid-all-of");
+    }
+    @Test
+    public void verifyInV32AllOf() {
+        verifyV32("valid-all-of");
     }
 
     @Test
     public void verifyInV3ValidAllOfMd() {
         verifyV3("valid-all-of-md");
     }
+    @Test
+    public void verifyInV31ValidAllOfMd() {
+        verifyV31("valid-all-of-md");
+    }
+    @Test
+    public void verifyInV32ValidAllOfMd() {
+        verifyV32("valid-all-of-md");
+    }
 
     @Test
     public void verifyInV3ValidMd() {
         verifyV3("valid-md");
     }
+    @Test
+    public void verifyInV31ValidMd() {
+        verifyV31("valid-md");
+    }
+    @Test
+    public void verifyInV32ValidMd() {
+        verifyV32("valid-md");
+    }
 
     @Test
     public void verifyInV3ValidR() {
         verifyV3("valid-r");
+    }
+    @Test
+    public void verifyInV31ValidR() {
+        verifyV31("valid-r");
+    }
+    @Test
+    public void verifyInV32ValidR() {
+        verifyV32("valid-r");
     }
 
     @Test

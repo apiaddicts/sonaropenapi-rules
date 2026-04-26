@@ -14,6 +14,8 @@ public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
         check = new OAR003DefinedWso2ScopesDescriptionCheck();
         v2Path = getV2Path("apim/wso2");
         v3Path = getV3Path("apim/wso2");
+        v31Path = getV31Path("apim");
+        v32Path = getV32Path("apim");
     }
 
     @Test
@@ -35,15 +37,39 @@ public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
     public void verifyInV3WithScopeDescription() {
         verifyV3("with-description");
     }
+    @Test
+    public void verifyInV31WithScopeDescription() {
+        verifyV31("with-description");
+    }
+    @Test
+    public void verifyInV32WithScopeDescription() {
+        verifyV32("with-description");
+    }
 
     @Test
     public void verifyInV3WithoutScopeDescription() {
         verifyV3("without-description");
     }
+    @Test
+    public void verifyInV31WithoutScopeDescription() {
+        verifyV31("without-description");
+    }
+    @Test
+    public void verifyInV32WithoutScopeDescription() {
+        verifyV32("without-description");
+    }
 
     @Test
     public void verifyInV3WithNullScopeDescription() {
         verifyV3("with-null-description");
+    }
+    @Test
+    public void verifyInV31WithNullScopeDescription() {
+        verifyV31("with-null-description");
+    }
+    @Test
+    public void verifyInV32WithNullScopeDescription() {
+        verifyV32("with-null-description");
     }
 
     @Override

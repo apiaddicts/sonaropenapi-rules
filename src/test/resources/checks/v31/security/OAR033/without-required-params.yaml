@@ -1,0 +1,32 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  parameters:
+    x-api-key:
+      in: header
+      name: x-api-key
+      schema:
+        type: string
+      required: true
+    traceId:
+      in: header
+      name: traceId
+      schema:
+        type: string
+      required: true
+paths:
+  /pets:
+    parameters:
+      - $ref: '#/components/parameters/traceId'
+    get: # Noncompliant {{OAR033: Headers [x-api-key] are required}}
+      parameters:
+      - in: header
+        name: dateTime
+        schema:
+          type: string
+        required: true
+      responses:
+        200:
+          description: Ok

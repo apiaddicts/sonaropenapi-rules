@@ -15,6 +15,8 @@ public class OAR073RateLimitCheckTest extends BaseCheckTest {
         check = new OAR073RateLimitCheck();
         v2Path = getV2Path("owasp");
         v3Path = getV3Path("owasp");
+        v31Path = getV31Path("owasp");
+        v32Path = getV32Path("owasp");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR073RateLimitCheckTest extends BaseCheckTest {
     public void verifyInV3rateLimit() {
         verifyV3("rate-limit");
     }
+    @Test
+    public void verifyInV31rateLimit() {
+        verifyV31("rate-limit");
+    }
+    @Test
+    public void verifyInV32rateLimit() {
+        verifyV32("rate-limit");
+    }
 
     @Test
     public void verifyInV3NorateLimit() {
         verifyV3("no-rate-limit");
+    }
+    @Test
+    public void verifyInV31NorateLimit() {
+        verifyV31("no-rate-limit");
+    }
+    @Test
+    public void verifyInV32NorateLimit() {
+        verifyV32("no-rate-limit");
     }
 
     @Override

@@ -14,6 +14,8 @@ public class OAR012ParameterNamingConventionCheckTest extends BaseCheckTest{
         check = new OAR012ParameterNamingConventionCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -43,5 +45,15 @@ public class OAR012ParameterNamingConventionCheckTest extends BaseCheckTest{
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR012 - ParameterNamingConvention - Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention", RuleType.BUG, Severity.MINOR, tags("format"));
+    }
+
+    @Test
+    public void verifyCaseInV31() {
+        verifyV31("snake-case-plain");
+    }
+
+    @Test
+    public void verifyCaseInV32() {
+        verifyV32("snake-case-plain");
     }
 }

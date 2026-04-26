@@ -14,6 +14,8 @@ public class OAR053ResponseHeadersCheckTest extends BaseCheckTest{
             check = new OAR053ResponseHeadersCheck();
             v2Path = getV2Path("security");
             v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
         } 
 
 
@@ -24,6 +26,14 @@ public class OAR053ResponseHeadersCheckTest extends BaseCheckTest{
      @Test
     public void verifyInV3(){
       verifyV3("valid");
+    }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
     }
 
 

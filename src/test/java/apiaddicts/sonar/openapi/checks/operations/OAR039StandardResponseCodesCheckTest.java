@@ -19,6 +19,8 @@ public class OAR039StandardResponseCodesCheckTest extends BaseCheckTest{
             check = new OAR039StandardResponseCodesCheck();
             v2Path = getV2Path("operations");
             v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
         } 
 
 
@@ -36,8 +38,24 @@ public class OAR039StandardResponseCodesCheckTest extends BaseCheckTest{
       verifyV3("valid");
     }
     @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
+    @Test
     public void verifyMissingCodesV3(){
       verifyV3("missing-codes");
+    }
+    @Test
+    public void verifyMissingCodesV31() {
+        verifyV31("missing-codes");
+    }
+    @Test
+    public void verifyMissingCodesV32() {
+        verifyV32("missing-codes");
     }
 
 

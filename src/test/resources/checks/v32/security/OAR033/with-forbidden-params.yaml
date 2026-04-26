@@ -1,0 +1,32 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  parameters:
+    x-api-key:
+      in: header
+      name: x-api-key
+      schema:
+        type: string
+      required: true
+    accept:
+      in: header
+      name: Accept # Noncompliant {{OAR033: Header not allowed}}
+      schema:
+        type: string
+      required: true
+paths:
+  /pets:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/x-api-key'
+      - $ref: '#/components/parameters/accept'
+      - in: header
+        name: Authorization # Noncompliant {{OAR033: Header not allowed}}
+        schema:
+          type: string
+        required: true
+      responses:
+        200:
+          description: Ok

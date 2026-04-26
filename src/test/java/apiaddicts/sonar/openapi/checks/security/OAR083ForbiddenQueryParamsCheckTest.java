@@ -15,6 +15,8 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
         check = new OAR083ForbiddenQueryParamsCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -67,25 +69,65 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid-query-params");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid-query-params");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid-query-params");
+    }
 
     @Test
     public void verifyInV3ForbiddenQueryParams() {
         verifyV3("forbidden-query-params");
+    }
+    @Test
+    public void verifyInV31ForbiddenQueryParams() {
+        verifyV31("forbidden-query-params");
+    }
+    @Test
+    public void verifyInV32ForbiddenQueryParams() {
+        verifyV32("forbidden-query-params");
     }
 
     @Test
     public void verifyInV3NoParameters() {
         verifyV3("no-parameters");
     }
+    @Test
+    public void verifyInV31NoParameters() {
+        verifyV31("no-parameters");
+    }
+    @Test
+    public void verifyInV32NoParameters() {
+        verifyV32("no-parameters");
+    }
 
     @Test
     public void verifyInV3NullNameParam() {
         verifyV3("null-name-param");
     }
+    @Test
+    public void verifyInV31NullNameParam() {
+        verifyV31("null-name-param");
+    }
+    @Test
+    public void verifyInV32NullNameParam() {
+        verifyV32("null-name-param");
+    }
 
     @Test
     public void verifyInV3OptionsOperation() {
         verifyV3("options-operation");
+    }
+    @Test
+    public void verifyInV31OptionsOperation() {
+        verifyV31("options-operation");
+    }
+    @Test
+    public void verifyInV32OptionsOperation() {
+        verifyV32("options-operation");
     }
 
     @Test
@@ -103,11 +145,27 @@ public class OAR083ForbiddenQueryParamsCheckTest extends BaseCheckTest {
         c.pathsStr = "/other";
         verifyV3("valid-query-params");
     }
+    @Test
+    public void verifyPathFilteringStrategiesInV31() {
+        verifyV31("valid-query-params");
+    }
+    @Test
+    public void verifyPathFilteringStrategiesInV32() {
+        verifyV32("valid-query-params");
+    }
 
     @Test
     public void verifyInV3EmptyForbiddenQueryParams() {
         ((OAR083ForbiddenQueryParamsCheck) check).forbiddenQueryParamsStr = "";
         verifyV3("valid-query-params");
+    }
+    @Test
+    public void verifyInV31EmptyForbiddenQueryParams() {
+        verifyV31("valid-query-params");
+    }
+    @Test
+    public void verifyInV32EmptyForbiddenQueryParams() {
+        verifyV32("valid-query-params");
     }
 
     @Override
