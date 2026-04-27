@@ -198,7 +198,7 @@ public class OAR029StandardResponseSchemaCheckTest extends BaseCheckTest {
     public void verifyV2WithInvalidSchema() throws Exception {
         setResponseSchema("not valid json");
         List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
-                new File(v2Path + "valid.yaml"), check, true, false, false);
+                new File(v2Path + "valid.yaml"), check, true, false, false, false);
         assertThat(issues).isNotEmpty();
     }
 

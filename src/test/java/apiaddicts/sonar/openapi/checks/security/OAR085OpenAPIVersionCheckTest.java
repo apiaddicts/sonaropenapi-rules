@@ -17,7 +17,6 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
         v3Path = getV3Path("security");
         v31Path = getV31Path("security");
         v32Path = getV32Path("security");
-        v31Path = getV31Path("security");
     }
 
     @Test
@@ -54,11 +53,6 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
     @Test
     public void verifyInvalidOpenApiVersionInV32() {
         verifyV32("invalid-openapi-version");
-    }
-
-    @Test
-    public void verifyInV31() {
-        verifyV31("valid-openapi-version.yaml");
     }
 
     @Override

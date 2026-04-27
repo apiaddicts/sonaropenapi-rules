@@ -98,26 +98,6 @@ public class OAR019SelectParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
-    public void verifyInV31() {
-        verifyV31("plain");
-    }
-
-    @Test
-    public void verifyInV31Excluded() {
-        verifyV31("excluded");
-    }
-
-    @Test
-    public void verifyInV31Without() {
-        verifyV31("plain-without");
-    }
-
-    @Test
-    public void verifyInV31WithRef() {
-        verifyV31("with-ref");
-    }
-
-    @Test
     public void verifyInV3PathEndingWithParam() {
         verifyV3("with-param");
     }

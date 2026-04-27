@@ -191,7 +191,7 @@ public class OAR034StandardPagedResponseSchemaCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV2WithPagingNoType() {
         List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
-                new File(v2Path + "with-paging-no-type.yaml"), check, true, false, false);
+                new File(v2Path + "with-paging-no-type.yaml"), check, true, false, false, false);
         assertThat(issues).isNotEmpty();
     }
 

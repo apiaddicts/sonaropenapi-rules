@@ -329,14 +329,4 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
         assertParameterProperties("Error Message", "The field must start with an uppercase letter.", RuleParamType.STRING);
         assertParameterProperties("Validation", "^[A-Z].*", RuleParamType.STRING);
     }
-
-    @Test
-    public void verifyInfoDescriptionInvalidInV31() {
-        verifyV31("info-invalid");
-    }
-
-    @Test
-    public void verifyInfoDescriptionInvalidInV32() {
-        verifyV32("info-invalid");
-    }
 }

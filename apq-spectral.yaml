@@ -15,6 +15,7 @@ functions:
   - apq-custom-field
   - apq-check-examples-coverage
   - apq-path-depth
+  - apq-path-param-query-conflict
 extends:
   - spectral:asyncapi
   - spectral:oas
@@ -638,16 +639,17 @@ rules:
       field: "summary"
       function: truthy
   apiq:OAR051:
-    description: "Provide a different summary and description for each operation."
-    message: "OAR051: Provide a different summary and description for each operation."
+    description: "Summary and description must be different - not just case variations or semantic duplicates."
+    message: "OAR051: Summary and description must be meaningfully different from each other."
     severity: "error"
-    given: "$.paths[*].*"
+    given: "$.paths[*][get,post,put,patch,delete]"
     then:
       function: apq-compare-insensitive
       functionOptions:
         property: summary
         equalTo: description
         result: falsy
+        threshold: 0.65
   apiq:OAR052:
     description: "Numeric schema types must define a format."
     message: "OAR052: Numeric types requires a format"
@@ -788,14 +790,15 @@ rules:
       functionOptions:
         type: pascal
   apiq:OAR069:
-    description: "Any param in PATH or QUERY should have a Bad Request (400) response."
-    message: "OAR069: Any param in PATH or QUERY should have a Bad Request (400) response."
-    severity: "warn"
-    given: "$.paths[*][*].responses"
+    description: "Path parameters should not appear as query parameters, and operations with parameters should have a 400 response."
+    message: "OAR069: Path parameter conflict or missing 400 Bad Request response."
+    severity: "error"
+    given: "$.paths[*][get,post,put,patch,delete]"
     then:
-      function: truthy
-      field: "400"
-      message: "Operation must define a 400 Bad Request response for parameters in PATH or QUERY."
+      - function: apq-path-param-query-conflict
+      - field: "responses.400"
+        function: truthy
+        message: "Operation with parameters must define a 400 Bad Request response."
   apiq:OAR070:
     description: "Parameters in path should not be numeric."
     message: "OAR070: Parameters in path should not be numeric."
