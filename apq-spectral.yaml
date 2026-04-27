@@ -16,6 +16,9 @@ functions:
   - apq-check-examples-coverage
   - apq-path-depth
   - apq-path-param-query-conflict
+  - apq-security-required-response
+  - apq-check-ambiguous-path
+  - apq-password-format
 extends:
   - spectral:asyncapi
   - spectral:oas
@@ -341,7 +344,13 @@ rules:
                       const: "$limit"
                     in:
                       const: query
-                  required: [name, in]
+                    schema:
+                      type: object
+                      properties:
+                        type:
+                          const: integer
+                      required: [type]
+                  required: [name, in, schema]
   apiq:OAR026:
     description: "The $total parameter default value should be false."
     message: "OAR026: The $total parameter default value should be false."
@@ -424,10 +433,9 @@ rules:
     severity: error
     given: "$.paths.*~"
     then:
-      field: "name"
-      function: pattern
+      function: apq-check-ambiguous-path
       functionOptions:
-        notMatch: "^.*elements|instances|resources|values|terms|objects|items|elements|instances|resources|values.*$"
+        ambiguous-words: "elements,instances,resources,values,terms,objects,items"
   apiq:OAR033:
     description: "Headers 'Accept', 'Content-Type', and 'Authorization' are not allowed."
     message: "OAR033: The header '{{value}}' is not allowed."
@@ -450,11 +458,9 @@ rules:
     description: "Response code 401 must be defined for operations with security schemes defined."
     message: "OAR035: Response code 401 must be defined for operations with security schemes defined."
     severity: "error"
-    given: "$.paths[*][*].responses"
+    given: "$.paths[*][*]"
     then:
-      function: truthy
-      field: "401"
-      message: "Operation must define a 401 Unauthorized response for security schemes."
+      function: apq-security-required-response
   apiq:OAR036:
     description: "Cookie use is forbidden as a session mechanism."
     message: "OAR036: Cookie use is forbidden as a session mechanism."
@@ -471,7 +477,7 @@ rules:
     description: "Schema should use well-defined type and format."
     message: "OAR037: String schemas must specify a valid format (date, date-time, password, byte, binary, email, uuid, uri, hostname, ipv4, or ipv6)."
     severity: error
-    given: "$..schema..[?(@.type=='string')]"
+    given: "$..schema..[?(@.type=='string' && !@.enum)]"
     then:
       field: format
       function: pattern
@@ -555,7 +561,6 @@ rules:
     severity: "error"
     given: "$.paths.*.*.responses.*.content.*~"
     then:
-      field: name
       function: pattern
       functionOptions:
         match: "^application\/[a-zA-Z0-9-_]+$"
@@ -939,12 +944,9 @@ rules:
     description: "Fields of type password should be string with format password."
     message: "OAR081: Fields of type password should be string with format password."
     severity: error
-    given: "$..properties[?(@.type == 'string' && @.format == 'number')]"
+    given: "$..properties"
     then:
-      field: "format"
-      function: pattern
-      functionOptions:
-        match: "^password$"
+      function: apq-password-format
   apiq:OAR082:
     description: "The string properties must define a byte or binary format."
     message: "OAR082: The string properties must define a 'byte' or 'binary' format."
