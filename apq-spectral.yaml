@@ -649,7 +649,7 @@ rules:
         property: summary
         equalTo: description
         result: falsy
-        threshold: 0.65
+        threshold: 0.55
   apiq:OAR052:
     description: "Numeric schema types must define a format."
     message: "OAR052: Numeric types requires a format"
@@ -790,15 +790,12 @@ rules:
       functionOptions:
         type: pascal
   apiq:OAR069:
-    description: "Path parameters should not appear as query parameters, and operations with parameters should have a 400 response."
-    message: "OAR069: Path parameter conflict or missing 400 Bad Request response."
+    description: "Path parameters should not appear as query parameters."
+    message: "OAR069: Path parameter should not appear as both path and query parameter."
     severity: "error"
-    given: "$.paths[*][get,post,put,patch,delete]"
+    given: "$.paths"
     then:
-      - function: apq-path-param-query-conflict
-      - field: "responses.400"
-        function: truthy
-        message: "Operation with parameters must define a 400 Bad Request response."
+      function: apq-path-param-query-conflict
   apiq:OAR070:
     description: "Parameters in path should not be numeric."
     message: "OAR070: Parameters in path should not be numeric."
