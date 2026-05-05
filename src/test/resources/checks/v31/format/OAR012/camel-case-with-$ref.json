@@ -1,0 +1,209 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "components": {
+    "parameters": {
+      "petType": {
+        "in": "path",
+        "name": "pet-Type", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "pathParamOk": {
+        "in": "path",
+        "name": "petId",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "pathParamWrong1": {
+        "in": "path",
+        "name": "pet_id", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "pathParamWrong2": {
+        "in": "path",
+        "name": "PET-ID", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "queryParamOk": {
+        "in": "query",
+        "name": "expandInfo",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "queryParamWrong1": {
+        "in": "query",
+        "name": "expand_info", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "queryParamWrong2": {
+        "in": "query",
+        "name": "expand-info", # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "headerParam": {
+        "in": "header",
+        "name": "X-Request-ID",
+        "schema": {
+          "type": "string"
+        },
+        "required": true
+      }
+    },
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "pet-type": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+            "type": "string"
+          },
+          "petAge": {
+            "type": "number"
+          },
+          "pet_name": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "PetsPostRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pet_name": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "PetsResponse": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pet_name": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/pets": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/petType"
+        },
+        {
+          "in": "path",
+          "name": "petName",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pathParamOk"
+          },
+          {
+            "$ref": "#/components/parameters/pathParamWrong1"
+          },
+          {
+            "$ref": "#/components/parameters/pathParamWrong2"
+          },
+          {
+            "$ref": "#/components/parameters/queryParamOk"
+          },
+          {
+            "$ref": "#/components/parameters/queryParamWrong1"
+          },
+          {
+            "$ref": "#/components/parameters/queryParamWrong2"
+          },
+          {
+            "$ref": "#/components/parameters/headerParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PetsPostRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PetsResponse"
+          }
+        }
+      },
+      "put": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pet_name": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pet_name": { # Noncompliant {{OAR012: Path params names, query params names, object names and property names with more than two words must be compliant with the standard naming convention: camelCase}}
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

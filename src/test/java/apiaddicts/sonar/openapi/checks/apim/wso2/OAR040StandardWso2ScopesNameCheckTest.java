@@ -15,6 +15,8 @@ public class OAR040StandardWso2ScopesNameCheckTest extends BaseCheckTest {
         check = new OAR040StandardWso2ScopesNameCheck();
         v2Path = getV2Path("apim/wso2");
         v3Path = getV3Path("apim/wso2");
+        v31Path = getV31Path("apim");
+        v32Path = getV32Path("apim");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR040StandardWso2ScopesNameCheckTest extends BaseCheckTest {
     public void verifyInV3WithValidNames() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31WithValidNames() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32WithValidNames() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3WithInvalidNames() {
         verifyV3("invalid");
+    }
+    @Test
+    public void verifyInV31WithInvalidNames() {
+        verifyV31("invalid");
+    }
+    @Test
+    public void verifyInV32WithInvalidNames() {
+        verifyV32("invalid");
     }
 
     @Override

@@ -15,6 +15,8 @@ public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
         check = new OAR035UnauthorizedResponseCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3WithoutAuthorizationResponses() {
         verifyV3("without-authorization-responses");
+    }
+    @Test
+    public void verifyInV31WithoutAuthorizationResponses() {
+        verifyV31("without-authorization-responses");
+    }
+    @Test
+    public void verifyInV32WithoutAuthorizationResponses() {
+        verifyV32("without-authorization-responses");
     }
 
     @Override

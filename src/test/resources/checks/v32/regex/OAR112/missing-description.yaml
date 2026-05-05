@@ -1,0 +1,5 @@
+openapi: 3.0.3
+info: # Noncompliant {{OAR112: Expected to find a value but didn't.}}
+  title: Test API
+  version: 1.0.0
+paths: {}

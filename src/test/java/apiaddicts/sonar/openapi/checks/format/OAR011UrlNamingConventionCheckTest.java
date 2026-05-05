@@ -15,6 +15,8 @@ public class OAR011UrlNamingConventionCheckTest extends BaseCheckTest {
         check = new OAR011UrlNamingConventionCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -36,15 +38,39 @@ public class OAR011UrlNamingConventionCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("plain");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("plain");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("plain");
+    }
 
     @Test
     public void verifyInV3BasePathOk() {
         verifyV3("base-path-ok");
     }
+    @Test
+    public void verifyInV31BasePathOk() {
+        verifyV31("base-path-ok");
+    }
+    @Test
+    public void verifyInV32BasePathOk() {
+        verifyV32("base-path-ok");
+    }
 
     @Test
     public void verifyInV3BasePathWrong() {
         verifyV3("base-path-wrong");
+    }
+    @Test
+    public void verifyInV31BasePathWrong() {
+        verifyV31("base-path-wrong");
+    }
+    @Test
+    public void verifyInV32BasePathWrong() {
+        verifyV32("base-path-wrong");
     }
 
     @Override

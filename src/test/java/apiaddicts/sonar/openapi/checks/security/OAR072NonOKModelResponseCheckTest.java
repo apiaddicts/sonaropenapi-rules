@@ -14,6 +14,8 @@ public class OAR072NonOKModelResponseCheckTest extends BaseCheckTest {
         check = new OAR072NonOKModelResponseCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -30,10 +32,26 @@ public class OAR072NonOKModelResponseCheckTest extends BaseCheckTest {
     public void verifyInV3Compliant() {
         verifyV3("with-stack-trace");
     }
+    @Test
+    public void verifyInV31Compliant() {
+        verifyV31("with-stack-trace");
+    }
+    @Test
+    public void verifyInV32Compliant() {
+        verifyV32("with-stack-trace");
+    }
 
     @Test
     public void verifyInV3WithStackTrace() {
         verifyV3("no-stack-trace");
+    }
+    @Test
+    public void verifyInV31WithStackTrace() {
+        verifyV31("no-stack-trace");
+    }
+    @Test
+    public void verifyInV32WithStackTrace() {
+        verifyV32("no-stack-trace");
     }
 
     @Override

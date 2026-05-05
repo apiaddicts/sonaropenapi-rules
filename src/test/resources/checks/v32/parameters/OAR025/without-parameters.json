@@ -1,0 +1,18 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : { # Noncompliant {{OAR025: $limit must be defined as a parameter in this operation}}
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}

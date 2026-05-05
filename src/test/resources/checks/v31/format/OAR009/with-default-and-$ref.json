@@ -1,0 +1,43 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "components": {
+    "requestBodies": {
+      "PetsPostRequest": {
+        "content": {
+          "application/json": {},
+          "application/xml": {}
+        }
+      }
+    }
+  },
+  "paths": {
+    "/pets": {
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PetsPostRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      },
+      "put": {
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  }
+}

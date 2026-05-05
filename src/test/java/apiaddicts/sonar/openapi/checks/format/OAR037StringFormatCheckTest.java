@@ -15,6 +15,8 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
         check = new OAR037StringFormatCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -36,10 +38,26 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("complete");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("complete");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("complete");
+    }
 
     @Test
     public void verifyInV3WithNested() {
         verifyV3("nested");
+    }
+    @Test
+    public void verifyInV31WithNested() {
+        verifyV31("nested");
+    }
+    @Test
+    public void verifyInV32WithNested() {
+        verifyV32("nested");
     }
 
     @Test

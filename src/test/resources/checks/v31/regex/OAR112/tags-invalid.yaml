@@ -1,0 +1,7 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+tags:
+  - name: invalidTag # Noncompliant {{OAR112: The field must start with an uppercase letter.}}
+paths: {}

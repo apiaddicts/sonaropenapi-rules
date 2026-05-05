@@ -15,6 +15,8 @@ public class OAR030StatusEndpointCheckTest extends BaseCheckTest {
         check = new OAR030StatusEndpointCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -36,15 +38,39 @@ public class OAR030StatusEndpointCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3WithoutStatus() {
         verifyV3("without-status");
     }
+    @Test
+    public void verifyInV31WithoutStatus() {
+        verifyV31("without-status");
+    }
+    @Test
+    public void verifyInV32WithoutStatus() {
+        verifyV32("without-status");
+    }
 
     @Test
     public void verifyInV3WithStatusWithoutGet() {
         verifyV3("with-status-without-get");
+    }
+    @Test
+    public void verifyInV31WithStatusWithoutGet() {
+        verifyV31("with-status-without-get");
+    }
+    @Test
+    public void verifyInV32WithStatusWithoutGet() {
+        verifyV32("with-status-without-get");
     }
 
     @Override

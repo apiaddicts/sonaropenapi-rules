@@ -1,0 +1,32 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Valid Response Headers Test",
+    "version": "1.0"
+  },
+  "paths": {
+    "/example": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "x-api-key": {
+                "description": "Mandatory header",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "traceId": {
+                "description": "Optional but allowed",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

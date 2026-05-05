@@ -14,6 +14,8 @@ public class OAR001MandatoryHttpsProtocolCheckTest extends BaseCheckTest {
         check = new OAR001MandatoryHttpsProtocolCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -30,10 +32,26 @@ public class OAR001MandatoryHttpsProtocolCheckTest extends BaseCheckTest {
     public void verifyInV3WithServers() {
         verifyV3("with-servers");
     }
+    @Test
+    public void verifyInV31WithServers() {
+        verifyV31("with-servers");
+    }
+    @Test
+    public void verifyInV32WithServers() {
+        verifyV32("with-servers");
+    }
 
     @Test
     public void verifyInV3WithoutServers() {
         verifyV3("without-servers");
+    }
+    @Test
+    public void verifyInV31WithoutServers() {
+        verifyV31("without-servers");
+    }
+    @Test
+    public void verifyInV32WithoutServers() {
+        verifyV32("without-servers");
     }
 
     @Override

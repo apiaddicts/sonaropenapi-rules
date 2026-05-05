@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /test:
+    get:
+      summary: lowercase operation summary # Noncompliant {{OAR112: The field must start with an uppercase letter.}}
+      responses:
+        '200':
+          description: OK

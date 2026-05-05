@@ -13,6 +13,8 @@ public class OAR115VerifyRequiredFieldsTest extends BaseCheckTest {
         check = new OAR115VerifyRequiredFields();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -29,8 +31,24 @@ public class OAR115VerifyRequiredFieldsTest extends BaseCheckTest {
         verifyV3("valid");
     }
     @Test
+    public void verifyValidRequiredFieldV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyValidRequiredFieldV32() {
+        verifyV32("valid");
+    }
+    @Test
     public void verifyInvalidRequiredFieldV3() {
         verifyV3("invalid");
+    }
+    @Test
+    public void verifyInvalidRequiredFieldV31() {
+        verifyV31("invalid");
+    }
+    @Test
+    public void verifyInvalidRequiredFieldV32() {
+        verifyV32("invalid");
     }
 
 
