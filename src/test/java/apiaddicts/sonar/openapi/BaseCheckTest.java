@@ -8,6 +8,8 @@ import org.sonar.api.server.rule.RulesDefinition;
 
 import org.apiaddicts.apitools.dosonarapi.api.OpenApiCheck;
 
+import apiaddicts.sonar.openapi.utils.ExternalRefHttpServer;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -77,6 +79,7 @@ public abstract class BaseCheckTest {
 
     @BeforeClass
     public static void beforeClass() {
+        ExternalRefHttpServer.start();
         I18nContext.setLang("en");
         if (repository != null) return;
         OpenAPICustomRulesDefinition rulesDefinition = new OpenAPICustomRulesDefinition();
