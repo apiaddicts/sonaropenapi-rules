@@ -24,7 +24,7 @@ paths:
                   $ref: '#/components/schemas/User'
         '400':
           $ref: >- # Noncompliant {{OAR031: Responses must have one or more examples defined}}
-            https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR031.yaml#/components/responses/server_error_response
+            http://localhost:18089/OAR031.yaml#/components/responses/server_error_response
   /users/{userId}:
     get:
       summary: Get a user by ID
@@ -48,7 +48,7 @@ paths:
                 $ref: '#/components/schemas/User'
         '400':
           $ref: >- # Noncompliant {{OAR031: Responses must have one or more examples defined}}
-            https://raw.githubusercontent.com/apiaddicts/sonaropenapi-rules/refs/heads/master/src/test/resources/externalRef/OAR031.yaml#/components/responses/server_error_response
+            http://localhost:18089/OAR031.yaml#/components/responses/server_error_response
 components:
   schemas:
     User:
