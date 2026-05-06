@@ -1,4 +1,4 @@
-openapi: "3.0.1"
+openapi: "3.1.0"
 tags:
 - name: used-tag
   description: a tag referenced in the operations

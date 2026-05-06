@@ -94,13 +94,13 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
     }
 
     private void visitV3Node(JsonNode node) {
-
-        if (node.getType() == OpenApi3Grammar.OPERATION && section.equals("consumes")) {
+        AstNodeType type = node.getType();
+        if ((type == OpenApi3Grammar.OPERATION || type == OpenApi31Grammar.OPERATION || type == OpenApi32Grammar.OPERATION) && section.equals("consumes")) {
             handleConsumesOperation(node);
             return;
         }
 
-        if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
+        if ((type == OpenApi3Grammar.RESPONSES || type == OpenApi31Grammar.RESPONSES || type == OpenApi32Grammar.RESPONSES) && section.equals("produces")) {
             MediaTypeUtils.handleProducesResponses(node, externalRefNode, this::visitContentNode);
         }
     }

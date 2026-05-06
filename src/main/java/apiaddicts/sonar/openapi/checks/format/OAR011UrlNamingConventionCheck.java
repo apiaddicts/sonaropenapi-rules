@@ -57,7 +57,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	}
 
 	private void visitV3Node(JsonNode node) {
-		if (node.is(OpenApi3Grammar.SERVER)) {
+		if (node.is(OpenApi3Grammar.SERVER) || node.is(OpenApi31Grammar.SERVER) || node.is(OpenApi32Grammar.SERVER)) {
 			visitV3ServerNode(node);
 		} else {
 			visitPathNode(node);

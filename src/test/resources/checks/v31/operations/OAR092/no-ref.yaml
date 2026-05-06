@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: "3.1.0"
 info:
   title: Sample-API_efc2b9f76813_V
   description: API de ejemplo para pruebas

@@ -99,10 +99,14 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
     }
     @Test
     public void verifyInV31ExcludeStrategy() {
+        setField("pathCheckStrategy", "/exclude");
+        setField("pathsStr", "/examples");
         verifyV31("exclude-noncompliant");
     }
     @Test
     public void verifyInV32ExcludeStrategy() {
+        setField("pathCheckStrategy", "/exclude");
+        setField("pathsStr", "/examples");
         verifyV32("exclude-noncompliant");
     }
 

@@ -167,7 +167,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
         }
 
         if (parentNode.getType().equals(OpenApi3Grammar.SCHEMA_PROPERTIES)
-                || parentNode.getType().toString().equals("BLOCK_MAPPING") 
+                || parentNode.getType().equals(OpenApi31Grammar.SCHEMA_PROPERTIES)
+                || parentNode.getType().equals(OpenApi32Grammar.SCHEMA_PROPERTIES)
+                || parentNode.getType().toString().equals("BLOCK_MAPPING")
                 || parentNode.getType().toString().equals("FLOW_MAPPING")) {
 
             JsonNode schemaParent = (JsonNode) parentNode.getParent().getParent();

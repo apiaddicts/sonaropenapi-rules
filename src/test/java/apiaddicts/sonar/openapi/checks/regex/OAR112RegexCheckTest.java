@@ -88,10 +88,12 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
     }
     @Test
     public void verifyServersDescriptionInvalidInV31() {
+        setField("nodes", "servers/description");
         verifyV31("servers-invalid");
     }
     @Test
     public void verifyServersDescriptionInvalidInV32() {
+        setField("nodes", "servers/description");
         verifyV32("servers-invalid");
     }
 
@@ -116,10 +118,12 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
     }
     @Test
     public void verifyOperationSummaryInvalidInV31() {
+        setField("nodes", "paths/get/summary");
         verifyV31("operation-invalid");
     }
     @Test
     public void verifyOperationSummaryInvalidInV32() {
+        setField("nodes", "paths/get/summary");
         verifyV32("operation-invalid");
     }
 
@@ -156,10 +160,12 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
     }
     @Test
     public void verifyTagsNameInvalidInV31() {
+        setField("nodes", "tags/name");
         verifyV31("tags-invalid");
     }
     @Test
     public void verifyTagsNameInvalidInV32() {
+        setField("nodes", "tags/name");
         verifyV32("tags-invalid");
     }
 
@@ -196,10 +202,12 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
     }
     @Test
     public void verifyExternalDocsDescriptionInvalidInV31() {
+        setField("nodes", "externalDocs/description");
         verifyV31("external-docs-invalid");
     }
     @Test
     public void verifyExternalDocsDescriptionInvalidInV32() {
+        setField("nodes", "externalDocs/description");
         verifyV32("external-docs-invalid");
     }
 
@@ -236,10 +244,12 @@ public class OAR112RegexCheckTest extends BaseCheckTest {
     }
     @Test
     public void verifyParametersDescriptionInvalidInV31() {
+        setField("nodes", "paths/get/parameters/description");
         verifyV31("parameters-invalid");
     }
     @Test
     public void verifyParametersDescriptionInvalidInV32() {
+        setField("nodes", "paths/get/parameters/description");
         verifyV32("parameters-invalid");
     }
 

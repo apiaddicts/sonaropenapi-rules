@@ -61,7 +61,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
-    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE, OpenApi32Grammar.PARAMETER, OpenApi32Grammar.REQUEST_BODY, OpenApi32Grammar.RESPONSE);
+    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE, OpenApi31Grammar.RESPONSES, OpenApi31Grammar.OPERATION, OpenApi32Grammar.PARAMETER, OpenApi32Grammar.REQUEST_BODY, OpenApi32Grammar.RESPONSE, OpenApi32Grammar.RESPONSES, OpenApi32Grammar.OPERATION);
   }
 
   @Override
