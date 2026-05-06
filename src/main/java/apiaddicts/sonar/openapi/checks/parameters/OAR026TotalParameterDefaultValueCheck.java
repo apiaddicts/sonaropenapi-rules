@@ -6,6 +6,7 @@ import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -19,7 +20,7 @@ public class OAR026TotalParameterDefaultValueCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER);
+        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi32Grammar.PARAMETER);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class OAR026TotalParameterDefaultValueCheck extends BaseCheck {
 
     private void visitV2Node(JsonNode node) {
         if (!"$total".equals(node.get("name").getTokenValue())) return;
-        JsonNode defaultNode = ( node.getType() == OpenApi2Grammar.PARAMETER ) ? node.get("default") : node.at("/schema/default");
+        JsonNode defaultNode = (node.getType() == OpenApi2Grammar.PARAMETER) ? node.get("default") : node.at("/schema/default");
         if (defaultNode.isMissing()) {
             if (node.key().isMissing()) {
                 addIssue(KEY, translate(MESSAGE), node);

@@ -6,6 +6,7 @@ import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
@@ -19,7 +20,7 @@ public class OAR085OpenAPIVersionCheck extends BaseCheck {
 
     public static final String KEY = "OAR085";
     private static final String MESSAGE = "OAR085.error";
-    private static final String DEFAULT_VALID_VERSIONS = "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1.0";
+    private static final String DEFAULT_VALID_VERSIONS = "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1.0,3.2.0";
 
     @RuleProperty(
             key = "valid-versions",
@@ -56,6 +57,6 @@ public class OAR085OpenAPIVersionCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT); 
+        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi32Grammar.ROOT);
     }
 }

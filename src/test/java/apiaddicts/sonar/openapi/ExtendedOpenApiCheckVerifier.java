@@ -31,14 +31,14 @@ public class ExtendedOpenApiCheckVerifier {
     }
 
     public static List<PreciseIssue> scanFileForIssues(File file, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31, boolean isV32) {
-        return check.scanFileForIssues(TestOpenApiVisitorRunner.createContext(file, isV2, isV3, isV31));
+        return check.scanFileForIssues(TestOpenApiVisitorRunner.createContext(file, isV2, isV3, isV31, isV32));
     }
 
     public static void verify(String path, OpenApiCheck check, boolean isV2, boolean isV3, boolean isV31, boolean isV32) {
         ExtendedOpenApiCheckVerifier verifier = new ExtendedOpenApiCheckVerifier();
         OpenApiVisitor collector = new ExtendedOpenApiCheckVerifier.ExpectedIssueCollector(verifier);
         File file = new File(path);
-        TestOpenApiVisitorRunner.scanFileForComments(file, isV2, isV3, isV31, new OpenApiVisitor[]{collector});
+        TestOpenApiVisitorRunner.scanFileForComments(file, isV2, isV3, isV31, isV32, new OpenApiVisitor[]{collector});
         Iterator<PreciseIssue> actualIssues = getActualIssues(file, check, isV2, isV3, isV31, isV32);
         verifier.checkIssues(actualIssues);
         if (actualIssues.hasNext()) {

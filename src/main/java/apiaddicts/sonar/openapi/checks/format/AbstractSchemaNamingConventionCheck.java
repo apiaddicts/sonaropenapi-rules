@@ -9,6 +9,7 @@ import java.util.Set;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isOperation;
 
@@ -25,16 +26,16 @@ public abstract class AbstractSchemaNamingConventionCheck extends AbstractNaming
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
-    return ImmutableSet.of(OpenApi2Grammar.PATHS, OpenApi3Grammar.PATHS, OpenApi31Grammar.PATHS, OpenApi2Grammar.PATH,
-        OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
+    return ImmutableSet.of(OpenApi2Grammar.PATHS, OpenApi3Grammar.PATHS, OpenApi31Grammar.PATHS, OpenApi32Grammar.PATHS, OpenApi2Grammar.PATH,
+        OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH);
   }
 
   @Override
   public void visitNode(JsonNode node) {
-    if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType())) {
+    if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType()) || OpenApi31Grammar.PATHS.equals(node.getType()) || OpenApi32Grammar.PATHS.equals(node.getType())) {
       visitPathsNode(node);
     }
-    if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType())) {
+    if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType()) || OpenApi32Grammar.PATH.equals(node.getType())) {
       visitPathNode(node);
     }
   }
@@ -121,7 +122,7 @@ public abstract class AbstractSchemaNamingConventionCheck extends AbstractNaming
         .forEach(response -> handleExternalRef.resolve(response, resolved -> {
           if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
             visitSchemaNode2(resolved);
-          } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+          } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE) || resolved.getType().equals(OpenApi31Grammar.RESPONSE) || resolved.getType().equals(OpenApi32Grammar.RESPONSE)) {
             JsonNode content = resolved.at("/content");
             if (!content.isMissing()) {
               content.propertyMap().forEach((mediaType, mediaTypeNode) -> {

@@ -6,6 +6,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Set;
@@ -25,7 +26,7 @@ public abstract class AbstractExplicitResponseCheck extends AbstractSchemaCheck 
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.RESPONSES, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.RESPONSES);
+        return ImmutableSet.of(OpenApi2Grammar.RESPONSES, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.RESPONSES, OpenApi32Grammar.RESPONSES);
     }
 
     @Override
@@ -46,7 +47,7 @@ public abstract class AbstractExplicitResponseCheck extends AbstractSchemaCheck 
                 visitV2ExplicitNode(resolved);
             }
 
-            else if (OpenApi3Grammar.RESPONSE.equals(type) || OpenApi31Grammar.RESPONSE.equals(type)) {
+            else if (OpenApi3Grammar.RESPONSE.equals(type) || OpenApi31Grammar.RESPONSE.equals(type) || OpenApi32Grammar.RESPONSE.equals(type)) {
                 handleV3Response(resolved);
             }
         }

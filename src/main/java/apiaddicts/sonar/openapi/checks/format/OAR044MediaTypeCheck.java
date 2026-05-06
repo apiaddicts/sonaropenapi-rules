@@ -26,6 +26,7 @@ import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
@@ -60,7 +61,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
 
   @Override
   public Set<AstNodeType> subscribedKinds() {
-    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE);
+    return Sets.newHashSet(OpenApi2Grammar.ROOT, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi3Grammar.RESPONSE, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.REQUEST_BODY, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi31Grammar.REQUEST_BODY, OpenApi31Grammar.RESPONSE, OpenApi32Grammar.PARAMETER, OpenApi32Grammar.REQUEST_BODY, OpenApi32Grammar.RESPONSE);
   }
 
   @Override
@@ -88,17 +89,17 @@ public class OAR044MediaTypeCheck extends BaseCheck {
   private void visitOpenApi3(JsonNode node) {
     AstNodeType type = node.getType();
 
-    if (type == OpenApi3Grammar.PARAMETER) {
+    if (type == OpenApi3Grammar.PARAMETER || type == OpenApi31Grammar.PARAMETER || type == OpenApi32Grammar.PARAMETER) {
       verifyParameterContent(node);
 
-    } else if (type == OpenApi3Grammar.RESPONSES) {
+    } else if (type == OpenApi3Grammar.RESPONSES || type == OpenApi31Grammar.RESPONSES || type == OpenApi32Grammar.RESPONSES) {
       node.properties().forEach(responseNode -> {
         if (!"204".equals(responseNode.key().getTokenValue())) {
           handleExternalRef.resolve(responseNode, this::verifyContent);
         }
       });
 
-    } else if (type == OpenApi3Grammar.OPERATION) {
+    } else if (type == OpenApi3Grammar.OPERATION || type == OpenApi31Grammar.OPERATION || type == OpenApi32Grammar.OPERATION) {
       String op = node.key().getTokenValue().toLowerCase();
 
       if (new HashSet<>(Arrays.asList("post", "put", "patch")).contains(op)) {

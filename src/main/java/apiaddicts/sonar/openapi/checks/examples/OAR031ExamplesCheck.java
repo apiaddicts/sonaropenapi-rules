@@ -12,6 +12,7 @@ import java.util.Set;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 
@@ -35,17 +36,18 @@ public class OAR031ExamplesCheck extends BaseCheck {
             OpenApi2Grammar.SCHEMA, OpenApi2Grammar.RESPONSES, OpenApi2Grammar.PARAMETER,
             OpenApi3Grammar.SCHEMA, OpenApi3Grammar.RESPONSES, OpenApi3Grammar.PARAMETER,
             OpenApi31Grammar.SCHEMA, OpenApi31Grammar.RESPONSES, OpenApi31Grammar.PARAMETER,
-            OpenApi3Grammar.REQUEST_BODY, OpenApi31Grammar.REQUEST_BODY, 
-            OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH
+            OpenApi32Grammar.SCHEMA, OpenApi32Grammar.RESPONSES, OpenApi32Grammar.PARAMETER,
+            OpenApi3Grammar.REQUEST_BODY, OpenApi31Grammar.REQUEST_BODY, OpenApi32Grammar.REQUEST_BODY,
+            OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH
         );
     }
 
     @Override
     public void visitNode(JsonNode node) {
         AstNodeType type = node.getType();
-        if (OpenApi2Grammar.PATH.equals(type) || OpenApi3Grammar.PATH.equals(type) || OpenApi31Grammar.PATH.equals(type)) {
+        if (OpenApi2Grammar.PATH.equals(type) || OpenApi3Grammar.PATH.equals(type) || OpenApi31Grammar.PATH.equals(type) || OpenApi32Grammar.PATH.equals(type)) {
             visitPathNode(node);
-        } else if (OpenApi2Grammar.PARAMETER.equals(type) || OpenApi3Grammar.PARAMETER.equals(type) || OpenApi31Grammar.PARAMETER.equals(type)) {
+        } else if (OpenApi2Grammar.PARAMETER.equals(type) || OpenApi3Grammar.PARAMETER.equals(type) || OpenApi31Grammar.PARAMETER.equals(type) || OpenApi32Grammar.PARAMETER.equals(type)) {
             visitParameterNode(node);
         } else if (type.equals(OpenApi2Grammar.RESPONSES) || type.equals(OpenApi2Grammar.SCHEMA)) {
             visitV2Node(node);
@@ -98,11 +100,11 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     private void visitV3Node(JsonNode node) {
         AstNodeType type = node.getType();
-        if (OpenApi3Grammar.RESPONSES.equals(type)) {
+        if (OpenApi3Grammar.RESPONSES.equals(type) || OpenApi31Grammar.RESPONSES.equals(type) || OpenApi32Grammar.RESPONSES.equals(type)) {
             processResponses(node, this::visitRequestBodyOrResponseV3Node);
-        } else if (OpenApi3Grammar.SCHEMA.equals(type)) {
+        } else if (OpenApi3Grammar.SCHEMA.equals(type) || OpenApi31Grammar.SCHEMA.equals(type) || OpenApi32Grammar.SCHEMA.equals(type)) {
             visitSchemaNode(node);
-        } else if (OpenApi3Grammar.REQUEST_BODY.equals(type)) {
+        } else if (OpenApi3Grammar.REQUEST_BODY.equals(type) || OpenApi31Grammar.REQUEST_BODY.equals(type) || OpenApi32Grammar.REQUEST_BODY.equals(type)) {
             visitRequestBodyOrResponseV3Node(node);
         }
     }
@@ -118,7 +120,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
         JsonNode content = node.at("/content");
 
         if (content.isMissing()) {
-            String errorKey = node.getType().equals(OpenApi3Grammar.REQUEST_BODY) ? "OAR031.error-request" : ERROR_RESPONSE;
+            String errorKey = (node.getType().equals(OpenApi3Grammar.REQUEST_BODY) || node.getType().equals(OpenApi31Grammar.REQUEST_BODY) || node.getType().equals(OpenApi32Grammar.REQUEST_BODY)) ? "OAR031.error-request" : ERROR_RESPONSE;
             addIssue(KEY, translate(errorKey), handleExternalRef.getTrueNode(node.key()));
             return;
         }
@@ -129,7 +131,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
                     || !mediaTypeNode.get(EXAMPLE).isMissing();
 
             if (!hasExplicitExample && !isSchemaCovered(schemaNode)) {
-                String errorKey = node.getType().equals(OpenApi3Grammar.REQUEST_BODY) ? "OAR031.error-request" : ERROR_RESPONSE;
+                String errorKey = (node.getType().equals(OpenApi3Grammar.REQUEST_BODY) || node.getType().equals(OpenApi31Grammar.REQUEST_BODY) || node.getType().equals(OpenApi32Grammar.REQUEST_BODY)) ? "OAR031.error-request" : ERROR_RESPONSE;
                 addIssue(KEY, translate(errorKey), handleExternalRef.getTrueNode(node.key()));
             }
         }
@@ -160,7 +162,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
     private void visitSchemaNode(JsonNode node) {
         JsonNode parentNode = (JsonNode) node.getParent().getParent();
 
-        if (parentNode.getType().equals(OpenApi3Grammar.PARAMETER)) {
+        if (parentNode.getType().equals(OpenApi3Grammar.PARAMETER) || parentNode.getType().equals(OpenApi31Grammar.PARAMETER) || parentNode.getType().equals(OpenApi32Grammar.PARAMETER)) {
             return;
         }
 
@@ -190,7 +192,7 @@ public class OAR031ExamplesCheck extends BaseCheck {
             .forEach(response -> handleExternalRef.resolve(response, resolved -> {
                 if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode2(resolved);
-                } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE) || resolved.getType().equals(OpenApi31Grammar.RESPONSE) || resolved.getType().equals(OpenApi32Grammar.RESPONSE)) {
                     JsonNode content = resolved.at("/content");
                     if (!content.isMissing()) {
                         content.propertyMap().forEach((mediaType, mediaTypeNode) -> {

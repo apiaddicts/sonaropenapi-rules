@@ -5,6 +5,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 
@@ -19,12 +20,12 @@ public class OAR092RequestBodyOnlyRefCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi3Grammar.PATHS);
+        return ImmutableSet.of(OpenApi3Grammar.PATHS, OpenApi31Grammar.PATHS, OpenApi32Grammar.PATHS);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi3Grammar.PATHS.equals(node.getType()) || OpenApi31Grammar.PATHS.equals(node.getType())) {
+        if (OpenApi3Grammar.PATHS.equals(node.getType()) || OpenApi31Grammar.PATHS.equals(node.getType()) || OpenApi32Grammar.PATHS.equals(node.getType())) {
             visitPathsNode(node);
         }
     }
