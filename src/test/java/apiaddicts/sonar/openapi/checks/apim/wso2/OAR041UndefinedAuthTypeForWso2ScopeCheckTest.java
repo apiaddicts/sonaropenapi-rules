@@ -14,6 +14,8 @@ public class OAR041UndefinedAuthTypeForWso2ScopeCheckTest extends BaseCheckTest 
         check = new OAR041UndefinedAuthTypeForWso2ScopeCheck();
         v2Path = getV2Path("apim/wso2");
         v3Path = getV3Path("apim/wso2");
+        v31Path = getV31Path("apim");
+        v32Path = getV32Path("apim");
     }
 
     @Test
@@ -35,15 +37,39 @@ public class OAR041UndefinedAuthTypeForWso2ScopeCheckTest extends BaseCheckTest 
     public void verifyInV3WithScopeAndAuth() {
         verifyV3("with-scope-and-auth");
     }
+    @Test
+    public void verifyInV31WithScopeAndAuth() {
+        verifyV31("with-scope-and-auth");
+    }
+    @Test
+    public void verifyInV32WithScopeAndAuth() {
+        verifyV32("with-scope-and-auth");
+    }
 
     @Test
     public void verifyInV3WithScopeWithoutAuth() {
         verifyV3("with-scope-without-auth");
     }
+    @Test
+    public void verifyInV31WithScopeWithoutAuth() {
+        verifyV31("with-scope-without-auth");
+    }
+    @Test
+    public void verifyInV32WithScopeWithoutAuth() {
+        verifyV32("with-scope-without-auth");
+    }
 
     @Test
     public void verifyInV3WithoutScopeAndAuth() {
         verifyV3("without-scope-and-auth");
+    }
+    @Test
+    public void verifyInV31WithoutScopeAndAuth() {
+        verifyV31("without-scope-and-auth");
+    }
+    @Test
+    public void verifyInV32WithoutScopeAndAuth() {
+        verifyV32("without-scope-and-auth");
     }
 
     @Override

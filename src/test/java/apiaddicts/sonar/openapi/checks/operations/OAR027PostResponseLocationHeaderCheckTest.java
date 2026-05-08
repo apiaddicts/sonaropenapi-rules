@@ -14,6 +14,8 @@ public class OAR027PostResponseLocationHeaderCheckTest extends BaseCheckTest {
         check = new OAR027PostResponseLocationHeaderCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -45,25 +47,65 @@ public class OAR027PostResponseLocationHeaderCheckTest extends BaseCheckTest {
     public void verifyInV3NoPost() {
         verifyV3("no-post");
     }
+    @Test
+    public void verifyInV31NoPost() {
+        verifyV31("no-post");
+    }
+    @Test
+    public void verifyInV32NoPost() {
+        verifyV32("no-post");
+    }
 
     @Test
     public void verifyInV3PostNo201() {
         verifyV3("post-no-201");
+    }
+    @Test
+    public void verifyInV31PostNo201() {
+        verifyV31("post-no-201");
+    }
+    @Test
+    public void verifyInV32PostNo201() {
+        verifyV32("post-no-201");
     }
 
     @Test
     public void verifyInV3Post201WithoutLocation() {
         verifyV3("post-201-without-location");
     }
+    @Test
+    public void verifyInV31Post201WithoutLocation() {
+        verifyV31("post-201-without-location");
+    }
+    @Test
+    public void verifyInV32Post201WithoutLocation() {
+        verifyV32("post-201-without-location");
+    }
 
     @Test
     public void verifyInV3Post201WithOtherHeaders() {
         verifyV3("post-201-with-other-headers");
     }
+    @Test
+    public void verifyInV31Post201WithOtherHeaders() {
+        verifyV31("post-201-with-other-headers");
+    }
+    @Test
+    public void verifyInV32Post201WithOtherHeaders() {
+        verifyV32("post-201-with-other-headers");
+    }
 
     @Test
     public void verifyInV3Post201WithLocation() {
         verifyV3("post-201-with-location");
+    }
+    @Test
+    public void verifyInV31Post201WithLocation() {
+        verifyV31("post-201-with-location");
+    }
+    @Test
+    public void verifyInV32Post201WithLocation() {
+        verifyV32("post-201-with-location");
     }
 
     @Override

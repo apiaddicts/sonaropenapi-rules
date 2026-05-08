@@ -15,6 +15,8 @@ public class OAR107ResourcesByDeleteVerbCheckTest extends BaseCheckTest {
         check = new OAR107ResourcesByDeleteVerbCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -25,6 +27,14 @@ public class OAR107ResourcesByDeleteVerbCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3() {
         verifyV3("plain");
+    }
+    @Test
+    public void verifyInV31() {
+        verifyV31("plain");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("plain");
     }
 
     @Override

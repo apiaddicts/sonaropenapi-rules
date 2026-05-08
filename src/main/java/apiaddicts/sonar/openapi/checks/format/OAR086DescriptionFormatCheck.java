@@ -5,6 +5,7 @@ import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.*;
 
@@ -29,19 +30,19 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi2Grammar.PATHS, OpenApi3Grammar.PATHS, OpenApi31Grammar.PATHS, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi32Grammar.ROOT, OpenApi2Grammar.PATHS, OpenApi3Grammar.PATHS, OpenApi31Grammar.PATHS, OpenApi32Grammar.PATHS, OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi32Grammar.OPERATION, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.ROOT.equals(node.getType()) || OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi31Grammar.ROOT.equals(node.getType())) {
+        if (OpenApi2Grammar.ROOT.equals(node.getType()) || OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi31Grammar.ROOT.equals(node.getType()) || OpenApi32Grammar.ROOT.equals(node.getType())) {
             checkInfoDescription(node);
             checkDefinitionsDescription(node);
         }
-        if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType())|| OpenApi31Grammar.PATHS.equals(node.getType())) {
+        if (OpenApi2Grammar.PATHS.equals(node.getType()) || OpenApi3Grammar.PATHS.equals(node.getType()) || OpenApi31Grammar.PATHS.equals(node.getType()) || OpenApi32Grammar.PATHS.equals(node.getType())) {
             visitPathsNode(node);
         }
-        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())) {
+        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType()) || OpenApi32Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
         }
     }
@@ -112,9 +113,10 @@ public class OAR086DescriptionFormatCheck extends BaseCheck {
             .filter(responses -> !responses.isMissing())
             .flatMap(responses -> responses.propertyMap().values().stream())
             .forEach(response -> handleExternalRef.resolve(response, resolved -> {
-                if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
+                AstNodeType responseType = resolved.getType();
+                if (responseType.equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode(resolved);
-                } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                } else if (responseType.equals(OpenApi3Grammar.RESPONSE) || responseType.equals(OpenApi31Grammar.RESPONSE) || responseType.equals(OpenApi32Grammar.RESPONSE)) {
                     resolved.at("/content").propertyMap().forEach((mediaType, mediaTypeNode) -> {
                         if (mediaType.toLowerCase().contains("json")) visitSchemaNode(mediaTypeNode);
                     });

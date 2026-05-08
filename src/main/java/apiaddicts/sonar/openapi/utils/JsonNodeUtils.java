@@ -3,6 +3,7 @@ package apiaddicts.sonar.openapi.utils;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.openapi.OpenApiConfiguration;
 import org.apiaddicts.apitools.dosonarapi.openapi.parser.OpenApiParser;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
@@ -182,6 +183,6 @@ public class JsonNodeUtils {
 
     public static boolean isOperation(JsonNode node) {
         AstNodeType type = node.getType();
-        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION) || type.equals(OpenApi31Grammar.OPERATION);
+        return type.equals(OpenApi2Grammar.OPERATION) || type.equals(OpenApi3Grammar.OPERATION) || type.equals(OpenApi31Grammar.OPERATION) || type.equals(OpenApi32Grammar.OPERATION);
     }
 }

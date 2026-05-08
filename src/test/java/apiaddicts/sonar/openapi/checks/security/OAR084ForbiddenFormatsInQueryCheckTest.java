@@ -15,6 +15,8 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
         check = new OAR084ForbiddenFormatsInQueryCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -67,25 +69,65 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid-query-formats");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid-query-formats");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid-query-formats");
+    }
 
     @Test
     public void verifyInV3ForbiddenQueryFormats() {
         verifyV3("forbidden-query-formats");
+    }
+    @Test
+    public void verifyInV31ForbiddenQueryFormats() {
+        verifyV31("forbidden-query-formats");
+    }
+    @Test
+    public void verifyInV32ForbiddenQueryFormats() {
+        verifyV32("forbidden-query-formats");
     }
 
     @Test
     public void verifyInV3NoParameters() {
         verifyV3("no-parameters");
     }
+    @Test
+    public void verifyInV31NoParameters() {
+        verifyV31("no-parameters");
+    }
+    @Test
+    public void verifyInV32NoParameters() {
+        verifyV32("no-parameters");
+    }
 
     @Test
     public void verifyInV3NonQueryParam() {
         verifyV3("non-query-param");
     }
+    @Test
+    public void verifyInV31NonQueryParam() {
+        verifyV31("non-query-param");
+    }
+    @Test
+    public void verifyInV32NonQueryParam() {
+        verifyV32("non-query-param");
+    }
 
     @Test
     public void verifyInV3NullFormatParam() {
         verifyV3("null-format-param");
+    }
+    @Test
+    public void verifyInV31NullFormatParam() {
+        verifyV31("null-format-param");
+    }
+    @Test
+    public void verifyInV32NullFormatParam() {
+        verifyV32("null-format-param");
     }
 
     @Test
@@ -102,11 +144,27 @@ public class OAR084ForbiddenFormatsInQueryCheckTest extends BaseCheckTest {
         c.pathsStr = "/other";
         verifyV3("valid-query-formats");
     }
+    @Test
+    public void verifyPathFilteringStrategiesInV31() {
+        verifyV31("valid-query-formats");
+    }
+    @Test
+    public void verifyPathFilteringStrategiesInV32() {
+        verifyV32("valid-query-formats");
+    }
 
     @Test
     public void verifyInV3EmptyForbiddenQueryFormats() {
         ((OAR084ForbiddenFormatsInQueryCheck) check).forbiddenQueryFormatsStr = "";
         verifyV3("valid-query-formats");
+    }
+    @Test
+    public void verifyInV31EmptyForbiddenQueryFormats() {
+        verifyV31("valid-query-formats");
+    }
+    @Test
+    public void verifyInV32EmptyForbiddenQueryFormats() {
+        verifyV32("valid-query-formats");
     }
 
     @Override

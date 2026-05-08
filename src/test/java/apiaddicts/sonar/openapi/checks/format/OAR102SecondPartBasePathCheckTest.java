@@ -15,6 +15,8 @@ public class OAR102SecondPartBasePathCheckTest extends BaseCheckTest {
         check = new OAR102SecondPartBasePathCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -35,6 +37,14 @@ public class OAR102SecondPartBasePathCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifySecondPartBasePathLogicInV3() {
@@ -43,6 +53,14 @@ public class OAR102SecondPartBasePathCheckTest extends BaseCheckTest {
         verifyV3("invalid");
         verifyV3("valid-with-values");
         verifyV3("one-part-path");
+    }
+    @Test
+    public void verifySecondPartBasePathLogicInV31() {
+        verifyV31("one-part-path");
+    }
+    @Test
+    public void verifySecondPartBasePathLogicInV32() {
+        verifyV32("one-part-path");
     }
 
     @Override

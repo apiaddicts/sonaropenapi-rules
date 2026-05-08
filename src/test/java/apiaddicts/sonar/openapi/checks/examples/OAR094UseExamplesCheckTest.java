@@ -14,6 +14,8 @@ public class OAR094UseExamplesCheckTest extends BaseCheckTest {
         check = new OAR094UseExamplesCheck();
         v2Path = getV2Path("examples");
         v3Path = getV3Path("examples");
+        v31Path = getV31Path("examples");
+        v32Path = getV32Path("examples");
     }
 
     @Test
@@ -30,15 +32,39 @@ public class OAR094UseExamplesCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("invalid-example");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("invalid-example");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("invalid-example");
+    }
 
     @Test
     public void verifyvalidV3() {
         verifyV3("valid-example");
     }
+    @Test
+    public void verifyvalidV31() {
+        verifyV31("valid-example");
+    }
+    @Test
+    public void verifyvalidV32() {
+        verifyV32("valid-example");
+    }
 
     @Test
     public void verifyvalidV3ExternalRefs() {
         verifyV3("externalref.yaml");
+    }
+    @Test
+    public void verifyvalidV31ExternalRefs() {
+        verifyV31("externalref.yaml");
+    }
+    @Test
+    public void verifyvalidV32ExternalRefs() {
+        verifyV32("externalref.yaml");
     }
 
     @Override

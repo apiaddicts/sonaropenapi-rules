@@ -11,6 +11,7 @@ import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
@@ -77,7 +78,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH);
     }
 
     @Override
@@ -99,7 +100,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
                 handleExternalRef.resolve(propResponse.value(), resolved -> {
                     if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                         visitSchemaNode(resolved, statusCode);
-                    } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                    } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE) || resolved.getType().equals(OpenApi31Grammar.RESPONSE) || resolved.getType().equals(OpenApi32Grammar.RESPONSE)) {
                         resolved.at("/content").propertyMap().forEach((mediaType, mediaTypeNode) -> {
                             if (mediaType.toLowerCase().contains("json")) {
                                 visitSchemaNode(mediaTypeNode, statusCode);

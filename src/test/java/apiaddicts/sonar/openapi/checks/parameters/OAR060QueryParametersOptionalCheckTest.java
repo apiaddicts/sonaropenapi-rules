@@ -14,6 +14,8 @@ public class OAR060QueryParametersOptionalCheckTest extends BaseCheckTest{
         check = new OAR060QueryParametersOptionalCheck();
         v2Path = getV2Path("parameters");
         v3Path = getV3Path("parameters");
+        v31Path = getV31Path("parameters");
+        v32Path = getV32Path("parameters");
     }
 
     @Test
@@ -29,8 +31,24 @@ public class OAR060QueryParametersOptionalCheckTest extends BaseCheckTest{
         verifyV3("required-false");
     }
     @Test
+    public void verifyInV31requiredFalse() {
+        verifyV31("required-false");
+    }
+    @Test
+    public void verifyInV32requiredFalse() {
+        verifyV32("required-false");
+    }
+    @Test
     public void verifyInV3requiredTrue() {
         verifyV3("required-true");
+    }
+    @Test
+    public void verifyInV31requiredTrue() {
+        verifyV31("required-true");
+    }
+    @Test
+    public void verifyInV32requiredTrue() {
+        verifyV32("required-true");
     }
     @Override
     public void verifyRule() {

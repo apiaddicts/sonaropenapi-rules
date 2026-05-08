@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 
@@ -22,12 +23,12 @@ public class OAR115VerifyRequiredFields extends BaseCheck {
 
  @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.SCHEMA,OpenApi2Grammar.RESPONSE, OpenApi3Grammar.SCHEMA,OpenApi31Grammar.SCHEMA,OpenApi3Grammar.RESPONSE, OpenApi31Grammar.RESPONSE);
+        return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.RESPONSE, OpenApi3Grammar.SCHEMA, OpenApi3Grammar.RESPONSE, OpenApi31Grammar.SCHEMA, OpenApi31Grammar.RESPONSE, OpenApi32Grammar.SCHEMA, OpenApi32Grammar.RESPONSE);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if(node.getType() == OpenApi3Grammar.RESPONSE || node.getType() == OpenApi31Grammar.RESPONSE ){
+        if(node.getType() == OpenApi3Grammar.RESPONSE || node.getType() == OpenApi31Grammar.RESPONSE || node.getType() == OpenApi32Grammar.RESPONSE){
             JsonNode content = node.get("content");
             JsonNode json = content.get("application/json");
             JsonNode schema = json.get("schema");

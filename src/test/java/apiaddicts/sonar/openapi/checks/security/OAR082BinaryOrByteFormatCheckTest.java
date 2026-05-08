@@ -15,6 +15,8 @@ public class OAR082BinaryOrByteFormatCheckTest extends BaseCheckTest {
         check = new OAR082BinaryOrByteFormatCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
     @Test
     public void verifyvalidV2() {
@@ -23,6 +25,14 @@ public class OAR082BinaryOrByteFormatCheckTest extends BaseCheckTest {
     @Test
     public void verifyvalidV3() {
         verifyV3("valid-format");
+    }
+    @Test
+    public void verifyvalidV31() {
+        verifyV31("valid-format");
+    }
+    @Test
+    public void verifyvalidV32() {
+        verifyV32("valid-format");
     }
 
     @Override

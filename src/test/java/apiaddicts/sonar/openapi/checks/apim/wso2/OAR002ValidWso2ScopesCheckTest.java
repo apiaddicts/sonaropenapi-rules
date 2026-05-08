@@ -14,6 +14,8 @@ public class OAR002ValidWso2ScopesCheckTest extends BaseCheckTest {
         check = new OAR002ValidWso2ScopesCheck();
         v2Path = getV2Path("apim/wso2");
         v3Path = getV3Path("apim/wso2");
+        v31Path = getV31Path("apim");
+        v32Path = getV32Path("apim");
     }
 
     @Test
@@ -45,25 +47,65 @@ public class OAR002ValidWso2ScopesCheckTest extends BaseCheckTest {
     public void verifyInV3WithScopes() {
         verifyV3("with-scopes");
     }
+    @Test
+    public void verifyInV31WithScopes() {
+        verifyV31("with-scopes");
+    }
+    @Test
+    public void verifyInV32WithScopes() {
+        verifyV32("with-scopes");
+    }
 
     @Test
     public void verifyInV3WithNullScopes() {
         verifyV3("with-null-scopes");
+    }
+    @Test
+    public void verifyInV31WithNullScopes() {
+        verifyV31("with-null-scopes");
+    }
+    @Test
+    public void verifyInV32WithNullScopes() {
+        verifyV32("with-null-scopes");
     }
 
     @Test
     public void verifyInV3WithEmptyScopes() {
         verifyV3("with-empty-scopes");
     }
+    @Test
+    public void verifyInV31WithEmptyScopes() {
+        verifyV31("with-empty-scopes");
+    }
+    @Test
+    public void verifyInV32WithEmptyScopes() {
+        verifyV32("with-empty-scopes");
+    }
 
     @Test
     public void verifyInV3WithoutScopes() {
         verifyV3("without-scopes");
     }
+    @Test
+    public void verifyInV31WithoutScopes() {
+        verifyV31("without-scopes");
+    }
+    @Test
+    public void verifyInV32WithoutScopes() {
+        verifyV32("without-scopes");
+    }
 
     @Test
     public void verifyInV3WithoutSecurity() {
         verifyV3("without-security");
+    }
+    @Test
+    public void verifyInV31WithoutSecurity() {
+        verifyV31("without-security");
+    }
+    @Test
+    public void verifyInV32WithoutSecurity() {
+        verifyV32("without-security");
     }
 
     @Override

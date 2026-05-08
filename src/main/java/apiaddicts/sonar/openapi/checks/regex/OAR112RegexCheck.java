@@ -8,6 +8,8 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.impl.MissingNode;
 
@@ -70,6 +72,32 @@ public class OAR112RegexCheck extends BaseCheck {
             OpenApi3Grammar.TAG,
             OpenApi3Grammar.SERVER,
             OpenApi3Grammar.EXTERNAL_DOC,
+            OpenApi31Grammar.ROOT,
+            OpenApi31Grammar.PATHS,
+            OpenApi31Grammar.OPERATION,
+            OpenApi31Grammar.INFO,
+            OpenApi31Grammar.RESPONSES,
+            OpenApi31Grammar.PARAMETER,
+            OpenApi31Grammar.COMPONENTS,
+            OpenApi31Grammar.REQUEST_BODY,
+            OpenApi31Grammar.SCHEMA,
+            OpenApi31Grammar.SECURITY_SCHEME,
+            OpenApi31Grammar.TAG,
+            OpenApi31Grammar.SERVER,
+            OpenApi31Grammar.EXTERNAL_DOC,
+            OpenApi32Grammar.ROOT,
+            OpenApi32Grammar.PATHS,
+            OpenApi32Grammar.OPERATION,
+            OpenApi32Grammar.INFO,
+            OpenApi32Grammar.RESPONSES,
+            OpenApi32Grammar.PARAMETER,
+            OpenApi32Grammar.COMPONENTS,
+            OpenApi32Grammar.REQUEST_BODY,
+            OpenApi32Grammar.SCHEMA,
+            OpenApi32Grammar.SECURITY_SCHEME,
+            OpenApi32Grammar.TAG,
+            OpenApi32Grammar.SERVER,
+            OpenApi32Grammar.EXTERNAL_DOC,
             OpenApi2Grammar.ROOT,
             OpenApi2Grammar.PATHS,
             OpenApi2Grammar.OPERATION,
@@ -81,7 +109,6 @@ public class OAR112RegexCheck extends BaseCheck {
             OpenApi2Grammar.SECURITY_SCHEME,
             OpenApi2Grammar.TAG,
             OpenApi2Grammar.EXTERNAL_DOC
-
         );
     }
 
@@ -95,18 +122,18 @@ public class OAR112RegexCheck extends BaseCheck {
         boolean isMethod = isPathRoot && Arrays.asList("get", "post", "put", "patch", "delete")
                 .contains(nodeSegments[1].toLowerCase());
 
-        if (pathSegments.contains("info") && isType(type, OpenApi3Grammar.ROOT, OpenApi2Grammar.ROOT)) {
+        if (pathSegments.contains("info") && isType(type, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi32Grammar.ROOT, OpenApi2Grammar.ROOT)) {
             handleInfoSection(node, pathSegments);
-        } else if (pathSegments.contains("servers") && type.equals(OpenApi3Grammar.SERVER)) {
+        } else if (pathSegments.contains("servers") && isType(type, OpenApi3Grammar.SERVER, OpenApi31Grammar.SERVER, OpenApi32Grammar.SERVER)) {
             handleServerNode(node, pathSegments);
-        } else if (isMethod && isType(type, OpenApi3Grammar.OPERATION, OpenApi2Grammar.OPERATION)) {
+        } else if (isMethod && isType(type, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi32Grammar.OPERATION, OpenApi2Grammar.OPERATION)) {
             handleOperationsNode(node, pathSegments);
-        } else if (pathSegments.contains("tags") && isType(type, OpenApi3Grammar.TAG, OpenApi2Grammar.TAG)) {
+        } else if (pathSegments.contains("tags") && isType(type, OpenApi3Grammar.TAG, OpenApi31Grammar.TAG, OpenApi32Grammar.TAG, OpenApi2Grammar.TAG)) {
             handleTagsNode(node, pathSegments);
-        } else if (pathSegments.contains("externalDocs") && isType(type, OpenApi3Grammar.EXTERNAL_DOC, OpenApi2Grammar.EXTERNAL_DOC)) {
+        } else if (pathSegments.contains("externalDocs") && isType(type, OpenApi3Grammar.EXTERNAL_DOC, OpenApi31Grammar.EXTERNAL_DOC, OpenApi32Grammar.EXTERNAL_DOC, OpenApi2Grammar.EXTERNAL_DOC)) {
             handleExternalDocsNode(node, pathSegments);
         } else if (isMethod && nodeSegments.length > 2 && "parameters".equals(nodeSegments[2])
-                && isType(type, OpenApi3Grammar.PARAMETER, OpenApi2Grammar.PARAMETERS)) {
+                && isType(type, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi32Grammar.PARAMETER, OpenApi2Grammar.PARAMETERS)) {
             handleParametersNode(node, pathSegments);
         }
     }

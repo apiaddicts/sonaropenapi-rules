@@ -14,6 +14,8 @@ public class OAR005UndefinedWso2ScopeUseCheckTest extends BaseCheckTest {
         check = new OAR005UndefinedWso2ScopeUseCheck();
         v2Path = getV2Path("apim/wso2");
         v3Path = getV3Path("apim/wso2");
+        v31Path = getV31Path("apim");
+        v32Path = getV32Path("apim");
     }
 
     @Test
@@ -35,15 +37,39 @@ public class OAR005UndefinedWso2ScopeUseCheckTest extends BaseCheckTest {
     public void verifyInV3WithNullOperationScope() {
         verifyV3("with-null-operation-scope");
     }
+    @Test
+    public void verifyInV31WithNullOperationScope() {
+        verifyV31("with-null-operation-scope");
+    }
+    @Test
+    public void verifyInV32WithNullOperationScope() {
+        verifyV32("with-null-operation-scope");
+    }
 
     @Test
     public void verifyInV3WithWrongOperationScope() {
         verifyV3("with-wrong-operation-scope");
     }
+    @Test
+    public void verifyInV31WithWrongOperationScope() {
+        verifyV31("with-wrong-operation-scope");
+    }
+    @Test
+    public void verifyInV32WithWrongOperationScope() {
+        verifyV32("with-wrong-operation-scope");
+    }
 
     @Test
     public void verifyInV3WithCorrectOperationScope() {
         verifyV3("with-correct-operation-scope");
+    }
+    @Test
+    public void verifyInV31WithCorrectOperationScope() {
+        verifyV31("with-correct-operation-scope");
+    }
+    @Test
+    public void verifyInV32WithCorrectOperationScope() {
+        verifyV32("with-correct-operation-scope");
     }
 
     @Override

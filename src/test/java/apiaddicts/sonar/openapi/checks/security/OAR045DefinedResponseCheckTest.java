@@ -14,6 +14,8 @@ public class OAR045DefinedResponseCheckTest extends BaseCheckTest {
         check = new OAR045DefinedResponseCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test

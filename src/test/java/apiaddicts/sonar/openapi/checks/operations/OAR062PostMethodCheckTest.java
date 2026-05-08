@@ -15,6 +15,8 @@ public class OAR062PostMethodCheckTest extends BaseCheckTest {
         check = new OAR062PostMethodCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR062PostMethodCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3InsufficentResponseCodes() {
         verifyV3("insuficent-response-codes");
+    }
+    @Test
+    public void verifyInV31InsufficentResponseCodes() {
+        verifyV31("insuficent-response-codes");
+    }
+    @Test
+    public void verifyInV32InsufficentResponseCodes() {
+        verifyV32("insuficent-response-codes");
     }
 
     @Override
