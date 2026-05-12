@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.0] - 2024-05-06
 
+## Changed
+
+- Move sonar organization config to github action
+
 ## Added
 
 ### Now, support for OpenAPI 3.2 is included. These are some of the new changes:
