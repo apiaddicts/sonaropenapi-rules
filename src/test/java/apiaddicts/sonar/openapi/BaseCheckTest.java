@@ -96,7 +96,7 @@ public abstract class BaseCheckTest {
         OpenAPICustomRulesDefinition rulesDefinition = new OpenAPICustomRulesDefinition();
         RulesDefinition.Context context = new RulesDefinition.Context();
         rulesDefinition.define(context);
-        repository = context.repository(OpenAPICustomRulesDefinition.REPOSITORY_KEY);
+        repository = context.repository(OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY);
     }
 
     @Test

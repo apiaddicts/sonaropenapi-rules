@@ -24,8 +24,8 @@ public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDef
 	@Override
 	public void define(Context context) {
 		NewBuiltInQualityProfile yamlProfile = context.createBuiltInQualityProfile(OPENAPI_WAY, "yaml");
-		addBaseRules(yamlProfile, CheckList.REPOSITORY_KEY);
-		addRepositoryRules(yamlProfile, OpenAPICustomRulesDefinition.REPOSITORY_KEY, RulesLists.getAllChecks());
+		addBaseRules(yamlProfile, CheckList.YAML_REPOSITORY_KEY);
+		addRepositoryRules(yamlProfile, OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY, RulesLists.getAllChecks());
 		yamlProfile.done();
 
 		NewBuiltInQualityProfile jsonProfile = context.createBuiltInQualityProfile(OPENAPI_WAY, "json");

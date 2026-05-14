@@ -17,7 +17,7 @@ public class OpenAPICustomRulesDefinitionTest {
 		RulesDefinition.Context context = new RulesDefinition.Context();
 		rulesDefinition.define(context);
 
-		Repository yamlRepository = context.repository(OpenAPICustomRulesDefinition.REPOSITORY_KEY);
+		Repository yamlRepository = context.repository(OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY);
 		assertThat(yamlRepository.name()).isEqualTo("OpenAPI Custom");
 		assertThat(yamlRepository.language()).isEqualTo("yaml");
 		assertThat(yamlRepository.rules()).hasSize(RulesLists.getAllChecks().size());

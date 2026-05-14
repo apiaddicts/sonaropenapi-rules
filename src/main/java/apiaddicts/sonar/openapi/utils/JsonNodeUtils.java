@@ -18,14 +18,16 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import com.sonar.sslr.api.AstNodeType;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 public class JsonNodeUtils {
 
-    private static final Logger LOG = Logger.getLogger(JsonNodeUtils.class.getName());
+    private static final Logger LOG = Loggers.get(JsonNodeUtils.class);
+    private static final int CONNECT_TIMEOUT_MS = 5_000;
+    private static final int READ_TIMEOUT_MS = 10_000;
 
     private JsonNodeUtils() {
 		    // Intentional blank
@@ -49,7 +51,8 @@ public class JsonNodeUtils {
             if (ref.startsWith("#")) {
                 return original.resolve();
             } else {
-                return resolveExternalRef(ref);
+                JsonNode resolved = resolveExternalRef(ref);
+                return resolved != null ? resolved : original;
             }
         }
         return original;
@@ -66,6 +69,9 @@ public class JsonNodeUtils {
 
     private static JsonNode resolveExternalRef(String url) {
         String content = retriveExternalRefContent(url);
+        if (content == null) {
+            return null;
+        }
         OpenApiConfiguration configuration = new OpenApiConfiguration(StandardCharsets.UTF_8, true);
         YamlParser parser = OpenApiParser.createGeneric(configuration);
 
@@ -93,8 +99,10 @@ public class JsonNodeUtils {
         try {
             URL url = URI.create(ref).toURL();
             conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
+            conn.setReadTimeout(READ_TIMEOUT_MS);
             conn.setRequestMethod("GET");
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+            conn.setRequestProperty("User-Agent", "SonarQube OpenAPI Plugin");
             conn.connect();
 
             int responseCode = conn.getResponseCode();
@@ -106,11 +114,11 @@ public class JsonNodeUtils {
                 }
             } else {
                 handleErrorResponse(conn);
-                return "Error: Response code " + responseCode;
+                return null;
             }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, String.format("Error parsing external ref %s", ref), e);
-            return "Error: " + e.getMessage();
+            LOG.warn("Cannot resolve external ref " + ref + ": " + e.getMessage());
+            return null;
         } finally {
             if (conn != null) {
                 conn.disconnect();
@@ -133,8 +141,7 @@ public class JsonNodeUtils {
         int responseCode = conn.getResponseCode();
         InputStream errorStream = conn.getErrorStream();
         String errorResponse = errorStream != null ? readInputStreamToString(errorStream) : "No error message";
-        conn.getHeaderFields().forEach((key, value) -> LOG.info("Header " + key + ": " + value));
-        LOG.log(Level.SEVERE, "Error resolving external ref {0} {1}", new Object[]{responseCode, errorResponse});
+        LOG.warn("External ref returned HTTP " + responseCode + ": " + errorResponse);
     }
 
     public static String getLastFetchedContent() {

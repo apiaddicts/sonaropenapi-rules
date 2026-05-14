@@ -15,7 +15,7 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
 @ScannerSide
 @ExtensionPoint
 public class OpenAPICustomRulesDefinition implements RulesDefinition {
-    public static final String REPOSITORY_KEY = "openapi-custom";
+    public static final String YAML_REPOSITORY_KEY = "openapi-custom-yaml";
     public static final String JSON_REPOSITORY_KEY = "openapi-custom-json";
     private static final String REPOSITORY_NAME = "OpenAPI Custom";
     private static final String ROOT_RESOURCE_FOLDER = "org/sonar/l10n/openapi/rules/openapi/";
@@ -32,7 +32,7 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
     @Override
     public void define(Context context) {
         I18nContext.initializeFromUserLanguage();
-        populateRepository(context, REPOSITORY_KEY, "yaml");
+        populateRepository(context, YAML_REPOSITORY_KEY, "yaml");
         populateRepository(context, JSON_REPOSITORY_KEY, "json");
     }
 
