@@ -8,7 +8,7 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
 
 import java.util.List;
 
-import static apiaddicts.sonar.openapi.OpenAPICustomRulesDefinition.REPOSITORY_KEY;
+import static apiaddicts.sonar.openapi.OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY;
 
 /**
  * Makes the rules visible to the OpenAPI scanner sensor,
@@ -22,7 +22,7 @@ import static apiaddicts.sonar.openapi.OpenAPICustomRulesDefinition.REPOSITORY_K
 public class OpenAPICustomRuleRepository implements OpenApiCustomRuleRepository {
 	@Override
 	public String repositoryKey() {
-		return REPOSITORY_KEY;
+		return YAML_REPOSITORY_KEY;
 	}
 
 	@Override

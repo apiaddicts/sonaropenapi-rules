@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
   <artifactId>sonaropenapi-rules-community</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube OpenAPI Community Rules</name>
@@ -64,7 +64,7 @@
 
     <sonar.version>8.7.0.41497</sonar.version>
     <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
-    <sonaropenapi.version>1.2.0</sonaropenapi.version>
+    <sonaropenapi.version>1.2.1</sonaropenapi.version>
     <sonaranalyzer.version>1.22.0.848</sonaranalyzer.version>
     <orgjson.version>20220320</orgjson.version>
     <junit.version>4.13.2</junit.version>
@@ -91,7 +91,13 @@
     <dependency>
       <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-front-end</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
+      <artifactId>openapi-checks</artifactId>
+      <version>${sonaropenapi.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
@@ -125,7 +131,7 @@
     <dependency>
       <groupId>org.apiaddicts.apitools.dosonarapi</groupId>
       <artifactId>openapi-test-tools</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

@@ -5,17 +5,17 @@ import org.junit.Test;
 
 import apiaddicts.sonar.openapi.checks.RulesLists;
 
-public class OpenAPICustomRuleRepositoryTest {
+public class OpenAPICustomJsonRuleRepositoryTest {
 
 	@Test
 	public void testRepositoryKey() {
-		OpenAPICustomRuleRepository repository = new OpenAPICustomRuleRepository();
-		assertThat(repository.repositoryKey()).isEqualTo(OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY);
+		OpenAPICustomJsonRuleRepository repository = new OpenAPICustomJsonRuleRepository();
+		assertThat(repository.repositoryKey()).isEqualTo(OpenAPICustomRulesDefinition.JSON_REPOSITORY_KEY);
 	}
 
 	@Test
 	public void testCheckClasses() {
-		OpenAPICustomRuleRepository repository = new OpenAPICustomRuleRepository();
+		OpenAPICustomJsonRuleRepository repository = new OpenAPICustomJsonRuleRepository();
 		assertThat(repository.checkClasses()).isEqualTo(RulesLists.getAllChecks());
 		assertThat(repository.checkClasses()).isNotEmpty();
 	}
