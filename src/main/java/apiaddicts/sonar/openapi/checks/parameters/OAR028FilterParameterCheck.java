@@ -75,6 +75,9 @@ public class OAR028FilterParameterCheck extends BaseCheck {
         JsonNode nameNode = node.get("name");
 
         if (inNode != null && nameNode != null) {
+            if (!"query".equals(inNode.getTokenValue())) {
+                return;
+            }
             String path = getPath(node);
             if (shouldExcludePath(path) && !parameterName.equals(nameNode.getTokenValue())) {
                 addIssue(KEY, translate(MESSAGE, parameterName), nameNode);
