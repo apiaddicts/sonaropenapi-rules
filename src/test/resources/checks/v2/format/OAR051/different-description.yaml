@@ -6,8 +6,8 @@ paths:
   /pets:
     post:
       summary: create a pet
-      description: Create a new pet. The pet type is assigned a new unique ID, and can then be referenced in other
-                   operations.
+      # Noncompliant@+1 {{OAR051: Description must differ from summary}}
+      description: Create a pet
       responses:
         default:
           description: the default response
