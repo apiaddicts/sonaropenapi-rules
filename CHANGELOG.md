@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Security
 
 - Upgrade `org.json:json` to `20231013` to fix CVE vulnerabilities
+- Upgrade `jackson-dataformat-yaml` from 2.13.3 to 2.18.6 to fix CVE alerts.
 
 ## Changed
 
