@@ -6,26 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [1.4.0] - 2024-05-20
+## [1.4.0] - 2024-05-22
 
-## Security
+### Security
 
 - Upgrade `org.json:json` to `20231013` to fix CVE vulnerabilities
 - Upgrade `jackson-dataformat-yaml` from 2.13.3 to 2.18.6 to fix CVE alerts.
+- Upgrade `assertj-core` from 3.22.0 to 3.27.7 to fix XXE vulnerability.
 
-## Changed
+### Changed
 
 - Move sonar organization config to github action
 
-## Added
+### Added
 
-### Now, support for OpenAPI 3.2 is included. These are some of the new changes:
+#### Now, support for OpenAPI 3.2 is included. These are some of the new changes:
 
 - All existing rules (OAR001 - OAR115) have been updated and validated for compatibility with the OpenAPI 3.2 specification.
 - Added a comprehensive set of test cases for every rule to ensure correct behavior and validation under OpenAPI 3.2 schemas.
 - Enhanced the engine to support new 3.2 structural changes, including updated reference handling and metadata fields.
 
-## Fixed
+### Fixed
 
 - Resolve language suffix conflict between the plugin's custom YAML/JSON support and SonarQube's built-in language detection.
 
