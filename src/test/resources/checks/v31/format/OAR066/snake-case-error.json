@@ -14,7 +14,13 @@
                   "type": "object",
                   "properties": {
                     "firstName": { "type": "string" }, # Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}
-                    "last_name": { "type": "string" }
+                    "last_name": {
+                      "type": "object",
+                      "properties": {
+                        "streetName": { "type": "string" }, # Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}
+                        "street_name": { "type": "string" }
+                      }
+                    }
                   }
                 }
               }
@@ -29,7 +35,13 @@
                     "type": "object",
                     "properties": {
                       "userID": { "type": "integer" }, # Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}
-                      "user_name": { "type": "string" }
+                      "user_name": {
+                        "type": "object",
+                        "properties": {
+                          "userId": { "type": "integer" }, # Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}
+                          "user_id": { "type": "integer" }
+                        }
+                      }
                     }
                   }
                 }

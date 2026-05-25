@@ -109,6 +109,23 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
         verifyV32("with-param");
     }
 
+    @Test
+    public void verifyInV2ExpandNoDollar() {
+        verifyV2("expand-no-dollar");
+    }
+    @Test
+    public void verifyInV3ExpandNoDollar() {
+        verifyV3("expand-no-dollar");
+    }
+    @Test
+    public void verifyInV31ExpandNoDollar() {
+        verifyV31("expand-no-dollar");
+    }
+    @Test
+    public void verifyInV32ExpandNoDollar() {
+        verifyV32("expand-no-dollar");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR020 - ExpandParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));

@@ -108,6 +108,7 @@ public abstract class AbstractSchemaNamingConventionCheck extends AbstractNaming
         JsonNode nameNode = property.key();
         String name = nameNode.getTokenValue();
         validateNamingConvention(name, nameNode);
+        visitSchemaNode(property);
       }
     }
   }
@@ -145,7 +146,10 @@ public abstract class AbstractSchemaNamingConventionCheck extends AbstractNaming
       JsonNode propsNode = schemaResolved.get(PROPERTIES);
       if (!propsNode.isMissing() && propsNode.isObject()) {
         propsNode.propertyMap()
-            .forEach((name, property) -> validateNamingConvention(name, handleExternalRef.getTrueNode(property.key())));
+            .forEach((name, property) -> {
+              validateNamingConvention(name, handleExternalRef.getTrueNode(property.key()));
+              visitSchemaNode(property);
+            });
       }
     });
   }

@@ -143,6 +143,23 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
         verifyV32("components-param");
     }
 
+    @Test
+    public void verifyInV2HeaderIgnored() {
+        verifyV2("header-ignored");
+    }
+    @Test
+    public void verifyInV3HeaderIgnored() {
+        verifyV3("header-ignored");
+    }
+    @Test
+    public void verifyInV31HeaderIgnored() {
+        verifyV31("header-ignored");
+    }
+    @Test
+    public void verifyInV32HeaderIgnored() {
+        verifyV32("header-ignored");
+    }
+
     private void setField(String name, String value) {
         try {
             java.lang.reflect.Field f = OAR028FilterParameterCheck.class.getDeclaredField(name);

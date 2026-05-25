@@ -109,6 +109,23 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
         verifyV32("with-param");
     }
 
+    @Test
+    public void verifyInV2ExcludeNoDollar() {
+        verifyV2("exclude-no-dollar");
+    }
+    @Test
+    public void verifyInV3ExcludeNoDollar() {
+        verifyV3("exclude-no-dollar");
+    }
+    @Test
+    public void verifyInV31ExcludeNoDollar() {
+        verifyV31("exclude-no-dollar");
+    }
+    @Test
+    public void verifyInV32ExcludeNoDollar() {
+        verifyV32("exclude-no-dollar");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR021 - ExcludeParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));

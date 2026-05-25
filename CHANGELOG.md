@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## [1.4.0] - 2024-05-22
 
 ### Security
@@ -29,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Resolve language suffix conflict between the plugin's custom YAML/JSON support and SonarQube's built-in language detection.
+- OAR020 - ExpandParameterCheck: rule now explicitly requires `$expand` (with `$` prefix) as the query parameter name, rejecting `expand` without prefix, aligning with Spectral behavior.
+- OAR021 - ExcludeParameterCheck: rule now explicitly requires `$exclude` (with `$` prefix) as the query parameter name, rejecting `exclude` without prefix, aligning with Spectral behavior.
+- OAR028 - FilterParameterCheck: rule now only evaluates `query` parameters; header, path and cookie parameters are ignored, aligning with Spectral behavior.
+- OAR051 - DescriptionDiffersSummaryCheck: rule now evaluates all HTTP methods (GET, POST, PUT, PATCH, DELETE), not only GET, aligning with Spectral behavior.
+- OAR066 - SnakeCaseNamingConventionCheck: rule now recursively validates nested schema property names at all depth levels, aligning with Spectral behavior.
 
 
 ## [1.3.7] - 2026-05-18

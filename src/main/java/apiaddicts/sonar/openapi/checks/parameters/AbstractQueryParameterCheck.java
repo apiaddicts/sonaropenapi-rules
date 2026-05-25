@@ -142,6 +142,9 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     }
 
     protected boolean shouldIncludePath(String path) {
+        if (paths.isEmpty()) {
+            return pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE); 
+        }
         if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return !paths.contains(path);
         } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {

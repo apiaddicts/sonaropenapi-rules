@@ -19,7 +19,15 @@
                   "type": "string"
                 },
                 "last_name": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "streetName": { # Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}
+                      "type": "string"
+                    },
+                    "street_name": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -35,7 +43,15 @@
                   "type": "integer"
                 },
                 "user_name": {
-                  "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "userId": { # Noncompliant {{OAR066: RequestBody and Responses schema property names must be compliant with the snake_case naming convention}}
+                      "type": "integer"
+                    },
+                    "user_id": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             }
