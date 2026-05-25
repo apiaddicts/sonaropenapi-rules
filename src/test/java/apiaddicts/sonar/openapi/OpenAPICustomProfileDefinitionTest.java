@@ -1,6 +1,7 @@
 package apiaddicts.sonar.openapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.apiaddicts.apitools.dosonarapi.checks.CheckList;
 import org.junit.Test;
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition.BuiltInQualityProfile;
@@ -15,12 +16,21 @@ public class OpenAPICustomProfileDefinitionTest {
 		OpenAPICustomProfileDefinition profileDefinition = new OpenAPICustomProfileDefinition();
 		BuiltInQualityProfilesDefinition.Context context = new BuiltInQualityProfilesDefinition.Context();
 		profileDefinition.define(context);
-		BuiltInQualityProfile profile = context.profile("openapi", OpenAPICustomProfileDefinition.MY_COMPANY_WAY);
-		assertThat(profile).isNotNull();
-		assertThat(profile.language()).isEqualTo("openapi");
-		assertThat(profile.name()).isEqualTo(OpenAPICustomProfileDefinition.MY_COMPANY_WAY);
 
-		assertThat(profile.rules()).hasSize(RulesLists.getAllChecks().size() - 1);
-		assertThat(profile.rules().stream().noneMatch(r -> r.ruleKey().equals("OAR112"))).isTrue();
+		int expectedSize = CheckList.getChecks().size() + RulesLists.getAllChecks().size() - 1;
+
+		BuiltInQualityProfile yamlProfile = context.profile("yaml", OpenAPICustomProfileDefinition.OPENAPI_WAY);
+		assertThat(yamlProfile).isNotNull();
+		assertThat(yamlProfile.language()).isEqualTo("yaml");
+		assertThat(yamlProfile.name()).isEqualTo(OpenAPICustomProfileDefinition.OPENAPI_WAY);
+		assertThat(yamlProfile.rules()).hasSize(expectedSize);
+		assertThat(yamlProfile.rules().stream().noneMatch(r -> r.ruleKey().equals("OAR112"))).isTrue();
+
+		BuiltInQualityProfile jsonProfile = context.profile("json", OpenAPICustomProfileDefinition.OPENAPI_WAY);
+		assertThat(jsonProfile).isNotNull();
+		assertThat(jsonProfile.language()).isEqualTo("json");
+		assertThat(jsonProfile.name()).isEqualTo(OpenAPICustomProfileDefinition.OPENAPI_WAY);
+		assertThat(jsonProfile.rules()).hasSize(expectedSize);
+		assertThat(jsonProfile.rules().stream().noneMatch(r -> r.ruleKey().equals("OAR112"))).isTrue();
 	}
 }

@@ -22,10 +22,11 @@ public class OpenAPICustomPluginTest {
 		};
 		Plugin.Context context = new Plugin.Context(runtime);
 		plugin.define(context);
-		assertThat(context.getExtensions()).hasSize(3);
+		assertThat(context.getExtensions()).hasSize(4);
 		assertThat(context.getExtensions()).contains(
 				OpenAPICustomProfileDefinition.class,
 				OpenAPICustomRulesDefinition.class,
-				OpenAPICustomRuleRepository.class);
+				OpenAPICustomRuleRepository.class,
+				OpenAPICustomJsonRuleRepository.class);
 	}
 }

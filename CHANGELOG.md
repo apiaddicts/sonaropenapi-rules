@@ -5,29 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.1] - 2024-05-18
+## [1.4.0] - 2024-05-22
+
+### Security
+
+- Upgrade `org.json:json` to `20231013` to fix CVE vulnerabilities
+- Upgrade `jackson-dataformat-yaml` from 2.13.3 to 2.18.6 to fix CVE alerts.
+- Upgrade `assertj-core` from 3.22.0 to 3.27.7 to fix XXE vulnerability.
+
+### Changed
+
+- Move sonar organization config to github action
+
+### Added
+
+#### Now, support for OpenAPI 3.2 is included. These are some of the new changes:
+
+- All existing rules (OAR001 - OAR115) have been updated and validated for compatibility with the OpenAPI 3.2 specification.
+- Added a comprehensive set of test cases for every rule to ensure correct behavior and validation under OpenAPI 3.2 schemas.
+- Enhanced the engine to support new 3.2 structural changes, including updated reference handling and metadata fields.
 
 ### Fixed
 
+- Resolve language suffix conflict between the plugin's custom YAML/JSON support and SonarQube's built-in language detection.
 - OAR020 - ExpandParameterCheck: rule now explicitly requires `$expand` (with `$` prefix) as the query parameter name, rejecting `expand` without prefix, aligning with Spectral behavior.
 - OAR021 - ExcludeParameterCheck: rule now explicitly requires `$exclude` (with `$` prefix) as the query parameter name, rejecting `exclude` without prefix, aligning with Spectral behavior.
 - OAR028 - FilterParameterCheck: rule now only evaluates `query` parameters; header, path and cookie parameters are ignored, aligning with Spectral behavior.
 - OAR051 - DescriptionDiffersSummaryCheck: rule now evaluates all HTTP methods (GET, POST, PUT, PATCH, DELETE), not only GET, aligning with Spectral behavior.
 - OAR066 - SnakeCaseNamingConventionCheck: rule now recursively validates nested schema property names at all depth levels, aligning with Spectral behavior.
 
-## [1.4.0] - 2024-05-06
 
-## Changed
+## [1.3.7] - 2026-05-18
 
-- Move sonar organization config to github action
-
-## Added
-
-### Now, support for OpenAPI 3.2 is included. These are some of the new changes:
-
-- All existing rules (OAR001 - OAR115) have been updated and validated for compatibility with the OpenAPI 3.2 specification.
-- Added a comprehensive set of test cases for every rule to ensure correct behavior and validation under OpenAPI 3.2 schemas.
-- Enhanced the engine to support new 3.2 structural changes, including updated reference handling and metadata fields.
+### Fixed
+  - Add Spanish documentation for OAR048
 
 ## [1.3.6] - 2026-05-05
 

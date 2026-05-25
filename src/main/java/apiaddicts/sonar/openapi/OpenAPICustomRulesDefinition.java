@@ -15,7 +15,8 @@ import org.sonarsource.api.sonarlint.SonarLintSide;
 @ScannerSide
 @ExtensionPoint
 public class OpenAPICustomRulesDefinition implements RulesDefinition {
-    public static final String REPOSITORY_KEY = "openapi-custom";
+    public static final String YAML_REPOSITORY_KEY = "openapi-custom-yaml";
+    public static final String JSON_REPOSITORY_KEY = "openapi-custom-json";
     private static final String REPOSITORY_NAME = "OpenAPI Custom";
     private static final String ROOT_RESOURCE_FOLDER = "org/sonar/l10n/openapi/rules/openapi/";
     private static final String SECURITY_GROUP = "security";
@@ -31,11 +32,15 @@ public class OpenAPICustomRulesDefinition implements RulesDefinition {
     @Override
     public void define(Context context) {
         I18nContext.initializeFromUserLanguage();
+        populateRepository(context, YAML_REPOSITORY_KEY, "yaml");
+        populateRepository(context, JSON_REPOSITORY_KEY, "json");
+    }
+
+    private void populateRepository(Context context, String key, String language) {
         NewRepository repository = context
-                .createRepository(REPOSITORY_KEY, "openapi")
+                .createRepository(key, language)
                 .setName(REPOSITORY_NAME);
 
-        // Carga de reglas para cada grupo
         new RuleMetadataLoader(getPath(SECURITY_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getSecurityChecks());
         new RuleMetadataLoader(getPath(FORMAT_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getFormatChecks());
         new RuleMetadataLoader(getPath(SCHEMAS_GROUP)).addRulesByAnnotatedClass(repository, RulesLists.getSchemasChecks());

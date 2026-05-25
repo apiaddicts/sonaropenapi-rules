@@ -16,10 +16,16 @@ public class OpenAPICustomRulesDefinitionTest {
 		OpenAPICustomRulesDefinition rulesDefinition = new OpenAPICustomRulesDefinition();
 		RulesDefinition.Context context = new RulesDefinition.Context();
 		rulesDefinition.define(context);
-		Repository repository = context.repository(OpenAPICustomRulesDefinition.REPOSITORY_KEY);
-		assertThat(repository.name()).isEqualTo("OpenAPI Custom");
-		assertThat(repository.language()).isEqualTo("openapi");
-		assertThat(repository.rules()).hasSize(RulesLists.getAllChecks().size());
+
+		Repository yamlRepository = context.repository(OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY);
+		assertThat(yamlRepository.name()).isEqualTo("OpenAPI Custom");
+		assertThat(yamlRepository.language()).isEqualTo("yaml");
+		assertThat(yamlRepository.rules()).hasSize(RulesLists.getAllChecks().size());
+
+		Repository jsonRepository = context.repository(OpenAPICustomRulesDefinition.JSON_REPOSITORY_KEY);
+		assertThat(jsonRepository.name()).isEqualTo("OpenAPI Custom");
+		assertThat(jsonRepository.language()).isEqualTo("json");
+		assertThat(jsonRepository.rules()).hasSize(RulesLists.getAllChecks().size());
 	}
 
 	@Test
@@ -39,7 +45,7 @@ public class OpenAPICustomRulesDefinitionTest {
 		I18nContext.setLang("en");
 		OpenAPICustomRulesDefinition rulesDefinition = new OpenAPICustomRulesDefinition();
 		RulesDefinition.Context context = new RulesDefinition.Context();
-		RulesDefinition.NewRepository newRepo = context.createRepository("test-repo", "openapi").setName("Test");
+		RulesDefinition.NewRepository newRepo = context.createRepository("test-repo", "yaml").setName("Test");
 
 		Method method = OpenAPICustomRulesDefinition.class.getDeclaredMethod(
 				"markAsTemplate", RulesDefinition.NewRepository.class, String.class);

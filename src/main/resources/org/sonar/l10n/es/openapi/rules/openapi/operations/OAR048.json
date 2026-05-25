@@ -1,0 +1,13 @@
+{
+  "title": "OAR048 - AtMostOneBodyParameter - Las APIs deben definir como máximo un parámetro body.",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30mn"
+  },
+  "tags": [
+    "operations"
+  ],
+  "defaultSeverity": "BLOCKER"
+}
