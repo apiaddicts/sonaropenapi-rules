@@ -32,6 +32,11 @@ public class OpenAPICustomProfileDefinition implements BuiltInQualityProfilesDef
 		addBaseRules(jsonProfile, CheckList.JSON_REPOSITORY_KEY);
 		addRepositoryRules(jsonProfile, OpenAPICustomRulesDefinition.JSON_REPOSITORY_KEY, RulesLists.getAllChecks());
 		jsonProfile.done();
+
+		NewBuiltInQualityProfile openapiProfile = context.createBuiltInQualityProfile(OPENAPI_WAY, CheckList.OPENAPI_LANGUAGE);
+		addBaseRules(openapiProfile, CheckList.OPENAPI_REPOSITORY_KEY);
+		addRepositoryRules(openapiProfile, OpenAPICustomRulesDefinition.OPENAPI_REPOSITORY_KEY, RulesLists.getAllChecks());
+		openapiProfile.done();
 	}
 
 	private void addBaseRules(NewBuiltInQualityProfile profile, String repositoryKey) {

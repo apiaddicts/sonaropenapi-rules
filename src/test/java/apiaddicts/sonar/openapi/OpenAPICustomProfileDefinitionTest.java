@@ -32,5 +32,12 @@ public class OpenAPICustomProfileDefinitionTest {
 		assertThat(jsonProfile.name()).isEqualTo(OpenAPICustomProfileDefinition.OPENAPI_WAY);
 		assertThat(jsonProfile.rules()).hasSize(expectedSize);
 		assertThat(jsonProfile.rules().stream().noneMatch(r -> r.ruleKey().equals("OAR112"))).isTrue();
+
+		BuiltInQualityProfile openapiProfile = context.profile("openapi", OpenAPICustomProfileDefinition.OPENAPI_WAY);
+		assertThat(openapiProfile).isNotNull();
+		assertThat(openapiProfile.language()).isEqualTo("openapi");
+		assertThat(openapiProfile.name()).isEqualTo(OpenAPICustomProfileDefinition.OPENAPI_WAY);
+		assertThat(openapiProfile.rules()).hasSize(expectedSize);
+		assertThat(openapiProfile.rules().stream().noneMatch(r -> r.ruleKey().equals("OAR112"))).isTrue();
 	}
 }

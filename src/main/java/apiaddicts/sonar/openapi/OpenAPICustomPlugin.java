@@ -15,7 +15,8 @@ public class OpenAPICustomPlugin implements Plugin {
 				OpenAPICustomRulesDefinition.class,
 				// batch extensions -> objects are instantiated during code analysis
 				OpenAPICustomRuleRepository.class,
-				OpenAPICustomJsonRuleRepository.class
+				OpenAPICustomJsonRuleRepository.class,
+				OpenAPICustomOpenApiRuleRepository.class
 		);
 	}
 

@@ -26,6 +26,11 @@ public class OpenAPICustomRulesDefinitionTest {
 		assertThat(jsonRepository.name()).isEqualTo("OpenAPI Custom");
 		assertThat(jsonRepository.language()).isEqualTo("json");
 		assertThat(jsonRepository.rules()).hasSize(RulesLists.getAllChecks().size());
+
+		Repository openapiRepository = context.repository(OpenAPICustomRulesDefinition.OPENAPI_REPOSITORY_KEY);
+		assertThat(openapiRepository.name()).isEqualTo("OpenAPI Custom");
+		assertThat(openapiRepository.language()).isEqualTo("openapi");
+		assertThat(openapiRepository.rules()).hasSize(RulesLists.getAllChecks().size());
 	}
 
 	@Test
