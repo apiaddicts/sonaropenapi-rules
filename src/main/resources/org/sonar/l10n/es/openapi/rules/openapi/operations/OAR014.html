@@ -1,5 +1,6 @@
 <p>Una ruta compleja puede ser una insinuación para detectar definiciones de API incorrectas.</p>
-<p>El número de partes de la ruta debe ser menor a 4, cuando el número de partes de la ruta este entre 4 y 5 se mostrará una advertencia.</p>
+<p>El número de partes de la ruta debe ser menor a 4, cuando el número de partes de la ruta esté entre 4 y 5 se mostrará una advertencia.</p>
+<p><strong>Nota:</strong> Los parámetros de ruta (p.ej. <code>{customerId}</code>) se excluyen del conteo de profundidad — solo cuentan los segmentos literales de nombre de recurso.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
@@ -7,7 +8,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}:
+  /customers/{customerId}/invoices/{invoiceId}/products:
     get:
       parameters:
         - in: path
@@ -21,7 +22,7 @@ paths:
       responses:
         200:
           description: OK
-  /customers/{customerId}/invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/details: # Noncompliant {{OAR014: Resources depth level should be smaller}}
     get:
       parameters:
         - in: path
@@ -73,6 +74,20 @@ paths:
       responses:
         200:
           description: OK
+  /customers/{customerId}/invoices/{invoiceId}/products:
+    get:
+      parameters:
+        - in: path
+          name: customerId
+          type: integer
+          required: true
+        - in: path
+          name: invoiceId
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
 <pre>
@@ -81,7 +96,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}:
+  /customers/{customerId}/invoices/{invoiceId}/products:
     get:
       parameters:
       - name: customerId
@@ -97,7 +112,7 @@ paths:
       responses:
         200:
           description: OK
-  /customers/{customerId}/invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/details: # Noncompliant {{OAR014: Resources depth level should be smaller}}
     get:
       parameters:
       - name: customerId
@@ -146,6 +161,22 @@ paths:
   /invoices/{invoiceId}/products:
     get:
       parameters:
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+  /customers/{customerId}/invoices/{invoiceId}/products:
+    get:
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
       - name: invoiceId
         in: path
         required: true

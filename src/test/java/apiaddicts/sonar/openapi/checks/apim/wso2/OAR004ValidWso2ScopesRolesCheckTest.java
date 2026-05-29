@@ -55,6 +55,46 @@ public class OAR004ValidWso2ScopesRolesCheckTest extends BaseCheckTest {
         verifyV32("with-invalid-roles");
     }
 
+    @Test
+    public void verifyInV2WithValidArrayRoles() {
+        verifyV2("with-valid-array-roles");
+    }
+
+    @Test
+    public void verifyInV2WithInvalidArrayRoles() {
+        verifyV2("with-invalid-array-roles");
+    }
+
+    @Test
+    public void verifyInV3WithValidArrayRoles() {
+        verifyV3("with-valid-array-roles");
+    }
+
+    @Test
+    public void verifyInV3WithInvalidArrayRoles() {
+        verifyV3("with-invalid-array-roles");
+    }
+
+    @Test
+    public void verifyInV31WithValidArrayRoles() {
+        verifyV31("with-valid-array-roles");
+    }
+
+    @Test
+    public void verifyInV31WithInvalidArrayRoles() {
+        verifyV31("with-invalid-array-roles");
+    }
+
+    @Test
+    public void verifyInV32WithValidArrayRoles() {
+        verifyV32("with-valid-array-roles");
+    }
+
+    @Test
+    public void verifyInV32WithInvalidArrayRoles() {
+        verifyV32("with-invalid-array-roles");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR004 - ValidWso2ScopesRoles - WSO2 scope roles value is not valid", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));

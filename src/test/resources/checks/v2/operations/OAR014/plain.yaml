@@ -53,12 +53,12 @@ paths:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six:
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six: # Noncompliant {{OAR014: Resources depth level should be smaller}}
     get:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six/{six}:
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six/{six}: # Noncompliant {{OAR014: Resources depth level should be smaller}}
     get:
       responses:
         default:

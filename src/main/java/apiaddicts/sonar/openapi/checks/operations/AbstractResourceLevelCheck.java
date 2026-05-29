@@ -2,7 +2,6 @@ package apiaddicts.sonar.openapi.checks.operations;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
-import java.util.regex.Matcher;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
@@ -12,7 +11,6 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Set;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public abstract class AbstractResourceLevelCheck extends BaseCheck {
@@ -32,26 +30,17 @@ public abstract class AbstractResourceLevelCheck extends BaseCheck {
 
 	@Override
 	public void visitNode(JsonNode node) {
-		visitV2Node(node);
-	}
-
-	private void visitV2Node(JsonNode node) {
 		String path = node.key().getTokenValue();
 		if (matchLevel(path)) addIssue(key, translate(MESSAGE), node.key());
 	}
 
 	private boolean matchLevel(String path) {
-		String levelRegex = "\\/[^/{}]*\\/\\{[^/{}]*\\}";
-		Pattern levelPattern = Pattern.compile(levelRegex);
-		Matcher levelMatcher = levelPattern.matcher(path);
-		Integer levels = 0;
-		while ( levelMatcher.find() ) {
-			levels++;
-		}
-
-		long pathParts = Stream.of(path.split("/")).filter(p -> !p.trim().isEmpty()).count();
-		return matchLevel(pathParts - levels);
-
+		long literalCount = Stream.of(path.split("/"))
+				.filter(s -> !s.trim().isEmpty())
+				.filter(s -> !(s.startsWith("{") && s.endsWith("}")))
+				.filter(s -> !s.equals("me"))
+				.count();
+		return matchLevel(literalCount);
 	}
 
 	abstract boolean matchLevel(long level);
