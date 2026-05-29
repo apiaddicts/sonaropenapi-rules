@@ -30,20 +30,21 @@ public abstract class AbstractPatternWso2ScopesCheck extends AbstractWso2ScopesC
     @Override
     protected void visitScope(JsonNode scope) {
         JsonNode fieldNode = scope.propertyMap().get(fieldName);
-        if (fieldNode == null || fieldNode.isNull() || fieldNode.isMissing()) return;
+        if (fieldNode == null || fieldNode.isNull() || fieldNode.isMissing())
+            return;
 
         List<JsonNode> elements = fieldNode.elements();
         if (!elements.isEmpty()) {
             for (JsonNode element : elements) {
                 String roleText = element.getTokenValue();
                 if (roleText != null && !pattern.matcher(roleText).matches()) {
-                    addIssue(ruleKey, translate(messageKey), element.value());
+                    addIssue(ruleKey, translate(messageKey), element);
                 }
             }
         } else {
             String fieldText = fieldNode.getTokenValue();
-            if (!pattern.matcher(fieldText).matches()) {
-                addIssue(ruleKey, translate(messageKey), fieldNode.value());
+            if (fieldText != null && !pattern.matcher(fieldText).matches()) {
+                addIssue(ruleKey, translate(messageKey), fieldNode);
             }
         }
     }
