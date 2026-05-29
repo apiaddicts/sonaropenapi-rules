@@ -2,6 +2,7 @@ package apiaddicts.sonar.openapi.checks.apim.wso2;
 
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class AbstractPatternWso2ScopesCheck extends AbstractWso2ScopesCheck {
@@ -29,11 +30,22 @@ public abstract class AbstractPatternWso2ScopesCheck extends AbstractWso2ScopesC
     @Override
     protected void visitScope(JsonNode scope) {
         JsonNode fieldNode = scope.propertyMap().get(fieldName);
-        if (fieldNode == null || fieldNode.isNull() || fieldNode.isMissing()) return;
+        if (fieldNode == null || fieldNode.isNull() || fieldNode.isMissing())
+            return;
 
-        String fieldText = fieldNode.getTokenValue();
-        boolean notValid = !pattern.matcher(fieldText).matches();
-
-        if (notValid) addIssue(ruleKey, translate(messageKey), fieldNode.value());
+        List<JsonNode> elements = fieldNode.elements();
+        if (!elements.isEmpty()) {
+            for (JsonNode element : elements) {
+                String roleText = element.getTokenValue();
+                if (roleText != null && !pattern.matcher(roleText).matches()) {
+                    addIssue(ruleKey, translate(messageKey), element);
+                }
+            }
+        } else {
+            String fieldText = fieldNode.getTokenValue();
+            if (fieldText != null && !pattern.matcher(fieldText).matches()) {
+                addIssue(ruleKey, translate(messageKey), fieldNode);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 <p>Una ruta compleja puede ser una insinuación para detectar definiciones de API incorrectas.</p>
 <p>El número de partes de la ruta debe ser menor a 4, cuando el número de partes de la ruta sea mayor o igual a 6 se mostrará un error.</p>
+<p><strong>Nota:</strong> Los parámetros de ruta (p.ej. <code>{customerId}</code>) se excluyen del conteo de profundidad — solo cuentan los segmentos literales de nombre de recurso.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
@@ -7,7 +8,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
+  /customers/{customerId}/invoices/{invoiceId}/products/details/versions:
     get:
       parameters:
         - in: path
@@ -16,10 +17,6 @@ paths:
           required: true
         - in: path
           name: invoiceId
-          type: integer
-          required: true
-        - in: path
-          name: productId
           type: integer
           required: true
       responses:
@@ -53,19 +50,17 @@ paths:
       responses:
         200:
           description: OK
-  /invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
     get:
       parameters:
+        - in: path
+          name: customerId
+          type: integer
+          required: true
         - in: path
           name: invoiceId
           type: integer
           required: true
-      responses:
-        200:
-          description: OK
-  /products/{productId}:
-    get:
-      parameters:
         - in: path
           name: productId
           type: integer
@@ -81,7 +76,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
+  /customers/{customerId}/invoices/{invoiceId}/products/details/versions:
     get:
       parameters:
       - name: customerId
@@ -90,11 +85,6 @@ paths:
         schema:
           type: integer
       - name: invoiceId
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: productId
         in: path
         required: true
         schema:
@@ -132,20 +122,19 @@ paths:
       responses:
         200:
           description: OK
-  /invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
     get:
       parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
       - name: invoiceId
         in: path
         required: true
         schema:
           type: integer
-      responses:
-        200:
-          description: OK
-  /products/{productId}:
-    get:
-      parameters:
       - name: productId
         in: path
         required: true

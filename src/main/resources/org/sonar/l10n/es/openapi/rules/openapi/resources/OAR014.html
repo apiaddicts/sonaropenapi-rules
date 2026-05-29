@@ -1,54 +1,32 @@
 <p>Una ruta compleja puede ser una insinuación para detectar definiciones de API incorrectas.</p>
-<p>El número de partes de la ruta debe ser menor a 4, cuando el número de partes de la ruta este entre 4 y 5 se mostrará una advertencia.</p>
+<p>El número de partes de la ruta debe ser menor a 4, cuando el número de partes de la ruta esté entre 4 y 5 se mostrará una advertencia.</p>
+<p><strong>Nota:</strong> Los parámetros de ruta (p.ej. <code>{customerId}</code>) se excluyen del conteo de profundidad — solo cuentan los segmentos literales de nombre de recurso.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <h3>JSON</h3>
 <pre>
 {
-    "swagger": "2.0", 
+    "swagger": "2.0",
     "info": {
-        "title": "Swagger Petstore", 
+        "title": "Swagger Petstore",
         "version": "1.0"
-    }, 
+    },
     "paths": {
-        "/customers/{customerId}/invoices/{invoiceId}": {
+        "/customers/{customerId}/invoices/{invoiceId}/products/details": {
             "get": {
                 "parameters": [
                     {
-                        "in": "path", 
-                        "name": "customerId", 
-                        "type": "integer", 
+                        "in": "path",
+                        "name": "customerId",
+                        "type": "integer",
                         "required": true
-                    }, 
+                    },
                     {
-                        "in": "path", 
-                        "name": "invoiceId", 
-                        "type": "integer", 
+                        "in": "path",
+                        "name": "invoiceId",
+                        "type": "integer",
                         "required": true
                     }
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }, 
-        "/customers/{customerId}/invoices/{invoiceId}/products": {
-            "get": {
-                "parameters": [
-                    {
-                        "in": "path", 
-                        "name": "customerId", 
-                        "type": "integer", 
-                        "required": true
-                    }, 
-                    {
-                        "in": "path", 
-                        "name": "invoiceId", 
-                        "type": "integer", 
-                        "required": true
-                    }
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -66,21 +44,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}:
-    get:
-      parameters:
-        - in: path
-          name: customerId
-          type: integer
-          required: true
-        - in: path
-          name: invoiceId
-          type: integer
-          required: true
-      responses:
-        200:
-          description: OK
-  /customers/{customerId}/invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/details:
     get:
       parameters:
         - in: path
@@ -99,56 +63,79 @@ paths:
 <h3>JSON</h3>
 <pre>
 {
-    "swagger": "2.0", 
+    "swagger": "2.0",
     "info": {
-        "title": "Swagger Petstore", 
+        "title": "Swagger Petstore",
         "version": "1.0"
-    }, 
+    },
     "paths": {
         "/customers/{customerId}/invoices": {
             "get": {
                 "parameters": [
                     {
-                        "in": "path", 
-                        "name": "customerId", 
-                        "type": "integer", 
+                        "in": "path",
+                        "name": "customerId",
+                        "type": "integer",
                         "required": true
                     }
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
                     }
                 }
             }
-        }, 
+        },
         "/invoices/{invoiceId}": {
             "get": {
                 "parameters": [
                     {
-                        "in": "path", 
-                        "name": "invoiceId", 
-                        "type": "integer", 
+                        "in": "path",
+                        "name": "invoiceId",
+                        "type": "integer",
                         "required": true
                     }
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
                     }
                 }
             }
-        }, 
+        },
         "/invoices/{invoiceId}/products": {
             "get": {
                 "parameters": [
                     {
-                        "in": "path", 
-                        "name": "invoiceId", 
-                        "type": "integer", 
+                        "in": "path",
+                        "name": "invoiceId",
+                        "type": "integer",
                         "required": true
                     }
-                ], 
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/customers/{customerId}/invoices/{invoiceId}/products": {
+            "get": {
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "customerId",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "invoiceId",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -196,64 +183,51 @@ paths:
       responses:
         200:
           description: OK
+  /customers/{customerId}/invoices/{invoiceId}/products:
+    get:
+      parameters:
+        - in: path
+          name: customerId
+          type: integer
+          required: true
+        - in: path
+          name: invoiceId
+          type: integer
+          required: true
+      responses:
+        200:
+          description: OK
 </pre>
 <h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
 <h3>JSON</h3>
 <pre>
 {
-    "openapi": "3.0.1", 
+    "openapi": "3.0.1",
     "info": {
-        "title": "Swagger Petstore", 
+        "title": "Swagger Petstore",
         "version": "1.0"
-    }, 
+    },
     "paths": {
-        "/customers/{customerId}/invoices/{invoiceId}": {
+        "/customers/{customerId}/invoices/{invoiceId}/products/details": {
             "get": {
                 "parameters": [
                     {
-                        "name": "customerId", 
-                        "in": "path", 
-                        "required": true, 
+                        "name": "customerId",
+                        "in": "path",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
-                    }, 
+                    },
                     {
-                        "name": "invoiceId", 
-                        "in": "path", 
-                        "required": true, 
+                        "name": "invoiceId",
+                        "in": "path",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
-                ], 
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        }, 
-        "/customers/{customerId}/invoices/{invoiceId}/products": {
-            "get": {
-                "parameters": [
-                    {
-                        "name": "customerId", 
-                        "in": "path", 
-                        "required": true, 
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }, 
-                    {
-                        "name": "invoiceId", 
-                        "in": "path", 
-                        "required": true, 
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -271,23 +245,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}:
-    get:
-      parameters:
-      - name: customerId
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: invoiceId
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        200:
-          description: OK
-  /customers/{customerId}/invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/details:
     get:
       parameters:
       - name: customerId
@@ -308,62 +266,89 @@ paths:
 <h3>JSON</h3>
 <pre>
 {
-    "openapi": "3.0.1", 
+    "openapi": "3.0.1",
     "info": {
-        "title": "Swagger Petstore", 
+        "title": "Swagger Petstore",
         "version": "1.0"
-    }, 
+    },
     "paths": {
         "/customers/{customerId}/invoices": {
             "get": {
                 "parameters": [
                     {
-                        "name": "customerId", 
-                        "in": "path", 
-                        "required": true, 
+                        "name": "customerId",
+                        "in": "path",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
                     }
                 }
             }
-        }, 
+        },
         "/invoices/{invoiceId}": {
             "get": {
                 "parameters": [
                     {
-                        "name": "invoiceId", 
-                        "in": "path", 
-                        "required": true, 
+                        "name": "invoiceId",
+                        "in": "path",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
                     }
                 }
             }
-        }, 
+        },
         "/invoices/{invoiceId}/products": {
             "get": {
                 "parameters": [
                     {
-                        "name": "invoiceId", 
-                        "in": "path", 
-                        "required": true, 
+                        "name": "invoiceId",
+                        "in": "path",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     }
-                ], 
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/customers/{customerId}/invoices/{invoiceId}/products": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "invoiceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -406,6 +391,22 @@ paths:
   /invoices/{invoiceId}/products:
     get:
       parameters:
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+  /customers/{customerId}/invoices/{invoiceId}/products:
+    get:
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
       - name: invoiceId
         in: path
         required: true

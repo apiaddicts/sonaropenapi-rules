@@ -1,5 +1,6 @@
 <p>A complex path may be a hint to detect wrong API definitions. </p>
 <p>The number of parts of the path must be less than 4, when the number of parts of the route is equal or greater than 6 an error will be displayed. </p>
+<p><strong>Note:</strong> Path parameters (e.g. <code>{customerId}</code>) are excluded from the depth count — only literal resource name segments count toward the depth.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
@@ -7,7 +8,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}/products/{productId}: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR015: Resources depth level should be smaller}}</span>
+  /customers/{customerId}/invoices/{invoiceId}/products/details/versions: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR015: Resources depth level should be smaller}}</span>
     get:
       parameters:
         - in: path
@@ -16,10 +17,6 @@ paths:
           required: true
         - in: path
           name: invoiceId
-          type: integer
-          required: true
-        - in: path
-          name: productId
           type: integer
           required: true
       responses:
@@ -53,19 +50,17 @@ paths:
       responses:
         200:
           description: OK
-  /invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
     get:
       parameters:
+        - in: path
+          name: customerId
+          type: integer
+          required: true
         - in: path
           name: invoiceId
           type: integer
           required: true
-      responses:
-        200:
-          description: OK
-  /products/{productId}:
-    get:
-      parameters:
         - in: path
           name: productId
           type: integer
@@ -81,7 +76,7 @@ info:
   title: Swagger Petstore
   version: "1.0"
 paths:
-  /customers/{customerId}/invoices/{invoiceId}/products/{productId}: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR015: Resources depth level should be smaller}}</span>
+  /customers/{customerId}/invoices/{invoiceId}/products/details/versions: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR015: Resources depth level should be smaller}}</span>
     get:
       parameters:
       - name: customerId
@@ -90,11 +85,6 @@ paths:
         schema:
           type: integer
       - name: invoiceId
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: productId
         in: path
         required: true
         schema:
@@ -132,20 +122,19 @@ paths:
       responses:
         200:
           description: OK
-  /invoices/{invoiceId}/products:
+  /customers/{customerId}/invoices/{invoiceId}/products/{productId}:
     get:
       parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
       - name: invoiceId
         in: path
         required: true
         schema:
           type: integer
-      responses:
-        200:
-          description: OK
-  /products/{productId}:
-    get:
-      parameters:
       - name: productId
         in: path
         required: true

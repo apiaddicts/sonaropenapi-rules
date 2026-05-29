@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1-beta-3] - 2026-05-29
+
+### Fixed
+
+- OAR004 - ValidWso2ScopesRoles - Fixed false negative where `roles` defined as a YAML/JSON array were not validated element by element. Updated `AbstractPatternWso2ScopesCheck.visitScope()` to iterate array elements via `fieldNode.elements()` and validate each one individually. Added test fixtures for array roles in v2, v3, v31 and v32 formats.
+- OAR014 - ResourceLevelWithinNonSuggestedRange - Removed upper bound threshold: rule now fires for all depths ≥ 4 (previously only fired for depths 4–5), aligning with Spectral behavior. Updated v2 test fixtures to mark depth-6 paths as noncompliant.
+- OAR015 - ResourceLevelMaxAllowed - Updated depth calculation algorithm in `AbstractResourceLevelCheck.matchLevel(String path)` to count only literal segments, explicitly excluding path parameters (e.g. `{customerId}`) and `/me` segments — matching Spectral's algorithm exactly. Previously used a `pathParts − literalParamPairs` formula that produced different results for paths starting with parameters, consecutive parameters, or containing `/me`.
 
 ## [1.4.1-beta-2] - 2026-05-28
 
