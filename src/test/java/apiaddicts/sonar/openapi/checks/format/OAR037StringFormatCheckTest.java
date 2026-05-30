@@ -68,7 +68,7 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("formats-allowed", "date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16)", RuleParamType.STRING);
+        assertParameterProperties("formats-allowed", "date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64", RuleParamType.STRING);
     }
 
     @Override

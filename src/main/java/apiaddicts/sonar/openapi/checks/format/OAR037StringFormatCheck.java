@@ -12,7 +12,7 @@ public class OAR037StringFormatCheck extends AbstractFormatCheck {
 
     public static final String KEY = "OAR037";
     private static final String MESSAGE = "OAR037.error";
-    private static final String DEFAULT_FORMATS_ALLOWED = "date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16)";
+    private static final String DEFAULT_FORMATS_ALLOWED = "date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64";
 
     @RuleProperty(
             key = "formats-allowed",
@@ -33,6 +33,6 @@ public class OAR037StringFormatCheck extends AbstractFormatCheck {
     }
 
     private boolean isInvalidString(String type, String format, Set<String> validFormats) {
-        return "string".equals(type) && (format != null && !validFormats.contains(format.toLowerCase()));
+        return "string".equals(type) && (format == null || !validFormats.contains(format.toLowerCase()));
     }
 }
