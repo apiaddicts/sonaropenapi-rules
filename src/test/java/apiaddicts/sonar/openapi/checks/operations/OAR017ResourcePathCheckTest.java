@@ -37,6 +37,30 @@ public class OAR017ResourcePathCheckTest extends BaseCheckTest {
         verifyV32("plain");
     }
 
+    @Test
+    public void verifyInV2Resources() {
+        v2Path = getV2Path("resources");
+        verifyV2("plain");
+    }
+
+    @Test
+    public void verifyInV3Resources() {
+        v3Path = getV3Path("resources");
+        verifyV3("plain");
+    }
+
+    @Test
+    public void verifyInV31Resources() {
+        v31Path = getV31Path("resources");
+        verifyV31("plain");
+    }
+
+    @Test
+    public void verifyInV32Resources() {
+        v32Path = getV32Path("resources");
+        verifyV32("plain");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR017 - ResourcePath - Resource path should alternate static and parametrized parts", RuleType.BUG, Severity.MAJOR, tags("operations"));

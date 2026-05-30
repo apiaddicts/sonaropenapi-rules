@@ -4,6 +4,7 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
@@ -19,7 +20,6 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 
 	public static final String KEY = "OAR017";
 	private static final String MESSAGE = "OAR017.error";
-	private static final String MESSAGE_PATTERN = "OAR017.error-patterns";
 	public static final String EXCLUDE_PATTERNS = "get,me,search";
 
 	@RuleProperty(
@@ -35,45 +35,46 @@ public class OAR017ResourcePathCheck extends BaseCheck {
 
 	@Override
 	public void visitNode(JsonNode node) {
-		visitV2Node(node);
-	}
-
-	private void visitV2Node(JsonNode node) {
 		String path = node.key().getTokenValue();
-		if (!isCorrect(path,node)) addIssue(KEY, translate(MESSAGE), node.key());
+		if (!isCorrect(path)) addIssue(KEY, translate(MESSAGE), node.key());
 	}
 
-	private boolean isCorrect(String path, JsonNode node) {
+	private boolean isCorrect(String path) {
 		String[] parts = Stream.of(path.split("/")).filter(p -> !p.trim().isEmpty()).toArray(String[]::new);
-		String[] patterns = Stream.of(patternsString.split(",")).toArray(String[]::new);
+		List<String> except = Arrays.asList(patternsString.split(","));
+
 		if (parts.length == 0) return true;
 
-		boolean previousWasVariable = false;
-		boolean twoOrMoreVariablesInARow = false;
+		boolean previousIsVar;
+		String firstPart = parts[0];
 
-		for (int i = 0; i < parts.length; i++) {
-		boolean currentIsVariable = isVariable(parts[i]);
-
-			if(!currentIsVariable && Arrays.asList(patterns).contains(parts[i])){
-				issuePatterns(parts[i],node);
-			}
-
-			if (previousWasVariable && currentIsVariable) {
-				twoOrMoreVariablesInARow = true;
-				break;
-			}
-
-			previousWasVariable = currentIsVariable;
+		if (except.contains(firstPart.trim())) {
+			previousIsVar = true;
+		} else if (isVariable(firstPart)) {
+			return false;
+		} else {
+			previousIsVar = false;
 		}
 
-		return !twoOrMoreVariablesInARow;
+		for (int i = 1; i < parts.length; i++) {
+			String part = parts[i].trim();
+
+			if (except.contains(part)) {
+				previousIsVar = true;
+				continue;
+			}
+
+			boolean currentIsVariable = isVariable(part);
+			if (currentIsVariable == previousIsVar) {
+				return false;
+			}
+			previousIsVar = currentIsVariable;
+		}
+
+		return true;
 	}
 
 	private boolean isVariable(String part) {
-		return '{' == part.charAt(0) && '}' == part.charAt(part.length() - 1);
-	}
-
-	private void issuePatterns(String pattern,JsonNode node){
-		addIssue(KEY, translate(MESSAGE_PATTERN,pattern), node.key());
+		return part.length() >= 2 && part.charAt(0) == '{' && part.charAt(part.length() - 1) == '}';
 	}
 }

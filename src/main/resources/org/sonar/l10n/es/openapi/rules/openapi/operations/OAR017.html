@@ -1,13 +1,10 @@
-<p>Se valida que cada ruta alterna sus partes entre partes estáticas y variables, empezando por las partes estáticas.</p>
-<p>Ejemplos:</p>
+<p>Se valida que cada ruta alterna sus partes entre partes estáticas y variables, empezando por las partes estáticas. Esta regla es idéntica a la implementación Spectral.</p>
+<p>Esta regla dispara cuando:</p>
 <ul>
-  <li>/{id} -&gt; Error</li>
-  <li>/facturas/{id}/{lineId} -&gt; Error</li>
-  <li>/facturas/{id} -&gt; Ok</li>
-  <li>/facturas/get -&gt; Ok</li>
-  <li>/facturas/{id}/lineas/{lineId} -&gt; Ok</li>
-  <li>/facturas/{id}/lineas/get -&gt; Ok</li>
+  <li>Aparecen dos segmentos consecutivos del mismo tipo: dos segmentos estáticos (p.ej. <code>/a/b</code>) o dos parámetros de ruta (p.ej. <code>/{a}/{b}</code>).</li>
+  <li>El path empieza por un parámetro de ruta (p.ej. <code>/{id}/items</code>).</li>
 </ul>
+<p><strong>Configurable:</strong> <code>exclude_patterns</code> (por defecto: <code>get,me,search</code>) — segmentos tratados como pseudo-parámetros que no rompen la regla de alternación.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"

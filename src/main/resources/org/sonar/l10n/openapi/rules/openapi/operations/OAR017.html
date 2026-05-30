@@ -1,13 +1,10 @@
-<p>It is validated that each route alternates its parts between static and variable parts, starting with the static parts.</p>
-<p>Examples:</p>
+<p>It is validated that each route alternates its parts between static and variable parts, starting with the static parts. This rule is identical to the Spectral implementation.</p>
+<p>Specifically, this rule fires when:</p>
 <ul>
-<li>/{id} -&gt; Error</li>
-<li>/facturas/{id}/{lineId} -&gt; Error</li>
-<li>/facturas/{id} -&gt; Ok</li>
-<li>/facturas/get -&gt; Ok</li>
-<li>/facturas/{id}/lineas/{lineId} -&gt; Ok</li>
-<li>/facturas/{id}/lineas/get -&gt; Ok</li>
+<li>Two consecutive path segments of the same type appear: two static segments (e.g. <code>/a/b</code>) or two path parameters (e.g. <code>/{a}/{b}</code>).</li>
+<li>The path starts with a path parameter (e.g. <code>/{id}/items</code>).</li>
 </ul>
+<p><strong>Configurable:</strong> <code>exclude_patterns</code> (default: <code>get,me,search</code>) — segments treated as pseudo-parameters that do not break the alternation rule.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"

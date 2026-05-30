@@ -50,3 +50,9 @@ paths:
       responses:
         200:
           description: Ok
+
+  /me/items/{id}:
+    get:
+      responses:
+        200:
+          description: Ok
