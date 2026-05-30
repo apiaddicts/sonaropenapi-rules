@@ -26,9 +26,19 @@
     }
   },
   "components": {
-    "schemas" : {
-      "response" : { # Noncompliant {{OAR038: 'data' or 'error' property is required}}
-        "type" : "object"
+    "schemas": {
+      "response" : {
+        "type" : "object",
+        "properties" : {
+          "invalid_name" : { # Noncompliant {{OAR038: 'data' or 'error' property is required}}
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
       }
     }
   }

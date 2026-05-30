@@ -17,5 +17,11 @@ paths:
 
 components:
   schemas:
-    response: # Noncompliant {{OAR038: 'data' or 'error' property is required}}
+    response:
       type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string

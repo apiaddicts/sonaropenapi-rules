@@ -1,4 +1,11 @@
-<p>A resource creation response must have at least one attribute.</p>
+<p>The 201 response schema of a POST operation must have properties named <code>data</code> or <code>error</code>, and each must have at least one sub-property.</p>
+<p>This rule fires when:</p>
+<ul>
+<li>A top-level property is not named exactly <code>data</code> or <code>error</code> (case-sensitive).</li>
+<li>A <code>data</code> or <code>error</code> property has no sub-properties.</li>
+<li>The 201 response has no schema.</li>
+</ul>
+<p><strong>Configurable:</strong> <code>data-property</code> — valid property name (default: <code>data</code>; also accepts <code>error</code>).</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <h3>JSON</h3>
 <pre>

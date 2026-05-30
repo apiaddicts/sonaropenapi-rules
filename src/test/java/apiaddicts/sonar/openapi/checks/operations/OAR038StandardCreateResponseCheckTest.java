@@ -127,6 +127,40 @@ public class OAR038StandardCreateResponseCheckTest extends BaseCheckTest {
         verifyV32("without-schema");
     }
 
+    @Test
+    public void verifyInV2WithErrorProperty() {
+        verifyV2("valid-with-error");
+    }
+    @Test
+    public void verifyInV3WithErrorProperty() {
+        verifyV3("valid-with-error");
+    }
+    @Test
+    public void verifyInV31WithErrorProperty() {
+        verifyV31("valid-with-error");
+    }
+    @Test
+    public void verifyInV32WithErrorProperty() {
+        verifyV32("valid-with-error");
+    }
+
+    @Test
+    public void verifyInV2WithInvalidProperty() {
+        verifyV2("with-invalid-property");
+    }
+    @Test
+    public void verifyInV3WithInvalidProperty() {
+        verifyV3("with-invalid-property");
+    }
+    @Test
+    public void verifyInV31WithInvalidProperty() {
+        verifyV31("with-invalid-property");
+    }
+    @Test
+    public void verifyInV32WithInvalidProperty() {
+        verifyV32("with-invalid-property");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR038 - StandardCreateResponse - Creation response schema must be compliant with the standard", RuleType.BUG, Severity.MAJOR, tags("operations"));

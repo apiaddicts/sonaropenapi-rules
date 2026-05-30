@@ -22,8 +22,18 @@
     }
   },
   "definitions" : {
-    "response" : { # Noncompliant {{OAR038: 'data' or 'error' property is required}}
-      "type" : "object"
+    "response" : {
+      "type" : "object",
+      "properties" : {
+        "invalid_name" : { # Noncompliant {{OAR038: 'data' or 'error' property is required}}
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
     }
   }
 }

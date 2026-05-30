@@ -1,4 +1,4 @@
-openapi: "3.2.0"
+openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Swagger Petstore
@@ -17,5 +17,11 @@ paths:
 
 components:
   schemas:
-    response: # Noncompliant {{OAR038: 'data' or 'error' property is required}}
+    response:
       type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string

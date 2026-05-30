@@ -22,7 +22,7 @@
     }
   },
   "definitions" : {
-    "response" : { # Noncompliant {{OAR038: 'data' property is missing}}
+    "response" : { # Noncompliant {{OAR038: 'data' or 'error' property is required}}
       "type" : "object"
     }
   }
