@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OAR021 - ExcludeParameterCheck - Same fix as OAR020 applied for `$exclude` parameter. Changed default path strategy to exclude-all, added `/me` and health-check exclusions, added `without-parameters` test cases.
 - OAR037 - StringFormatCheck - Fixed false negative where string schemas without a `format` field were not reported. Updated `isInvalidString` to also fire when `format == null`, aligning with Spectral behavior.
 - OAR038 - StandardCreateResponseCheck - POST 201 responses must have a schema whose properties are named `data` or `error`, each with at least one sub-property. Fires with a distinct message when the property name is invalid vs. when sub-properties are missing.
+- OAR066 - SnakeCaseNamingConventionCheck - Fixed false positives on industry-standard property name prefixes. Skip properties whose names start with `@` or `x-`.
 
 ## [1.4.1-beta-3] - 2026-05-29
 
