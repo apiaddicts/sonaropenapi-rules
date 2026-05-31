@@ -1,0 +1,41 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Health Check Excluded Paths API
+paths:
+  /status:
+    get:
+      summary: Health check - excluded from rate limit rule
+      responses:
+        '200':
+          description: OK
+  /health:
+    get:
+      summary: Health endpoint - excluded from rate limit rule
+      responses:
+        '200':
+          description: OK
+  /health-check:
+    get:
+      summary: Health check endpoint - excluded from rate limit rule
+      responses:
+        '200':
+          description: OK
+  /ping:
+    get:
+      summary: Ping endpoint - excluded from rate limit rule
+      responses:
+        '200':
+          description: OK
+  /liveness:
+    get:
+      summary: Liveness probe - excluded from rate limit rule
+      responses:
+        '200':
+          description: OK
+  /readiness:
+    get:
+      summary: Readiness probe - excluded from rate limit rule
+      responses:
+        '200':
+          description: OK

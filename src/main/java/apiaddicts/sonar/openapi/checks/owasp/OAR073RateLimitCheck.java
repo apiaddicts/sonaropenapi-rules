@@ -10,7 +10,7 @@ public class OAR073RateLimitCheck extends AbstractPathResponseCheck {
     private static final String MESSAGE = "OAR073.error";
 
     private static final String DEFAULT_PATH_STATUS = "/status";
-    private static final String DEFAULT_PATHS = DEFAULT_PATH_STATUS + ", /health-check";
+    private static final String DEFAULT_PATHS = DEFAULT_PATH_STATUS + ", /health, /health-check, /ping, /liveness, /readiness";
     private static final String DEFAULT_STRATEGY = "/exclude";
 
     public OAR073RateLimitCheck() {

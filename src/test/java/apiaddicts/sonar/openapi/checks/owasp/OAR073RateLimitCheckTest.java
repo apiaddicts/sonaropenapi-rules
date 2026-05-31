@@ -30,6 +30,11 @@ public class OAR073RateLimitCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2HealthCheckExcluded() {
+        verifyV2("health-check-excluded");
+    }
+
+    @Test
     public void verifyInV3rateLimit() {
         verifyV3("rate-limit");
     }
@@ -53,6 +58,21 @@ public class OAR073RateLimitCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV32NorateLimit() {
         verifyV32("no-rate-limit");
+    }
+
+    @Test
+    public void verifyInV3HealthCheckExcluded() {
+        verifyV3("health-check-excluded");
+    }
+
+    @Test
+    public void verifyInV31HealthCheckExcluded() {
+        verifyV31("health-check-excluded");
+    }
+
+    @Test
+    public void verifyInV32HealthCheckExcluded() {
+        verifyV32("health-check-excluded");
     }
 
     @Override
