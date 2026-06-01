@@ -1,4 +1,7 @@
-<p>A string type with invalid format or without format may cause developers to use the wrong variable types in the API implementation.</p>
+<p>A string schema without a format, or with an unrecognized format, may cause developers to use the wrong variable types in the API implementation.</p>
+<p>This rule fires when the <code>format</code> field is <strong>absent</strong> or <strong>present but not recognized</strong>. Every string schema must declare one of the valid formats.</p>
+<p><strong>Valid formats:</strong> <code>date</code>, <code>date-time</code>, <code>password</code>, <code>byte</code>, <code>binary</code>, <code>email</code>, <code>uuid</code>, <code>uri</code>, <code>hostname</code>, <code>ipv4</code>, <code>ipv6</code>, <code>HEX</code>, <code>HEX(16)</code>, <code>json</code>, <code>xml</code>, <code>base64</code>.</p>
+<p><strong>Configurable:</strong> <code>formats-allowed</code> — comma-separated list of allowed formats (default: the list above).</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
@@ -16,8 +19,10 @@ paths:
             items:
               type: object
               properties:
+                name:
+                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — no format</span>
                 date:
-                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}}</span>
+                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — invalid format</span>
                   format: 'dd/mm/yyyy'
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -60,8 +65,10 @@ paths:
                 items:
                   type: object
                   properties:
+                    name:
+                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — no format</span>
                     date:
-                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}}</span>
+                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — invalid format</span>
                       format: dd/mm/yyyy
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>

@@ -114,10 +114,10 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected boolean hasNamedRefParameter(JsonNode parameterNode) {
         String refValue = parameterNode.get("$ref").getTokenValue();
-        JsonNode refParameterNode = resolveReference(refValue, rootNode);  
+        JsonNode refParameterNode = resolveReference(refValue, rootNode);
         if (refParameterNode != null) {
             JsonNode nameNode = refParameterNode.get("name");
-            JsonNode inNode = refParameterNode.get("in"); 
+            JsonNode inNode = refParameterNode.get("in");
             return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
         }
         return false;
@@ -143,7 +143,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected boolean shouldIncludePath(String path) {
         if (paths.isEmpty()) {
-            return pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE); 
+            return pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE);
         }
         if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return !paths.contains(path);
@@ -172,8 +172,8 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     }
 
     protected JsonNode resolveReference(String refValue, JsonNode root) {
-        if (refValue == null || !refValue.startsWith("#/")) { 
-            return null; 
+        if (refValue == null || !refValue.startsWith("#/")) {
+            return null;
         }
 
         String pathToReference = refValue.substring(2);
@@ -182,7 +182,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         JsonNode currentNode = root;
         for (String part : pathParts) {
             if (currentNode == null) {
-                return null; 
+                return null;
             }
             currentNode = currentNode.get(part);
         }

@@ -1,4 +1,11 @@
 <p>Los nombres de las propiedades del esquema RequestBody y Responses deben cumplir la convención de nomenclatura snake_case</p>
+<h2>Prefijos exentos</h2>
+<p>Los siguientes prefijos de nombres de propiedades que siguen convenciones estándar de industria <strong>no</strong> están sujetos a esta regla:</p>
+<ul>
+  <li>Prefijo <code>_</code> &mdash; campos estándar HAL/HATEOAS (<code>_links</code>, <code>_embedded</code>)</li>
+  <li>Prefijo <code>@</code> &mdash; campos estándar JSON-LD W3C (<code>@context</code>, <code>@type</code>, <code>@id</code>)</li>
+  <li>Prefijo <code>x-</code> &mdash; convenciones de extensión OpenAPI (<code>x-internal</code>, <code>x-campo-personalizado</code>)</li>
+</ul>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"

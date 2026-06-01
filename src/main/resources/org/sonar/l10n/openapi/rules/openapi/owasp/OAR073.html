@@ -1,4 +1,15 @@
 <p>API should include a 429 'Too Many Requests' response to indicate rate limiting</p>
+<h2>Excluded Paths</h2>
+<p>The following health-check paths are <strong>excluded</strong> from this rule by default:</p>
+<ul>
+  <li><code>/status</code></li>
+  <li><code>/health</code></li>
+  <li><code>/health-check</code></li>
+  <li><code>/ping</code></li>
+  <li><code>/liveness</code></li>
+  <li><code>/readiness</code></li>
+</ul>
+<p>This list is configurable via the <code>paths</code> rule parameter.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
     swagger: '2.0'

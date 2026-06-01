@@ -1,4 +1,15 @@
 <p>La API debería incluir una respuesta 429 (demasiadas solicitudes) para indicar la limitación de la tasa</p>
+<h2>Paths excluidos</h2>
+<p>Los siguientes paths de health-check están <strong>excluidos</strong> de esta regla por defecto:</p>
+<ul>
+  <li><code>/status</code></li>
+  <li><code>/health</code></li>
+  <li><code>/health-check</code></li>
+  <li><code>/ping</code></li>
+  <li><code>/liveness</code></li>
+  <li><code>/readiness</code></li>
+</ul>
+<p>Esta lista es configurable mediante el parámetro de regla <code>paths</code>.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
     swagger: '2.0'

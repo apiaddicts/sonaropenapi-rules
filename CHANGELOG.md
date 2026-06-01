@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1-beta-4] - 2026-05-31
+
+### Fixed
+
+- OAR020 - ExpandParameterCheck - Fixed false negative where GET operations on non-`/examples` paths (e.g. `/pets`, `/orders`) without a `parameters` block were not reported. Changed default path strategy from include-only `/examples` to exclude-all (empty exclude list), so the rule now applies to all collection GET endpoints. Added `/me` path exclusion and health-check path exclusion (`status`, `health`, `ping`) in `visitNode`, aligning with Spectral's filter. Added `without-parameters` test cases for v2, v3, v31 and v32.
+- OAR021 - ExcludeParameterCheck - Same fix as OAR020 applied for `$exclude` parameter. Changed default path strategy to exclude-all, added `/me` and health-check exclusions, added `without-parameters` test cases.
+- OAR037 - StringFormatCheck - Fixed false negative where string schemas without a `format` field were not reported. Updated `isInvalidString` to also fire when `format == null`.
+- OAR038 - StandardCreateResponseCheck - POST 201 responses must have a schema whose properties are named `data` or `error`, each with at least one sub-property. Fires with a distinct message when the property name is invalid vs. when sub-properties are missing.
+- OAR066 - SnakeCaseNamingConventionCheck - Fixed false positives on industry-standard property name prefixes. Skip properties whose names start with `@` or `x-`.
+- OAR073 - RateLimitCheck - Extended default excluded paths from `/status, /health-check` to `/status, /health, /health-check, /ping, /liveness, /readiness` in `DEFAULT_PATHS`.
+
 ## [1.4.1-beta-3] - 2026-05-29
 
 ### Fixed
