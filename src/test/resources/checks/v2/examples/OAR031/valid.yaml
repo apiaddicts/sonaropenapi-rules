@@ -51,7 +51,7 @@ definitions:
       size: 
         type: integer
         example: 1
-      pets: # Noncompliant {{OAR031: Properties must have an example defined}}
+      pets:
         type: array
         items:
           $ref: '#/definitions/pet'
