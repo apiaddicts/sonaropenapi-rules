@@ -1,4 +1,4 @@
-<p>The chosen parameter must be defined in this operation. By default, $filter</p>
+<p>The $filter query parameter must be present in GET collection operations. One issue is raised per operation missing the $filter parameter.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"
@@ -7,15 +7,10 @@
     title: Swagger Petstore
   paths:
     /pets:
-      get:
-        parameters: 
+      get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
+        parameters:
           - in: query
-            name: other <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
-            type: array
-            items:
-              type: string
-          - in: query
-            name: hola <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
+            name: other
             type: array
             items:
               type: string
@@ -38,11 +33,6 @@
             type: array
             items:
               type: string
-          - in: query
-            name: $filter
-            type: array
-            items:
-              type: string
         responses:
           206:
             description: Ok
@@ -55,16 +45,10 @@
     title: Swagger Petstore
   paths:
     /pets:
-      get:
-        parameters: 
+      get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
+        parameters:
           - in: query
-            name: other <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
-            schema:
-              type: array
-              items:
-                type: string
-          - in: query
-            name: select <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
+            name: other
             schema:
               type: array
               items:
@@ -83,12 +67,6 @@
     /pets:
       get:
         parameters:
-          - in: query
-            name: $filter
-            schema:
-              type: array
-              items:
-                type: string
           - in: query
             name: $filter
             schema:

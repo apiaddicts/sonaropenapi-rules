@@ -162,7 +162,16 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
 
     private void setField(String name, String value) {
         try {
-            java.lang.reflect.Field f = OAR028FilterParameterCheck.class.getDeclaredField(name);
+            java.lang.reflect.Field f = null;
+            Class<?> clazz = check.getClass();
+            while (clazz != null && f == null) {
+                try {
+                    f = clazz.getDeclaredField(name);
+                } catch (NoSuchFieldException e) {
+                    clazz = clazz.getSuperclass();
+                }
+            }
+            if (f == null) throw new NoSuchFieldException(name);
             f.setAccessible(true);
             f.set(check, value);
         } catch (Exception e) {

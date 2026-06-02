@@ -1,118 +1,45 @@
 package apiaddicts.sonar.openapi.checks.parameters;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
-import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
-import apiaddicts.sonar.openapi.checks.BaseCheck;
-
-import com.google.common.collect.ImmutableSet;
-import com.sonar.sslr.api.AstNode;
-import com.sonar.sslr.api.AstNodeType;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 @Rule(key = OAR028FilterParameterCheck.KEY)
-public class OAR028FilterParameterCheck extends BaseCheck {
+public class OAR028FilterParameterCheck extends AbstractQueryParameterCheck {
 
     public static final String KEY = "OAR028";
     private static final String MESSAGE = "OAR028.error";
-    private static final String DEFAULT_PATH = "/examples";
-    private static final String PATH_STRATEGY = "/include";
-    private static final String PARAM_NAME = "$filter";
-
-    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
-    private static final String PATH_STRATEGY_INCLUDE = "/include";
-
-    @RuleProperty(
-        key = "paths",
-        description = "List of explicit paths to include/exclude from this rule separated by comma",
-        defaultValue = DEFAULT_PATH
-    )
-    private String pathsStr = DEFAULT_PATH;
-
-    @RuleProperty(
-        key = "pathValidationStrategy",
-        description = "Path validation strategy (include/exclude)",
-        defaultValue = PATH_STRATEGY
-    )
-    private String pathCheckStrategy = PATH_STRATEGY;
+    private static final String DEFAULT_PARAM_NAME = "$filter";
 
     @RuleProperty(
         key = "parameterName",
-        description = "Name of the parameter to be checked",
-        defaultValue = PARAM_NAME
+        description = "Name of the query parameter to be checked",
+        defaultValue = DEFAULT_PARAM_NAME
     )
-    private String parameterName = PARAM_NAME;
+    private String filterParamName = DEFAULT_PARAM_NAME;
 
-    private Set<String> paths;
-
-    @Override
-    public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi32Grammar.PARAMETER);
+    public OAR028FilterParameterCheck() {
+        super(KEY, MESSAGE, DEFAULT_PARAM_NAME, false);
     }
 
     @Override
     protected void visitFile(JsonNode root) {
-        paths = parsePaths(pathsStr);
+        this.parameterName = filterParamName;
         super.visitFile(root);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        visitParameterNode(node);
-    }
+        if (!"get".equals(node.key().getTokenValue())) return;
 
-    public void visitParameterNode(JsonNode node) {
-        JsonNode inNode = node.get("in");
-        JsonNode nameNode = node.get("name");
+        String path = getPath(node);
 
-        if (inNode != null && nameNode != null) {
-            if (!"query".equals(inNode.getTokenValue())) {
-                return;
-            }
-            String path = getPath(node);
-            if (shouldExcludePath(path) && !parameterName.equals(nameNode.getTokenValue())) {
-                addIssue(KEY, translate(MESSAGE, parameterName), nameNode);
-            }
-        }
-    }
+        if (endsWithPathParam(path)) return;
+        if (path.contains("/me/") || path.endsWith("/me")) return;
+        if (path.contains("status") || path.contains("health") || path.contains("ping")) return;
 
-    private String getPath(JsonNode node) {
-        StringBuilder pathBuilder = new StringBuilder();
-        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH);
-        if (pathNode != null) {
-            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH && pathNode.getType() != OpenApi31Grammar.PATH && pathNode.getType() != OpenApi32Grammar.PATH) {
-                pathNode = pathNode.getParent();
-            }
-            pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());
-        }
-        return pathBuilder.toString();
-    }
-
-    private boolean shouldExcludePath(String path) {
-        if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
-            return !paths.contains(path);
-        } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
-            return paths.contains(path);
-        }
-        return false;
-    }
-
-    private Set<String> parsePaths(String pathsStr) {
-        if (!pathsStr.trim().isEmpty()) {
-            return Arrays.stream(pathsStr.split(","))
-                .map(String::trim)
-                .collect(Collectors.toSet());
-        } else {
-            return new HashSet<>();
+        if (!hasParameterInNode(node)) {
+            addIssue(ruleKey, translate(messageKey, parameterName), node.key());
         }
     }
 }

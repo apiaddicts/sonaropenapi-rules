@@ -25,7 +25,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected final String ruleKey;
     protected final String messageKey;
-    protected final String parameterName;
+    protected String parameterName;
     protected final boolean applyToParameterizedPaths;
 
     protected Set<String> paths;
