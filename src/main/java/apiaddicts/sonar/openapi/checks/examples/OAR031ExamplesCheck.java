@@ -216,7 +216,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
             if (props.isMissing() || !props.isObject()) return;
 
             props.propertyMap().forEach((key, propertyNode) -> {
-                if (propertyNode.get(EXAMPLE).isMissing()) {
+                JsonNode type = getType(propertyNode);
+                if (!type.isMissing() && !isObjectType(type) && !isArrayType(type) && !isSchemaCovered(propertyNode)) {
                     addIssue(KEY, translate("OAR031.error-property"), handleExternalRef.getTrueNode(propertyNode.key()));
                 }
             });

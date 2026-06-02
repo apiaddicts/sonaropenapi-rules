@@ -20,9 +20,9 @@ paths:
               type: object
               properties:
                 name:
-                  type: string
+                  type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format ausente</span>
                 date:
-                  type: string
+                  type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format inválido</span>
                   format: 'dd/mm/yyyy'
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
@@ -66,9 +66,9 @@ paths:
                   type: object
                   properties:
                     name:
-                      type: string
+                      type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format ausente</span>
                     date:
-                      type: string
+                      type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format inválido</span>
                       format: dd/mm/yyyy
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>

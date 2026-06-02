@@ -90,6 +90,23 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
         verifyV32("nested-properties-examples.yaml");
     }
 
+    @Test
+    public void verifyInV2AllOfSchema() {
+        verifyV2("allof-schema");
+    }
+    @Test
+    public void verifyInV3AllOfSchema() {
+        verifyV3("allof-schema");
+    }
+    @Test
+    public void verifyInV31AllOfSchema() {
+        verifyV31("allof-schema");
+    }
+    @Test
+    public void verifyInV32AllOfSchema() {
+        verifyV32("allof-schema");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR031 - Examples - Responses, Request Body, Parameters and Properties must have an example defined", RuleType.BUG, Severity.MAJOR, tags("examples"));

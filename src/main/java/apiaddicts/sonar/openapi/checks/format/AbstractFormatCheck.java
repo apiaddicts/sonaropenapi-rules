@@ -27,8 +27,13 @@ public abstract class AbstractFormatCheck extends BaseCheck {
         JsonNode typeNode = node.get("type");
         String type = typeNode.getTokenValue();
         JsonNode formatNode = node.get("format");
-        String format = formatNode.isMissing() ? null : formatNode.getTokenValue();
-        validate(type, format, typeNode);
+        if (formatNode.isMissing()) {
+            validate(type, null, typeNode);
+            return;
+        }
+        String format = formatNode.getTokenValue();
+        if (format == null || format.isBlank()) return;
+        validate(type, format.trim(), typeNode);
     }
 
     public abstract void validate(String type, String format, JsonNode typeNode);

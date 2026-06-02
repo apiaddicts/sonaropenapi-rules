@@ -8,7 +8,7 @@
     "parameters" : {
       "filterParam" : {
         "in" : "query",
-        "name" : "other",
+        "name" : "$filter",
         "schema" : {
           "type" : "string"
         }
@@ -18,6 +18,9 @@
   "paths" : {
     "/examples" : {
       "get" : {
+        "parameters" : [
+          { "$ref" : "#/components/parameters/filterParam" }
+        ],
         "responses" : {
           "200" : {
             "description" : "Ok"

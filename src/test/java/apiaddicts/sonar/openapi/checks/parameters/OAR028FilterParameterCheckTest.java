@@ -160,9 +160,35 @@ public class OAR028FilterParameterCheckTest extends BaseCheckTest {
         verifyV32("header-ignored");
     }
 
+    @Test
+    public void verifyInV2MeHealthPing() {
+        verifyV2("me-health-ping");
+    }
+    @Test
+    public void verifyInV3MeHealthPing() {
+        verifyV3("me-health-ping");
+    }
+    @Test
+    public void verifyInV31MeHealthPing() {
+        verifyV31("me-health-ping");
+    }
+    @Test
+    public void verifyInV32MeHealthPing() {
+        verifyV32("me-health-ping");
+    }
+
     private void setField(String name, String value) {
         try {
-            java.lang.reflect.Field f = OAR028FilterParameterCheck.class.getDeclaredField(name);
+            java.lang.reflect.Field f = null;
+            Class<?> clazz = check.getClass();
+            while (clazz != null && f == null) {
+                try {
+                    f = clazz.getDeclaredField(name);
+                } catch (NoSuchFieldException e) {
+                    clazz = clazz.getSuperclass();
+                }
+            }
+            if (f == null) throw new NoSuchFieldException(name);
             f.setAccessible(true);
             f.set(check, value);
         } catch (Exception e) {
