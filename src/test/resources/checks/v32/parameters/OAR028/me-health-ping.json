@@ -1,0 +1,63 @@
+{
+  "openapi" : "3.2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/examples" : {
+      "post" : {
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    },
+    "/pets/{id}" : {
+      "get" : {
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    },
+    "/users/me" : {
+      "get" : {
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    },
+    "/users/me/settings" : {
+      "get" : {
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    },
+    "/health" : {
+      "get" : {
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    },
+    "/ping" : {
+      "get" : {
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}

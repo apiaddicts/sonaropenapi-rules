@@ -1,0 +1,29 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+definitions:
+  BaseEntity:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+  Pet:
+    allOf:
+      - $ref: '#/definitions/BaseEntity'
+    properties:
+      name:
+        type: string
+        example: "Fluffy"
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/Pet'
+          examples:
+            application/json:
+              name: Fluffy

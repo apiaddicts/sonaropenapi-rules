@@ -5,7 +5,7 @@ import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
 @Rule(key = OAR028FilterParameterCheck.KEY)
-public class OAR028FilterParameterCheck extends AbstractQueryParameterCheck {
+public class OAR028FilterParameterCheck extends AbstractCollectionQueryParameterCheck {
 
     public static final String KEY = "OAR028";
     private static final String MESSAGE = "OAR028.error";
@@ -26,20 +26,5 @@ public class OAR028FilterParameterCheck extends AbstractQueryParameterCheck {
     protected void visitFile(JsonNode root) {
         this.parameterName = filterParamName;
         super.visitFile(root);
-    }
-
-    @Override
-    public void visitNode(JsonNode node) {
-        if (!"get".equals(node.key().getTokenValue())) return;
-
-        String path = getPath(node);
-
-        if (endsWithPathParam(path)) return;
-        if (path.contains("/me/") || path.endsWith("/me")) return;
-        if (path.contains("status") || path.contains("health") || path.contains("ping")) return;
-
-        if (!hasParameterInNode(node)) {
-            addIssue(ruleKey, translate(messageKey, parameterName), node.key());
-        }
     }
 }

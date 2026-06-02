@@ -65,6 +65,11 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
         verifyV3("with-$ref");
     }
 
+    @Test
+    public void verifyInV2BlankFormat() {
+        verifyV2("blank-format");
+    }
+
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
