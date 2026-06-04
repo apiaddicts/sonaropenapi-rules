@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: Test API with Violations
+  version: 1.0.0
+  # Missing license and contact (OAR110, OAR111)
+servers:
+  - url: http://example.com  # OAR001: Should be HTTPS
+    description: Non-HTTPS server
+paths:
+  /users:
+    get:
+      summary: Get Users
+      # Missing description (OAR086, OAR087)
+      operationId: getUsers
+      tags:
+        - undeclaredTag  # OAR046: Tag not in global tags list
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          # Missing required field info (OAR025)
+        - name: offset_value  # OAR077: Should use snake_case in query params
+          in: query
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+        '401':
+          # Missing content for non-204 response (OAR045)
+          description: Unauthorized
+        '204':
+          description: No Content
+          # OAR049: Should not have content for 204
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      summary: Create User
+      description: This creates a user  # OAR051: Summary and description are too similar
+      requestBody:
+        # Missing content (OAR006)
+        required: true
+      responses:
+        '201':
+          # Missing location header (OAR027)
+          description: Created
+  /products/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get Product
+      parameters:
+        - name: id
+          in: query  # OAR069: Path param should not also be in query
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Default
+          # Missing content (OAR007)
+    put:
+      summary: Update Product
+      responses:
+        '200':
+          description: Updated
+          # Missing content (OAR007)
+  /internal/admin:  # OAR030: Status endpoint not found
+    get:
+      summary: Admin Panel
+      tags:
+        - admin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+tags:
+  - name: users
+    description: User operations
+  - name: products
+    # OAR047: Tag should have description (if declared, should be used properly)
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32  # OAR016, OAR037: Format validation
+        message:
+          type: string
+          # Missing required fields (OAR115)

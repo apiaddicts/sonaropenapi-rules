@@ -15,6 +15,8 @@ public class OAR098LongBasePathCheckTest extends BaseCheckTest {
         check = new OAR098LongBasePathCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR098LongBasePathCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3TooLong() {
         verifyV3("too-long");
+    }
+    @Test
+    public void verifyInV31TooLong() {
+        verifyV31("too-long");
+    }
+    @Test
+    public void verifyInV32TooLong() {
+        verifyV32("too-long");
     }
 
     @Override

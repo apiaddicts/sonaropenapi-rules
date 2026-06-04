@@ -14,6 +14,8 @@ public class OAR006UndefinedRequestMediaTypeCheckTest extends BaseCheckTest {
         check = new OAR006UndefinedRequestMediaTypeCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -39,6 +41,14 @@ public class OAR006UndefinedRequestMediaTypeCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3WithoutAnything() {
         verifyV3("without-anything");
+    }
+    @Test
+    public void verifyInV31WithoutAnything() {
+        verifyV31("without-anything");
+    }
+    @Test
+    public void verifyInV32WithoutAnything() {
+        verifyV32("without-anything");
     }
 
     @Override

@@ -1,4 +1,4 @@
-<p>The chosen parameter must be defined in this operation. By default, $filter</p>
+<p>El parámetro de consulta $filter debe estar presente en las operaciones GET de colección. Se genera un único issue por operación a la que le falta el parámetro $filter.</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"
@@ -7,15 +7,10 @@
     title: Swagger Petstore
   paths:
     /pets:
-      get:
-        parameters: 
+      get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
+        parameters:
           - in: query
-            name: other 
-            type: array
-            items:
-              type: string
-          - in: query
-            name: hola 
+            name: other
             type: array
             items:
               type: string
@@ -23,7 +18,7 @@
           206:
             description: Ok
 </pre>
-<h2>Compliant Solution (OpenAPI 2)</h2>
+<h2>Solución compatible (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"
   info:
@@ -38,16 +33,11 @@
             type: array
             items:
               type: string
-          - in: query
-            name: $filter
-            type: array
-            items:
-              type: string
         responses:
           206:
             description: Ok
 </pre>
-<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
 <pre>
   openapi: "3.0.0"
   info:
@@ -55,16 +45,10 @@
     title: Swagger Petstore
   paths:
     /pets:
-      get:
-        parameters: 
+      get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR028: $filter must be defined as a parameter in this operation}}</span>
+        parameters:
           - in: query
-            name: other 
-            schema:
-              type: array
-              items:
-                type: string
-          - in: query
-            name: select 
+            name: other
             schema:
               type: array
               items:
@@ -73,7 +57,7 @@
           206:
             description: Ok
 </pre>
-<h2>Compliant Solution (OpenAPI 3)</h2>
+<h2>Solución compatible (OpenAPI 3)</h2>
 <pre>
   openapi: "3.0.0"
   info:
@@ -83,12 +67,6 @@
     /pets:
       get:
         parameters:
-          - in: query
-            name: $filter
-            schema:
-              type: array
-              items:
-                type: string
           - in: query
             name: $filter
             schema:

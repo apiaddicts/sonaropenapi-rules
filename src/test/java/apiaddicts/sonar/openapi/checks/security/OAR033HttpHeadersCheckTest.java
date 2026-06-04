@@ -15,6 +15,8 @@ public class OAR033HttpHeadersCheckTest extends BaseCheckTest {
         check = new OAR033HttpHeadersCheck();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -36,15 +38,39 @@ public class OAR033HttpHeadersCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3WithForbiddenParams() {
         verifyV3("with-forbidden-params");
     }
+    @Test
+    public void verifyInV31WithForbiddenParams() {
+        verifyV31("with-forbidden-params");
+    }
+    @Test
+    public void verifyInV32WithForbiddenParams() {
+        verifyV32("with-forbidden-params");
+    }
 
     @Test
     public void verifyInV3WithoutRequiredParams() {
         verifyV3("without-required-params");
+    }
+    @Test
+    public void verifyInV31WithoutRequiredParams() {
+        verifyV31("without-required-params");
+    }
+    @Test
+    public void verifyInV32WithoutRequiredParams() {
+        verifyV32("without-required-params");
     }
 
     @Override

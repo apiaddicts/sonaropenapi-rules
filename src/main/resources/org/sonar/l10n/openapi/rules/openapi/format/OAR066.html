@@ -1,4 +1,11 @@
 <p>RequestBody and Responses schema property names must be compliant with the snake_case naming convention</p>
+<h2>Exempt Prefixes</h2>
+<p>The following industry-standard property name prefixes are <strong>not</strong> subject to this rule:</p>
+<ul>
+  <li><code>_</code> prefix &mdash; HAL/HATEOAS standard fields (<code>_links</code>, <code>_embedded</code>)</li>
+  <li><code>@</code> prefix &mdash; JSON-LD W3C standard fields (<code>@context</code>, <code>@type</code>, <code>@id</code>)</li>
+  <li><code>x-</code> prefix &mdash; OpenAPI extension conventions (<code>x-internal</code>, <code>x-custom-field</code>)</li>
+</ul>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"

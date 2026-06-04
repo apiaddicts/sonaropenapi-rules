@@ -15,6 +15,8 @@ public class OAR032AmbiguousElementsPathCheckTest extends BaseCheckTest {
         check = new OAR032AmbiguousElementsPathCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR032AmbiguousElementsPathCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid");
+    }
 
     @Test
     public void verifyInV3WithForbiddenNames() {
         verifyV3("forbidden-names");
+    }
+    @Test
+    public void verifyInV31WithForbiddenNames() {
+        verifyV31("forbidden-names");
+    }
+    @Test
+    public void verifyInV32WithForbiddenNames() {
+        verifyV32("forbidden-names");
     }
 
     @Override

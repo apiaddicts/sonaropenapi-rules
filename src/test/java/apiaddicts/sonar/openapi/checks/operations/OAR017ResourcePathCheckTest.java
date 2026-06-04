@@ -15,6 +15,8 @@ public class OAR017ResourcePathCheckTest extends BaseCheckTest {
         check = new OAR017ResourcePathCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -25,6 +27,38 @@ public class OAR017ResourcePathCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3() {
         verifyV3("plain");
+    }
+    @Test
+    public void verifyInV31() {
+        verifyV31("plain");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("plain");
+    }
+
+    @Test
+    public void verifyInV2Resources() {
+        v2Path = getV2Path("resources");
+        verifyV2("plain");
+    }
+
+    @Test
+    public void verifyInV3Resources() {
+        v3Path = getV3Path("resources");
+        verifyV3("plain");
+    }
+
+    @Test
+    public void verifyInV31Resources() {
+        v31Path = getV31Path("resources");
+        verifyV31("plain");
+    }
+
+    @Test
+    public void verifyInV32Resources() {
+        v32Path = getV32Path("resources");
+        verifyV32("plain");
     }
 
     @Override

@@ -6,6 +6,14 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
+import apiaddicts.sonar.openapi.ExtendedOpenApiCheckVerifier;
+import org.apiaddicts.apitools.dosonarapi.api.PreciseIssue;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.ValidationException;
+
+import java.io.File;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
 
@@ -16,6 +24,7 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
         v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -32,15 +41,92 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid-openapi-version");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid-openapi-version");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid-openapi-version");
+    }
 
     @Test
     public void verifyInvalidOpenApiVersionInV3() {
         verifyV3("invalid-openapi-version");
     }
+    @Test
+    public void verifyInvalidOpenApiVersionInV31() {
+        verifyV31("invalid-openapi-version");
+    }
+    @Test
+    public void verifyInvalidOpenApiVersionInV32() {
+        verifyV32("invalid-openapi-version");
+    }
 
     @Test
-    public void verifyInV31() {
-        verifyV31("valid-openapi-version.yaml");
+    public void verifyTrulyInvalidVersionInV2() {
+        try {
+            List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                    new File(v2Path + "truly-invalid.yaml"), check, true, false, false, false);
+            assertThat(issues).isNotEmpty();
+        } catch (ValidationException e) {
+            // Intentional blanck
+        }
+    }
+
+    @Test
+    public void verifyTrulyInvalidVersionInV2Json() {
+        try {
+            List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                    new File(v2Path + "truly-invalid.json"), check, true, false, false, false);
+            assertThat(issues).isNotEmpty();
+        } catch (ValidationException e) {
+            // Intentional blanck
+        }
+    }
+
+    @Test
+    public void verifyTrulyInvalidVersionInV3() {
+        try {
+            List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                    new File(v3Path + "truly-invalid.yaml"), check, false, true, false, false);
+            assertThat(issues).isNotEmpty();
+        } catch (ValidationException e) {
+            // Intentional blanck
+        }
+    }
+
+    @Test
+    public void verifyTrulyInvalidVersionInV3Json() {
+        try {
+            List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                    new File(v3Path + "truly-invalid.json"), check, false, true, false, false);
+            assertThat(issues).isNotEmpty();
+        } catch (ValidationException e) {
+            // Intentional blanck
+        }
+    }
+
+    @Test
+    public void verifyTrulyInvalidVersionInV31() {
+        try {
+            List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                    new File(v31Path + "truly-invalid.yaml"), check, false, false, true, false);
+            assertThat(issues).isNotEmpty();
+        } catch (ValidationException e) {
+            // Intentional blanck
+        }
+    }
+
+    @Test
+    public void verifyTrulyInvalidVersionInV32() {
+        try {
+            List<PreciseIssue> issues = ExtendedOpenApiCheckVerifier.scanFileForIssues(
+                    new File(v32Path + "truly-invalid.yaml"), check, false, false, false, true);
+            assertThat(issues).isNotEmpty();
+        } catch (ValidationException e) {
+            // Intentional blanck
+        }
     }
 
     @Override
@@ -51,6 +137,6 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("valid-versions", "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1.0", RuleParamType.STRING);
+        assertParameterProperties("valid-versions", "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1.0,3.2.0", RuleParamType.STRING);
     }
 }

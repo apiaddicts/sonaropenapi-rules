@@ -15,6 +15,8 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
         check = new OAR021ExcludeParameterCheck();
         v2Path = getV2Path("parameters");
         v3Path = getV3Path("parameters");
+        v31Path = getV31Path("parameters");
+        v32Path = getV32Path("parameters");
     }
 
     @Test
@@ -46,25 +48,99 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("plain");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("plain");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("plain");
+    }
 
     @Test
     public void verifyInV3Excluded() {
         verifyV3("excluded");
+    }
+    @Test
+    public void verifyInV31Excluded() {
+        verifyV31("excluded");
+    }
+    @Test
+    public void verifyInV32Excluded() {
+        verifyV32("excluded");
     }
 
     @Test
     public void verifyInV3Without() {
         verifyV3("plain-without");
     }
+    @Test
+    public void verifyInV31Without() {
+        verifyV31("plain-without");
+    }
+    @Test
+    public void verifyInV32Without() {
+        verifyV32("plain-without");
+    }
 
     @Test
     public void verifyInV3WithRef() {
         verifyV3("with-ref");
     }
+    @Test
+    public void verifyInV31WithRef() {
+        verifyV31("with-ref");
+    }
+    @Test
+    public void verifyInV32WithRef() {
+        verifyV32("with-ref");
+    }
 
     @Test
     public void verifyInV3PathEndingWithParam() {
         verifyV3("with-param");
+    }
+    @Test
+    public void verifyInV31PathEndingWithParam() {
+        verifyV31("with-param");
+    }
+    @Test
+    public void verifyInV32PathEndingWithParam() {
+        verifyV32("with-param");
+    }
+
+    @Test
+    public void verifyInV2ExcludeNoDollar() {
+        verifyV2("exclude-no-dollar");
+    }
+    @Test
+    public void verifyInV3ExcludeNoDollar() {
+        verifyV3("exclude-no-dollar");
+    }
+    @Test
+    public void verifyInV31ExcludeNoDollar() {
+        verifyV31("exclude-no-dollar");
+    }
+    @Test
+    public void verifyInV32ExcludeNoDollar() {
+        verifyV32("exclude-no-dollar");
+    }
+
+    @Test
+    public void verifyInV2WithoutParameters() {
+        verifyV2("without-parameters");
+    }
+    @Test
+    public void verifyInV3WithoutParameters() {
+        verifyV3("without-parameters");
+    }
+    @Test
+    public void verifyInV31WithoutParameters() {
+        verifyV31("without-parameters");
+    }
+    @Test
+    public void verifyInV32WithoutParameters() {
+        verifyV32("without-parameters");
     }
 
     @Override

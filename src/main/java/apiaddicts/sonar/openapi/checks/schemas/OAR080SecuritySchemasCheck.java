@@ -9,6 +9,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
@@ -40,9 +41,11 @@ public class OAR080SecuritySchemasCheck extends BaseCheck {
             OpenApi2Grammar.PATH,
             OpenApi3Grammar.PATH,
             OpenApi31Grammar.PATH,
+            OpenApi32Grammar.PATH,
             OpenApi2Grammar.OPERATION,
             OpenApi3Grammar.OPERATION,
-            OpenApi31Grammar.OPERATION
+            OpenApi31Grammar.OPERATION,
+            OpenApi32Grammar.OPERATION
         );
     }
 

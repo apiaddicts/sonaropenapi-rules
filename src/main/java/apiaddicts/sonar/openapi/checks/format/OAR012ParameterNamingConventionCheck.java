@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
@@ -36,13 +38,18 @@ public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventi
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.PARAMETER, OpenApi2Grammar.SCHEMA, OpenApi3Grammar.PARAMETER,
-				OpenApi3Grammar.SCHEMA);
+		return ImmutableSet.of(
+				OpenApi2Grammar.PARAMETER, OpenApi2Grammar.SCHEMA,
+				OpenApi3Grammar.PARAMETER, OpenApi3Grammar.SCHEMA,
+				OpenApi31Grammar.PARAMETER, OpenApi31Grammar.SCHEMA,
+				OpenApi32Grammar.PARAMETER, OpenApi32Grammar.SCHEMA);
 	}
 
 	@Override
 	public void visitNode(JsonNode node) {
-		if (OpenApi2Grammar.PARAMETER.equals(node.getType()) || OpenApi3Grammar.PARAMETER.equals(node.getType())) {
+		AstNodeType type = node.getType();
+		if (OpenApi2Grammar.PARAMETER.equals(type) || OpenApi3Grammar.PARAMETER.equals(type)
+				|| OpenApi31Grammar.PARAMETER.equals(type) || OpenApi32Grammar.PARAMETER.equals(type)) {
 			visitParameterNode(node);
 		} else {
 			visitSchemaNode(node);
@@ -50,7 +57,8 @@ public class OAR012ParameterNamingConventionCheck extends AbstractNamingConventi
 	}
 
 	private void visitSchemaNode(JsonNode schemaNode) {
-		if (schemaNode.getType().equals(OpenApi3Grammar.REF))
+		AstNodeType type = schemaNode.getType();
+		if (OpenApi3Grammar.REF.equals(type) || OpenApi31Grammar.REF.equals(type) || OpenApi32Grammar.REF.equals(type))
 			schemaNode = resolve(schemaNode);
 
 		Map<String, JsonNode> properties = schemaNode.propertyMap();

@@ -14,6 +14,8 @@ public class OAR049NoContentIn204CheckTest extends BaseCheckTest {
         check = new OAR049NoContentIn204Check();
         v2Path = getV2Path("security");
         v3Path = getV3Path("security");
+        v31Path = getV31Path("security");
+        v32Path = getV32Path("security");
     }
 
     @Test
@@ -24,6 +26,14 @@ public class OAR049NoContentIn204CheckTest extends BaseCheckTest {
     @Test
     public void verifyInV3() {
         verifyV3("no-content-in-204");
+    }
+    @Test
+    public void verifyInV31() {
+        verifyV31("no-content-in-204");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("no-content-in-204");
     }
 
     @Override

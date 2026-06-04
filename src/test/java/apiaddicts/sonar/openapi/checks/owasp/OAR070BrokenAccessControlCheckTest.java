@@ -14,6 +14,8 @@ public class OAR070BrokenAccessControlCheckTest extends BaseCheckTest{
         check = new OAR070BrokenAccessControlCheck();
         v2Path = getV2Path("owasp");
         v3Path = getV3Path("owasp");
+        v31Path = getV31Path("owasp");
+        v32Path = getV32Path("owasp");
     }
 
     @Test
@@ -29,8 +31,24 @@ public class OAR070BrokenAccessControlCheckTest extends BaseCheckTest{
         verifyV3("numeric");
     }
     @Test
+    public void verifyInV31numeric() {
+        verifyV31("numeric");
+    }
+    @Test
+    public void verifyInV32numeric() {
+        verifyV32("numeric");
+    }
+    @Test
     public void verifyInV3noNumeric() {
         verifyV3("no-numeric");
+    }
+    @Test
+    public void verifyInV31noNumeric() {
+        verifyV31("no-numeric");
+    }
+    @Test
+    public void verifyInV32noNumeric() {
+        verifyV32("no-numeric");
     }
     @Override
     public void verifyRule() {

@@ -16,6 +16,18 @@ paths:
                 type: string
               last_name:
                 type: string
+              _links:
+                type: object
+              _embedded:
+                type: object
+              "@context":
+                type: string
+              "@type":
+                type: string
+              "@id":
+                type: string
+              x-internal:
+                type: boolean
       responses:
         '200':
           description: Success

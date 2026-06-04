@@ -6,6 +6,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.RuleProperty;
 
@@ -84,16 +85,16 @@ public abstract class AbstractHttpMethodCheck extends BaseCheck {
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(
-                OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH,
-                OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION
+                OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH,
+                OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi32Grammar.OPERATION
         );
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH) {
+        if (node.getType() == OpenApi2Grammar.PATH || node.getType() == OpenApi3Grammar.PATH || node.getType() == OpenApi31Grammar.PATH || node.getType() == OpenApi32Grammar.PATH) {
             currentPath = node.key().getTokenValue();
-        } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION) {
+        } else if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION || node.getType() == OpenApi32Grammar.OPERATION) {
             if (shouldExcludePath()) {
                 return;
             }

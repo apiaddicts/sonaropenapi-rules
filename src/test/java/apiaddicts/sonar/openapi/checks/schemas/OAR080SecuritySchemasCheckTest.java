@@ -15,6 +15,8 @@ public class OAR080SecuritySchemasCheckTest extends BaseCheckTest {
         check = new OAR080SecuritySchemasCheck();
         v2Path = getV2Path("schemas");
         v3Path = getV3Path("schemas");
+        v31Path = getV31Path("schemas");
+        v32Path = getV32Path("schemas");
     }
 
     @Test

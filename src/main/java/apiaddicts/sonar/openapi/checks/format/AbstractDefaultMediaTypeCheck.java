@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.RuleProperty;
 
@@ -50,7 +51,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.RESPONSES);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi32Grammar.OPERATION, OpenApi3Grammar.RESPONSES, OpenApi31Grammar.RESPONSES, OpenApi32Grammar.RESPONSES);
     }
 
     @Override
@@ -93,13 +94,13 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
     }
 
     private void visitV3Node(JsonNode node) {
-
-        if (node.getType() == OpenApi3Grammar.OPERATION && section.equals("consumes")) {
+        AstNodeType type = node.getType();
+        if ((type == OpenApi3Grammar.OPERATION || type == OpenApi31Grammar.OPERATION || type == OpenApi32Grammar.OPERATION) && section.equals("consumes")) {
             handleConsumesOperation(node);
             return;
         }
 
-        if (node.getType() == OpenApi3Grammar.RESPONSES && section.equals("produces")) {
+        if ((type == OpenApi3Grammar.RESPONSES || type == OpenApi31Grammar.RESPONSES || type == OpenApi32Grammar.RESPONSES) && section.equals("produces")) {
             MediaTypeUtils.handleProducesResponses(node, externalRefNode, this::visitContentNode);
         }
     }

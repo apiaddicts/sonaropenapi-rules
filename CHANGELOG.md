@@ -5,6 +5,100 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-06-04
+
+### Added
+
+- Add OpenAPI language support without YAML and JSON conflicts.
+
+### Changed
+
+- Bump plugin version to `1.4.1`.
+- Update `sonaropenapi.version` to `1.2.1`.
+- Reference `openapi-front-end` and `openapi-test-tools` dependencies via `${sonaropenapi.version}` property instead of hardcoded version.
+
+### Fixed
+
+- OAR004 - ValidWso2ScopesRoles - Fixed false negative where `roles` defined as a YAML/JSON array were not validated element by element. Updated `AbstractPatternWso2ScopesCheck.visitScope()` to iterate array elements via `fieldNode.elements()` and validate each one individually. Added test fixtures for array roles in v2, v3, v31 and v32 formats.
+- OAR014 - ResourceLevelWithinNonSuggestedRange - Removed upper bound threshold: rule now fires for all depths ≥ 4 (previously only fired for depths 4–5), aligning with Spectral behavior. Updated v2 test fixtures to mark depth-6 paths as noncompliant.
+- OAR015 - ResourceLevelMaxAllowed - Updated depth calculation algorithm in `AbstractResourceLevelCheck.matchLevel(String path)` to count only literal segments, explicitly excluding path parameters (e.g. `{customerId}`) and `/me` segments — matching Spectral's algorithm exactly. Previously used a `pathParts − literalParamPairs` formula that produced different results for paths starting with parameters, consecutive parameters, or containing `/me`.
+- OAR020 - ExpandParameterCheck - Fixed false negative where GET operations on non-`/examples` paths (e.g. `/pets`, `/orders`) without a `parameters` block were not reported. Changed default path strategy from include-only `/examples` to exclude-all (empty exclude list), so the rule now applies to all collection GET endpoints. Added `/me` path exclusion and health-check path exclusion (`status`, `health`, `ping`) in `visitNode`, aligning with Spectral's filter. Added `without-parameters` test cases for v2, v3, v31 and v32.
+- OAR021 - ExcludeParameterCheck - Same fix as OAR020 applied for `$exclude` parameter. Changed default path strategy to exclude-all, added `/me` and health-check exclusions, added `without-parameters` test cases.
+- OAR028 - FilterParameterCheck - Rewritten to extend `AbstractQueryParameterCheck`. Fires exactly once per GET operation when `$filter` query parameter is absent; does not fire if `$filter` is present alongside other parameters; resolves `$filter` referenced via `$ref` to components. Covers ALL collection GET endpoints except `/me` paths, terminal `/{id}` paths and health-check paths (`status`, `health`, `ping`).
+- OAR037 - StringFormatCheck - Fixed false negative where string schemas without a `format` field were not reported. Updated `isInvalidString` to also fire when `format == null`.
+- OAR038 - StandardCreateResponseCheck - POST 201 responses must have a schema whose properties are named `data` or `error`, each with at least one sub-property. Fires with a distinct message when the property name is invalid vs. when sub-properties are missing.
+- OAR066 - SnakeCaseNamingConventionCheck - Fixed false positives on industry-standard property name prefixes. Skip properties whose names start with `@` or `x-`.
+- OAR073 - RateLimitCheck - Extended default excluded paths from `/status, /health-check` to `/status, /health, /health-check, /ping, /liveness, /readiness` in `DEFAULT_PATHS`.
+
+## [1.4.1-beta-5] - 2026-06-02
+
+### Fixed
+
+- OAR028 - FilterParameterCheck - Rewritten to extend `AbstractQueryParameterCheck`. Fires exactly once per GET operation when `$filter` query parameter is absent; does not fire if `$filter` is present alongside other parameters; resolves `$filter` referenced via `$ref` to components. Covers ALL collection GET endpoints except `/me` paths, terminal `/{id}` paths and health-check paths (`status`, `health`, `ping`).
+
+## [1.4.1-beta-4] - 2026-05-31
+
+### Fixed
+
+- OAR020 - ExpandParameterCheck - Fixed false negative where GET operations on non-`/examples` paths (e.g. `/pets`, `/orders`) without a `parameters` block were not reported. Changed default path strategy from include-only `/examples` to exclude-all (empty exclude list), so the rule now applies to all collection GET endpoints. Added `/me` path exclusion and health-check path exclusion (`status`, `health`, `ping`) in `visitNode`, aligning with Spectral's filter. Added `without-parameters` test cases for v2, v3, v31 and v32.
+- OAR021 - ExcludeParameterCheck - Same fix as OAR020 applied for `$exclude` parameter. Changed default path strategy to exclude-all, added `/me` and health-check exclusions, added `without-parameters` test cases.
+- OAR037 - StringFormatCheck - Fixed false negative where string schemas without a `format` field were not reported. Updated `isInvalidString` to also fire when `format == null`.
+- OAR038 - StandardCreateResponseCheck - POST 201 responses must have a schema whose properties are named `data` or `error`, each with at least one sub-property. Fires with a distinct message when the property name is invalid vs. when sub-properties are missing.
+- OAR066 - SnakeCaseNamingConventionCheck - Fixed false positives on industry-standard property name prefixes. Skip properties whose names start with `@` or `x-`.
+- OAR073 - RateLimitCheck - Extended default excluded paths from `/status, /health-check` to `/status, /health, /health-check, /ping, /liveness, /readiness` in `DEFAULT_PATHS`.
+
+## [1.4.1-beta-3] - 2026-05-29
+
+### Fixed
+
+- OAR004 - ValidWso2ScopesRoles - Fixed false negative where `roles` defined as a YAML/JSON array were not validated element by element. Updated `AbstractPatternWso2ScopesCheck.visitScope()` to iterate array elements via `fieldNode.elements()` and validate each one individually. Added test fixtures for array roles in v2, v3, v31 and v32 formats.
+- OAR014 - ResourceLevelWithinNonSuggestedRange - Removed upper bound threshold: rule now fires for all depths ≥ 4 (previously only fired for depths 4–5), aligning with Spectral behavior. Updated v2 test fixtures to mark depth-6 paths as noncompliant.
+- OAR015 - ResourceLevelMaxAllowed - Updated depth calculation algorithm in `AbstractResourceLevelCheck.matchLevel(String path)` to count only literal segments, explicitly excluding path parameters (e.g. `{customerId}`) and `/me` segments — matching Spectral's algorithm exactly. Previously used a `pathParts − literalParamPairs` formula that produced different results for paths starting with parameters, consecutive parameters, or containing `/me`.
+
+## [1.4.1-beta-2] - 2026-05-28
+
+### Added
+
+- Add OpenAPI language support without YAML and JSON conflicts.
+
+## [1.4.1-beta-1] - 2026-05-26
+
+### Changed
+
+- Bump plugin version to `1.4.1-beta-1`.
+- Update `sonaropenapi.version` to `1.2.1-beta-1`.
+- Reference `openapi-front-end` and `openapi-test-tools` dependencies via `${sonaropenapi.version}` property instead of hardcoded version.
+
+## [1.4.0] - 2026-05-22
+
+### Security
+
+- Upgrade `org.json:json` to `20231013` to fix CVE vulnerabilities
+- Upgrade `jackson-dataformat-yaml` from 2.13.3 to 2.18.6 to fix CVE alerts.
+- Upgrade `assertj-core` from 3.22.0 to 3.27.7 to fix XXE vulnerability.
+
+### Changed
+
+- Move sonar organization config to github action
+
+### Added
+
+#### Now, support for OpenAPI 3.2 is included. These are some of the new changes:
+
+- All existing rules (OAR001 - OAR115) have been updated and validated for compatibility with the OpenAPI 3.2 specification.
+- Added a comprehensive set of test cases for every rule to ensure correct behavior and validation under OpenAPI 3.2 schemas.
+- Enhanced the engine to support new 3.2 structural changes, including updated reference handling and metadata fields.
+
+### Fixed
+
+- Resolve language suffix conflict between the plugin's custom YAML/JSON support and SonarQube's built-in language detection.
+- OAR020 - ExpandParameterCheck: rule now explicitly requires `$expand` (with `$` prefix) as the query parameter name, rejecting `expand` without prefix, aligning with Spectral behavior.
+- OAR021 - ExcludeParameterCheck: rule now explicitly requires `$exclude` (with `$` prefix) as the query parameter name, rejecting `exclude` without prefix, aligning with Spectral behavior.
+- OAR028 - FilterParameterCheck: rule now only evaluates `query` parameters; header, path and cookie parameters are ignored, aligning with Spectral behavior.
+- OAR051 - DescriptionDiffersSummaryCheck: rule now evaluates all HTTP methods (GET, POST, PUT, PATCH, DELETE), not only GET, aligning with Spectral behavior.
+- OAR066 - SnakeCaseNamingConventionCheck: rule now recursively validates nested schema property names at all depth levels, aligning with Spectral behavior.
+
+
 ## [1.3.7] - 2026-05-18
 
 ### Fixed

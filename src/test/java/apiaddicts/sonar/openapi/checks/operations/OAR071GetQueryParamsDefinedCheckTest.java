@@ -15,6 +15,8 @@ public class OAR071GetQueryParamsDefinedCheckTest extends BaseCheckTest {
         check = new OAR071GetQueryParamsDefinedCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
@@ -31,10 +33,26 @@ public class OAR071GetQueryParamsDefinedCheckTest extends BaseCheckTest {
     public void verifyInV3() {
         verifyV3("valid-query-params");
     }
+    @Test
+    public void verifyInV31() {
+        verifyV31("valid-query-params");
+    }
+    @Test
+    public void verifyInV32() {
+        verifyV32("valid-query-params");
+    }
 
     @Test
     public void verifyInV3MissingQueryParams() {
         verifyV3("missing-query-params");
+    }
+    @Test
+    public void verifyInV31MissingQueryParams() {
+        verifyV31("missing-query-params");
+    }
+    @Test
+    public void verifyInV32MissingQueryParams() {
+        verifyV32("missing-query-params");
     }
 
     @Override

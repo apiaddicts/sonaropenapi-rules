@@ -1,101 +1,115 @@
-<p>The chosen parameter must be defined in this operation. By default, $exclude</p>
+<p>Every GET collection operation must define <code>$exclude</code> as a query parameter.</p>
+<p><strong>Applies to:</strong> GET operations on collection paths (paths that do not end with a path parameter such as <code>/{id}</code>).</p>
+<p><strong>Excluded automatically:</strong> detail endpoints (path ends with <code>/{param}</code>), paths containing <code>/me</code>, and health-check paths containing <code>status</code>, <code>health</code>, or <code>ping</code>.</p>
+<p><strong>Configurable parameters:</strong></p>
+<ul>
+  <li><code>paths</code> — list of explicit paths to include/exclude (default: <code>/examples</code>).</li>
+  <li><code>pathValidationStrategy</code> — <code>/include</code> or <code>/exclude</code> (default: <code>/include</code>).</li>
+</ul>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
-  swagger: "2.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters: 
-          - in: query
-            name: other <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
-            type: array
-            items:
-              type: string
-          - in: query
-            name: hola <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
-            type: array
-            items:
-              type: string
-        responses:
-          206:
-            description: Ok
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
+      responses:
+        206:
+          description: Ok
+  /orders:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
+      parameters:
+        - in: query
+          name: other
+          type: array
+          items:
+            type: string
+      responses:
+        206:
+          description: Ok
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
 <pre>
-  swagger: "2.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters:
-          - in: query
-            name: $exclude
-            type: array
-            items:
-              type: string
-          - in: query
-            name: $exclude
-            type: array
-            items:
-              type: string
-        responses:
-          206:
-            description: Ok
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: query
+          name: $exclude
+          type: array
+          items:
+            type: string
+      responses:
+        206:
+          description: Ok
+  /pets/{petId}:
+    get:
+      parameters:
+        - in: path
+          name: petId
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Ok
 </pre>
 <h2>Noncompliant Code Example (OpenAPI 3)</h2>
 <pre>
-  openapi: "3.0.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters: 
-          - in: query
-            name: other <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
-            schema:
-              type: array
-              items:
-                type: string
-          - in: query
-            name: select <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
-            schema:
-              type: array
-              items:
-                type: string
-        responses:
-          206:
-            description: Ok
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
+      responses:
+        "206":
+          description: Ok
+  /orders:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR021: $exclude must be defined as a parameter in this operation}}</span>
+      parameters:
+        - in: query
+          name: other
+          schema:
+            type: string
+      responses:
+        "206":
+          description: Ok
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
 <pre>
-  openapi: "3.0.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters:
-          - in: query
-            name: $exclude
-            schema:
-              type: array
-              items:
-                type: string
-          - in: query
-            name: $exclude
-            schema:
-              type: array
-              items:
-                type: string
-        responses:
-          206:
-            description: Ok
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      parameters:
+        - in: query
+          name: $exclude
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        "206":
+          description: Ok
+  /pets/{petId}:
+    get:
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Ok
 </pre>

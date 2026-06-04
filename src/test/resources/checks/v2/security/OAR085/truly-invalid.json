@@ -1,0 +1,9 @@
+{
+  "swagger": "1.0",
+  "info": {
+    "title": "Sample API",
+    "description": "This is a sample API with an invalid swagger version.",
+    "version": "1.0.0"
+  },
+  "paths": {}
+}

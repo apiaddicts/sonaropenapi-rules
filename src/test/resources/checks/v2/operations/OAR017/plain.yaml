@@ -13,12 +13,12 @@ paths:
       responses:
         200:
           description: "Ok"
-  /{one}:
+  /{one}: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
     get:
       responses:
         200:
           description: "Ok"
-  /one/two:
+  /one/two: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
     get:
       responses:
         200:
@@ -29,6 +29,21 @@ paths:
         200:
           description: "Ok"
   /one/{two}/three:
+    get:
+      responses:
+        200:
+          description: "Ok"
+  /one/me:
+    get:
+      responses:
+        200:
+          description: "Ok"
+  /one/me/three:
+    get:
+      responses:
+        200:
+          description: "Ok"
+  /one/{two}/{three}: # Noncompliant {{OAR017: Resource path should alternate static and parametrized parts}}
     get:
       responses:
         200:

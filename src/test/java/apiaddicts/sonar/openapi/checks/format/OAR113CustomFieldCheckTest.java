@@ -14,6 +14,8 @@ public class OAR113CustomFieldCheckTest extends BaseCheckTest {
         check = new OAR113CustomFieldCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
 
@@ -31,8 +33,24 @@ public class OAR113CustomFieldCheckTest extends BaseCheckTest {
         verifyV3("valid");
     }
     @Test
+    public void verifyValidCustomV31() {
+        verifyV31("valid");
+    }
+    @Test
+    public void verifyValidCustomV32() {
+        verifyV32("valid");
+    }
+    @Test
     public void verifyInvalidCustomV3() {
         verifyV3("invalid");
+    }
+    @Test
+    public void verifyInvalidCustomV31() {
+        verifyV31("invalid");
+    }
+    @Test
+    public void verifyInvalidCustomV32() {
+        verifyV32("invalid");
     }
 
     @Override

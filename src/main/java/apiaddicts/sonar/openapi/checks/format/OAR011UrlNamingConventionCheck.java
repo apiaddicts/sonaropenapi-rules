@@ -8,6 +8,7 @@ import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.net.MalformedURLException;
@@ -35,7 +36,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
-		return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi2Grammar.PATH, OpenApi3Grammar.SERVER, OpenApi3Grammar.PATH, OpenApi31Grammar.SERVER, OpenApi31Grammar.PATH);
+		return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi2Grammar.PATH, OpenApi3Grammar.SERVER, OpenApi3Grammar.PATH, OpenApi31Grammar.SERVER, OpenApi31Grammar.PATH, OpenApi32Grammar.SERVER, OpenApi32Grammar.PATH);
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class OAR011UrlNamingConventionCheck extends AbstractNamingConventionChec
 	}
 
 	private void visitV3Node(JsonNode node) {
-		if (node.is(OpenApi3Grammar.SERVER)) {
+		if (node.is(OpenApi3Grammar.SERVER) || node.is(OpenApi31Grammar.SERVER) || node.is(OpenApi32Grammar.SERVER)) {
 			visitV3ServerNode(node);
 		} else {
 			visitPathNode(node);

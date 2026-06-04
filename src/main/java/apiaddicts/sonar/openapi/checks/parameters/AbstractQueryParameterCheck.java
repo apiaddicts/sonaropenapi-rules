@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.RuleProperty;
 
@@ -24,7 +25,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected final String ruleKey;
     protected final String messageKey;
-    protected final String parameterName;
+    protected String parameterName;
     protected final boolean applyToParameterizedPaths;
 
     protected Set<String> paths;
@@ -58,7 +59,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi32Grammar.OPERATION);
     }
 
     @Override
@@ -113,10 +114,10 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected boolean hasNamedRefParameter(JsonNode parameterNode) {
         String refValue = parameterNode.get("$ref").getTokenValue();
-        JsonNode refParameterNode = resolveReference(refValue, rootNode);  
+        JsonNode refParameterNode = resolveReference(refValue, rootNode);
         if (refParameterNode != null) {
             JsonNode nameNode = refParameterNode.get("name");
-            JsonNode inNode = refParameterNode.get("in"); 
+            JsonNode inNode = refParameterNode.get("in");
             return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
         }
         return false;
@@ -130,9 +131,9 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected String getPath(JsonNode node) {
         StringBuilder pathBuilder = new StringBuilder();
-        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
+        AstNode pathNode = node.getFirstAncestor(OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH);
         if (pathNode != null) {
-            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH && pathNode.getType() != OpenApi31Grammar.PATH) {
+            while (pathNode.getType() != OpenApi2Grammar.PATH && pathNode.getType() != OpenApi3Grammar.PATH && pathNode.getType() != OpenApi31Grammar.PATH && pathNode.getType() != OpenApi32Grammar.PATH) {
                 pathNode = pathNode.getParent();
             }
             pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());
@@ -141,6 +142,9 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     }
 
     protected boolean shouldIncludePath(String path) {
+        if (paths.isEmpty()) {
+            return pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE);
+        }
         if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
             return !paths.contains(path);
         } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
@@ -168,8 +172,8 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     }
 
     protected JsonNode resolveReference(String refValue, JsonNode root) {
-        if (refValue == null || !refValue.startsWith("#/")) { 
-            return null; 
+        if (refValue == null || !refValue.startsWith("#/")) {
+            return null;
         }
 
         String pathToReference = refValue.substring(2);
@@ -178,7 +182,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         JsonNode currentNode = root;
         for (String part : pathParts) {
             if (currentNode == null) {
-                return null; 
+                return null;
             }
             currentNode = currentNode.get(part);
         }

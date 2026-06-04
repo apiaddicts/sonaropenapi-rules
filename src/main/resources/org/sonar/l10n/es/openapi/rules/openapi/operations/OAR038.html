@@ -1,4 +1,11 @@
-<p>Una respuesta de creación de recurso debe contar con al menos un atributo.</p>
+<p>El schema de la respuesta 201 de una operación POST debe tener propiedades llamadas <code>data</code> o <code>error</code>, y cada una debe tener al menos una sub-propiedad.</p>
+<p>Esta regla dispara cuando:</p>
+<ul>
+<li>Una propiedad de nivel superior no se llama exactamente <code>data</code> o <code>error</code> (sensible a mayúsculas).</li>
+<li>Una propiedad <code>data</code> o <code>error</code> no tiene sub-propiedades.</li>
+<li>La respuesta 201 no tiene schema.</li>
+</ul>
+<p><strong>Configurable:</strong> <code>data-property</code> — nombre de propiedad válido (por defecto: <code>data</code>; también acepta <code>error</code>).</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"

@@ -1,0 +1,31 @@
+{
+  "openapi" : "3.2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : {
+      "post" : {
+        "summary" : "create a pet",
+        # Noncompliant@+1 {{OAR051: Description must differ from summary}}
+        "description" : "Create a pet",
+        "responses" : {
+          "default" : {
+            "description" : "the default response"
+          }
+        }
+      },
+      "get" : {
+        "summary" : "list all pets",
+        # Noncompliant@+1 {{OAR051: Description must differ from summary}}
+        "description" : "List all pets",
+        "responses" : {
+          "default" : {
+            "description" : "the default response"
+          }
+        }
+      }
+    }
+  }
+}

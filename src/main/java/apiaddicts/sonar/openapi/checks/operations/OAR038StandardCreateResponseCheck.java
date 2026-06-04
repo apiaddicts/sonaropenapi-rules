@@ -17,12 +17,14 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
     public static final String KEY = "OAR038";
 
     private static final String DATA_PROPERTY = "data";
+    private static final String ERROR_PROPERTY = "error";
 
     @RuleProperty(
             key = "data-property",
-            description = "Data property in standard response.",
+            description = "Valid top-level property name for the standard response.",
             defaultValue = DATA_PROPERTY
     )
+    @SuppressWarnings("unused")
     private String dataNode = DATA_PROPERTY;
 
     public OAR038StandardCreateResponseCheck() {
@@ -34,20 +36,26 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
         JsonNode schemaNode = node.get("schema");
         if (schemaNode.isMissing()) {
             addIssue(KEY, translate("OAR038.error-required-schema"), node.key());
-        } else {
-            schemaNode = resolve(schemaNode);
-
-            Map<String, JsonNode> properties = getAllProperties(schemaNode);
-
-            validateProperty(properties, dataNode, TYPE_ANY, schemaNode.key())
-                    .ifPresent(this::validateData);
+            return;
         }
-    }
 
-    private void validateData(JsonNode data) {
-        Map<String, JsonNode> properties = getAllProperties(data);
+        schemaNode = resolve(schemaNode);
+        Map<String, JsonNode> properties = getAllProperties(schemaNode);
+
+        for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
+            String propName = entry.getKey();
+            if (DATA_PROPERTY.equals(propName) || ERROR_PROPERTY.equals(propName)) {
+                Map<String, JsonNode> subProps = getAllProperties(resolve(entry.getValue()));
+                if (subProps.isEmpty()) {
+                    addIssue(KEY, translate("OAR038.error-required-one-property"), entry.getValue().key());
+                }
+            } else {
+                addIssue(KEY, translate("OAR038.error"), entry.getValue().key());
+            }
+        }
+
         if (properties.isEmpty()) {
-            addIssue(KEY, translate("OAR038.error-required-one-property"), data.key());
+            addIssue(KEY, translate("OAR038.error"), schemaNode.key());
         }
     }
 }

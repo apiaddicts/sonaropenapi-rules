@@ -13,6 +13,8 @@ public class OAR016NumericFormatCheckTest extends BaseCheckTest {
         check = new OAR016NumericFormatCheck();
         v2Path = getV2Path("format");
         v3Path = getV3Path("format");
+        v31Path = getV31Path("format");
+        v32Path = getV32Path("format");
     }
 
     @Test
@@ -39,10 +41,26 @@ public class OAR016NumericFormatCheckTest extends BaseCheckTest {
     public void verifyNestedV3() {
         verifyV3("nested");
     }
+    @Test
+    public void verifyNestedV31() {
+        verifyV31("nested");
+    }
+    @Test
+    public void verifyNestedV32() {
+        verifyV32("nested");
+    }
 
     @Test
     public void verifyWithRefV3() {
         verifyV3("with-$ref");
+    }
+    @Test
+    public void verifyWithRefV31() {
+        verifyV31("with-$ref");
+    }
+    @Test
+    public void verifyWithRefV32() {
+        verifyV32("with-$ref");
     }
 
 

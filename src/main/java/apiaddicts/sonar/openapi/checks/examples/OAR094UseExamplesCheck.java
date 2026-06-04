@@ -6,6 +6,7 @@ import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import apiaddicts.sonar.openapi.utils.ExternalRefHandler;
@@ -26,15 +27,15 @@ public class OAR094UseExamplesCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH);
+        return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi32Grammar.ROOT, OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (OpenApi2Grammar.ROOT.equals(node.getType()) || OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi31Grammar.ROOT.equals(node.getType())) {
+        if (OpenApi2Grammar.ROOT.equals(node.getType()) || OpenApi3Grammar.ROOT.equals(node.getType()) || OpenApi31Grammar.ROOT.equals(node.getType()) || OpenApi32Grammar.ROOT.equals(node.getType())) {
             deepSearchForExample(node);
         }
-        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType())) {
+        if (OpenApi2Grammar.PATH.equals(node.getType()) || OpenApi3Grammar.PATH.equals(node.getType()) || OpenApi31Grammar.PATH.equals(node.getType()) || OpenApi32Grammar.PATH.equals(node.getType())) {
             visitPathNode(node);
         }
     }
@@ -60,7 +61,7 @@ public class OAR094UseExamplesCheck extends BaseCheck {
             .forEach(response -> handleExternalRef.resolve(response, resolved -> {
                 if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode(resolved);
-                } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE)) {
+                } else if (resolved.getType().equals(OpenApi3Grammar.RESPONSE) || resolved.getType().equals(OpenApi31Grammar.RESPONSE) || resolved.getType().equals(OpenApi32Grammar.RESPONSE)) {
                     JsonNode content = resolved.at("/content");
                     if (!content.isMissing()) {
                         content.propertyMap().forEach((mediaType, mediaTypeNode) -> {

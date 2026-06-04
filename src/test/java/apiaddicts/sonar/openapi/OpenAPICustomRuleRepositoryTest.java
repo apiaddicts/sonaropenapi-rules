@@ -10,7 +10,7 @@ public class OpenAPICustomRuleRepositoryTest {
 	@Test
 	public void testRepositoryKey() {
 		OpenAPICustomRuleRepository repository = new OpenAPICustomRuleRepository();
-		assertThat(repository.repositoryKey()).isEqualTo(OpenAPICustomRulesDefinition.REPOSITORY_KEY);
+		assertThat(repository.repositoryKey()).isEqualTo(OpenAPICustomRulesDefinition.YAML_REPOSITORY_KEY);
 	}
 
 	@Test

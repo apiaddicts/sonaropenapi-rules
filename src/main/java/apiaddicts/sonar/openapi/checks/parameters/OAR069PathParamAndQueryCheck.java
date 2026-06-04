@@ -4,6 +4,7 @@ import com.sonar.sslr.api.AstNodeType;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
+import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.sonar.check.Rule;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
@@ -21,18 +22,18 @@ public class OAR069PathParamAndQueryCheck extends BaseCheck {
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
-        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION);
+        return ImmutableSet.of(OpenApi2Grammar.OPERATION, OpenApi3Grammar.OPERATION, OpenApi31Grammar.OPERATION, OpenApi32Grammar.OPERATION);
     }
 
     @Override
     public void visitNode(JsonNode node) {
-        if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION) {
+        if (node.getType() == OpenApi2Grammar.OPERATION || node.getType() == OpenApi3Grammar.OPERATION || node.getType() == OpenApi31Grammar.OPERATION || node.getType() == OpenApi32Grammar.OPERATION) {
             visitOperationNode(node);
         }
     }
 
     private void visitOperationNode(JsonNode node) {
-        List<JsonNode> parameters = node.getDescendants(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER)
+        List<JsonNode> parameters = node.getDescendants(OpenApi2Grammar.PARAMETER, OpenApi3Grammar.PARAMETER, OpenApi31Grammar.PARAMETER, OpenApi32Grammar.PARAMETER)
             .stream()
             .map(JsonNode.class::cast)
             .collect(Collectors.toList());

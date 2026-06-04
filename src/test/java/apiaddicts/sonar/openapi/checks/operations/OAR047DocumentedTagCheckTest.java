@@ -14,6 +14,8 @@ public class OAR047DocumentedTagCheckTest extends BaseCheckTest {
         check = new OAR047DocumentedTagCheck();
         v2Path = getV2Path("operations");
         v3Path = getV3Path("operations");
+        v31Path = getV31Path("operations");
+        v32Path = getV32Path("operations");
     }
 
     @Test
