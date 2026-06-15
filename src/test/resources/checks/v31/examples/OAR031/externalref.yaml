@@ -14,7 +14,7 @@ paths:
       summary: Get all users
       description: Returns a list of users.
       responses:
-        '200':
+        '200': # Noncompliant {{OAR031: Responses must have one or more examples defined}}
           description: A JSON array of user objects
           content:
             application/json:
@@ -40,7 +40,7 @@ paths:
               name: Puppy
               type: dog
       responses:
-        '200':
+        '200': # Noncompliant {{OAR031: Responses must have one or more examples defined}}
           description: A single user object
           content:
             application/json:

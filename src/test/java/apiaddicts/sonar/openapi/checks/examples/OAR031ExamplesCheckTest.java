@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
+import org.sonar.api.server.rule.RuleParamType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
 public class OAR031ExamplesCheckTest extends BaseCheckTest {
@@ -110,6 +111,15 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR031 - Examples - Responses, Request Body, Parameters and Properties must have an example defined", RuleType.BUG, Severity.MAJOR, tags("examples"));
+    }
+
+    @Override
+    public void verifyParameters() {
+        assertNumberOfParameters(4);
+        assertParameterProperties("validateResponse", "true", RuleParamType.BOOLEAN);
+        assertParameterProperties("validateRequestBody", "true", RuleParamType.BOOLEAN);
+        assertParameterProperties("validateParameter", "true", RuleParamType.BOOLEAN);
+        assertParameterProperties("validateProperty", "true", RuleParamType.BOOLEAN);
     }
 
 }

@@ -12,6 +12,12 @@ paths:
           description: Pet list
           schema:
             $ref: '#/definitions/pets'
+          examples:
+            application/json:
+              size: 1
+              pets:
+                - name: Snow
+                  type: dog
         default:
           $ref: "#/responses/server_error_response"
   /pets/{id}:
@@ -23,6 +29,10 @@ paths:
           description: One pet
           schema:
             $ref: "#/definitions/pet"
+          examples:
+            application/json:
+              name: Snow
+              type: dog
         default:
           $ref: "#/responses/server_error_response"
 
@@ -64,3 +74,6 @@ responses:
         error:
           type: string
           example: "Server error"
+    examples:
+      application/json:
+        error: "Server error"

@@ -6,7 +6,7 @@ paths:
   /profile:
     put:
       summary: Update user profile
-      requestBody:
+      requestBody: # Noncompliant {{OAR031: Request body must have one or more examples defined}}
         required: true
         content:
           application/json:

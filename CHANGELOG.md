@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- OAR031 - ExamplesCheck - Per-level configuration via rule parameters `validate-response`, `validate-request-body`, `validate-parameter` and `validate-property` (all `true` by default); each level can be disabled independently.
+
+### Changed
+
+- OAR031 - ExamplesCheck - Examples are now validated as four **independent** levels (response, request body, parameter, property). The response/request-body/parameter levels require an example declared at the media-type or schema **root** (non-recursive); examples nested inside schema properties no longer satisfy them. Aligns OAR031 with the Spectral ruleset (identical findings on the same document) and is stricter than before, so existing specs may surface new findings.
+
+
 ## [1.4.1] - 2026-06-04
 
 ### Added

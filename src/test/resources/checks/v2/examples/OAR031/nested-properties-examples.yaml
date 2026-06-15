@@ -6,7 +6,7 @@ paths:
   /profile:
     put:
       parameters:
-        - name: body
+        - name: body # Noncompliant {{OAR031: Parameters must have one or more examples defined}}
           in: body
           required: true
           schema:

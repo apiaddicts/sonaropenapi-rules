@@ -15,6 +15,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
 
 @Rule(key = OAR031ExamplesCheck.KEY)
 public class OAR031ExamplesCheck extends BaseCheck {
@@ -27,6 +28,39 @@ public class OAR031ExamplesCheck extends BaseCheck {
     private static final String ITEMS = "items";
 
     private static final String ERROR_RESPONSE = "OAR031.error-response";
+    private static final String ERROR_REQUEST = "OAR031.error-request";
+
+    @RuleProperty(
+            key = "validateResponse",
+            description = "Validate that responses declare a body-level example",
+            defaultValue = "true",
+            type = "BOOLEAN"
+    )
+    private boolean validateResponse = true;
+
+    @RuleProperty(
+            key = "validateRequestBody",
+            description = "Validate that request bodies declare a body-level example",
+            defaultValue = "true",
+            type = "BOOLEAN"
+    )
+    private boolean validateRequestBody = true;
+
+    @RuleProperty(
+            key = "validateParameter",
+            description = "Validate that parameters declare an example",
+            defaultValue = "true",
+            type = "BOOLEAN"
+    )
+    private boolean validateParameter = true;
+
+    @RuleProperty(
+            key = "validateProperty",
+            description = "Validate that each schema property declares an example",
+            defaultValue = "true",
+            type = "BOOLEAN"
+    )
+    private boolean validateProperty = true;
 
     private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
@@ -67,11 +101,13 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
             JsonNode schema = resolved.get(SCHEMA);
 
+            // Parameter level: the parameter itself, or its schema's ROOT, must declare an
+            // example. Examples buried inside schema properties do NOT satisfy this level.
             boolean hasExample = !resolved.get(EXAMPLE).isMissing()
                     || !resolved.get(EXAMPLES).isMissing()
-                    || (!schema.isMissing() && isSchemaCovered(schema));
+                    || schemaHasRootExample(schema);
 
-            if (!hasExample) {
+            if (validateParameter && !hasExample) {
                 addIssue(KEY, translate("OAR031.error-parameter"), handleExternalRef.getTrueNode(node));
             }
         });
@@ -89,10 +125,11 @@ public class OAR031ExamplesCheck extends BaseCheck {
     private void visitResponseV2Node(JsonNode node) {
         handleExternalRef.resolve(node, resolved -> {
             JsonNode schemaNode = resolved.get(SCHEMA);
+            // Response level: a response-level examples map or the schema ROOT example.
             boolean hasExample = !resolved.get(EXAMPLES).isMissing()
-                    || (!schemaNode.isMissing() && isSchemaCovered(schemaNode));
+                    || schemaHasRootExample(schemaNode);
 
-            if (!hasExample) {
+            if (validateResponse && !hasExample) {
                 addIssue(KEY, translate(ERROR_RESPONSE), handleExternalRef.getTrueNode(node.key()));
             }
         });
@@ -117,26 +154,42 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitRequestBodyOrResponseV3Node(JsonNode node) {
+        boolean isRequestBody = node.getType().equals(OpenApi3Grammar.REQUEST_BODY)
+                || node.getType().equals(OpenApi31Grammar.REQUEST_BODY)
+                || node.getType().equals(OpenApi32Grammar.REQUEST_BODY);
+        boolean levelOn = isRequestBody ? validateRequestBody : validateResponse;
+        if (!levelOn) return;
+
+        String errorKey = isRequestBody ? ERROR_REQUEST : ERROR_RESPONSE;
         JsonNode content = node.at("/content");
 
         if (content.isMissing()) {
-            String errorKey = (node.getType().equals(OpenApi3Grammar.REQUEST_BODY) || node.getType().equals(OpenApi31Grammar.REQUEST_BODY) || node.getType().equals(OpenApi32Grammar.REQUEST_BODY)) ? "OAR031.error-request" : ERROR_RESPONSE;
             addIssue(KEY, translate(errorKey), handleExternalRef.getTrueNode(node.key()));
             return;
         }
 
         for (JsonNode mediaTypeNode : content.propertyMap().values()) {
             JsonNode schemaNode = mediaTypeNode.get(SCHEMA);
-            boolean hasExplicitExample = !mediaTypeNode.get(EXAMPLES).isMissing()
-                    || !mediaTypeNode.get(EXAMPLE).isMissing();
+            // Body level: a media-type example/examples or the schema ROOT example.
+            // Examples buried inside schema properties do NOT satisfy this level.
+            boolean hasBodyExample = !mediaTypeNode.get(EXAMPLES).isMissing()
+                    || !mediaTypeNode.get(EXAMPLE).isMissing()
+                    || schemaHasRootExample(schemaNode);
 
-            if (!hasExplicitExample && !isSchemaCovered(schemaNode)) {
-                String errorKey = (node.getType().equals(OpenApi3Grammar.REQUEST_BODY) || node.getType().equals(OpenApi31Grammar.REQUEST_BODY) || node.getType().equals(OpenApi32Grammar.REQUEST_BODY)) ? "OAR031.error-request" : ERROR_RESPONSE;
+            if (!hasBodyExample) {
                 addIssue(KEY, translate(errorKey), handleExternalRef.getTrueNode(node.key()));
             }
         }
     }
 
+    // Non-recursive: only an example declared directly on the schema root counts.
+    private boolean schemaHasRootExample(JsonNode schemaNode) {
+        if (schemaNode.isMissing()) return false;
+        return handleExternalRef.resolve(schemaNode, resolved ->
+                !resolved.get(EXAMPLE).isMissing() || !resolved.get(EXAMPLES).isMissing());
+    }
+
+    // Recursive coverage, used only by the property-level walk.
     private boolean isSchemaCovered(JsonNode schemaNode) {
         if (schemaNode.isMissing()) return false;
 
@@ -160,6 +213,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitSchemaNode(JsonNode node) {
+        if (!validateProperty) return;
+
         JsonNode parentNode = (JsonNode) node.getParent().getParent();
 
         if (parentNode.getType().equals(OpenApi3Grammar.PARAMETER) || parentNode.getType().equals(OpenApi31Grammar.PARAMETER) || parentNode.getType().equals(OpenApi32Grammar.PARAMETER)) {
@@ -185,6 +240,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
     }
 
     private void visitPathNode(JsonNode node) {
+        if (!validateProperty) return;
+
         node.properties().stream()
             .filter(prop -> isOperation(prop))
             .map(JsonNode::value)
