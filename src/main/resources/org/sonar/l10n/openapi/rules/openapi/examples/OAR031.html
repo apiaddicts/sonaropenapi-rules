@@ -1,4 +1,6 @@
 <p>The examples can help developers to understand the response data structure and representation.</p>
+<p>Examples are validated as four <b>independent</b> levels: <b>response</b>, <b>request body</b>, <b>parameter</b> and <b>property</b>. The response, request-body and parameter levels require an example declared at the media-type or schema <b>root</b>; examples nested inside individual properties do not satisfy them. <code>204</code> responses are excluded.</p>
+<p>Each level can be enabled or disabled independently with the rule parameters <code>validate-response</code>, <code>validate-request-body</code>, <code>validate-parameter</code> and <code>validate-property</code> (all enabled by default).</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
