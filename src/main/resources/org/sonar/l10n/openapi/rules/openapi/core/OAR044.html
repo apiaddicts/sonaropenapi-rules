@@ -65,30 +65,34 @@ paths:
 <h3>JSON</h3>
 <pre>
 {
-    "swagger": "2.0", 
+    "swagger": "2.0",
     "info": {
-        "version": "1.0.0", 
+        "version": "1.0.0",
         "title": "Swagger Petstore"
-    }, 
+    },
     "produces": [
-        "application/json", 
-        "text/plain"
-    ], 
+        "application/json",
+        "text/plain",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/ld+json"
+    ],
     "consumes": [
-        "application/json", 
-        "text/plain"
-    ], 
+        "application/json",
+        "text/plain",
+        "application/vnd.ms-excel"
+    ],
     "paths": {
         "/pets": {
             "get": {
                 "produces": [
-                    "application/json", 
+                    "application/json",
                     "text/plain"
-                ], 
+                ],
                 "consumes": [
-                    "application/json", 
+                    "application/json",
                     "text/plain"
-                ], 
+                ],
                 "responses": {
                     "200": {
                         "description": "some operation"
@@ -108,9 +112,13 @@ info:
 produces:
     - application/json
     - text/plain
+    - application/vnd.ms-excel
+    - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    - application/ld+json
 consumes:
     - application/json
     - text/plain
+    - application/vnd.ms-excel
 paths:
     /pets:
     get:
@@ -128,24 +136,28 @@ paths:
 <h3>JSON</h3>
 <pre>
 {
-    "openapi": "3.0.1", 
+    "openapi": "3.0.1",
     "info": {
-        "version": "1.0.0", 
+        "version": "1.0.0",
         "title": "Swagger Petstore"
-    }, 
+    },
     "paths": {
-        "/pets": null, 
-        "post": {
-            "requestBody": null, 
-            "content": {
-                "application": {}, 
-                "text/*": {}
-            }, 
-            "responses": null, 
-            "200": {
-                "description": "some operation", 
-                "content": null, 
-                "application": {}
+        "/pets": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application": {},
+                        "invalid-no-slash": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "some operation",
+                        "content": {
+                            "application": {}
+                        }
+                    }
+                }
             }
         }
     }
@@ -163,7 +175,7 @@ paths:
         requestBody:
         content:
             'application': {}
-            'text/*': {}
+            'invalid-no-slash': {}
         responses:
         '200':
             description: some operation
@@ -174,25 +186,35 @@ paths:
 <h3>JSON</h3>
 <pre>
 {
-    "openapi": "3.0.1", 
+    "openapi": "3.0.1",
     "info": {
-        "version": "1.0.0", 
+        "version": "1.0.0",
         "title": "Swagger Petstore"
-    }, 
+    },
     "paths": {
         "/pets": {
             "post": {
                 "requestBody": {
                     "content": {
-                        "application/json": {}, 
-                        "text/plain": {}
+                        "application/json": {},
+                        "multipart/form-data": {},
+                        "application/vnd.ms-excel": {},
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {},
+                        "application/ld+json": {},
+                        "image/*": {},
+                        "*/*": {}
                     }
-                }, 
-                "responses": { 
+                },
+                "responses": {
                     "200": {
-                        "description": "some operation", 
+                        "description": "some operation",
                         "content": {
-                            "application/json": {}
+                            "application/json": {},
+                            "text/csv": {},
+                            "image/png": {},
+                            "text/plain; charset=utf-8": {},
+                            "application/vnd.ms-excel": {},
+                            "application/vnd.github+json": {}
                         }
                     }
                 }
@@ -213,10 +235,20 @@ paths:
         requestBody:
         content:
             'application/json': {}
-            'text/plain': {}
+            'multipart/form-data': {}
+            'application/vnd.ms-excel': {}
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {}
+            'application/ld+json': {}
+            'image/*': {}
+            '*/*': {}
         responses:
         '200':
             description: some operation
             content:
             'application/json': {}
+            'text/csv': {}
+            'image/png': {}
+            'text/plain; charset=utf-8': {}
+            'application/vnd.ms-excel': {}
+            'application/vnd.github+json': {}
 </pre>

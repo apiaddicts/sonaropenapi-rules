@@ -32,12 +32,26 @@
       "requestBody" : {
         "content" : {
           "application" : { }, # Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}
-          "text/*" : { }
+          "text/*" : { },
+          "application/vnd.ms-excel" : { },
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : { },
+          "application/ld+json" : { },
+          "image/*" : { },
+          "*/*" : { }
           }
         },
         "responses" : {
           "200" : {
-            "description" : "some operation"
+            "description" : "some operation",
+            "content" : {
+              "application/json" : { },
+              "text/csv" : { },
+              "image/png" : { },
+              "application/vnd.ms-excel" : { },
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : { },
+              "application/vnd.github+json" : { },
+              "text/plain; charset=utf-8" : { }
+            }
           }
         }
       }

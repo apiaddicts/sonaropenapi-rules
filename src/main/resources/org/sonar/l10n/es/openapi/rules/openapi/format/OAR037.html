@@ -1,5 +1,5 @@
-<p>Una propiedad de tipo string sin formato, o con un formato no reconocido, puede provocar una implementación incorrecta de la API.</p>
-<p>Esta regla dispara cuando el campo <code>format</code> está <strong>ausente</strong> o <strong>presente pero no es reconocido</strong>. Todo schema de tipo string debe declarar uno de los formatos válidos.</p>
+<p>Una propiedad de tipo string con un valor de <code>format</code> no reconocido puede provocar una implementación incorrecta de la API.</p>
+<p>Esta regla dispara únicamente cuando el campo <code>format</code> está <strong>presente pero no es reconocido</strong>. Los schemas de tipo string sin campo <code>format</code> son aceptados.</p>
 <p><strong>Formatos válidos:</strong> <code>date</code>, <code>date-time</code>, <code>password</code>, <code>byte</code>, <code>binary</code>, <code>email</code>, <code>uuid</code>, <code>uri</code>, <code>hostname</code>, <code>ipv4</code>, <code>ipv6</code>, <code>HEX</code>, <code>HEX(16)</code>, <code>json</code>, <code>xml</code>, <code>base64</code>.</p>
 <p><strong>Configurable:</strong> <code>formats-allowed</code> — lista de formatos permitidos separados por coma (por defecto: la lista anterior).</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
@@ -19,8 +19,6 @@ paths:
             items:
               type: object
               properties:
-                name:
-                  type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format ausente</span>
                 date:
                   type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format inválido</span>
                   format: 'dd/mm/yyyy'
@@ -42,6 +40,8 @@ paths:
             items:
               type: object
               properties:
+                name:
+                  type: string
                 date:
                   type: string
                   format: date
@@ -65,8 +65,6 @@ paths:
                 items:
                   type: object
                   properties:
-                    name:
-                      type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format ausente</span>
                     date:
                       type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format inválido</span>
                       format: dd/mm/yyyy
@@ -90,6 +88,8 @@ paths:
                 items:
                   type: object
                   properties:
+                    name:
+                      type: string
                     date:
                       type: string
                       format: date
