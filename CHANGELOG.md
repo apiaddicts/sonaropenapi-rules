@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0-beta-2] - 2026-06-23
+
+### Fixed
+
+- OAR017 - ResourcePathCheck - Added `delete` to the `exclude_patterns` default (now `get,me,search,delete`); paths ending with `/delete` (e.g. `/orders/delete`, `/orders/{orderId}/delete`) are now treated as pseudo-parameters and no longer trigger the alternation rule.
+- OAR020 - ExpandParameterCheck - Fixed `verifyInV2PathEndingWithParam` test method that was incorrectly calling `verifyV3("with-param")` instead of `verifyV2("with-param")`; the Swagger 2.0 `with-param` test fixtures are now correctly exercised in v2 mode.
+- OAR021 - ExcludeParameterCheck - Fixed `verifyInV2PathEndingWithParam` test, now correctly calls `verifyV2("with-param")`.
+
+### Added
+
+- OAR022 - OrderbyParameterCheck - Added `single-resource` test cases (v2, v3, v31, v32) verifying that paths ending with a path parameter (e.g. `/examples/{id}`) are correctly excluded by `applyToParameterizedPaths = false`.
+- OAR025 - LimitParameterCheck - Added `single-resource` test cases (v2, v3, v31, v32) verifying that paths ending with a path parameter (e.g. `/examples/{id}`) are correctly excluded by `applyToParameterizedPaths = false`.
+
 ## [1.5.0-beta-1] - 2026-06-15
 
 ### Added

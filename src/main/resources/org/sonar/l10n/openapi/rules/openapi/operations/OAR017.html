@@ -4,7 +4,7 @@
 <li>Two consecutive path segments of the same type appear: two static segments (e.g. <code>/a/b</code>) or two path parameters (e.g. <code>/{a}/{b}</code>).</li>
 <li>The path starts with a path parameter (e.g. <code>/{id}/items</code>).</li>
 </ul>
-<p><strong>Configurable:</strong> <code>exclude_patterns</code> (default: <code>get,me,search</code>) — segments treated as pseudo-parameters that do not break the alternation rule.</p>
+<p><strong>Configurable:</strong> <code>exclude_patterns</code> (default: <code>get,me,search,delete</code>) — segments treated as pseudo-parameters that do not break the alternation rule.</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
