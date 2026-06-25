@@ -72,6 +72,23 @@ public class OAR022OrderbyParameterCheckTest extends BaseCheckTest {
         verifyV32("plain-without");
     }
 
+    @Test
+    public void verifyInV2SingleResource() {
+        verifyV2("single-resource");
+    }
+    @Test
+    public void verifyInV3SingleResource() {
+        verifyV3("single-resource");
+    }
+    @Test
+    public void verifyInV31SingleResource() {
+        verifyV31("single-resource");
+    }
+    @Test
+    public void verifyInV32SingleResource() {
+        verifyV32("single-resource");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR022 - OrderbyParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MINOR, tags("parameters"));

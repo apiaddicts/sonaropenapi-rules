@@ -70,6 +70,11 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
         verifyV2("blank-format");
     }
 
+    @Test
+    public void verifyInV3StringWithoutFormatIsValid() {
+        verifyV3("no-format");
+    }
+
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);

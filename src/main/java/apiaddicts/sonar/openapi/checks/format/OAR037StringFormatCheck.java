@@ -33,6 +33,6 @@ public class OAR037StringFormatCheck extends AbstractFormatCheck {
     }
 
     private boolean isInvalidString(String type, String format, Set<String> validFormats) {
-        return "string".equals(type) && (format == null || !validFormats.contains(format.toLowerCase()));
+        return "string".equals(type) && format != null && !validFormats.contains(format.toLowerCase());
     }
 }

@@ -20,7 +20,17 @@ paths:
       responses:
         '200':
           description: some operation
-    post: # without produces/consumes -> should not fail
+    post:
+      produces:
+        - application/vnd.ms-excel
+        - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+        - application/ld+json
+        - text/csv
+        - image/png
+      consumes:
+        - application/vnd.ms-excel
+        - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+        - application/ld+json
       responses:
         '200':
           description: some operation

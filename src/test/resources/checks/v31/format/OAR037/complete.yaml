@@ -37,7 +37,7 @@ paths:
                 type: object
                 properties:
                   without:
-                    type: string # Noncompliant {{OAR037: String types requires a valid format}}
+                    type: string
                   date:
                     type: string
                     format: date

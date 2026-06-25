@@ -52,7 +52,7 @@ public class OAR044MediaTypeCheck extends BaseCheck {
   );
   @VisibleForTesting
   static final Pattern MEDIA_RANGE_PATTERN = Pattern.compile(
-      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+/" +
+      "(\\*|[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+)/" +
       "(\\*|" +
       "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+" +
       "(; charset=[a-zA-Z0-9_\\-]+)?" +

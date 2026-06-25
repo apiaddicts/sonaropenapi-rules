@@ -41,7 +41,7 @@ public class OAR021ExcludeParameterCheckTest extends BaseCheckTest {
 
     @Test
     public void verifyInV2PathEndingWithParam() {
-        verifyV3("with-param");
+        verifyV2("with-param");
     }
 
     @Test
