@@ -1,5 +1,10 @@
-<p>Una propiedad de tipo string con un valor de <code>format</code> no reconocido puede provocar una implementación incorrecta de la API.</p>
-<p>Esta regla dispara únicamente cuando el campo <code>format</code> está <strong>presente pero no es reconocido</strong>. Los schemas de tipo string sin campo <code>format</code> son aceptados.</p>
+<p>Una propiedad de tipo string sin un <code>format</code> reconocido y sin un <code>pattern</code> válido puede permitir la entrada de valores arbitrarios sin validar, lo que puede llevar a implementaciones inseguras o incorrectas de la API.</p>
+<p>Esta regla exige que todo schema de tipo string restrinja sus valores de una de estas dos formas:</p>
+<ul>
+  <li>declarando un campo <code>format</code> con un valor reconocido, o</li>
+  <li>si no se declara <code>format</code>, declarando un campo <code>pattern</code> que sea una expresión regular no vacía y sintácticamente válida.</li>
+</ul>
+<p>La regla dispara cuando <code>format</code> está presente pero no es reconocido, o cuando <code>format</code> está ausente y <code>pattern</code> está ausente, vacío, o no es una expresión regular sintácticamente válida.</p>
 <p><strong>Formatos válidos:</strong> <code>date</code>, <code>date-time</code>, <code>password</code>, <code>byte</code>, <code>binary</code>, <code>email</code>, <code>uuid</code>, <code>uri</code>, <code>hostname</code>, <code>ipv4</code>, <code>ipv6</code>, <code>HEX</code>, <code>HEX(16)</code>, <code>json</code>, <code>xml</code>, <code>base64</code>.</p>
 <p><strong>Configurable:</strong> <code>formats-allowed</code> — lista de formatos permitidos separados por coma (por defecto: la lista anterior).</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
@@ -19,8 +24,10 @@ paths:
             items:
               type: object
               properties:
+                id:
+                  type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato o pattern válido}} — sin format, sin pattern</span>
                 date:
-                  type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format inválido</span>
+                  type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato o pattern válido}} — format inválido</span>
                   format: 'dd/mm/yyyy'
 </pre>
 <h2>Solución compatible (OpenAPI 2)</h2>
@@ -40,8 +47,9 @@ paths:
             items:
               type: object
               properties:
-                name:
+                id:
                   type: string
+                  pattern: '^[A-Z]{3}-\d+$'
                 date:
                   type: string
                   format: date
@@ -65,8 +73,10 @@ paths:
                 items:
                   type: object
                   properties:
+                    id:
+                      type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato o pattern válido}} — sin format, sin pattern</span>
                     date:
-                      type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato válido}} — format inválido</span>
+                      type: string <span class="error-info" style="color: #FD8E18;"># No conforme {{OAR037: Las propiedades de tipo string deben definir un formato o pattern válido}} — format inválido</span>
                       format: dd/mm/yyyy
 </pre>
 <h2>Solución compatible (OpenAPI 3)</h2>
@@ -88,8 +98,9 @@ paths:
                 items:
                   type: object
                   properties:
-                    name:
+                    id:
                       type: string
+                      pattern: '^[A-Z]{3}-\d+$'
                     date:
                       type: string
                       format: date

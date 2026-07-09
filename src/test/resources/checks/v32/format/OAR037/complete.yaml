@@ -8,13 +8,13 @@ components:
       in: header
       name: paramOne
       schema:
-        type: string # Noncompliant {{OAR037: String types requires a valid format}}
+        type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
         format: YYYY-MM-DD
     paramTwo:
       in: header
       name: paramTwo
       schema:
-        type: string # Noncompliant {{OAR037: String types requires a valid format}}
+        type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
         format: YYYY-MM-DD
 paths:
   /invoices:
@@ -23,7 +23,7 @@ paths:
       - in: header
         name: paramThree
         schema:
-          type: string # Noncompliant {{OAR037: String types requires a valid format}}
+          type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
           format: YYYY-MM-DD
     get:
       parameters:
@@ -37,7 +37,13 @@ paths:
                 type: object
                 properties:
                   without:
+                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                  withPattern:
                     type: string
+                    pattern: '^[A-Z]{3}-[0-9]+$'
+                  withInvalidPattern:
+                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    pattern: '['
                   date:
                     type: string
                     format: date
@@ -72,5 +78,5 @@ paths:
                     type: string
                     format: ipv6
                   other:
-                    type: string # Noncompliant {{OAR037: String types requires a valid format}}
+                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
                     format: YYYY-MM-DD

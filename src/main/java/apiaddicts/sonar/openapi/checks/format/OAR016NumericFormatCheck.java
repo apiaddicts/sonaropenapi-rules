@@ -10,7 +10,7 @@ public class OAR016NumericFormatCheck extends AbstractFormatCheck {
 	private static final String MESSAGE = "OAR016.error";
 
 	@Override
-	public void validate(String type, String format, JsonNode typeNode) {
+	public void validate(String type, String format, JsonNode typeNode, JsonNode node) {
 		if (isInvalidInteger(type, format) || isInvalidNumber(type, format)) {
 			addIssue(KEY, translate(MESSAGE), typeNode.key());
 		}
