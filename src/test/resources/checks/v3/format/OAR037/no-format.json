@@ -16,13 +16,19 @@
                   "type": "object",
                   "properties": {
                     "name": {
-                      "type": "string"
+                      "type": "string",
+                      "pattern": "^[A-Za-z ]+$"
                     },
-                    "description": {
-                      "type": "string"
+                    "emptyPattern": {
+                      "type": "string", # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                      "pattern": ""
+                    },
+                    "invalidPattern": {
+                      "type": "string", # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                      "pattern": "[a-z"
                     },
                     "code": {
-                      "type": "string"
+                      "type": "string" # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
                     }
                   }
                 }

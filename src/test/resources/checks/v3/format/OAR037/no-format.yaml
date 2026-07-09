@@ -15,7 +15,12 @@ paths:
                 properties:
                   name:
                     type: string
-                  description:
-                    type: string
+                    pattern: '^[A-Za-z ]+$'
+                  emptyPattern:
+                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    pattern: ""
+                  invalidPattern:
+                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    pattern: "[a-z"
                   code:
-                    type: string
+                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}

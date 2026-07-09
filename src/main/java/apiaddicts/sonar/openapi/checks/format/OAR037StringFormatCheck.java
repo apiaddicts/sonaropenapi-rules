@@ -4,6 +4,8 @@ import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,17 +24,44 @@ public class OAR037StringFormatCheck extends AbstractFormatCheck {
     private String formatsAllowed = DEFAULT_FORMATS_ALLOWED;
 
     @Override
-    public void validate(String type, String format, JsonNode typeNode) {
-        Set<String> validFormats = Stream.of(formatsAllowed.split(","))
-                .map(f -> f.trim().toLowerCase())
-                .collect(Collectors.toSet());
+    public void validate(String type, String format, JsonNode typeNode, JsonNode node) {
+        if (!"string".equals(type)) {
+            return;
+        }
 
-        if (isInvalidString(type, format, validFormats)) {
+        if (format != null) {
+            Set<String> validFormats = Stream.of(formatsAllowed.split(","))
+                    .map(f -> f.trim().toLowerCase())
+                    .collect(Collectors.toSet());
+            if (!validFormats.contains(format.toLowerCase())) {
+                addIssue(KEY, translate(MESSAGE), typeNode.key());
+            }
+            return;
+        }
+
+        if (!hasValidPattern(node)) {
             addIssue(KEY, translate(MESSAGE), typeNode.key());
         }
     }
 
-    private boolean isInvalidString(String type, String format, Set<String> validFormats) {
-        return "string".equals(type) && format != null && !validFormats.contains(format.toLowerCase());
+    private boolean hasValidPattern(JsonNode node) {
+        JsonNode patternNode = node.get("pattern");
+        if (patternNode.isMissing()) {
+            return false;
+        }
+        String pattern = patternNode.getTokenValue();
+        if (pattern == null || pattern.isBlank()) {
+            return false;
+        }
+        return isValidRegex(pattern.trim());
+    }
+
+    private boolean isValidRegex(String pattern) {
+        try {
+            Pattern.compile(pattern);
+            return true;
+        } catch (PatternSyntaxException e) {
+            return false;
+        }
     }
 }
