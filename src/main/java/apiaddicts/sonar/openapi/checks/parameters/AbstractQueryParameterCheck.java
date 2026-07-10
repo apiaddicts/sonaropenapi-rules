@@ -4,57 +4,52 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNode;
 import com.sonar.sslr.api.AstNodeType;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
-import org.sonar.check.RuleProperty;
 
 public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected static final String DEFAULT_PATH = "/examples";
     protected static final String PATH_STRATEGY = "/include";
 
-    private static final String PATH_STRATEGY_EXCLUDE = "/exclude";
-    private static final String PATH_STRATEGY_INCLUDE = "/include";
+    protected static final String PATH_STRATEGY_EXCLUDE = "/exclude";
+    protected static final String PATH_STRATEGY_INCLUDE = "/include";
 
     protected final String ruleKey;
     protected final String messageKey;
-    protected String parameterName;
+    protected final String defaultParameterName;
     protected final boolean applyToParameterizedPaths;
 
-    protected Set<String> paths;
+    protected List<Pattern> paths;
     protected JsonNode rootNode;
-
-    @RuleProperty(
-        key = "paths",
-        description = "List of explicit paths to include/exclude from this rule separated by comma",
-        defaultValue = DEFAULT_PATH
-    )
-    protected String pathsStr = DEFAULT_PATH;
-
-    @RuleProperty(
-        key = "pathValidationStrategy",
-        description = "Path validation strategy (include/exclude)",
-        defaultValue = PATH_STRATEGY
-    )
-    protected String pathCheckStrategy = PATH_STRATEGY;
 
     protected AbstractQueryParameterCheck(
         String ruleKey,
         String messageKey,
-        String parameterName,
+        String defaultParameterName,
         boolean applyToParameterizedPaths
     ) {
         this.ruleKey = ruleKey;
         this.messageKey = messageKey;
-        this.parameterName = parameterName;
+        this.defaultParameterName = defaultParameterName;
         this.applyToParameterizedPaths = applyToParameterizedPaths;
+    }
+
+    protected abstract String getPathsStr();
+
+    protected abstract String getPathCheckStrategy();
+
+    protected String getParameterName() {
+        return defaultParameterName;
     }
 
     @Override
@@ -65,7 +60,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     @Override
     protected void visitFile(JsonNode root) {
         this.rootNode = root;
-        paths = parsePaths(pathsStr);
+        paths = parsePaths(getPathsStr());
         super.visitFile(root);
     }
 
@@ -86,7 +81,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         if (shouldIncludePath(path) && !hasParameter) {
             addIssue(
                 ruleKey,
-                translate(messageKey, parameterName),
+                translate(messageKey, getParameterName()),
                 node.key()
             );
         }
@@ -118,7 +113,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         if (refParameterNode != null) {
             JsonNode nameNode = refParameterNode.get("name");
             JsonNode inNode = refParameterNode.get("in");
-            return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
+            return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && getParameterName().equals(nameNode.getTokenValue());
         }
         return false;
     }
@@ -126,7 +121,7 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     protected boolean hasDirectParameter(JsonNode parameterNode) {
         JsonNode nameNode = parameterNode.get("name");
         JsonNode inNode = parameterNode.get("in");
-        return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && parameterName.equals(nameNode.getTokenValue());
+        return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && getParameterName().equals(nameNode.getTokenValue());
     }
 
     protected String getPath(JsonNode node) {
@@ -143,12 +138,13 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
 
     protected boolean shouldIncludePath(String path) {
         if (paths.isEmpty()) {
-            return pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE);
+            return getPathCheckStrategy().equals(PATH_STRATEGY_EXCLUDE);
         }
-        if (pathCheckStrategy.equals(PATH_STRATEGY_EXCLUDE)) {
-            return !paths.contains(path);
-        } else if (pathCheckStrategy.equals(PATH_STRATEGY_INCLUDE)) {
-            return paths.contains(path);
+        boolean matchesList = paths.stream().anyMatch(p -> p.matcher(path).find());
+        if (getPathCheckStrategy().equals(PATH_STRATEGY_EXCLUDE)) {
+            return !matchesList;
+        } else if (getPathCheckStrategy().equals(PATH_STRATEGY_INCLUDE)) {
+            return matchesList;
         }
         return false;
     }
@@ -161,13 +157,15 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         return last.matches("^\\{[^}]+\\}$");
     }
 
-    protected Set<String> parsePaths(String pathsStr) {
-        if (!pathsStr.trim().isEmpty()) {
+    protected List<Pattern> parsePaths(String pathsStr) {
+        if (pathsStr != null && !pathsStr.trim().isEmpty()) {
             return Arrays.stream(pathsStr.split(","))
                 .map(String::trim)
-                .collect(Collectors.toSet());
+                .filter(s -> !s.isEmpty())
+                .map(Pattern::compile)
+                .collect(Collectors.toList());
         } else {
-            return new HashSet<>();
+            return new ArrayList<>();
         }
     }
 

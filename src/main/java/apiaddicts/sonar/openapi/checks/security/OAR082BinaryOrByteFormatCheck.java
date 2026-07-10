@@ -31,11 +31,16 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
     )
     private String fieldsApply = FIELDS_TO_APPLY;
 
-    private List<String> fieldsList = Arrays.asList(fieldsApply.split(","));
+    private List<String> fieldsList;
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(OpenApi2Grammar.SCHEMA, OpenApi2Grammar.PARAMETER, OpenApi3Grammar.SCHEMA, OpenApi31Grammar.SCHEMA, OpenApi32Grammar.SCHEMA);
+    }
+
+    @Override
+    protected void visitFile(JsonNode root) {
+        fieldsList = Arrays.asList(fieldsApply.split(","));
     }
 
     @Override
