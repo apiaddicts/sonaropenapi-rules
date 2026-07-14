@@ -9,7 +9,7 @@ public class OAR021ExcludeParameterCheck extends AbstractCollectionQueryParamete
     public static final String KEY = "OAR021";
     private static final String MESSAGE = "OAR021.error";
     private static final String PARAM_NAME = "$exclude";
-    private static final String DEFAULT_PATHS = "\\/me(\\/|$),status|health|ping";
+    private static final String DEFAULT_PATHS = "/me,/health,/ping,/status";
     private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(

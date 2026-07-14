@@ -9,7 +9,7 @@ public class OAR019SelectParameterCheck extends AbstractQueryParameterCheck {
     public static final String KEY = "OAR019";
     private static final String MESSAGE = "OAR019.error";
     private static final String PARAM_NAME = "$select";
-    private static final String DEFAULT_PATHS = "\\/me(\\/|$),status|health|ping";
+    private static final String DEFAULT_PATHS = "/me,/health,/ping,/status";
     private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(

@@ -152,7 +152,7 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
     public void verifyParameters() {
         assertNumberOfParameters(3);
         assertParameterProperties("parameterName", "$expand", RuleParamType.STRING);
-        assertParameterProperties("paths", "\\/me(\\/|$),status|health|ping", RuleParamType.STRING);
+        assertParameterProperties("paths", "/me,/health,/ping,/status", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }
 }

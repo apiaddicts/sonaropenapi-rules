@@ -157,12 +157,19 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         return last.matches("^\\{[^}]+\\}$");
     }
 
+    /**
+     * Each entry in {@code pathsStr} is a literal path segment (e.g. "/status"), not a regular
+     * expression — callers configure this like they would type a real path. It's matched as
+     * that literal segment appearing anywhere in the path, bounded by "/" or the end of the
+     * path, so "/status" matches "/status", "/api/status", and "/status/health" but not
+     * "/status-report" or "/user-status".
+     */
     protected List<Pattern> parsePaths(String pathsStr) {
         if (pathsStr != null && !pathsStr.trim().isEmpty()) {
             return Arrays.stream(pathsStr.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
-                .map(Pattern::compile)
+                .map(segment -> Pattern.compile(Pattern.quote(segment) + "(/|$)"))
                 .collect(Collectors.toList());
         } else {
             return new ArrayList<>();

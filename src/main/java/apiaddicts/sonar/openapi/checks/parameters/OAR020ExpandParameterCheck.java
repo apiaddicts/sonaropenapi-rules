@@ -9,7 +9,7 @@ public class OAR020ExpandParameterCheck extends AbstractCollectionQueryParameter
     public static final String KEY = "OAR020";
     private static final String MESSAGE = "OAR020.error";
     private static final String PARAM_NAME = "$expand";
-    private static final String DEFAULT_PATHS = "\\/me(\\/|$),status|health|ping";
+    private static final String DEFAULT_PATHS = "/me,/health,/ping,/status";
     private static final String PATH_STRATEGY = "/exclude";
 
     @RuleProperty(
