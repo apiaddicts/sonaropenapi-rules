@@ -53,12 +53,12 @@ paths:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six: # Noncompliant {{OAR014: Resources depth level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six: # depth 6, out of the 4-5 non-suggested range (covered separately by OAR015)
     get:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six/{six}: # Noncompliant {{OAR014: Resources depth level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}/six/{six}:
     get:
       responses:
         default:

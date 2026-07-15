@@ -13,7 +13,6 @@ public abstract class AbstractPatternWso2ScopesCheck extends AbstractWso2ScopesC
     protected final String defaultPatternValue;
 
     protected Pattern pattern;
-    private String patternStr;
 
     protected AbstractPatternWso2ScopesCheck(String key, String message, String fieldName, String defaultPatternValue) {
         this.ruleKey = key;
@@ -22,8 +21,11 @@ public abstract class AbstractPatternWso2ScopesCheck extends AbstractWso2ScopesC
         this.defaultPatternValue = defaultPatternValue;
     }
 
+    protected abstract String getPatternStr();
+
     @Override
     protected void visitFile(JsonNode root) {
+        String patternStr = getPatternStr();
         pattern = Pattern.compile(patternStr != null ? patternStr : defaultPatternValue);
     }
 

@@ -19,4 +19,9 @@ public class OAR040StandardWso2ScopesNameCheck extends AbstractPatternWso2Scopes
     public OAR040StandardWso2ScopesNameCheck() {
         super(KEY, MESSAGE, "name", DEFAULT_PATTERN_VALUE);
     }
+
+    @Override
+    protected String getPatternStr() {
+        return patternStr;
+    }
 }

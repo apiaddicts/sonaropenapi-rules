@@ -29,15 +29,14 @@ public class OAR085OpenAPIVersionCheck extends BaseCheck {
     )
     private String validVersionsStr = DEFAULT_VALID_VERSIONS;
 
-    private final List<String> validVersions = Arrays.asList(validVersionsStr.split(","));
-
     @Override
     protected void visitFile(JsonNode root) {
         JsonNode swaggerNode = root.get("swagger");
         JsonNode openapiNode = root.get("openapi");
 
         String version = getVersion(swaggerNode, openapiNode);
-        
+        List<String> validVersions = Arrays.asList(validVersionsStr.split(","));
+
         if (version == null || !validVersions.contains(version)) {
             addIssue(KEY, translate(MESSAGE, version), root.key());
         }

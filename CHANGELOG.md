@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0-beta-4] - 2026-07-14
+
+### Fixed
+
+- OAR004 - ValidWso2ScopesRoles - Fixed a field-shadowing bug in the shared base class that made the `pattern` parameter have no effect.
+- OAR014 - ResourceLevelWithinNonSuggestedRange - `matchLevel` ignored `maxLevel` entirely; the parameter is now applied.
+- OAR019 - SelectParameterCheck - Added real support for `paths` and `pathValidationStrategy`, and re-added the `parameterName` parameter (removed in an earlier refactor).
+- OAR020 - ExpandParameterCheck - Removed hardcoded path-exclusion logic that bypassed the configurable `paths` parameter; re-added `parameterName`.
+- OAR021 - ExcludeParameterCheck - Removed hardcoded path-exclusion logic that bypassed the configurable `paths` parameter; re-added `parameterName`.
+- OAR038 - StandardCreateResponse - The `dataNode` parameter was never read; the check always used its default value instead.
+- OAR040 - StandardWso2ScopesName - Fixed the same field-shadowing bug as OAR004.
+- OAR082 - BinaryOrByteFormat - `fields-to-apply` was read before Sonar injected its configured value, so the parameter had no effect.
+- OAR085 - OpenAPIVersion - `valid-versions` was read before Sonar injected its configured value, so the parameter had no effect.
+
+### Changed
+
+- OAR019, OAR020, OAR021 - `paths` now takes plain path segments (e.g. `/status`) instead of a regular expression. Default excluded paths (`/me`, `/health`, `/ping`, `/status`) are now matched as real path segments instead of a loose substring, so a path like `/subscription-status-reports` is no longer wrongly excluded.
+
 ## [1.5.0-beta-3] - 2026-07-08
 
 ### Changed

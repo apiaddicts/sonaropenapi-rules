@@ -32,6 +32,6 @@ public class OAR014ResourceLevelWithinNonSuggestedRangeCheck extends AbstractRes
 
 	@Override
 	boolean matchLevel(long level) {
-		return minLevel <= level;
+		return minLevel <= level && level <= maxLevel;
 	}
 }
