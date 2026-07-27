@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0-beta-5] - 2026-07-27
+
+### Fixed
+
+- OAR014 / OAR015 - ResourceLevel - Issue message now interpolates the configured level values (min-level/max-level for OAR014, max-level-allowed for OAR015).
+- OAR004 / OAR040 - Wso2Scopes - Issue message now includes the configured `pattern` (passed through `AbstractPatternWso2ScopesCheck`).
+- OAR038 - StandardCreateResponse - Issue message now interpolates the configured `data-property` instead of the hardcoded `data`.
+- OAR082 - BinaryOrByteFormat - Issue message now shows the configured `fields-to-apply`.
+- OAR085 - OpenAPIVersion - Issue message now shows the configured `valid-versions`.
+- OAR037 - StringFormat - Issue message now interpolates the configured `formats-allowed`.
+
 ## [1.5.0-beta-4] - 2026-07-14
 
 ### Fixed

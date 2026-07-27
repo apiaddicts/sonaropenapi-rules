@@ -62,7 +62,7 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
             if ("string".equals(type)) {
                 String format = fieldNode.get("format").getTokenValue();
                 if (!"binary".equals(format) && !"byte".equals(format)) {
-                    addIssue(KEY, translate(MESSAGE), typeNode.key());
+                    addIssue(KEY, translate(MESSAGE, fieldsApply), typeNode.key());
                 }
             }
         }
