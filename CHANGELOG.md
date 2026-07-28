@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-07-28
+
+### Added
+
+- OAR022 - OrderbyParameterCheck - Added `single-resource` test cases (v2, v3, v31, v32) verifying that paths ending with a path parameter (e.g. `/examples/{id}`) are correctly excluded by `applyToParameterizedPaths = false`.
+- OAR025 - LimitParameterCheck - Added `single-resource` test cases (v2, v3, v31, v32) verifying that paths ending with a path parameter (e.g. `/examples/{id}`) are correctly excluded by `applyToParameterizedPaths = false`.
+- OAR031 - ExamplesCheck - Per-level configuration via rule parameters `validate-response`, `validate-request-body`, `validate-parameter` and `validate-property` (all `true` by default); each level can be disabled independently.
+
+### Fixed
+
+- OAR017 - ResourcePathCheck - Added `delete` to the `exclude_patterns` default (now `get,me,search,delete`); paths ending with `/delete` (e.g. `/orders/delete`, `/orders/{orderId}/delete`) are now treated as pseudo-parameters and no longer trigger the alternation rule.
+- OAR020 - ExpandParameterCheck - Fixed `verifyInV2PathEndingWithParam` test method that was incorrectly calling `verifyV3("with-param")` instead of `verifyV2("with-param")`; the Swagger 2.0 `with-param` test fixtures are now correctly exercised in v2 mode.
+- OAR021 - ExcludeParameterCheck - Fixed `verifyInV2PathEndingWithParam` test, now correctly calls `verifyV2("with-param")`.
+- OAR044 - MediaTypeCheck - Fixed `MEDIA_RANGE_PATTERN` to allow `*/*` (full wildcard) as a valid OAP3 media range; the type component now accepts `*` in addition to RFC 6838 type names. Added test coverage for vendor-specific types (`application/vnd.ms-excel`, `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, `application/ld+json`, `application/vnd.github+json`).
+- OAR004 - ValidWso2ScopesRoles - Fixed a field-shadowing bug in the shared base class that made the `pattern` parameter have no effect.
+- OAR014 - ResourceLevelWithinNonSuggestedRange - `matchLevel` ignored `maxLevel` entirely; the parameter is now applied.
+- OAR019 - SelectParameterCheck - Added real support for `paths` and `pathValidationStrategy`, and re-added the `parameterName` parameter (removed in an earlier refactor).
+- OAR020 - ExpandParameterCheck - Removed hardcoded path-exclusion logic that bypassed the configurable `paths` parameter; re-added `parameterName`.
+- OAR021 - ExcludeParameterCheck - Removed hardcoded path-exclusion logic that bypassed the configurable `paths` parameter; re-added `parameterName`.
+- OAR038 - StandardCreateResponse - The `dataNode` parameter was never read; the check always used its default value instead.
+- OAR040 - StandardWso2ScopesName - Fixed the same field-shadowing bug as OAR004.
+- OAR082 - BinaryOrByteFormat - `fields-to-apply` was read before Sonar injected its configured value, so the parameter had no effect.
+- OAR085 - OpenAPIVersion - `valid-versions` was read before Sonar injected its configured value, so the parameter had no effect.
+
+### Changed
+
+- OAR019, OAR020, OAR021 - `paths` now takes plain path segments (e.g. `/status`) instead of a regular expression. Default excluded paths (`/me`, `/health`, `/ping`, `/status`) are now matched as real path segments instead of a loose substring, so a path like `/subscription-status-reports` is no longer wrongly excluded.
+- OAR037 - StringFormatCheck - Reclassified as a security rule (`VULNERABILITY`, tag `safety`, keeping its existing `format` rule group/package). String schemas must now declare a valid `format`, or — when no `format` is declared — a non-empty, syntactically valid `pattern`; schemas with neither a valid `format` nor a valid `pattern` are reported.
+- OAR037 - StringFormatCheck - Rule no longer fires when a string schema omits the `format` field entirely; it only fires when `format` is present but not a recognized value.
+- OAR031 - ExamplesCheck - Examples are now validated as four **independent** levels (response, request body, parameter, property). The response/request-body/parameter levels require an example declared at the media-type or schema **root** (non-recursive); examples nested inside schema properties no longer satisfy them. Aligns OAR031 with the Spectral ruleset (identical findings on the same document) and is stricter than before, so existing specs may surface new findings.
+
 ## [1.5.0-beta-4] - 2026-07-14
 
 ### Fixed
