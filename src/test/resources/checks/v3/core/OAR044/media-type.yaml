@@ -24,6 +24,21 @@ paths:
         - name: otherParam
           in: path
     post:
+      requestBody:
+        content:
+          'application/vnd.ms-excel': {}
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {}
+          'application/ld+json': {}
+          'image/*': {}
+          '*/*': {}
       responses:
-         '200':
-           description: some operation
+        '200':
+          description: some operation
+          content:
+            'application/json': {}
+            'text/csv': {}
+            'image/png': {}
+            'application/vnd.ms-excel': {}
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {}
+            'application/vnd.github+json': {}
+            'text/plain; charset=utf-8': {}

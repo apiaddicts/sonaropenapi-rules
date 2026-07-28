@@ -69,7 +69,7 @@ public class OAR017ResourcePathCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("exclude_patterns", "get,me,search", RuleParamType.STRING);
+        assertParameterProperties("exclude_patterns", "get,me,search,delete", RuleParamType.STRING);
     }
 
 }

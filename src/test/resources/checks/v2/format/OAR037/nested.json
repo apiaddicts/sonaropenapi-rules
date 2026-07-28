@@ -17,8 +17,12 @@
                   "type" : "object",
                   "properties" : {
                     "value" : {
-                      "type" : "string", # Noncompliant {{OAR037: String types requires a valid format}}
+                      "type" : "string", # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
                       "format" : "YYYY-MM-DD"
+                    },
+                    "code" : {
+                      "type" : "string",
+                      "pattern" : "^[A-Z]{3}-[0-9]+$"
                     }
                   }
                 }

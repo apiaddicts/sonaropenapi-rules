@@ -1,5 +1,10 @@
-<p>A string schema without a format, or with an unrecognized format, may cause developers to use the wrong variable types in the API implementation.</p>
-<p>This rule fires when the <code>format</code> field is <strong>absent</strong> or <strong>present but not recognized</strong>. Every string schema must declare one of the valid formats.</p>
+<p>A string schema without a recognized <code>format</code> and without a valid <code>pattern</code> may allow arbitrary, unvalidated input, which can lead developers to use the wrong variable types or to accept unsafe values in the API implementation.</p>
+<p>This rule requires every string schema to constrain its values in one of two ways:</p>
+<ul>
+  <li>declare a <code>format</code> field with a recognized value, or</li>
+  <li>if no <code>format</code> is declared, declare a <code>pattern</code> field that is a non-empty, syntactically valid regular expression.</li>
+</ul>
+<p>The rule fires when <code>format</code> is present but not recognized, or when <code>format</code> is absent and <code>pattern</code> is missing, empty, or not a syntactically valid regular expression.</p>
 <p><strong>Valid formats:</strong> <code>date</code>, <code>date-time</code>, <code>password</code>, <code>byte</code>, <code>binary</code>, <code>email</code>, <code>uuid</code>, <code>uri</code>, <code>hostname</code>, <code>ipv4</code>, <code>ipv6</code>, <code>HEX</code>, <code>HEX(16)</code>, <code>json</code>, <code>xml</code>, <code>base64</code>.</p>
 <p><strong>Configurable:</strong> <code>formats-allowed</code> — comma-separated list of allowed formats (default: the list above).</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
@@ -19,10 +24,10 @@ paths:
             items:
               type: object
               properties:
-                name:
-                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — no format</span>
+                id:
+                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types require a valid format or pattern}} — no format, no pattern</span>
                 date:
-                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — invalid format</span>
+                  type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types require a valid format or pattern}} — invalid format</span>
                   format: 'dd/mm/yyyy'
 </pre>
 <h2>Compliant Solution (OpenAPI 2)</h2>
@@ -42,6 +47,9 @@ paths:
             items:
               type: object
               properties:
+                id:
+                  type: string
+                  pattern: '^[A-Z]{3}-\d+$'
                 date:
                   type: string
                   format: date
@@ -65,10 +73,10 @@ paths:
                 items:
                   type: object
                   properties:
-                    name:
-                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — no format</span>
+                    id:
+                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types require a valid format or pattern}} — no format, no pattern</span>
                     date:
-                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types requires a valid format}} — invalid format</span>
+                      type: string <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR037: String types require a valid format or pattern}} — invalid format</span>
                       format: dd/mm/yyyy
 </pre>
 <h2>Compliant Solution (OpenAPI 3)</h2>
@@ -90,6 +98,9 @@ paths:
                 items:
                   type: object
                   properties:
+                    id:
+                      type: string
+                      pattern: '^[A-Z]{3}-\d+$'
                     date:
                       type: string
                       format: date

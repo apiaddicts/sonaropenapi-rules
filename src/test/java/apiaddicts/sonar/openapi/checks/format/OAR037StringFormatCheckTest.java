@@ -70,6 +70,11 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
         verifyV2("blank-format");
     }
 
+    @Test
+    public void verifyInV3PatternFallback() {
+        verifyV3("no-format");
+    }
+
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
@@ -78,6 +83,6 @@ public class OAR037StringFormatCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR037 - StringFormat - String types requires a valid format", RuleType.BUG, Severity.MAJOR, tags("format"));
+        assertRuleProperties("OAR037 - StringFormat - String types require a valid format or pattern", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 }

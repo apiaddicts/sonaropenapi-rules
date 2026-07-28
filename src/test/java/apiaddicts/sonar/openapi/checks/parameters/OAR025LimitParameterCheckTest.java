@@ -72,6 +72,23 @@ public class OAR025LimitParameterCheckTest extends BaseCheckTest {
         verifyV32("plain-without");
     }
 
+    @Test
+    public void verifyInV2SingleResource() {
+        verifyV2("single-resource");
+    }
+    @Test
+    public void verifyInV3SingleResource() {
+        verifyV3("single-resource");
+    }
+    @Test
+    public void verifyInV31SingleResource() {
+        verifyV31("single-resource");
+    }
+    @Test
+    public void verifyInV32SingleResource() {
+        verifyV32("single-resource");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR025 - LimitParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));

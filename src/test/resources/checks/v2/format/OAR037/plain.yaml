@@ -12,7 +12,13 @@ paths:
             type: object
             properties:
               without:
-                type: string # Noncompliant {{OAR037: String types requires a valid format}}
+                type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+              withPattern:
+                type: string
+                pattern: '^[A-Z]{3}-[0-9]+$'
+              withInvalidPattern:
+                type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                pattern: '['
               date:
                 type: string
                 format: date
@@ -53,5 +59,5 @@ paths:
                 type: string
                 format: HEX(16)
               other:
-                type: string # Noncompliant {{OAR037: String types requires a valid format}}
+                type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
                 format: YYYY-MM-DD

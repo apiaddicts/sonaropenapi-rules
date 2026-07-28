@@ -19,4 +19,9 @@ public class OAR004ValidWso2ScopesRolesCheck extends AbstractPatternWso2ScopesCh
     public OAR004ValidWso2ScopesRolesCheck() {
         super(KEY, MESSAGE, "roles", DEFAULT_PATTERN_VALUE);
     }
+
+    @Override
+    protected String getPatternStr() {
+        return patternStr;
+    }
 }

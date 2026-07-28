@@ -10,7 +10,7 @@ paths:
   /users:
     get:
       responses:
-        200:
+        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
           description: OK
           schema:
             type: array
@@ -27,7 +27,7 @@ paths:
           required: true
           type: string
       responses:
-        200:
+        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
           description: A single user
           schema:
             $ref: '#/definitions/User'

@@ -34,9 +34,13 @@ info:
 produces:
     - application/json
     - text/plain
+    - application/vnd.ms-excel
+    - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    - application/ld+json
 consumes:
     - application/json
     - text/plain
+    - application/vnd.ms-excel
 paths:
     /pets:
     get:
@@ -62,7 +66,7 @@ paths:
         requestBody:
         content:
             'application': {}
-            'text/*': {}
+            'invalid-no-slash': {}
         responses:
         '200':
             description: some operation
@@ -81,10 +85,20 @@ paths:
         requestBody:
         content:
             'application/json': {}
-            'text/plain': {}
+            'multipart/form-data': {}
+            'application/vnd.ms-excel': {}
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {}
+            'application/ld+json': {}
+            'image/*': {}
+            '*/*': {}
         responses:
         '200':
             description: some operation
             content:
             'application/json': {}
+            'text/csv': {}
+            'image/png': {}
+            'text/plain; charset=utf-8': {}
+            'application/vnd.ms-excel': {}
+            'application/vnd.github+json': {}
 </pre>

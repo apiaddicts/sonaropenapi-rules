@@ -24,7 +24,6 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
             description = "Valid top-level property name for the standard response.",
             defaultValue = DATA_PROPERTY
     )
-    @SuppressWarnings("unused")
     private String dataNode = DATA_PROPERTY;
 
     public OAR038StandardCreateResponseCheck() {
@@ -44,7 +43,7 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
 
         for (Map.Entry<String, JsonNode> entry : properties.entrySet()) {
             String propName = entry.getKey();
-            if (DATA_PROPERTY.equals(propName) || ERROR_PROPERTY.equals(propName)) {
+            if (dataNode.equals(propName) || ERROR_PROPERTY.equals(propName)) {
                 Map<String, JsonNode> subProps = getAllProperties(resolve(entry.getValue()));
                 if (subProps.isEmpty()) {
                     addIssue(KEY, translate("OAR038.error-required-one-property"), entry.getValue().key());

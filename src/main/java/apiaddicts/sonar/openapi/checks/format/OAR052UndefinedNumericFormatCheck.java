@@ -10,7 +10,7 @@ public class OAR052UndefinedNumericFormatCheck extends AbstractFormatCheck {
 	private static final String MESSAGE = "OAR052.error";
 
 	@Override
-	public void validate(String type, String format, JsonNode typeNode) {
+	public void validate(String type, String format, JsonNode typeNode, JsonNode node) {
 		if (("integer".equals(type) || "number".equals(type)) && format == null) {
 			addIssue(KEY, translate(MESSAGE), typeNode.key());
 		}

@@ -41,7 +41,7 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
 
     @Test
     public void verifyInV2PathEndingWithParam() {
-        verifyV3("with-param");
+        verifyV2("with-param");
     }
 
     @Test
@@ -150,8 +150,9 @@ public class OAR020ExpandParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(2);
-        assertParameterProperties("paths", "/examples", RuleParamType.STRING);
-        assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
+        assertNumberOfParameters(3);
+        assertParameterProperties("parameterName", "$expand", RuleParamType.STRING);
+        assertParameterProperties("paths", "/me,/health,/ping,/status", RuleParamType.STRING);
+        assertParameterProperties("pathValidationStrategy", "/exclude", RuleParamType.STRING);
     }
 }

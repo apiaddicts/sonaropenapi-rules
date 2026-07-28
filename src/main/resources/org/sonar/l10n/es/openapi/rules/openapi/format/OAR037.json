@@ -1,13 +1,13 @@
 {
-  "title": "OAR037 - StringFormat - Los tipos string requieren un formato válido",
-  "type": "BUG",
+  "title": "OAR037 - StringFormat - Los tipos string requieren un formato o pattern válido",
+  "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",
     "constantCost": "30min"
   },
   "tags": [
-    "format"
+    "safety"
   ],
   "defaultSeverity": "MAJOR"
 }

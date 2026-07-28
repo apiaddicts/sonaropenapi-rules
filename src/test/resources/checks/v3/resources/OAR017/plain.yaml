@@ -56,3 +56,8 @@ paths:
       responses:
         200:
           description: Ok
+  /one/delete:
+    post:
+      responses:
+        200:
+          description: Ok
