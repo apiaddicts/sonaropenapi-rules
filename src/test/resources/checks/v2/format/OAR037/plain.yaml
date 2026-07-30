@@ -16,6 +16,11 @@ paths:
               withPattern:
                 type: string
                 pattern: '^[A-Z]{3}-[0-9]+$'
+              withEnum:
+                type: string
+                enum:
+                  - email
+                  - sms
               withInvalidPattern:
                 type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
                 pattern: '['

@@ -39,9 +39,18 @@ public class OAR037StringFormatCheck extends AbstractFormatCheck {
             return;
         }
 
+        if (hasEnum(node)) {
+            return;
+        }
+
         if (!hasValidPattern(node)) {
             addIssue(KEY, translate(MESSAGE), typeNode.key());
         }
+    }
+
+    private boolean hasEnum(JsonNode node) {
+        JsonNode enumNode = node.get("enum");
+        return !enumNode.isMissing() && !enumNode.elements().isEmpty();
     }
 
     private boolean hasValidPattern(JsonNode node) {
