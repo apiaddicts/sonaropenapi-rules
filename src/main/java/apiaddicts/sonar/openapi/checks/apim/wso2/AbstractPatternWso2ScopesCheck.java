@@ -35,18 +35,19 @@ public abstract class AbstractPatternWso2ScopesCheck extends AbstractWso2ScopesC
         if (fieldNode == null || fieldNode.isNull() || fieldNode.isMissing())
             return;
 
+        String patternStr = getPatternStr() != null ? getPatternStr() : defaultPatternValue;
         List<JsonNode> elements = fieldNode.elements();
         if (!elements.isEmpty()) {
             for (JsonNode element : elements) {
                 String roleText = element.getTokenValue();
                 if (roleText != null && !pattern.matcher(roleText).matches()) {
-                    addIssue(ruleKey, translate(messageKey), element);
+                    addIssue(ruleKey, translate(messageKey, patternStr), element);
                 }
             }
         } else {
             String fieldText = fieldNode.getTokenValue();
             if (fieldText != null && !pattern.matcher(fieldText).matches()) {
-                addIssue(ruleKey, translate(messageKey), fieldNode);
+                addIssue(ruleKey, translate(messageKey, patternStr), fieldNode);
             }
         }
     }

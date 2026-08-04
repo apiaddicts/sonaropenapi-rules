@@ -34,4 +34,14 @@ public class OAR014ResourceLevelWithinNonSuggestedRangeCheck extends AbstractRes
 	boolean matchLevel(long level) {
 		return minLevel <= level && level <= maxLevel;
 	}
+
+	@Override
+	protected String messageKey() {
+		return "OAR014.error";
+	}
+
+	@Override
+	protected Object[] messageArgs() {
+		return new Object[] { minLevel, maxLevel };
+	}
 }
