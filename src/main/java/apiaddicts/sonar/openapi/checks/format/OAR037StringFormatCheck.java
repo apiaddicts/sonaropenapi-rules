@@ -34,13 +34,13 @@ public class OAR037StringFormatCheck extends AbstractFormatCheck {
                     .map(f -> f.trim().toLowerCase())
                     .collect(Collectors.toSet());
             if (!validFormats.contains(format.toLowerCase())) {
-                addIssue(KEY, translate(MESSAGE), typeNode.key());
+                addIssue(KEY, translate(MESSAGE, formatsAllowed), typeNode.key());
             }
             return;
         }
 
         if (!hasValidPattern(node)) {
-            addIssue(KEY, translate(MESSAGE), typeNode.key());
+            addIssue(KEY, translate(MESSAGE, formatsAllowed), typeNode.key());
         }
     }
 

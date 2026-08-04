@@ -49,12 +49,12 @@ public class OAR038StandardCreateResponseCheck extends AbstractExplicitResponseC
                     addIssue(KEY, translate("OAR038.error-required-one-property"), entry.getValue().key());
                 }
             } else {
-                addIssue(KEY, translate("OAR038.error"), entry.getValue().key());
+                addIssue(KEY, translate("OAR038.error", dataNode), entry.getValue().key());
             }
         }
 
         if (properties.isEmpty()) {
-            addIssue(KEY, translate("OAR038.error"), schemaNode.key());
+            addIssue(KEY, translate("OAR038.error", dataNode), schemaNode.key());
         }
     }
 }

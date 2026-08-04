@@ -14,11 +14,11 @@
                 "type": "object",
                 "properties": {
                   "product": {  
-                    "type": "string",  # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}}
+                    "type": "string",  # Noncompliant {{OAR082: The string properties among product,line,price must define a byte or binary format}}
                     "format": "int128"
                   },
                   "line": { 
-                    "type": "string"   # Noncompliant {{OAR082: The string properties of the specified parameters must define a byte or binary format.}}
+                    "type": "string"   # Noncompliant {{OAR082: The string properties among product,line,price must define a byte or binary format}}
                   },
                   "price": {  
                     "type": "string",
