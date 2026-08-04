@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OAR082 - BinaryOrByteFormat - Issue message now shows the configured `fields-to-apply`.
 - OAR085 - OpenAPIVersion - Issue message now shows the configured `valid-versions`.
 - OAR037 - StringFormat - Issue message now interpolates the configured `formats-allowed`.
+- OAR037 - StringFormat - Fixed false positive on string schemas constrained by `enum`. The check only inspected `format`/`pattern`, so a string with a non-empty `enum` and no `format` was wrongly reported even though the `enum` already constrains the allowed values. When no `format` is declared, a non-empty `enum` now satisfies the rule (like a valid `pattern`); a present-but-invalid `format` still fires even when an `enum` is declared.
 - OAR044 - MediaTypeCheck - Media type parameters now follow RFC 9110 (charset without space, other parameter names, multiple parameters); type/subtype can no longer start with `.`.
 
 

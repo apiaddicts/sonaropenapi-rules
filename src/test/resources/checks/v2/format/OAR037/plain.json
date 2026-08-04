@@ -20,6 +20,10 @@
                   "type" : "string",
                   "pattern" : "^[A-Z]{3}-[0-9]+$"
                 },
+                "withEnum" : {
+                  "type" : "string",
+                  "enum" : ["email", "sms"]
+                },
                 "withInvalidPattern" : {
                   "type" : "string", # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
                   "pattern" : "["
