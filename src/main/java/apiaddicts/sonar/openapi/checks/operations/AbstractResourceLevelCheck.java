@@ -15,8 +15,6 @@ import java.util.stream.Stream;
 
 public abstract class AbstractResourceLevelCheck extends BaseCheck {
 
-	private static final String MESSAGE = "generic.path-level";
-
 	private String key;
 
 	protected AbstractResourceLevelCheck(String key) {
@@ -31,8 +29,12 @@ public abstract class AbstractResourceLevelCheck extends BaseCheck {
 	@Override
 	public void visitNode(JsonNode node) {
 		String path = node.key().getTokenValue();
-		if (matchLevel(path)) addIssue(key, translate(MESSAGE), node.key());
+		if (matchLevel(path)) addIssue(key, translate(messageKey(), messageArgs()), node.key());
 	}
+
+	protected abstract String messageKey();
+
+	protected abstract Object[] messageArgs();
 
 	private boolean matchLevel(String path) {
 		long literalCount = Stream.of(path.split("/"))

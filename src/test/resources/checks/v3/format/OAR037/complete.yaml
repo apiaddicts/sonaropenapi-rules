@@ -8,13 +8,13 @@ components:
       in: header
       name: paramOne
       schema:
-        type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+        type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
         format: YYYY-MM-DD
     paramTwo:
       in: header
       name: paramTwo
       schema:
-        type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+        type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
         format: YYYY-MM-DD
 paths:
   /invoices:
@@ -23,7 +23,7 @@ paths:
       - in: header
         name: paramThree
         schema:
-          type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+          type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
           format: YYYY-MM-DD
     get:
       parameters:
@@ -37,7 +37,7 @@ paths:
                 type: object
                 properties:
                   without:
-                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
                   withPattern:
                     type: string
                     pattern: '^[A-Z]{3}-[0-9]+$'
@@ -47,7 +47,7 @@ paths:
                       - email
                       - sms
                   withInvalidPattern:
-                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
                     pattern: '['
                   date:
                     type: string
@@ -83,5 +83,5 @@ paths:
                     type: string
                     format: ipv6
                   other:
-                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
                     format: YYYY-MM-DD

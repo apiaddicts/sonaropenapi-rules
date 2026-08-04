@@ -14,7 +14,8 @@ paths:
         - name: someParam
           in: query
           content:
-            'application': {} # Noncompliant {{OAR044: Declared mime type should conform to RFC6838}}
+            'application': {} # Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}
+            'text/*': {}
             'text/plain': {}  # invalid (only 1 content allowed by spec), but should not be caught by this rule
         - name: otherParam
           in: path
@@ -22,12 +23,17 @@ paths:
       requestBody:
         content:
           'application': { } # Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}
+          '.text/plain': { } # Noncompliant {{OAR044: Declared media type range should conform to RFC7231}}
           'text/*': { }
           'application/vnd.ms-excel': {}
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {}
           'application/ld+json': {}
           'image/*': {}
           '*/*': {}
+          'text/plain;charset=utf-8': {}
+          'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxk': {}
+          'multipart/form-data; boundary="----abc 123"': {}
+          'application/json; charset=utf-8; boundary=xyz': {}
       responses:
         '200':
           description: some operation
