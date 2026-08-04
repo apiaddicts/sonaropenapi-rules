@@ -4,7 +4,8 @@
   <li>declarando un campo <code>format</code> con un valor reconocido, o</li>
   <li>si no se declara <code>format</code>, declarando un campo <code>pattern</code> que sea una expresión regular no vacía y sintácticamente válida.</li>
 </ul>
-<p>La regla dispara cuando <code>format</code> está presente pero no es reconocido, o cuando <code>format</code> está ausente y <code>pattern</code> está ausente, vacío, o no es una expresión regular sintácticamente válida.</p>
+<p>Cuando no se declara <code>format</code>, un <code>enum</code> no vacío también satisface la regla: el <code>enum</code> ya restringe los valores permitidos, por lo que no se exige un <code>pattern</code>. Un <code>format</code> presente pero no reconocido sigue disparando aunque haya un <code>enum</code>.</p>
+<p>La regla dispara cuando <code>format</code> está presente pero no es reconocido, o cuando <code>format</code> está ausente y no hay un <code>pattern</code> válido ni un <code>enum</code> no vacío.</p>
 <p><strong>Formatos válidos:</strong> <code>date</code>, <code>date-time</code>, <code>password</code>, <code>byte</code>, <code>binary</code>, <code>email</code>, <code>uuid</code>, <code>uri</code>, <code>hostname</code>, <code>ipv4</code>, <code>ipv6</code>, <code>HEX</code>, <code>HEX(16)</code>, <code>json</code>, <code>xml</code>, <code>base64</code>.</p>
 <p><strong>Configurable:</strong> <code>formats-allowed</code> — lista de formatos permitidos separados por coma (por defecto: la lista anterior).</p>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
@@ -104,4 +105,9 @@ paths:
                     date:
                       type: string
                       format: date
+                    channelType:
+                      type: string
+                      enum:
+                        - email
+                        - sms
 </pre>

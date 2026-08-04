@@ -44,19 +44,20 @@ public class OAR044MediaTypeCheck extends BaseCheck {
   protected static final String MESSAGE_V3 = "OAR044.error.v3";
   private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
+  private static final String RESTRICTED_NAME = "[a-zA-Z0-9][a-zA-Z0-9.!#$&^_+\\-]*";
+  private static final String OWS = "[ \\t]*";
+  private static final String TOKEN = "[a-zA-Z0-9!#$%&'*+\\-.^_`|~]+";
+  private static final String QUOTED_STRING = "\"(?:[^\"\\\\]|\\\\.)*\"";
+  private static final String PARAMETERS =
+      "(?:" + OWS + ";" + OWS + TOKEN + "=(?:" + TOKEN + "|" + QUOTED_STRING + "))*";
+
   @VisibleForTesting
   static final Pattern MIME_TYPE_PATTERN = Pattern.compile(
-      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+/" +
-      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+" +
-      "(; charset=[a-zA-Z0-9_\\-]+)?"
+      RESTRICTED_NAME + "/" + RESTRICTED_NAME + PARAMETERS
   );
   @VisibleForTesting
   static final Pattern MEDIA_RANGE_PATTERN = Pattern.compile(
-      "(\\*|[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+)/" +
-      "(\\*|" +
-      "[a-zA-Z0-9.][a-zA-Z0-9.!#$&_^+\\-]+" +
-      "(; charset=[a-zA-Z0-9_\\-]+)?" +
-      ")"
+      "(\\*|" + RESTRICTED_NAME + ")/(\\*|" + RESTRICTED_NAME + ")" + PARAMETERS
   );
 
   @Override
@@ -114,8 +115,8 @@ public class OAR044MediaTypeCheck extends BaseCheck {
     for (JsonNode property : properties.values()) {
       JsonNode keyNode = property.key();
       String key = keyNode.getTokenValue();
-      if (!MIME_TYPE_PATTERN.matcher(key).matches()) {
-        addIssue(CHECK_KEY, translate(MESSAGE_V2), keyNode);
+      if (!MEDIA_RANGE_PATTERN.matcher(key).matches()) {
+        addIssue(CHECK_KEY, translate(MESSAGE_V3), keyNode);
       }
     }
   }

@@ -8,7 +8,7 @@ paths:
 x-wso2-security:
   apim:
     x-wso2-scopes:
-      - name: app # Noncompliant {{OAR040: WSO2 scope name value is non compliant with the standard}}
-      - name: app1_sc_ran # Noncompliant {{OAR040: WSO2 scope name value is non compliant with the standard}}
-      - name: GENE_Sc_ran # Noncompliant {{OAR040: WSO2 scope name value is non compliant with the standard}}
-      - name: X_SC_A # Noncompliant {{OAR040: WSO2 scope name value is non compliant with the standard}}
+      - name: app # Noncompliant {{OAR040: WSO2 scope name does not match the required pattern: ^[a-zA-Z]{4,}_(SC|sc)_[a-zA-Z0-9]{1,}$}}
+      - name: app1_sc_ran # Noncompliant {{OAR040: WSO2 scope name does not match the required pattern: ^[a-zA-Z]{4,}_(SC|sc)_[a-zA-Z0-9]{1,}$}}
+      - name: GENE_Sc_ran # Noncompliant {{OAR040: WSO2 scope name does not match the required pattern: ^[a-zA-Z]{4,}_(SC|sc)_[a-zA-Z0-9]{1,}$}}
+      - name: X_SC_A # Noncompliant {{OAR040: WSO2 scope name does not match the required pattern: ^[a-zA-Z]{4,}_(SC|sc)_[a-zA-Z0-9]{1,}$}}

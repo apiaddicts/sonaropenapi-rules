@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.5.1-beta-1] - 2026-08-04
+
+### Fixed
+
+- OAR014 / OAR015 - ResourceLevel - Issue message now interpolates the configured level values (min-level/max-level for OAR014, max-level-allowed for OAR015).
+- OAR004 / OAR040 - Wso2Scopes - Issue message now includes the configured `pattern` (passed through `AbstractPatternWso2ScopesCheck`).
+- OAR038 - StandardCreateResponse - Issue message now interpolates the configured `data-property` instead of the hardcoded `data`.
+- OAR082 - BinaryOrByteFormat - Issue message now shows the configured `fields-to-apply`.
+- OAR085 - OpenAPIVersion - Issue message now shows the configured `valid-versions`.
+- OAR037 - StringFormat - Issue message now interpolates the configured `formats-allowed`.
+- OAR037 - StringFormat - Fixed false positive on string schemas constrained by `enum`. The check only inspected `format`/`pattern`, so a string with a non-empty `enum` and no `format` was wrongly reported even though the `enum` already constrains the allowed values. When no `format` is declared, a non-empty `enum` now satisfies the rule (like a valid `pattern`); a present-but-invalid `format` still fires even when an `enum` is declared.
+- OAR044 - MediaTypeCheck - Media type parameters now follow RFC 9110 (charset without space, other parameter names, multiple parameters); type/subtype can no longer start with `.`.
+
+
 ## [1.5.0] - 2026-07-28
 
 ### Added

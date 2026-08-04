@@ -12,5 +12,5 @@ x-wso2-security:
         key: read
         roles:
           - ROLE_READ
-          - ROL€_V¡€U # Noncompliant {{OAR004: WSO2 scope roles value is not valid}}
+          - ROL€_V¡€U # Noncompliant {{OAR004: WSO2 scope role does not match the required pattern: ^[a-zA-Z0-9_\-., ]+$}}
         description: Allows users to read records

@@ -38,7 +38,7 @@ public class OAR085OpenAPIVersionCheck extends BaseCheck {
         List<String> validVersions = Arrays.asList(validVersionsStr.split(","));
 
         if (version == null || !validVersions.contains(version)) {
-            addIssue(KEY, translate(MESSAGE, version), root.key());
+            addIssue(KEY, translate(MESSAGE, validVersionsStr), root.key());
         }
     }
 
