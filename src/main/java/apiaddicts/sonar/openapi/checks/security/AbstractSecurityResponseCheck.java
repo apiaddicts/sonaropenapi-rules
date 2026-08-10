@@ -56,6 +56,10 @@ public abstract class AbstractSecurityResponseCheck extends BaseCheck {
     }
 
     private void validateSecurityResponse(JsonNode node) {
+        if (isExplicitSecurityOptOut(node)) {
+            return;
+        }
+
         JsonNode responsesNode = node.get("responses");
         Set<String> currentCodes = responsesNode.properties().stream()
                 .map(JsonNode::key)
@@ -80,5 +84,10 @@ public abstract class AbstractSecurityResponseCheck extends BaseCheck {
     protected boolean hasSecurity(JsonNode node) {
         JsonNode security = node.get("security");
         return !security.isMissing() && !security.isNull() && !security.elements().isEmpty();
+    }
+
+    private boolean isExplicitSecurityOptOut(JsonNode node) {
+        JsonNode security = node.get("security");
+        return !security.isMissing() && !security.isNull() && security.elements().isEmpty();
     }
 }

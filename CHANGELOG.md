@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.1-beta-2]
+
+### Fixed
+
+- OAR035 - AuthorizationResponses - Honor an operation-level `security: []` explicit opt-out: the operation is unsecured, so no 401 is required even under global security. Added `security-opt-out` (v3) fixtures and test.
+- OAR096 - ForbiddenResponses - Same `security: []` opt-out fix in the shared `AbstractSecurityResponseCheck`: no 403 required for opted-out operations. Added `security-opt-out` (v3) fixtures and test.
+
+
 ## [1.5.1-beta-1] - 2026-08-04
 
 ### Fixed
