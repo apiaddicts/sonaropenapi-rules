@@ -46,6 +46,11 @@ public class OAR035AuthorizationResponsesCheckTest extends BaseCheckTest {
     public void verifyInV3WithoutAuthorizationResponses() {
         verifyV3("without-authorization-responses");
     }
+
+    @Test
+    public void verifyInV3SecurityOptOut() {
+        verifyV3("security-opt-out");
+    }
     @Test
     public void verifyInV31WithoutAuthorizationResponses() {
         verifyV31("without-authorization-responses");
