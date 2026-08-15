@@ -42,4 +42,9 @@ public class OAR025LimitParameterCheck extends AbstractQueryParameterCheck {
     protected String getPathCheckStrategy() {
         return pathCheckStrategy;
     }
+
+    @Override
+    protected boolean requiresPaginatedResponse() {
+        return true;
+    }
 }

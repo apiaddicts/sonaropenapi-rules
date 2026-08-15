@@ -24,6 +24,8 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
     protected static final String PATH_STRATEGY_EXCLUDE = "/exclude";
     protected static final String PATH_STRATEGY_INCLUDE = "/include";
 
+    protected static final String PAGINATED_RESPONSE_CODE = "206";
+
     protected final String ruleKey;
     protected final String messageKey;
     protected final String defaultParameterName;
@@ -73,6 +75,10 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         String path = getPath(node);
 
         if (!applyToParameterizedPaths && endsWithPathParam(path)) {
+            return;
+        }
+
+        if (requiresPaginatedResponse() && !hasPaginatedResponse(node)) {
             return;
         }
 
@@ -134,6 +140,23 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
             pathBuilder.append(((JsonNode) pathNode).key().getTokenValue());
         }
         return pathBuilder.toString();
+    }
+
+    protected boolean requiresPaginatedResponse() {
+        return false;
+    }
+
+    protected boolean hasPaginatedResponse(JsonNode node) {
+        JsonNode responses = node.get("responses");
+        if (responses == null || responses.isMissing()) {
+            return false;
+        }
+        for (JsonNode responseNode : responses.propertyMap().values()) {
+            if (PAGINATED_RESPONSE_CODE.equals(responseNode.key().getTokenValue())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected boolean shouldIncludePath(String path) {
