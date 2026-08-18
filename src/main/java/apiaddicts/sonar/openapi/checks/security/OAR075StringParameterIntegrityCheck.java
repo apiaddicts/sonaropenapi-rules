@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isStringType;
+
 @Rule(key = OAR075StringParameterIntegrityCheck.KEY)
 public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterIntegrityCheck {
 
@@ -27,7 +29,7 @@ public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterI
 
     @Override
     protected boolean isTargetType(JsonNode typeNode) {
-        return typeNode != null && !typeNode.isMissing() && "string".equals(typeNode.getTokenValue());
+        return isStringType(typeNode);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
 import org.sonar.check.Rule;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
@@ -75,7 +76,9 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
             for (Map.Entry<String, JsonNode> entry : propertiesNode.propertyMap().entrySet()) {
                 String propertyName = entry.getKey();
                 JsonNode propertyTypeNode = entry.getValue().get("type");
-                String propertyType = propertyTypeNode != null ? propertyTypeNode.stringValue() : null;
+                String propertyType = (propertyTypeNode != null && propertyTypeNode.isArray())
+                        ? JsonNodeUtils.getPrimaryType(propertyTypeNode)
+                        : (propertyTypeNode != null ? propertyTypeNode.stringValue() : null);
                 schemaTypes.put(propertyName, propertyType);
             }
         }

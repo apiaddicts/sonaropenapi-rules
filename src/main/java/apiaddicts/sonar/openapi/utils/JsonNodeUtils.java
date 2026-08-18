@@ -184,8 +184,26 @@ public class JsonNodeUtils {
         return isType(schemaNode, TYPE_BOOLEAN);
     }
 
+    public static String getPrimaryType(JsonNode typeNode) {
+        if (typeNode == null || typeNode.isMissing()) return null;
+        if (typeNode.isArray()) {
+            for (JsonNode element : typeNode.elements()) {
+                String value = element.getTokenValue();
+                if (value != null && !"null".equals(value)) return value;
+            }
+            return null;
+        }
+        return typeNode.getTokenValue();
+    }
+
     public static boolean isType(JsonNode type, String name) {
-        return TYPE_ANY.equals(name) || name.equals(type.getTokenValue());
+        if (TYPE_ANY.equals(name)) return true;
+        if (type == null || type.isMissing()) return false;
+        if (name.equals(type.getTokenValue())) return true;
+        for (JsonNode element : type.elements()) {
+            if (name.equals(element.getTokenValue())) return true;
+        }
+        return false;
     }
 
     public static boolean isOperation(JsonNode node) {

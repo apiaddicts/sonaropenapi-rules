@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.1-beta-3]
+
+### Added
+
+- OAR085 - Accept `3.0.4`, `3.1.1`, `3.1.2` in the default valid-versions.
+
+### Changed
+
+- Bump `sonar-openapi` core to `1.2.2-beta-1` (parses the new versions).
+- `JsonNodeUtils` - `isType`/`getPrimaryType` accept array-form `type` (OpenAPI 3.1).
+- OAR082 - Accept array-form `type`; accept `contentEncoding`/`contentMediaType` as byte/binary.
+- OAR029 - Accept array-form `type`.
+- OAR070 - Accept array-form `type`.
+- OAR074 - Accept array-form `type`.
+- OAR075 - Accept array-form `type`.
+- OAR108 - Accept array-form `type`.
+- OAR115 - Accept array-form `type`.
+- OAR016 / OAR037 / OAR052 / OAR076 - Accept array-form `type` via `AbstractFormatCheck`.
+
+
 ## [1.5.1-beta-2]
 
 ### Fixed
