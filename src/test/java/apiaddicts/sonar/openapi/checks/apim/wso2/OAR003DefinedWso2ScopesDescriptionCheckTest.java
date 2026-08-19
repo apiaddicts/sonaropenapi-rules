@@ -63,6 +63,32 @@ public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
     public void verifyInV3WithNullScopeDescription() {
         verifyV3("with-null-description");
     }
+
+    @Test
+    public void verifyInV3WithScopesAsMap() {
+        verifyV3("fail-scopes-as-map");
+    }
+    @Test
+    public void verifyInV31WithScopesAsMap() {
+        verifyV31("fail-scopes-as-map");
+    }
+    @Test
+    public void verifyInV32WithScopesAsMap() {
+        verifyV32("fail-scopes-as-map");
+    }
+
+    @Test
+    public void verifyInV3WithRefSecurity() {
+        verifyV3("fail-ref-security");
+    }
+    @Test
+    public void verifyInV31WithRefSecurity() {
+        verifyV31("fail-ref-security");
+    }
+    @Test
+    public void verifyInV32WithRefSecurity() {
+        verifyV32("fail-ref-security");
+    }
     @Test
     public void verifyInV31WithNullScopeDescription() {
         verifyV31("with-null-description");

@@ -7,8 +7,10 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,10 +27,14 @@ public abstract class AbstractWso2ScopesCheck extends BaseCheck {
 	}
 
 	private void visitV2NV3Node(JsonNode node) {
-		JsonNode scopesNode = node.get("x-wso2-security").get("apim").get("x-wso2-scopes");
+		JsonNode securityNode = node.get("x-wso2-security");
+		if (!securityNode.isMissing()) securityNode = JsonNodeUtils.resolve(securityNode);
+		JsonNode scopesNode = securityNode.get("apim").get("x-wso2-scopes");
 		visitScopesNode(scopesNode);
 		if (scopesNode.isMissing() || scopesNode.isNull()) return;
-		List<JsonNode> scopes = scopesNode.elements();
+		List<JsonNode> scopes = scopesNode.isObject()
+			? new ArrayList<>(scopesNode.propertyMap().values())
+			: scopesNode.elements();
 		visitScopes(scopes);
 		scopes.forEach(this::visitScope);
 	}
