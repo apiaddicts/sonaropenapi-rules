@@ -73,6 +73,15 @@ public class OAR025LimitParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2NoPagination() {
+        verifyV2("no-pagination");
+    }
+    @Test
+    public void verifyInV3NoPagination() {
+        verifyV3("no-pagination");
+    }
+
+    @Test
     public void verifyInV2SingleResource() {
         verifyV2("single-resource");
     }
