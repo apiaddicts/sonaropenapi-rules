@@ -8,14 +8,10 @@ paths:
       parameters:
         - in: query
           name: $limit
-          type: array
-          items:
-            type: string
+          type: integer
         - in: query
           name: $limit
-          type: array
-          items:
-            type: string
+          type: integer
       responses:
         206:
           description: Ok

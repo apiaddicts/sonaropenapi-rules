@@ -1,6 +1,7 @@
-<p>Toda operación GET de colección dentro del alcance debe definir <code>$limit</code> como parámetro de consulta.</p>
+<p>Toda operación GET de colección dentro del alcance debe definir <code>$limit</code> como parámetro de consulta de tipo <code>integer</code>.</p>
 <p><strong>Se aplica a:</strong> por defecto, solo a las operaciones GET en rutas que contienen el segmento <code>/examples</code> que declaran una respuesta <code>206</code>. Las operaciones sin respuesta <code>206</code> no se comprueban, y el resto de rutas queda fuera de alcance.</p>
 <p><strong>Excluidos automáticamente:</strong> endpoints de detalle (la ruta termina en <code>/{param}</code>, p. ej. <code>/examples/{id}</code>).</p>
+<p><strong>También se reporta:</strong> cuando <code>$limit</code> está presente pero su tipo no es <code>integer</code>.</p>
 <p><strong>Parámetros configurables:</strong></p>
 <ul>
   <li><code>paths</code> — lista de rutas a incluir/excluir separadas por coma (por defecto: <code>/examples</code>).</li>
@@ -37,9 +38,7 @@ paths:
       parameters:
         - in: query
           name: $limit
-          type: array
-          items:
-            type: string
+          type: integer
       responses:
         206:
           description: Ok
@@ -85,9 +84,7 @@ paths:
         - in: query
           name: $limit
           schema:
-            type: array
-            items:
-              type: string
+            type: integer
       responses:
         "206":
           description: Ok

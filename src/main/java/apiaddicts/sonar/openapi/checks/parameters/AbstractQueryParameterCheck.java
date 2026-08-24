@@ -82,52 +82,90 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
             return;
         }
 
-        boolean hasParameter = hasParameterInNode(node);
+        if (!shouldIncludePath(path)) {
+            return;
+        }
 
-        if (shouldIncludePath(path) && !hasParameter) {
+        JsonNode parameterNode = findMatchingParameter(node);
+
+        if (parameterNode == null) {
             addIssue(
                 ruleKey,
                 translate(messageKey, getParameterName()),
+                node.key()
+            );
+        } else if (getExpectedType() != null && !hasExpectedType(parameterNode)) {
+            addIssue(
+                ruleKey,
+                translate(getTypeMessageKey(), getParameterName()),
                 node.key()
             );
         }
     }
 
     protected boolean hasParameterInNode(JsonNode node) {
+        return findMatchingParameter(node) != null;
+    }
+
+    protected JsonNode findMatchingParameter(JsonNode node) {
         JsonNode parametersNode = node.get("parameters");
         if (parametersNode != null) {
-
             for (JsonNode parameterNode : parametersNode.elements()) {
-              if (isRefParameter(parameterNode) && hasNamedRefParameter(parameterNode)) {
-                  return true;
-              }
-              if (hasDirectParameter(parameterNode)) {
-                  return true;
-              }
+                if (isRefParameter(parameterNode)) {
+                    JsonNode refParameterNode = resolveReference(parameterNode.get("$ref").getTokenValue(), rootNode);
+                    if (refParameterNode != null && matchesNameAndIn(refParameterNode)) {
+                        return refParameterNode;
+                    }
+                } else if (matchesNameAndIn(parameterNode)) {
+                    return parameterNode;
+                }
             }
         }
-        return false;
+        return null;
     }
 
     protected boolean isRefParameter(JsonNode parameterNode) {
-        return parameterNode.get("$ref") != null;
+        JsonNode refNode = parameterNode.get("$ref");
+        return refNode != null && !refNode.isMissing();
     }
 
     protected boolean hasNamedRefParameter(JsonNode parameterNode) {
-        String refValue = parameterNode.get("$ref").getTokenValue();
-        JsonNode refParameterNode = resolveReference(refValue, rootNode);
-        if (refParameterNode != null) {
-            JsonNode nameNode = refParameterNode.get("name");
-            JsonNode inNode = refParameterNode.get("in");
-            return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && getParameterName().equals(nameNode.getTokenValue());
-        }
-        return false;
+        JsonNode refParameterNode = resolveReference(parameterNode.get("$ref").getTokenValue(), rootNode);
+        return refParameterNode != null && matchesNameAndIn(refParameterNode);
     }
 
     protected boolean hasDirectParameter(JsonNode parameterNode) {
+        return matchesNameAndIn(parameterNode);
+    }
+
+    protected boolean matchesNameAndIn(JsonNode parameterNode) {
         JsonNode nameNode = parameterNode.get("name");
         JsonNode inNode = parameterNode.get("in");
-        return inNode != null && "query".equals(inNode.getTokenValue()) && nameNode != null && getParameterName().equals(nameNode.getTokenValue());
+        return inNode != null && "query".equals(inNode.getTokenValue())
+            && nameNode != null && getParameterName().equals(nameNode.getTokenValue());
+    }
+
+    protected String getExpectedType() {
+        return null;
+    }
+
+    protected String getTypeMessageKey() {
+        return null;
+    }
+
+    protected boolean hasExpectedType(JsonNode parameterNode) {
+        String expected = getExpectedType();
+        if (expected == null) {
+            return true;
+        }
+        JsonNode schemaNode = parameterNode.get("schema");
+        JsonNode typeNode;
+        if (schemaNode != null && !schemaNode.isMissing()) {
+            typeNode = schemaNode.get("type");   // OpenAPI 3.x
+        } else {
+            typeNode = parameterNode.get("type"); // OpenAPI 2.0
+        }
+        return typeNode != null && !typeNode.isMissing() && expected.equals(typeNode.getTokenValue());
     }
 
     protected String getPath(JsonNode node) {
