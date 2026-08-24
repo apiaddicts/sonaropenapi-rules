@@ -161,7 +161,11 @@ public abstract class AbstractQueryParameterCheck extends BaseCheck {
         JsonNode schemaNode = parameterNode.get("schema");
         JsonNode typeNode;
         if (schemaNode != null && !schemaNode.isMissing()) {
-            typeNode = schemaNode.get("type");   // OpenAPI 3.x
+            JsonNode schemaRef = schemaNode.get("$ref");
+            if (schemaRef != null && !schemaRef.isMissing()) {
+                schemaNode = resolveReference(schemaRef.getTokenValue(), rootNode);
+            }
+            typeNode = schemaNode != null ? schemaNode.get("type") : null;
         } else {
             typeNode = parameterNode.get("type"); // OpenAPI 2.0
         }

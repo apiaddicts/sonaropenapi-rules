@@ -132,6 +132,50 @@ public class OAR025LimitParameterCheckTest extends BaseCheckTest {
         verifyV32("wrong-type-ref");
     }
 
+    @Test
+    public void verifyInV3SchemaRef() {
+        verifyV3("schema-ref");
+    }
+    @Test
+    public void verifyInV31SchemaRef() {
+        verifyV31("schema-ref");
+    }
+    @Test
+    public void verifyInV32SchemaRef() {
+        verifyV32("schema-ref");
+    }
+
+    @Test
+    public void verifyInV2OkRef() {
+        verifyV2("ok-ref");
+    }
+    @Test
+    public void verifyInV3OkRef() {
+        verifyV3("ok-ref");
+    }
+    @Test
+    public void verifyInV31OkRef() {
+        verifyV31("ok-ref");
+    }
+    @Test
+    public void verifyInV32OkRef() {
+        verifyV32("ok-ref");
+    }
+
+    @Test
+    public void verifyInV31ArrayType() {
+        verifyV31("array-type");
+    }
+    @Test
+    public void verifyInV32ArrayType() {
+        verifyV32("array-type");
+    }
+
+    @Test
+    public void verifyInV3NoType() {
+        verifyV3("no-type");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR025 - LimitParameter - the chosen parameter must be defined in this operation", RuleType.BUG, Severity.MAJOR, tags("parameters"));
