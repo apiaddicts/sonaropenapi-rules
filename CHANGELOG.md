@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.1-beta-4] - 2026-08-24
+
+### Added
+
+- OAR116 - PathPattern - New rule: every API path must match a configurable regex `pattern` (default `^/`); unanchored match, dynamic message with the configured pattern.
+
 ## [1.5.1-beta-3] - 2026-08-14
 
 ### Changed
