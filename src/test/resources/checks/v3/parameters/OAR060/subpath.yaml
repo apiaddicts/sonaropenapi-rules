@@ -1,0 +1,16 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OAR060 subpath not excluded
+paths:
+  /status/health:
+    get:
+      parameters:
+        - in: query
+          name: verbose
+          required: true # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
