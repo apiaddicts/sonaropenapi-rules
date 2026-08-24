@@ -1,0 +1,13 @@
+{
+  "title": "OAR116 - PathPattern - Todas las rutas de la API deben cumplir con la expresión regular configurada",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

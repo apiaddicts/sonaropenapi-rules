@@ -1,0 +1,53 @@
+<p>Every API path must match the configured regular expression. By default the pattern only requires each path to start with "/" (<code>^/</code>); clients can override it with a stricter expression.</p>
+<h2>Noncompliant Solution (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  pets: # Noncompliant {{OAR116: Path does not match the required pattern: ^/}}
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
+<h2>Compliant Solution (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
+<h2>Noncompliant Solution (OpenAPI 3)</h2>
+<pre>
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  pets: # Noncompliant {{OAR116: Path does not match the required pattern: ^/}}
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
+<h2>Compliant Solution (OpenAPI 3)</h2>
+<pre>
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
