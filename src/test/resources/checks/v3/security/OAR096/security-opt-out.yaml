@@ -1,0 +1,26 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OAR096 - security opt-out
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []
+paths:
+  /public:
+    get:
+      # Explicit opt-out: `security: []` disables the global security for this
+      # operation, so it is unsecured and no 403 is required (compliant).
+      security: []
+      responses:
+        200:
+          description: Ok
+  /secured:
+    get:
+      responses: # Noncompliant {{OAR096: Response code 403 must be defined for operations with security schemes defined}}
+        200:
+          description: Ok

@@ -1,0 +1,33 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "components" : {
+    "schemas" : {
+      "LimitType" : {
+        "type" : "integer",
+        "format" : "int64"
+      }
+    }
+  },
+  "paths" : {
+    "/examples" : {
+      "get" : {
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "$limit",
+          "schema" : {
+            "$ref" : "#/components/schemas/LimitType"
+          }
+        } ],
+        "responses" : {
+          "206" : {
+            "description" : "Ok"
+          }
+        }
+      }
+    }
+  }
+}

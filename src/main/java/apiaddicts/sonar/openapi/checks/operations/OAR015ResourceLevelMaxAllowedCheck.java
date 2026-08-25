@@ -25,4 +25,14 @@ public class OAR015ResourceLevelMaxAllowedCheck extends AbstractResourceLevelChe
 	boolean matchLevel(long level) {
 		return maxLevelAllowed < level;
 	}
+
+	@Override
+	protected String messageKey() {
+		return "OAR015.error";
+	}
+
+	@Override
+	protected Object[] messageArgs() {
+		return new Object[] { maxLevelAllowed };
+	}
 }

@@ -17,10 +17,10 @@ paths:
                     type: string
                     pattern: '^[A-Za-z ]+$'
                   emptyPattern:
-                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
                     pattern: ""
                   invalidPattern:
-                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}
                     pattern: "[a-z"
                   code:
-                    type: string # Noncompliant {{OAR037: String types require a valid format, or a valid pattern when no format is defined}}
+                    type: string # Noncompliant {{OAR037: String types require one of the allowed formats (date,date-time,password,byte,binary,email,uuid,uri,hostname,ipv4,ipv6,HEX,HEX(16),json,xml,base64), or a valid pattern when no format is defined}}

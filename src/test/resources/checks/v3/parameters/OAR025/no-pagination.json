@@ -1,0 +1,18 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/examples": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "in scope but not paginated (no 206 response) -> rule does not apply"
+          }
+        }
+      }
+    }
+  }
+}

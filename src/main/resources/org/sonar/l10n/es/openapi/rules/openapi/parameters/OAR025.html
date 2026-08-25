@@ -1,102 +1,102 @@
-<p>El parámetro elegido debe definirse en esta operación. Por defecto, $limit</p>
-<p>Esta regla se aplica únicamente a endpoints GET de colección. Los paths que terminan con un parámetro de ruta (p. ej. <code>/examples/{id}</code>) se consideran endpoints de recurso único y quedan excluidos automáticamente.</p>
+<p>Toda operación GET de colección dentro del alcance debe definir <code>$limit</code> como parámetro de consulta de tipo <code>integer</code>.</p>
+<p><strong>Se aplica a:</strong> por defecto, solo a las operaciones GET en rutas que contienen el segmento <code>/examples</code> que declaran una respuesta <code>206</code>. Las operaciones sin respuesta <code>206</code> no se comprueban, y el resto de rutas queda fuera de alcance.</p>
+<p><strong>Excluidos automáticamente:</strong> endpoints de detalle (la ruta termina en <code>/{param}</code>, p. ej. <code>/examples/{id}</code>).</p>
+<p><strong>También se reporta:</strong> cuando <code>$limit</code> está presente pero su tipo no es <code>integer</code>.</p>
+<p><strong>Parámetros configurables:</strong></p>
+<ul>
+  <li><code>paths</code> — lista de rutas a incluir/excluir separadas por coma (por defecto: <code>/examples</code>).</li>
+  <li><code>pathValidationStrategy</code> — <code>/include</code> o <code>/exclude</code> (por defecto: <code>/include</code>).</li>
+</ul>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
-  swagger: "2.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters: 
-          - in: query
-            name: other 
-            type: array
-            items:
-              type: string
-          - in: query
-            name: hola 
-            type: array
-            items:
-              type: string
-        responses:
-          206:
-            description: Ok
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /examples:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR025: $limit must be defined as a parameter in this operation}}</span>
+      parameters:
+        - in: query
+          name: other
+          type: array
+          items:
+            type: string
+      responses:
+        206:
+          description: Ok
 </pre>
-<h2>Compliant Solution (OpenAPI 2)</h2>
+<h2>Solución compatible (OpenAPI 2)</h2>
 <pre>
-  swagger: "2.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters:
-          - in: query
-            name: $limit
-            type: array
-            items:
-              type: string
-          - in: query
-            name: $limit
-            type: array
-            items:
-              type: string
-        responses:
-          206:
-            description: Ok
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /examples:
+    get:
+      parameters:
+        - in: query
+          name: $limit
+          type: integer
+      responses:
+        206:
+          description: Ok
+  /examples/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        206:
+          description: Ok
 </pre>
-<h2>Noncompliant Code Example (OpenAPI 3)</h2>
+<h2>Ejemplo de código no compatible (OpenAPI 3)</h2>
 <pre>
-  openapi: "3.0.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters: 
-          - in: query
-            name: other 
-            schema:
-              type: array
-              items:
-                type: string
-          - in: query
-            name: select 
-            schema:
-              type: array
-              items:
-                type: string
-        responses:
-          206:
-            description: Ok
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /examples:
+    get: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR025: $limit must be defined as a parameter in this operation}}</span>
+      parameters:
+        - in: query
+          name: other
+          schema:
+            type: string
+      responses:
+        "206":
+          description: Ok
 </pre>
-<h2>Compliant Solution (OpenAPI 3)</h2>
+<h2>Solución compatible (OpenAPI 3)</h2>
 <pre>
-  openapi: "3.0.0"
-  info:
-    version: 1.0.0
-    title: Swagger Petstore
-  paths:
-    /pets:
-      get:
-        parameters:
-          - in: query
-            name: $limit
-            schema:
-              type: array
-              items:
-                type: string
-          - in: query
-            name: $limit
-            schema:
-              type: array
-              items:
-                type: string
-        responses:
-          206:
-            description: Ok
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /examples:
+    get:
+      parameters:
+        - in: query
+          name: $limit
+          schema:
+            type: integer
+      responses:
+        "206":
+          description: Ok
+  /examples/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "206":
+          description: Ok
 </pre>

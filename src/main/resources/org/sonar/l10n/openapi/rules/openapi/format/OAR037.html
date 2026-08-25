@@ -4,7 +4,8 @@
   <li>declare a <code>format</code> field with a recognized value, or</li>
   <li>if no <code>format</code> is declared, declare a <code>pattern</code> field that is a non-empty, syntactically valid regular expression.</li>
 </ul>
-<p>The rule fires when <code>format</code> is present but not recognized, or when <code>format</code> is absent and <code>pattern</code> is missing, empty, or not a syntactically valid regular expression.</p>
+<p>When no <code>format</code> is declared, a non-empty <code>enum</code> also satisfies the rule: the <code>enum</code> already constrains the allowed values, so a <code>pattern</code> is not required. A <code>format</code> that is present but not recognized still fires even when an <code>enum</code> is declared.</p>
+<p>The rule fires when <code>format</code> is present but not recognized, or when <code>format</code> is absent and there is no valid <code>pattern</code> and no non-empty <code>enum</code>.</p>
 <p><strong>Valid formats:</strong> <code>date</code>, <code>date-time</code>, <code>password</code>, <code>byte</code>, <code>binary</code>, <code>email</code>, <code>uuid</code>, <code>uri</code>, <code>hostname</code>, <code>ipv4</code>, <code>ipv6</code>, <code>HEX</code>, <code>HEX(16)</code>, <code>json</code>, <code>xml</code>, <code>base64</code>.</p>
 <p><strong>Configurable:</strong> <code>formats-allowed</code> — comma-separated list of allowed formats (default: the list above).</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
@@ -104,4 +105,9 @@ paths:
                     date:
                       type: string
                       format: date
+                    channelType:
+                      type: string
+                      enum:
+                        - email
+                        - sms
 </pre>

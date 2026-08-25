@@ -33,22 +33,22 @@ paths:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four: # Noncompliant {{OAR014: Resources depth level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four: # Noncompliant {{OAR014: Resources depth level must not fall within the non-suggested range 4 to 5}}
     get:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}: # Noncompliant {{OAR014: Resources depth level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}: # Noncompliant {{OAR014: Resources depth level must not fall within the non-suggested range 4 to 5}}
     get:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five: # Noncompliant {{OAR014: Resources depth level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}/five: # Noncompliant {{OAR014: Resources depth level must not fall within the non-suggested range 4 to 5}}
     get:
       responses:
         default:
           description: Ok
-  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}: # Noncompliant {{OAR014: Resources depth level should be smaller}}
+  /one/{one}/two/{two}/three/{three}/four/{four}/five/{five}: # Noncompliant {{OAR014: Resources depth level must not fall within the non-suggested range 4 to 5}}
     get:
       responses:
         default:

@@ -8,7 +8,9 @@ public class OAR025LimitParameterCheck extends AbstractQueryParameterCheck {
 
     public static final String KEY = "OAR025";
     private static final String MESSAGE = "OAR025.error";
+    private static final String TYPE_MESSAGE = "OAR025.type.error";
     private static final String PARAM_NAME = "$limit";
+    private static final String EXPECTED_TYPE = "integer";
 
     @RuleProperty(
         key = "paths",
@@ -41,5 +43,20 @@ public class OAR025LimitParameterCheck extends AbstractQueryParameterCheck {
     @Override
     protected String getPathCheckStrategy() {
         return pathCheckStrategy;
+    }
+
+    @Override
+    protected boolean requiresPaginatedResponse() {
+        return true;
+    }
+
+    @Override
+    protected String getExpectedType() {
+        return EXPECTED_TYPE;
+    }
+
+    @Override
+    protected String getTypeMessageKey() {
+        return TYPE_MESSAGE;
     }
 }
