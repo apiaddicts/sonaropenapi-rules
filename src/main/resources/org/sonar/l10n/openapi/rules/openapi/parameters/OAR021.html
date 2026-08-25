@@ -1,10 +1,10 @@
 <p>Every GET collection operation must define <code>$exclude</code> as a query parameter.</p>
-<p><strong>Applies to:</strong> GET operations on collection paths (paths that do not end with a path parameter such as <code>/{id}</code>).</p>
-<p><strong>Excluded automatically:</strong> detail endpoints (path ends with <code>/{param}</code>), paths containing <code>/me</code>, and health-check paths containing <code>status</code>, <code>health</code>, or <code>ping</code>.</p>
+<p><strong>Applies to:</strong> by default, all GET operations on collection paths, except the paths excluded below.</p>
+<p><strong>Excluded automatically:</strong> detail endpoints (path ends with <code>/{param}</code>), plus (by default) paths containing <code>/me</code>, <code>/health</code>, <code>/ping</code>, or <code>/status</code>.</p>
 <p><strong>Configurable parameters:</strong></p>
 <ul>
-  <li><code>paths</code> — list of explicit paths to include/exclude (default: <code>/examples</code>).</li>
-  <li><code>pathValidationStrategy</code> — <code>/include</code> or <code>/exclude</code> (default: <code>/include</code>).</li>
+  <li><code>paths</code> — comma-separated list of paths to include/exclude (default: <code>/me,/health,/ping,/status</code>).</li>
+  <li><code>pathValidationStrategy</code> — <code>/include</code> or <code>/exclude</code> (default: <code>/exclude</code>).</li>
 </ul>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
