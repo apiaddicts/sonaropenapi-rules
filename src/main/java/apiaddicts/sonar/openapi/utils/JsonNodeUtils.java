@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import com.sonar.sslr.api.AstNodeType;
@@ -45,17 +46,21 @@ public class JsonNodeUtils {
     private static String lastFetchedContent = "";
 
     public static JsonNode resolve(JsonNode original) {
-
-        if (original.isRef()) {
-            String ref = original.get("$ref").getTokenValue();
+        JsonNode current = original;
+        Set<String> visitedRefs = new HashSet<>();
+        while (current.isRef()) {
+            String ref = current.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                return original.resolve();
+                if (!visitedRefs.add(ref)) {
+                    return current;
+                }
+                current = current.resolve();
             } else {
                 JsonNode resolved = resolveExternalRef(ref);
-                return resolved != null ? resolved : original;
+                return resolved != null ? resolved : current;
             }
         }
-        return original;
+        return current;
     }
 
     public static boolean isExternalRef (JsonNode original){

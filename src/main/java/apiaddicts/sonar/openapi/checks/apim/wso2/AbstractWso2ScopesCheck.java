@@ -32,9 +32,13 @@ public abstract class AbstractWso2ScopesCheck extends BaseCheck {
 		JsonNode scopesNode = securityNode.get("apim").get("x-wso2-scopes");
 		visitScopesNode(scopesNode);
 		if (scopesNode.isMissing() || scopesNode.isNull()) return;
-		List<JsonNode> scopes = scopesNode.isObject()
+		List<JsonNode> rawScopes = scopesNode.isObject()
 			? new ArrayList<>(scopesNode.propertyMap().values())
 			: scopesNode.elements();
+		List<JsonNode> scopes = new ArrayList<>(rawScopes.size());
+		for (JsonNode scope : rawScopes) {
+			scopes.add(JsonNodeUtils.resolve(scope));
+		}
 		visitScopes(scopes);
 		scopes.forEach(this::visitScope);
 	}
