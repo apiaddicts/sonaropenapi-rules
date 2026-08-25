@@ -1,20 +1,18 @@
 {
-  "swagger" : "2.0",
+  "openapi" : "3.0.0",
   "info" : {
     "version" : "1.0.0",
     "title" : "Swagger Petstore"
   },
   "paths" : {
     "/examples" : {
-      "get" : {
+      "get" : { # Noncompliant {{OAR025: $limit must be defined as a parameter of type integer in this operation}}
         "parameters" : [ {
           "in" : "query",
           "name" : "$limit",
-          "type" : "integer"
-        }, {
-          "in" : "query",
-          "name" : "$limit",
-          "type" : "integer"
+          "schema" : {
+            "format" : "int64"
+          }
         } ],
         "responses" : {
           "206" : {

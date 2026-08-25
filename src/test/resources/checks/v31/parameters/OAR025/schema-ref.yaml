@@ -2,6 +2,11 @@ openapi: "3.1.0"
 info:
   version: 1.0.0
   title: Swagger Petstore
+components:
+  schemas:
+    LimitType:
+      type: integer
+      format: int64
 paths:
   /examples:
     get:
@@ -9,11 +14,7 @@ paths:
         - in: query
           name: $limit
           schema:
-            type: integer
-        - in: query
-          name: $limit
-          schema:
-            type: integer
+            $ref: '#/components/schemas/LimitType'
       responses:
         206:
           description: Ok

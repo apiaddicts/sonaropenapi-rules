@@ -1,6 +1,7 @@
-<p>Every GET collection operation in scope must define <code>$limit</code> as a query parameter.</p>
+<p>Every GET collection operation in scope must define <code>$limit</code> as a query parameter of type <code>integer</code>.</p>
 <p><strong>Applies to:</strong> by default, only GET operations on paths containing the <code>/examples</code> segment that declare a <code>206</code> response. Operations without a <code>206</code> response are not checked, and every other path is out of scope.</p>
 <p><strong>Excluded automatically:</strong> detail endpoints (path ends with <code>/{param}</code>, e.g. <code>/examples/{id}</code>).</p>
+<p><strong>Also reported:</strong> when <code>$limit</code> is present but its type is not <code>integer</code>.</p>
 <p><strong>Configurable parameters:</strong></p>
 <ul>
   <li><code>paths</code> — comma-separated list of paths to include/exclude (default: <code>/examples</code>).</li>
@@ -37,9 +38,7 @@ paths:
       parameters:
         - in: query
           name: $limit
-          type: array
-          items:
-            type: string
+          type: integer
       responses:
         206:
           description: Ok
@@ -85,9 +84,7 @@ paths:
         - in: query
           name: $limit
           schema:
-            type: array
-            items:
-              type: string
+            type: integer
       responses:
         "206":
           description: Ok

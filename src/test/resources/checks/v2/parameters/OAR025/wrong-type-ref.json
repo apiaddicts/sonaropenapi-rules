@@ -4,17 +4,18 @@
     "version" : "1.0.0",
     "title" : "Swagger Petstore"
   },
+  "parameters" : {
+    "limit" : {
+      "in" : "query",
+      "name" : "$limit",
+      "type" : "string"
+    }
+  },
   "paths" : {
     "/examples" : {
-      "get" : {
+      "get" : { # Noncompliant {{OAR025: $limit must be defined as a parameter of type integer in this operation}}
         "parameters" : [ {
-          "in" : "query",
-          "name" : "$limit",
-          "type" : "integer"
-        }, {
-          "in" : "query",
-          "name" : "$limit",
-          "type" : "integer"
+          "$ref" : "#/parameters/limit"
         } ],
         "responses" : {
           "206" : {
