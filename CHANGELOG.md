@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Bump `sonar-openapi` core to `1.2.2-beta-1` (parses the new versions).
+- Bump `sonar-openapi` core to `1.3.0-beta-1` (parses the new versions).
 - `JsonNodeUtils` - `isType`/`getPrimaryType` accept array-form `type` (OpenAPI 3.1).
 - OAR082 - Accept array-form `type`; accept `contentEncoding`/`contentMediaType` as byte/binary.
 - OAR029 - Accept array-form `type`.
