@@ -73,6 +73,15 @@ public class OAR025LimitParameterCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2NoPagination() {
+        verifyV2("no-pagination");
+    }
+    @Test
+    public void verifyInV3NoPagination() {
+        verifyV3("no-pagination");
+    }
+
+    @Test
     public void verifyInV2SingleResource() {
         verifyV2("single-resource");
     }
@@ -87,6 +96,84 @@ public class OAR025LimitParameterCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV32SingleResource() {
         verifyV32("single-resource");
+    }
+
+    @Test
+    public void verifyInV2WrongType() {
+        verifyV2("wrong-type");
+    }
+    @Test
+    public void verifyInV3WrongType() {
+        verifyV3("wrong-type");
+    }
+    @Test
+    public void verifyInV31WrongType() {
+        verifyV31("wrong-type");
+    }
+    @Test
+    public void verifyInV32WrongType() {
+        verifyV32("wrong-type");
+    }
+
+    @Test
+    public void verifyInV2WrongTypeRef() {
+        verifyV2("wrong-type-ref");
+    }
+    @Test
+    public void verifyInV3WrongTypeRef() {
+        verifyV3("wrong-type-ref");
+    }
+    @Test
+    public void verifyInV31WrongTypeRef() {
+        verifyV31("wrong-type-ref");
+    }
+    @Test
+    public void verifyInV32WrongTypeRef() {
+        verifyV32("wrong-type-ref");
+    }
+
+    @Test
+    public void verifyInV3SchemaRef() {
+        verifyV3("schema-ref");
+    }
+    @Test
+    public void verifyInV31SchemaRef() {
+        verifyV31("schema-ref");
+    }
+    @Test
+    public void verifyInV32SchemaRef() {
+        verifyV32("schema-ref");
+    }
+
+    @Test
+    public void verifyInV2OkRef() {
+        verifyV2("ok-ref");
+    }
+    @Test
+    public void verifyInV3OkRef() {
+        verifyV3("ok-ref");
+    }
+    @Test
+    public void verifyInV31OkRef() {
+        verifyV31("ok-ref");
+    }
+    @Test
+    public void verifyInV32OkRef() {
+        verifyV32("ok-ref");
+    }
+
+    @Test
+    public void verifyInV31ArrayType() {
+        verifyV31("array-type");
+    }
+    @Test
+    public void verifyInV32ArrayType() {
+        verifyV32("array-type");
+    }
+
+    @Test
+    public void verifyInV3NoType() {
+        verifyV3("no-type");
     }
 
     @Override

@@ -6,14 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [1.5.1-beta-3]
+## [1.5.1-beta-4] - 2026-08-24
 
-### Fixed
+### Changed
 
 - OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
+- OAR025 - The shared `apq-collection-query-param-required` function now also validates the parameter type for OAR025, keyed by rule code; when `$limit` is present but its type is not `integer`, a distinct type message is emitted.
 
 
-## [1.5.1-beta-2]
+## [1.5.1-beta-3] - 2026-08-14
+
+### Changed
+
+- OAR022 - OrderbyParameterCheck - Now only applies to paginated collections (operations declaring a 206 response); added `no-pagination` fixtures/tests and corrected the HTML docs (real defaults + 206 condition).
+- OAR025 - LimitParameterCheck - Same 206 gating for `$limit`; added `no-pagination` fixtures/tests and corrected the HTML docs.
+- OAR020 - ExpandParameterCheck - Corrected the HTML docs to the real defaults (`/me,/health,/ping,/status`, `/exclude`).
+- OAR021 - ExcludeParameterCheck - Corrected the HTML docs to the real defaults (`/me,/health,/ping,/status`, `/exclude`).
+
+
+## [1.5.1-beta-2] - 2026-08-12
 
 ### Fixed
 

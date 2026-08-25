@@ -1,0 +1,19 @@
+openapi: "3.2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  parameters:
+    limit:
+      in: query
+      name: $limit
+      schema:
+        type: string
+paths:
+  /examples:
+    get: # Noncompliant {{OAR025: $limit must be defined as a parameter of type integer in this operation}}
+      parameters:
+        - $ref: '#/components/parameters/limit'
+      responses:
+        "206":
+          description: Ok

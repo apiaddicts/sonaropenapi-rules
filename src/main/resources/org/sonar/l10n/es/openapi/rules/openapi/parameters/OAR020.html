@@ -1,10 +1,10 @@
 <p>Toda operación GET de colección debe definir <code>$expand</code> como parámetro de consulta.</p>
-<p><strong>Se aplica a:</strong> operaciones GET en rutas de colección (rutas que no terminan en un parámetro de ruta como <code>/{id}</code>).</p>
-<p><strong>Excluidos automáticamente:</strong> endpoints de detalle (ruta termina en <code>/{param}</code>), rutas que contienen <code>/me</code>, y rutas de health-check que contienen <code>status</code>, <code>health</code> o <code>ping</code>.</p>
+<p><strong>Se aplica a:</strong> por defecto, todas las operaciones GET en rutas de colección, excepto las rutas excluidas más abajo.</p>
+<p><strong>Excluidos automáticamente:</strong> endpoints de detalle (la ruta termina en <code>/{param}</code>) y, por defecto, las rutas que contienen <code>/me</code>, <code>/health</code>, <code>/ping</code> o <code>/status</code>.</p>
 <p><strong>Parámetros configurables:</strong></p>
 <ul>
-  <li><code>paths</code> — lista de rutas a incluir/excluir separadas por coma (por defecto: <code>/examples</code>).</li>
-  <li><code>pathValidationStrategy</code> — <code>/include</code> o <code>/exclude</code> (por defecto: <code>/include</code>).</li>
+  <li><code>paths</code> — lista de rutas a incluir/excluir separadas por coma (por defecto: <code>/me,/health,/ping,/status</code>).</li>
+  <li><code>pathValidationStrategy</code> — <code>/include</code> o <code>/exclude</code> (por defecto: <code>/exclude</code>).</li>
 </ul>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>

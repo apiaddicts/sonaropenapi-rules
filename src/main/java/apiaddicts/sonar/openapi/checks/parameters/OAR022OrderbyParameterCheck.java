@@ -42,4 +42,9 @@ public class OAR022OrderbyParameterCheck extends AbstractQueryParameterCheck {
     protected String getPathCheckStrategy() {
         return pathCheckStrategy;
     }
+
+    @Override
+    protected boolean requiresPaginatedResponse() {
+        return true;
+    }
 }
