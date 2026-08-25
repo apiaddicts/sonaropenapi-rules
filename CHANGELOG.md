@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.1-beta-4] - 2026-08-25
+
+### Changed
+
+- OAR025 - The shared `apq-collection-query-param-required` function now also validates the parameter type for OAR025, keyed by rule code; when `$limit` is present but its type is not `integer`, a distinct type message is emitted.
+- OAR022 - OrderbyParameterCheck - Now only applies to paginated collections (operations declaring a 206 response); added `no-pagination` fixtures/tests and corrected the HTML docs (real defaults + 206 condition).
+- OAR025 - LimitParameterCheck - Same 206 gating for `$limit`; added `no-pagination` fixtures/tests and corrected the HTML docs.
+- OAR020 - ExpandParameterCheck - Corrected the HTML docs to the real defaults (`/me,/health,/ping,/status`, `/exclude`).
+- OAR021 - ExcludeParameterCheck - Corrected the HTML docs to the real defaults (`/me,/health,/ping,/status`, `/exclude`).
+
+### Fixed
+
+- OAR035 - AuthorizationResponses - Honor an operation-level `security: []` explicit opt-out: the operation is unsecured, so no 401 is required even under global security. Added `security-opt-out` (v3) fixtures and test.
+- OAR096 - ForbiddenResponses - Same `security: []` opt-out fix in the shared `AbstractSecurityResponseCheck`: no 403 required for opted-out operations. Added `security-opt-out` (v3) fixtures and test.
+- OAR014 / OAR015 - ResourceLevel - Issue message now interpolates the configured level values (min-level/max-level for OAR014, max-level-allowed for OAR015).
+- OAR004 / OAR040 - Wso2Scopes - Issue message now includes the configured `pattern` (passed through `AbstractPatternWso2ScopesCheck`).
+- OAR038 - StandardCreateResponse - Issue message now interpolates the configured `data-property` instead of the hardcoded `data`.
+- OAR082 - BinaryOrByteFormat - Issue message now shows the configured `fields-to-apply`.
+- OAR085 - OpenAPIVersion - Issue message now shows the configured `valid-versions`.
+- OAR037 - StringFormat - Fixed false positive on string schemas constrained by `enum`. The check only inspected `format`/`pattern`, so a string with a non-empty `enum` and no `format` was wrongly reported even though the `enum` already constrains the allowed values. When no `format` is declared, a non-empty `enum` now satisfies the rule (like a valid `pattern`); a present-but-invalid `format` still fires even when an `enum` is declared.
+- OAR044 - MediaTypeCheck - Media type parameters now follow RFC 9110 (charset without space, other parameter names, multiple parameters); type/subtype can no longer start with `.`.
+
+
 ## [1.5.1-beta-4] - 2026-08-24
 
 ### Changed
