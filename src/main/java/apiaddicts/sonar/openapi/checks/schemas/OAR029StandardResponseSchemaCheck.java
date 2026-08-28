@@ -173,7 +173,7 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         if ("any".equals(type)) type = TYPE_ANY;
 
         validateProperty(properties, name, type, parent.key()).ifPresent(node -> {
-            boolean isArray = "array".equals(parent.get("type").getTokenValue());
+            boolean isArray = isArrayType(parent.get("type"));
             if (getAllProperties(node).isEmpty() && !isArray) {
                 addIssue(KEY, translate("OAR029.error-required-one-property", name), handleExternalRef.getTrueNode(node.key()));
             }
