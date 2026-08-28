@@ -63,6 +63,32 @@ public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
     public void verifyInV3WithNullScopeDescription() {
         verifyV3("with-null-description");
     }
+
+    @Test
+    public void verifyInV3WithScopesAsMap() {
+        verifyV3("fail-scopes-as-map");
+    }
+    @Test
+    public void verifyInV31WithScopesAsMap() {
+        verifyV31("fail-scopes-as-map");
+    }
+    @Test
+    public void verifyInV32WithScopesAsMap() {
+        verifyV32("fail-scopes-as-map");
+    }
+
+    @Test
+    public void verifyInV3WithRefSecurity() {
+        verifyV3("fail-ref-security");
+    }
+    @Test
+    public void verifyInV31WithRefSecurity() {
+        verifyV31("fail-ref-security");
+    }
+    @Test
+    public void verifyInV32WithRefSecurity() {
+        verifyV32("fail-ref-security");
+    }
     @Test
     public void verifyInV31WithNullScopeDescription() {
         verifyV31("with-null-description");
@@ -70,6 +96,49 @@ public class OAR003DefinedWso2ScopesDescriptionCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV32WithNullScopeDescription() {
         verifyV32("with-null-description");
+    }
+
+    @Test
+    public void verifyInV2WithScopesAsMap() {
+        verifyV2("fail-scopes-as-map");
+    }
+    @Test
+    public void verifyInV2WithRefSecurity() {
+        verifyV2("fail-ref-security");
+    }
+
+    @Test
+    public void verifyInV2WithChainedRefSecurity() {
+        verifyV2("fail-chained-ref-security");
+    }
+    @Test
+    public void verifyInV3WithChainedRefSecurity() {
+        verifyV3("fail-chained-ref-security");
+    }
+    @Test
+    public void verifyInV31WithChainedRefSecurity() {
+        verifyV31("fail-chained-ref-security");
+    }
+    @Test
+    public void verifyInV32WithChainedRefSecurity() {
+        verifyV32("fail-chained-ref-security");
+    }
+
+    @Test
+    public void verifyInV2WithRefScopeDescription() {
+        verifyV2("ref-scope-with-description");
+    }
+    @Test
+    public void verifyInV3WithRefScopeDescription() {
+        verifyV3("ref-scope-with-description");
+    }
+    @Test
+    public void verifyInV31WithRefScopeDescription() {
+        verifyV31("ref-scope-with-description");
+    }
+    @Test
+    public void verifyInV32WithRefScopeDescription() {
+        verifyV32("ref-scope-with-description");
     }
 
     @Override
