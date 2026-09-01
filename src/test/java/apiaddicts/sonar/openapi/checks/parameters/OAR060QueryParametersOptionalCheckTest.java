@@ -99,6 +99,35 @@ public class OAR060QueryParametersOptionalCheckTest extends BaseCheckTest{
     public void verifyRefParamAndQueryWithoutRequiredIgnored() {
         verifyV3("edge-params.yaml");
     }
+    @Test
+    public void verifyV3SharedParamUsedOnlyByExcludedPath() {
+        verifyV3("ref-excluded-path.yaml");
+    }
+    @Test
+    public void verifyV31SharedParamUsedOnlyByExcludedPath() {
+        verifyV31("ref-excluded-path.yaml");
+    }
+    @Test
+    public void verifyV32SharedParamUsedOnlyByExcludedPath() {
+        verifyV32("ref-excluded-path.yaml");
+    }
+    @Test
+    public void verifyV2SharedParamUsedOnlyByExcludedPath() {
+        verifyV2("ref-excluded-path.yaml");
+    }
+    @Test
+    public void verifyV3SharedParamUsedByExcludedAndNonExcludedPaths() {
+        verifyV3("ref-mixed-paths.yaml");
+    }
+    @Test
+    public void verifyV3SharedParamNotExcludedWithoutExclusions() throws Exception {
+        setExclusions("");
+        verifyV3("ref-no-exclusions.yaml");
+    }
+    @Test
+    public void verifyV3ExternalRefParamIsNotResolved() {
+        verifyV3("ref-external.yaml");
+    }
 
     private void setExclusions(String value) throws Exception {
         Field field = OAR060QueryParametersOptionalCheck.class.getDeclaredField("exclusionStr");
