@@ -108,6 +108,57 @@ public class OAR002ValidWso2ScopesCheckTest extends BaseCheckTest {
         verifyV32("without-security");
     }
 
+    @Test
+    public void verifyInV2WithEmptyValueScopes() {
+        verifyV2("with-empty-value-scopes.yaml");
+    }
+    @Test
+    public void verifyInV3WithEmptyValueScopes() {
+        verifyV3("with-empty-value-scopes.yaml");
+    }
+    @Test
+    public void verifyInV31WithEmptyValueScopes() {
+        verifyV31("with-empty-value-scopes.yaml");
+    }
+    @Test
+    public void verifyInV32WithEmptyValueScopes() {
+        verifyV32("with-empty-value-scopes.yaml");
+    }
+
+    @Test
+    public void verifyInV2WithEmptyValueContainer() {
+        verifyV2("with-empty-value-container.yaml");
+    }
+    @Test
+    public void verifyInV3WithEmptyValueContainer() {
+        verifyV3("with-empty-value-container.yaml");
+    }
+    @Test
+    public void verifyInV31WithEmptyValueContainer() {
+        verifyV31("with-empty-value-container.yaml");
+    }
+    @Test
+    public void verifyInV32WithEmptyValueContainer() {
+        verifyV32("with-empty-value-container.yaml");
+    }
+
+    @Test
+    public void verifyInV2WithScopesAsMap() {
+        verifyV2("with-scopes-as-map.yaml");
+    }
+    @Test
+    public void verifyInV3WithScopesAsMap() {
+        verifyV3("with-scopes-as-map.yaml");
+    }
+    @Test
+    public void verifyInV31WithScopesAsMap() {
+        verifyV31("with-scopes-as-map.yaml");
+    }
+    @Test
+    public void verifyInV32WithScopesAsMap() {
+        verifyV32("with-scopes-as-map.yaml");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR002 - ValidWso2Scopes - WSO2 scope definition is wrong", RuleType.VULNERABILITY, Severity.BLOCKER, tags("api-manager", "vulnerability", "wso2"));

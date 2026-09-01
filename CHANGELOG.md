@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0-beta-3] - 2026-09-01
+
+### Fixed
+
+- OAR002 - Detect an attribute or container written with no value (`roles:`), the `~`/`Null`/`NULL` spellings of null, and anchor map-form scope defects on the scope key.
+
 ## [1.6.0-beta-2] - 2026-09-01
 
 ### Changed
