@@ -67,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OAR025 - The shared `apq-collection-query-param-required` function now also validates the parameter type for OAR025, keyed by rule code; when `$limit` is present but its type is not `integer`, a distinct type message is emitted.
 
 
-## [1.5.1-beta-3] - 2026-08-14
+# [1.5.1-beta-3] - 2026-08-14
 
 ### Changed
 
