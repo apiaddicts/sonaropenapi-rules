@@ -38,8 +38,15 @@ public class OAR002ValidWso2ScopesCheck extends AbstractWso2ScopesCheck {
 		JsonNode property = properties.get(propertyName);
 		if (!properties.containsKey(propertyName)) {
 			addIssue(KEY, translate(MESSAGE_PROP, propertyName), scope);
-		} else if(property.isNull() || property.getTokenValue().trim().equals("")) {
+		} else if (isEmpty(property)) {
 			addIssue(KEY, translate(MESSAGE_PROP, propertyName), property.key());
 		}
+	}
+
+	private boolean isEmpty(JsonNode property) {
+		if (property.isNull()) return true;
+		if (property.isArray()) return property.elements().isEmpty();
+		if (property.isObject()) return property.propertyMap().isEmpty();
+		return property.getTokenValue().trim().equals("");
 	}
 }
