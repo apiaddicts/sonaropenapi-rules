@@ -5,9 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0-beta-2] - 2026-08-31
+## [1.6.0-beta-3] - 2026-09-02
 
+### Fixed
+
+- OAR002 - Detect an attribute or container written with no value (`roles:`), the `~`/`Null`/`NULL` spellings of null, and anchor map-form scope defects on the scope key.
+- OAR044 - MediaTypeCheck - Made the media type regex quantifiers possessive to prevent ReDoS with no change to matching.
 - OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
+
+### Added
+
+- OAR060 - QueryParametersOptional - New `path-exclusions` rule property (default `/status`): a comma-separated list of exact, case-sensitive paths the rule must not fire on.
+- OAR116 - PathPattern - New rule: every API path must match a configurable regex `pattern` (default `^/`); unanchored match, dynamic message with the configured pattern.
+
+
+## [1.6.0-beta-2] - 2026-09-01
+
+### Changed
+
+- Bump `sonar-openapi` core to `1.3.0-beta-2`: a document declaring an unsupported `openapi` / `swagger` version is now analysed instead of being silently skipped.
 
 ## [1.6.0-beta-1] - 2026-08-28
 
@@ -60,11 +76,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
 - OAR025 - The shared `apq-collection-query-param-required` function now also validates the parameter type for OAR025, keyed by rule code; when `$limit` is present but its type is not `integer`, a distinct type message is emitted.
 
 
-## [1.5.1-beta-3] - 2026-08-14
+# [1.5.1-beta-3] - 2026-08-14
 
 ### Changed
 

@@ -7,6 +7,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.openapi.OpenApiConfiguration;
 import org.apiaddicts.apitools.dosonarapi.openapi.parser.OpenApiParser;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.YamlGrammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.YamlParser;
 
 import java.net.HttpURLConnection;
@@ -151,6 +152,16 @@ public class JsonNodeUtils {
 
     public static String getLastFetchedContent() {
         return lastFetchedContent;
+    }
+
+    public static JsonNode propertyKey(JsonNode object, String propertyName) {
+        if (object == null || !object.isObject()) return null;
+        JsonNode found = null;
+        for (JsonNode property : object.getJsonChildren(YamlGrammar.BLOCK_PROPERTY, YamlGrammar.FLOW_PROPERTY)) {
+            JsonNode key = property.key();
+            if (!key.isMissing() && propertyName.equals(key.getTokenValue())) found = key;
+        }
+        return found;
     }
 
     public static JsonNode getType(JsonNode schema) {

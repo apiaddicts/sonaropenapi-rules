@@ -1,0 +1,35 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: OAR060 shared param used only by an excluded path
+paths:
+  /status:
+    get:
+      parameters:
+        - $ref: '#/parameters/SharedRefOnly'
+      responses:
+        200:
+          description: Ok
+  /pets:
+    get:
+      parameters:
+        - $ref: '#/parameters/SharedByPets'
+      responses:
+        200:
+          description: Ok
+parameters:
+  SharedRefOnly:
+    in: query
+    name: q
+    type: string
+    required: true
+  SharedByPets:
+    in: query
+    name: p
+    type: string
+    required: true # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+  NeverReferenced:
+    in: query
+    name: unused
+    type: string
+    required: true # Noncompliant {{OAR060: All parameters in query must be defined as optional}}

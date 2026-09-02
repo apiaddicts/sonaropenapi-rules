@@ -16,6 +16,8 @@ import java.util.Set;
 
 public abstract class AbstractWso2ScopesCheck extends BaseCheck {
 
+	private JsonNode scopesKeyNode;
+
 	@Override
 	public Set<AstNodeType> subscribedKinds() {
 		return ImmutableSet.of(OpenApi2Grammar.ROOT, OpenApi3Grammar.ROOT, OpenApi31Grammar.ROOT, OpenApi32Grammar.ROOT);
@@ -26,10 +28,16 @@ public abstract class AbstractWso2ScopesCheck extends BaseCheck {
 		visitV2NV3Node(node);
 	}
 
+	protected JsonNode scopesKeyNode() {
+		return scopesKeyNode;
+	}
+
 	private void visitV2NV3Node(JsonNode node) {
 		JsonNode securityNode = node.get("x-wso2-security");
 		if (!securityNode.isMissing()) securityNode = JsonNodeUtils.resolve(securityNode);
-		JsonNode scopesNode = securityNode.get("apim").get("x-wso2-scopes");
+		JsonNode apimNode = securityNode.get("apim");
+		JsonNode scopesNode = apimNode.get("x-wso2-scopes");
+		scopesKeyNode = JsonNodeUtils.propertyKey(apimNode, "x-wso2-scopes");
 		visitScopesNode(scopesNode);
 		if (scopesNode.isMissing() || scopesNode.isNull()) return;
 		List<JsonNode> rawScopes = scopesNode.isObject()
