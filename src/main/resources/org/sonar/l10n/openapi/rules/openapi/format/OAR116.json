@@ -1,0 +1,13 @@
+{
+  "title": "OAR116 - PathPattern - All API paths must match the configured regular expression",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "format"
+  ],
+  "defaultSeverity": "MAJOR"
+}

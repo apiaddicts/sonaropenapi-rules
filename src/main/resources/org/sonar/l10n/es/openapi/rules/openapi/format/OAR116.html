@@ -1,0 +1,53 @@
+<p>Todas las rutas de la API deben cumplir con la expresión regular configurada. Por defecto el patrón solo exige que cada ruta empiece con "/" (<code>^/</code>); el cliente puede sobrescribirlo con una expresión más estricta.</p>
+<h2>Solución no conforme (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  pets: # Noncompliant {{OAR116: Path does not match the required pattern: ^/}}
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
+<h2>Solución conforme (OpenAPI 2)</h2>
+<pre>
+swagger: "2.0"
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
+<h2>Solución no conforme (OpenAPI 3)</h2>
+<pre>
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  pets: # Noncompliant {{OAR116: Path does not match the required pattern: ^/}}
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>
+<h2>Solución conforme (OpenAPI 3)</h2>
+<pre>
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: "1.0.0"
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: Ok
+</pre>

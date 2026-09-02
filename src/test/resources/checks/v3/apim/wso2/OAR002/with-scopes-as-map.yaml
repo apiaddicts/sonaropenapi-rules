@@ -1,0 +1,21 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets: {}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      read: # Noncompliant {{OAR002: WSO2 scope 'key' is required}}
+        name: read
+        roles: ROLE_READ
+      write:
+        name: write
+        key: write
+        roles: # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+      manage:
+        name: manage
+        key: manage
+        roles: ROLE_MANAGE
