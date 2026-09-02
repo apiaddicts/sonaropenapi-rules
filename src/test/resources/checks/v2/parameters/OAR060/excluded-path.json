@@ -5,13 +5,13 @@
       "title" : "Swagger Petstore"
     },
     "paths" : {
-      "/pets" : {
+      "/status" : {
         "get" : {
           "parameters" : [ {
             "in" : "query",
             "name" : "other",
             "type" : "array",
-            "required" : true, # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+            "required" : true,
             "items" : {
               "type" : "string"
             }
@@ -19,7 +19,7 @@
             "in" : "query",
             "name" : "$filter",
             "type" : "array",
-            "required" : true, # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+            "required" : true,
             "items" : {
               "type" : "string"
             }
