@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0-beta-3] - 2026-09-01
+## [1.6.0-beta-3] - 2026-09-02
 
 ### Fixed
 
 - OAR002 - Detect an attribute or container written with no value (`roles:`), the `~`/`Null`/`NULL` spellings of null, and anchor map-form scope defects on the scope key.
-- 
+- OAR044 - MediaTypeCheck - Made the media type regex quantifiers possessive to prevent ReDoS with no change to matching.
+
 ### Added
 
 - OAR060 - QueryParametersOptional - New `path-exclusions` rule property (default `/status`): a comma-separated list of exact, case-sensitive paths the rule must not fire on.
@@ -46,13 +47,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OAR108 - Accept array-form `type`.
 - OAR115 - Accept array-form `type`.
 - OAR016 / OAR037 / OAR052 / OAR076 - Accept array-form `type` via `AbstractFormatCheck`.
-
-
-## [1.6.0-beta-1] - 2026-08-25
-
-### Fixed
-
-- OAR044 - MediaTypeCheck - Made the media type regex quantifiers possessive to prevent ReDoS with no change to matching.
 
 
 ## [1.5.1] - 2026-08-25
