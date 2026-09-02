@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - OAR002 - Detect an attribute or container written with no value (`roles:`), the `~`/`Null`/`NULL` spellings of null, and anchor map-form scope defects on the scope key.
 - OAR044 - MediaTypeCheck - Made the media type regex quantifiers possessive to prevent ReDoS with no change to matching.
+- OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
 
 ### Added
 
@@ -29,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - OAR002 - Rewrote to validate the full `x-wso2-scopes` definition (null/empty container and missing/null/blank or empty-array/object `name`/`key`/`roles`) via new `apq-wso2-scopes-valid`.
-- OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
 
 ### Added
 
@@ -76,7 +76,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
 - OAR025 - The shared `apq-collection-query-param-required` function now also validates the parameter type for OAR025, keyed by rule code; when `$limit` is present but its type is not `integer`, a distinct type message is emitted.
 
 
