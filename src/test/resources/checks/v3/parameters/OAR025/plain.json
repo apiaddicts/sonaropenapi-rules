@@ -11,19 +11,13 @@
           "in" : "query",
           "name" : "$limit",
           "schema": {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
+            "type" : "integer"
           }
         }, {
           "in" : "query",
           "name" : "$limit",
           "schema": {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
-            }
+            "type" : "integer"
           }
         } ],
         "responses" : {
