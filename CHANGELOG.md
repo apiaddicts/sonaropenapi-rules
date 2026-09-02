@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.0-beta-3] - 2026-09-01
 
+### Fixed
+
+- OAR002 - Detect an attribute or container written with no value (`roles:`), the `~`/`Null`/`NULL` spellings of null, and anchor map-form scope defects on the scope key.
+- 
 ### Added
 
 - OAR060 - QueryParametersOptional - New `path-exclusions` rule property (default `/status`): a comma-separated list of exact, case-sensitive paths the rule must not fire on.
