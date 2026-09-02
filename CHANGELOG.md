@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - OAR060 - QueryParametersOptional - New `path-exclusions` rule property (default `/status`): a comma-separated list of exact, case-sensitive paths the rule must not fire on.
+- OAR116 - PathPattern - New rule: every API path must match a configurable regex `pattern` (default `^/`); unanchored match, dynamic message with the configured pattern.
+
 
 ## [1.6.0-beta-2] - 2026-09-01
 
