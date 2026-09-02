@@ -45,11 +45,11 @@ public class OAR044MediaTypeCheck extends BaseCheck {
   private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
   private static final String RESTRICTED_NAME = "[a-zA-Z0-9][a-zA-Z0-9.!#$&^_+\\-]*";
-  private static final String OWS = "[ \\t]*";
-  private static final String TOKEN = "[a-zA-Z0-9!#$%&'*+\\-.^_`|~]+";
-  private static final String QUOTED_STRING = "\"(?:[^\"\\\\]|\\\\.)*\"";
+  private static final String OWS = "[ \\t]*+";
+  private static final String TCHARS = "[a-zA-Z0-9!#$%&'*+\\-.^_`|~]++";
+  private static final String QUOTED_STRING = "\"(?:[^\"\\\\]|\\\\.)*+\"";
   private static final String PARAMETERS =
-      "(?:" + OWS + ";" + OWS + TOKEN + "=(?:" + TOKEN + "|" + QUOTED_STRING + "))*";
+      "(?:" + OWS + ";" + OWS + TCHARS + "=(?:" + TCHARS + "|" + QUOTED_STRING + "))*+";
 
   @VisibleForTesting
   static final Pattern MIME_TYPE_PATTERN = Pattern.compile(
