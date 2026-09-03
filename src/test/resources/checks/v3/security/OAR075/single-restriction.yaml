@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  title: OAR075 - una sola restriccion basta
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      parameters:
+        - name: soloMinLength
+          in: query
+          schema:
+            type: string
+            minLength: 1
+        - name: soloMaxLength
+          in: query
+          schema:
+            type: string
+            maxLength: 10
+        - name: soloPattern
+          in: query
+          schema:
+            type: string
+            pattern: '^[a-z]+$'
+        - name: soloEnum
+          in: query
+          schema:
+            type: string
+            enum: ['admin', 'user']
+        - name: soloFormat
+          in: query
+          schema:
+            type: string  # Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}
+            format: date
+      responses:
+        '200':
+          description: ok

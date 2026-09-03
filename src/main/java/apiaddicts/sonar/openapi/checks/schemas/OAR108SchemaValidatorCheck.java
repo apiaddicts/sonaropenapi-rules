@@ -2,6 +2,8 @@ package apiaddicts.sonar.openapi.checks.schemas;
 
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
+import com.sonar.sslr.api.TokenType;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.snakeyaml.parser.Tokens;
 import org.sonar.check.Rule;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
@@ -20,6 +22,7 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
 
     public static final String KEY = "OAR108";
     private static final String MESSAGE = "OAR108.error";
+    private static final String TYPE_NULL = "null";
 
     @Override
     public Set<AstNodeType> subscribedKinds() {
@@ -62,10 +65,17 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
 
         schemaTypes.forEach((keyName, expectedType) -> {
             String actualType = exampleTypes.getOrDefault(keyName, "unknown");
-            if (!expectedType.equals(actualType)) {
+            if (!isCompatible(expectedType, actualType)) {
                 addIssue(KEY, translate(MESSAGE), example.key());
             }
         });
+    }
+
+    private boolean isCompatible(String expectedType, String actualType) {
+        if (expectedType == null) return true;
+        if (TYPE_NULL.equals(actualType)) return true;
+        if (expectedType.equals(actualType)) return true;
+        return "number".equals(expectedType) && "integer".equals(actualType);
     }
 
     private Map<String, String> extractSchemaTypes(JsonNode schemaNode) {
@@ -76,9 +86,7 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
             for (Map.Entry<String, JsonNode> entry : propertiesNode.propertyMap().entrySet()) {
                 String propertyName = entry.getKey();
                 JsonNode propertyTypeNode = entry.getValue().get("type");
-                String propertyType = (propertyTypeNode != null && propertyTypeNode.isArray())
-                        ? JsonNodeUtils.getPrimaryType(propertyTypeNode)
-                        : (propertyTypeNode != null ? propertyTypeNode.stringValue() : null);
+                String propertyType = JsonNodeUtils.getPrimaryType(propertyTypeNode);
                 schemaTypes.put(propertyName, propertyType);
             }
         }
@@ -119,22 +127,28 @@ public class OAR108SchemaValidatorCheck extends BaseCheck {
     }
 
     private String determineExampleType(JsonNode node) {
-        String value = node.stringValue().trim();
-
-        if (value.matches("-?\\d+\\.\\d+")) {
-            return "number";
-        } else if (value.matches("-?\\d+")) {
-            return "integer";
-        }
-
-        if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-            return "boolean";
-        }
-
         if (node.isObject()) {
             return "object";
-        } else if (node.isArray()) {
+        }
+        if (node.isArray()) {
             return "array";
+        }
+        if (node.isNull()) {
+            return TYPE_NULL;
+        }
+
+        TokenType tokenType = node.getToken().getType();
+        if (tokenType == Tokens.INTEGER) {
+            return "integer";
+        }
+        if (tokenType == Tokens.FLOAT) {
+            return "number";
+        }
+        if (tokenType == Tokens.TRUE || tokenType == Tokens.FALSE) {
+            return "boolean";
+        }
+        if (tokenType == Tokens.NULL) {
+            return TYPE_NULL;
         }
 
         return "string";
