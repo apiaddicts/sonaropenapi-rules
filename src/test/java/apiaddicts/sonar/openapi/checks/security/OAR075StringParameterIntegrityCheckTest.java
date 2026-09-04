@@ -46,6 +46,16 @@ public class OAR075StringParameterIntegrityCheckTest extends BaseCheckTest {
     public void verifyInV3noRestrictions() {
         verifyV3("no-restrictions");
     }
+
+    @Test
+    public void verifyInV3singleRestriction() {
+        verifyV3("single-restriction.yaml");
+    }
+
+    @Test
+    public void verifyInV31arrayType() {
+        verifyV31("array-type.yaml");
+    }
     @Test
     public void verifyInV31noRestrictions() {
         verifyV31("no-restrictions");
@@ -58,11 +68,11 @@ public class OAR075StringParameterIntegrityCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("parameter_integrity", "minLength,maxLength,enum,format", RuleParamType.STRING);
+        assertParameterProperties("parameter_integrity", "minLength,maxLength,pattern,enum", RuleParamType.STRING);
     }
 
     @Override
     public void verifyRule() {
-        assertRuleProperties("OAR075 - StringParameterIntegrityCheck - String parameters should have minLength, maxLength, pattern (regular expression),format or enum restriction", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
+        assertRuleProperties("OAR075 - StringParameterIntegrityCheck - String parameters should have minLength, maxLength, pattern (regular expression) or enum restriction", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));
     }
 }

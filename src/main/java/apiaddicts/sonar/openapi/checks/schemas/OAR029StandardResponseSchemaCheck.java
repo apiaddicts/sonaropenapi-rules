@@ -16,6 +16,7 @@ import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -128,19 +129,11 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
         Map<String, JsonNode> properties = getAllProperties(schemaNode);
 
         if (rootProperty != null) {
-            if (rootProperty.equals("*")) {
-                rootProperty = properties.entrySet().iterator().next().getKey();
-            }
+            Optional<JsonNode> rootNode = resolveRootNode(properties, schemaNode);
+            if (!rootNode.isPresent()) return;
 
-            validateProperty(properties, rootProperty, "object", schemaNode.key()).ifPresent(node -> {
-                Map<String, JsonNode> allProp = getAllProperties(node);
-                if (allProp.isEmpty()) {
-                    addIssue(KEY, translate("OAR029.error-required-one-property", rootProperty), handleExternalRef.getTrueNode(node.key()));
-                }
-            });
-
-            schemaNode = properties.get(rootProperty);
-            properties = getAllProperties(properties.get(rootProperty));
+            schemaNode = rootNode.get();
+            properties = getAllProperties(schemaNode);
         }
 
         if (successCode) {
@@ -149,6 +142,23 @@ public class OAR029StandardResponseSchemaCheck extends AbstractSchemaCheck {
             validateRootProperties(requiredOnError, properties, schemaNode);
         }
         validateRootProperties(requiredAlways, properties, schemaNode);
+    }
+
+    private Optional<JsonNode> resolveRootNode(Map<String, JsonNode> properties, JsonNode schemaNode) {
+        String currentRootProperty = rootProperty;
+        if ("*".equals(currentRootProperty)) {
+            if (properties.isEmpty()) return Optional.empty();
+            currentRootProperty = properties.entrySet().iterator().next().getKey();
+        }
+
+        final String resolvedRootProperty = currentRootProperty;
+        Optional<JsonNode> rootNode = validateProperty(properties, resolvedRootProperty, "object", schemaNode.key());
+        rootNode.ifPresent(node -> {
+            if (getAllProperties(node).isEmpty()) {
+                addIssue(KEY, translate("OAR029.error-required-one-property", resolvedRootProperty), handleExternalRef.getTrueNode(node.key()));
+            }
+        });
+        return rootNode;
     }
 
     private void validateRootProperties(JSONArray requiredPropsArray, Map<String, JsonNode> properties, JsonNode parentNode) {
