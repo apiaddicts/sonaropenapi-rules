@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0-beta-4] - 2026-09-04
+
+### Fixed
+
+- OAR029 - StandardResponseSchemaCheck - Fixed crash (`NoSuchElementException`) when `rootProperty: "*"` and the schema has no properties; root-node resolution now returns safely instead of throwing.
+- OAR108 - SchemaValidatorCheck - Example type detection rewritten to use the YAML token type instead of string pattern-matching, fixing misclassification of quoted numbers; `integer`/`number` and `null` are now treated as compatible with their schema type.
+- OAR075 - StringParameterIntegrityCheck - Fixed any-of integrity check that required all configured constraints (`allMatch`) instead of at least one (`anyMatch`); default constraints changed from `minLength,maxLength,enum,format` to `minLength,maxLength,pattern,enum`.
+
 ## [1.6.0-beta-3] - 2026-09-02
 
 ### Fixed
