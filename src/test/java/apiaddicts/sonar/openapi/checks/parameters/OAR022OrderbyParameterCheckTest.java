@@ -105,7 +105,8 @@ public class OAR022OrderbyParameterCheckTest extends BaseCheckTest {
 
     @Override
     public void verifyParameters() {
-        assertNumberOfParameters(2);
+        assertNumberOfParameters(3);
+        assertParameterProperties("parameterName", "$orderby", RuleParamType.STRING);
         assertParameterProperties("paths", "/examples", RuleParamType.STRING);
         assertParameterProperties("pathValidationStrategy", "/include", RuleParamType.STRING);
     }
