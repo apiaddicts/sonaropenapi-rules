@@ -13,6 +13,13 @@ public class OAR025LimitParameterCheck extends AbstractQueryParameterCheck {
     private static final String EXPECTED_TYPE = "integer";
 
     @RuleProperty(
+        key = "parameterName",
+        description = "Name of the query parameter to be checked",
+        defaultValue = PARAM_NAME
+    )
+    private String parameterNameOverride = PARAM_NAME;
+
+    @RuleProperty(
         key = "paths",
         description = "List of explicit paths to include/exclude from this rule separated by comma",
         defaultValue = DEFAULT_PATH
@@ -33,6 +40,11 @@ public class OAR025LimitParameterCheck extends AbstractQueryParameterCheck {
             PARAM_NAME,
             false
         );
+    }
+
+    @Override
+    protected String getParameterName() {
+        return parameterNameOverride;
     }
 
     @Override

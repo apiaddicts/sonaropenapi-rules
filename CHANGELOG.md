@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0-beta-5] - 2026-09-09
+
+### Added
+
+- OAR022 - OrderbyParameter - New `parameterName` rule property (default `$orderby`), previously hardcoded; now configurable like OAR020/021/028.
+- OAR025 - LimitParameter - Same as OAR022: new `parameterName` rule property (default `$limit`), previously hardcoded.
+
+## [1.6.0-beta-4] - 2026-09-02
+
+### Fixed
+
+- OAR029 - StandardResponseSchema - Stop the response when a configured `rootProperty` is missing or mistyped, instead of falling through to `getAllProperties(null)` and throwing; the `*` wildcard is resolved into a local rather than written back to the field.
+- OAR108 - SchemaValidator - Derive the example type from the lexer token instead of a regex over its text, and read the schema type through `getPrimaryType`; an untyped property, a null example value and an integer against a `number` schema are no longer mismatches.
+
+### Changed
+
+- OAR075 - StringParameterIntegrity - `allMatch` to `anyMatch`, default `parameter_integrity` to `minLength,maxLength,pattern,enum`, and rule title aligned.
+
+
 ## [1.6.0-beta-3] - 2026-09-02
 
 ### Fixed
