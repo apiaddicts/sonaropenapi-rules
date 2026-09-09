@@ -14,7 +14,7 @@ public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterI
 
     public static final String KEY = "OAR075";
     private static final String MESSAGE = "OAR075.error";
-    private static final String DEFAULT = "minLength,maxLength,enum,format";
+    private static final String DEFAULT = "minLength,maxLength,pattern,enum";
 
     @RuleProperty(
             key = "parameter_integrity",
@@ -38,7 +38,7 @@ public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterI
                 .map(String::trim)
                 .collect(Collectors.toSet());
 
-        boolean ok = checks.stream().allMatch(k->{
+        boolean ok = checks.stream().anyMatch(k->{
             JsonNode n = node.get(k);
             return n != null && !n.isMissing();
         });

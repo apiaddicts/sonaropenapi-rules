@@ -54,6 +54,16 @@ public class OAR108SchemaValidatorCheckTest extends BaseCheckTest {
         verifyV32("invalid");
     }
 
+    @Test
+    public void verifyInV2QuotedNumber() {
+        verifyV2("quoted-number.yaml");
+    }
+
+    @Test
+    public void verifyInV31ArrayType() {
+        verifyV31("array-type.yaml");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR108 - SchemaValidator - Schema does not match the provided example", RuleType.BUG, Severity.MAJOR, tags("schemas"));

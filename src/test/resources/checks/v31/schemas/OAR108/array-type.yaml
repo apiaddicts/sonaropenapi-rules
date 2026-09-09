@@ -1,0 +1,56 @@
+openapi: 3.1.1
+info:
+  title: OAR108 - forma-array de type (JSON Schema 2020-12)
+  version: 1.0.0
+paths:
+  /mismatch:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nullAlFinal:
+                    type: ["integer", "null"]
+                  nullDelante:
+                    type: ["null", "integer"]
+              example: # Noncompliant {{OAR108: Schema does not match the provided example}}
+                nullAlFinal: "mal"
+                nullDelante: "mal"
+  /match:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nullAlFinal:
+                    type: ["integer", "null"]
+                  nullDelante:
+                    type: ["null", "integer"]
+                  cadena:
+                    type: ["string", "null"]
+              example:
+                nullAlFinal: 1
+                nullDelante: 2
+                cadena: "ok"
+  /nulos:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: ["integer", "null"]
+              example:
+                id:
