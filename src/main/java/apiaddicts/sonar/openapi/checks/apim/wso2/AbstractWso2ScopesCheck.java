@@ -10,7 +10,6 @@ import apiaddicts.sonar.openapi.checks.BaseCheck;
 import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,20 +32,12 @@ public abstract class AbstractWso2ScopesCheck extends BaseCheck {
 	}
 
 	private void visitV2NV3Node(JsonNode node) {
-		JsonNode securityNode = node.get("x-wso2-security");
-		if (!securityNode.isMissing()) securityNode = JsonNodeUtils.resolve(securityNode);
-		JsonNode apimNode = securityNode.get("apim");
-		JsonNode scopesNode = apimNode.get("x-wso2-scopes");
-		scopesKeyNode = JsonNodeUtils.propertyKey(apimNode, "x-wso2-scopes");
+		JsonNode apimNode = JsonNodeUtils.getWso2ApimNode(node);
+		JsonNode scopesNode = apimNode.get(JsonNodeUtils.WSO2_SCOPES);
+		scopesKeyNode = JsonNodeUtils.propertyKey(apimNode, JsonNodeUtils.WSO2_SCOPES);
 		visitScopesNode(scopesNode);
 		if (scopesNode.isMissing() || scopesNode.isNull()) return;
-		List<JsonNode> rawScopes = scopesNode.isObject()
-			? new ArrayList<>(scopesNode.propertyMap().values())
-			: scopesNode.elements();
-		List<JsonNode> scopes = new ArrayList<>(rawScopes.size());
-		for (JsonNode scope : rawScopes) {
-			scopes.add(JsonNodeUtils.resolve(scope));
-		}
+		List<JsonNode> scopes = JsonNodeUtils.getWso2Scopes(scopesNode);
 		visitScopes(scopes);
 		scopes.forEach(this::visitScope);
 	}

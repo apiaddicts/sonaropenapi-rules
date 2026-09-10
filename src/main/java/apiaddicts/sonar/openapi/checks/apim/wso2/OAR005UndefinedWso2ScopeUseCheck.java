@@ -2,13 +2,11 @@ package apiaddicts.sonar.openapi.checks.apim.wso2;
 
 import com.sonar.sslr.api.AstNode;
 import org.sonar.check.Rule;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static java.util.Objects.isNull;
 
 @Rule(key = OAR005UndefinedWso2ScopeUseCheck.KEY)
 public class OAR005UndefinedWso2ScopeUseCheck
@@ -26,18 +24,13 @@ public class OAR005UndefinedWso2ScopeUseCheck
 
     private Set<String> getScopes(JsonNode root) {
 
-        JsonNode scopes = root
-                .get("x-wso2-security")
-                .get("apim")
-                .get("x-wso2-scopes");
+        JsonNode scopes = JsonNodeUtils
+                .getWso2ApimNode(root)
+                .get(JsonNodeUtils.WSO2_SCOPES);
 
-        if (scopes.isMissing() || scopes.isNull()) {
-            return Collections.emptySet();
-        }
-
-        return scopes.elements().stream()
+        return JsonNodeUtils.getWso2Scopes(scopes).stream()
                 .map(node -> node.get("name"))
-                .filter(node -> !node.isMissing() && !node.isNull())
+                .filter(node -> !node.isMissing() && !JsonNodeUtils.isNullScalar(node))
                 .map(AstNode::getTokenValue)
                 .collect(Collectors.toSet());
     }
@@ -49,11 +42,7 @@ public class OAR005UndefinedWso2ScopeUseCheck
 
         if (scopeNode.isMissing()) return;
 
-        String scope = scopeNode.isNull()
-                ? null
-                : scopeNode.getTokenValue();
-
-        if (isNull(scope) || !definedScopes.contains(scope)) {
+        if (JsonNodeUtils.isNullScalar(scopeNode) || !definedScopes.contains(scopeNode.getTokenValue())) {
             addIssue(KEY, translate(MESSAGE), scopeNode);
         }
     }

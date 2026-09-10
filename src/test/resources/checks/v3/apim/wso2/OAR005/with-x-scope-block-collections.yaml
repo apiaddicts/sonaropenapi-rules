@@ -1,0 +1,25 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /a:
+    get:
+      responses:
+        200:
+          description: Ok
+      x-scope:
+        - scope_one # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    put:
+      responses:
+        200:
+          description: Ok
+      x-scope:
+        name: scope_one # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - name: scope_one
+        key: scope_one
+        roles: role_one

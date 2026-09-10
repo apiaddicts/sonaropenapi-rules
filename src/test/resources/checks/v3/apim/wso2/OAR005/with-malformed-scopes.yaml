@@ -1,0 +1,57 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /a:
+    get:
+      responses:
+        200:
+          description: Ok
+      x-scope: scope_one
+    put:
+      responses:
+        200:
+          description: Ok
+      x-scope: no_name # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    post:
+      responses:
+        200:
+          description: Ok
+      x-scope: null_name # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    delete:
+      responses:
+        200:
+          description: Ok
+      x-scope: empty_name # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    options:
+      responses:
+        200:
+          description: Ok
+      x-scope: plain_scalar_element # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    head:
+      responses:
+        200:
+          description: Ok
+      x-scope: array_element # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - name: scope_one
+        key: scope_one
+        roles: role_one
+        description: A well formed scope
+      - key: no_name
+        roles: role_two
+        description: No name property at all
+      - name: null
+        key: null_name
+        roles: role_three
+        description: Null name
+      - name:
+        key: empty_name
+        roles: role_four
+        description: Name with no value
+      - plain_scalar_element
+      - [array_element]

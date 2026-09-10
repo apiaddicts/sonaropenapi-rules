@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0-beta-6] - 2026-09-10
+
+### Fixed
+
+- OAR005 - UndefinedWso2ScopeUse - Resolve a `$ref` on `x-wso2-security` and on each individual scope, and iterate map-form `x-wso2-scopes` in addition to the array form (shared with `AbstractWso2ScopesCheck` through new `JsonNodeUtils` helpers), so an operation whose `x-scope` names a scope declared behind a reference or under a mapping key is no longer reported. Also accept the `~`/`Null`/`NULL` null spellings for the operation's `x-scope` (previously only the lowercase `null` scalar was treated as null). Matching remains on the scope `name` only, never on `key`.
+- OAR009 / OAR010 - DefaultRequestMediaType / DefaultResponseMediaType - `AbstractDefaultMediaTypeCheck` now compares `default-media-type` and the document's actual media types case-insensitively (matching Spectral's `apq-response-media-type`), so a spec written with mixed-case media types (e.g. `Application/JSON`) or a `default-media-type` property configured with different casing no longer diverges from Spectral.
+- OAR007 - UndefinedResponseMediaType - Fixed the rule description: paragraph 1 wrongly stated "the request data formats must be defined" and referenced the `"consumes"` keyword (copy-pasted from OAR006); corrected to describe response media types and the `"produces"` keyword, matching the already-correct Spanish translation and the rest of the description.
+
 ## [1.6.0-beta-5] - 2026-09-09
 
 ### Added
