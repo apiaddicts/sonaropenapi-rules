@@ -2,6 +2,7 @@ package apiaddicts.sonar.openapi.checks.format;
 
 import apiaddicts.sonar.openapi.checks.BaseCheck;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isExternalRef;
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isObjectType;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.resolve;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
@@ -58,7 +59,7 @@ public class OAR115VerifyRequiredFields extends BaseCheck {
 
     public void verifyTypeObject(JsonNode node){
         JsonNode typeNode = node.get("type");
-        if (typeNode != null && "object".equals(typeNode.getTokenValue())) {
+        if (typeNode != null && isObjectType(typeNode)) {
             validateRequiredFields(node);
         }
     }

@@ -1,0 +1,24 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OAR060 external parameter ref
+paths:
+  /status:
+    get:
+      parameters:
+        - $ref: './common.yaml#/components/parameters/External'
+      responses:
+        "200":
+          description: OK
+  /pets:
+    get:
+      parameters:
+        - $ref: './common.yaml#/components/parameters/External'
+        - in: query
+          name: inline
+          required: true # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK

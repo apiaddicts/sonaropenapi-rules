@@ -1,4 +1,8 @@
 <p>Todos los parámetros en query deben definirse como opcionales</p>
+<p><strong>Parámetros configurables:</strong></p>
+<ul>
+  <li><code>path-exclusions</code> — lista separada por comas de rutas exactas (sensibles a mayúsculas) en las que esta regla no debe aplicarse (por defecto: <code>/status</code>). La coincidencia es exacta: <code>/status</code> excluye <code>/status</code>, pero no <code>/status/health</code> ni <code>/statuses</code>.</li>
+</ul>
 <h2>Ejemplo de código no compatible (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"

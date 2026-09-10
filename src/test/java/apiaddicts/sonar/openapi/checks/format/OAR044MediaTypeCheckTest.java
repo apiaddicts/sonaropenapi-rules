@@ -6,6 +6,8 @@ import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
 import apiaddicts.sonar.openapi.BaseCheckTest;
 
+import static org.junit.Assert.assertFalse;
+
 public class OAR044MediaTypeCheckTest extends BaseCheckTest {
 
     @Before
@@ -34,6 +36,13 @@ public class OAR044MediaTypeCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV32() {
         verifyV32("media-type");
+    }
+
+    @Test(timeout = 2000)
+    public void verifyNoBacktrackingOnLongInput() {
+        String malicious = "application/json;x=\"" + "a".repeat(500_000);
+        assertFalse(OAR044MediaTypeCheck.MEDIA_RANGE_PATTERN.matcher(malicious).matches());
+        assertFalse(OAR044MediaTypeCheck.MIME_TYPE_PATTERN.matcher(malicious).matches());
     }
 
     @Override

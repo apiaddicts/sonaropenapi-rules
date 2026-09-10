@@ -1,0 +1,33 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : { }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : {
+        "read" : {
+          "name" : "read",
+          "key" : "read",
+          "roles" : "ROLE_READ",
+          "description" : "Allows users to read the catalogue"
+        },
+        "write" : {
+          "$ref" : "#/x-wso2-definitions/writeScope"
+        }
+      }
+    }
+  },
+  "x-wso2-definitions" : {
+    "writeScope" : {
+      "name" : "write",
+      "key" : "write",
+      "roles" : "ROLE_WRITE",
+      "description" : "Allows users to write the catalogue"
+    }
+  }
+}

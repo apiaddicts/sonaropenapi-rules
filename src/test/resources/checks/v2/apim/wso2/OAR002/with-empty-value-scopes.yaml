@@ -1,0 +1,38 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets: {}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - name: read
+        key: read
+        roles: # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+      - name: write
+        key: # Noncompliant {{OAR002: WSO2 scope 'key' is required}}
+        roles: ROLE_WRITE
+      - name: # Noncompliant {{OAR002: WSO2 scope 'name' is required}}
+        key: view
+        roles: ROLE_VIEW
+      - name: tilde
+        key: tilde
+        roles: ~ # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+      - name: capitalised
+        key: capitalised
+        roles: Null # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+      - name: uppercase
+        key: uppercase
+        roles: NULL # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}
+      - name: quoted-null
+        key: quoted-null
+        roles: "null"
+      - name: quoted-tilde
+        key: quoted-tilde
+        roles: "~"
+      - name: duplicated
+        key: duplicated
+        roles: ROLE_FIRST
+        roles: # Noncompliant {{OAR002: WSO2 scope 'roles' is required}}

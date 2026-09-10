@@ -1,4 +1,8 @@
 <p>All parameters in query must be defined as optional</p>
+<p><strong>Configurable parameters:</strong></p>
+<ul>
+  <li><code>path-exclusions</code> — comma-separated list of exact, case-sensitive paths this rule must not fire on (default: <code>/status</code>). Matching is exact: <code>/status</code> excludes <code>/status</code> but neither <code>/status/health</code> nor <code>/statuses</code>.</li>
+</ul>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
   swagger: "2.0"

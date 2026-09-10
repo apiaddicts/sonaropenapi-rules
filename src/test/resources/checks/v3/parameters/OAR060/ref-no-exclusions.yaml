@@ -1,0 +1,20 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OAR060 shared param with no exclusions configured
+paths:
+  /status:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/SharedRefOnly'
+      responses:
+        "200":
+          description: OK
+components:
+  parameters:
+    SharedRefOnly:
+      in: query
+      name: q
+      required: true # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+      schema:
+        type: string

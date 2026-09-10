@@ -1,0 +1,34 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OAR060 shared param used only by an excluded path
+paths:
+  /status:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/SharedRefOnly'
+      responses:
+        "200":
+          description: OK
+    parameters:
+      - $ref: '#/components/parameters/SharedPathLevel'
+components:
+  parameters:
+    SharedRefOnly:
+      in: query
+      name: q
+      required: true
+      schema:
+        type: string
+    SharedPathLevel:
+      in: query
+      name: p
+      required: true
+      schema:
+        type: string
+    NeverReferenced:
+      in: query
+      name: unused
+      required: true # Noncompliant {{OAR060: All parameters in query must be defined as optional}}
+      schema:
+        type: string

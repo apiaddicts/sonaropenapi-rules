@@ -35,6 +35,11 @@ public class OAR082BinaryOrByteFormatCheckTest extends BaseCheckTest {
         verifyV32("valid-format");
     }
 
+    @Test
+    public void verifyArrayFormTypeV31() {
+        verifyV31("array-type-format.yaml");
+    }
+
     @Override
     public void verifyRule() {
         assertRuleProperties("OAR082 - BinaryOrByte - The string properties of the specified parameters must define a byte or binary format.", RuleType.VULNERABILITY, Severity.MAJOR, tags("safety"));

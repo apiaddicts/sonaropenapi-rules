@@ -7,6 +7,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import apiaddicts.sonar.openapi.checks.BaseCheck;
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
 import java.util.Set;
@@ -25,7 +26,7 @@ public abstract class AbstractFormatCheck extends BaseCheck {
 
     private void visitV2Node(JsonNode node) {
         JsonNode typeNode = node.get("type");
-        String type = typeNode.getTokenValue();
+        String type = JsonNodeUtils.getPrimaryType(typeNode);
         JsonNode formatNode = node.get("format");
         if (formatNode.isMissing()) {
             validate(type, null, typeNode, node);

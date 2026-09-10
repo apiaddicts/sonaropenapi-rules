@@ -13,6 +13,8 @@ import org.apiaddicts.apitools.dosonarapi.api.v31.OpenApi31Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import apiaddicts.sonar.openapi.utils.JsonNodeUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -57,11 +59,13 @@ public class OAR082BinaryOrByteFormatCheck extends BaseCheck {
             if (fieldNode == null || fieldNode.isMissing()) continue;
 
             JsonNode typeNode = fieldNode.get("type");
-            String type = typeNode.isMissing() ? null : typeNode.getTokenValue();
 
-            if ("string".equals(type)) {
+            if (JsonNodeUtils.isStringType(typeNode)) {
                 String format = fieldNode.get("format").getTokenValue();
-                if (!"binary".equals(format) && !"byte".equals(format)) {
+                boolean hasBinaryFormat = "binary".equals(format) || "byte".equals(format);
+                boolean hasContentEncoding = !fieldNode.get("contentEncoding").isMissing()
+                        || !fieldNode.get("contentMediaType").isMissing();
+                if (!hasBinaryFormat && !hasContentEncoding) {
                     addIssue(KEY, translate(MESSAGE, fieldsApply), typeNode.key());
                 }
             }

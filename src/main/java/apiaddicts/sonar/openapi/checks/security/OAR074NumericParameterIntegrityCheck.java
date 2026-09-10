@@ -3,6 +3,8 @@ package apiaddicts.sonar.openapi.checks.security;
 import org.sonar.check.Rule;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
 
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isType;
+
 @Rule(key = OAR074NumericParameterIntegrityCheck.KEY)
 public class OAR074NumericParameterIntegrityCheck extends AbstractTypedParameterIntegrityCheck {
 
@@ -15,9 +17,7 @@ public class OAR074NumericParameterIntegrityCheck extends AbstractTypedParameter
 
     @Override
     protected boolean isTargetType(JsonNode typeNode) {
-        if(typeNode == null || typeNode.isMissing()) return false;
-        String t = typeNode.getTokenValue();
-        return "integer".equals(t) || "number".equals(t) || "float".equals(t);
+        return isType(typeNode, "integer") || isType(typeNode, "number") || isType(typeNode, "float");
     }
 
     @Override

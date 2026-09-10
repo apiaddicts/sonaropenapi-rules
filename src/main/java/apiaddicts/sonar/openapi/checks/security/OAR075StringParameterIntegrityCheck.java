@@ -7,12 +7,14 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isStringType;
+
 @Rule(key = OAR075StringParameterIntegrityCheck.KEY)
 public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterIntegrityCheck {
 
     public static final String KEY = "OAR075";
     private static final String MESSAGE = "OAR075.error";
-    private static final String DEFAULT = "minLength,maxLength,enum,format";
+    private static final String DEFAULT = "minLength,maxLength,pattern,enum";
 
     @RuleProperty(
             key = "parameter_integrity",
@@ -27,7 +29,7 @@ public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterI
 
     @Override
     protected boolean isTargetType(JsonNode typeNode) {
-        return typeNode != null && !typeNode.isMissing() && "string".equals(typeNode.getTokenValue());
+        return isStringType(typeNode);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class OAR075StringParameterIntegrityCheck extends AbstractTypedParameterI
                 .map(String::trim)
                 .collect(Collectors.toSet());
 
-        boolean ok = checks.stream().allMatch(k->{
+        boolean ok = checks.stream().anyMatch(k->{
             JsonNode n = node.get(k);
             return n != null && !n.isMissing();
         });

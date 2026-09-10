@@ -1,0 +1,15 @@
+openapi: "3.2.0"
+info:
+  version: 1.0.0
+  title: Sample API
+paths:
+  /v1/pets:
+    get:
+      responses:
+        "200":
+          description: Ok
+  /pets: # Noncompliant {{OAR116: Path does not match the required pattern: ^/v[0-9]+}}
+    get:
+      responses:
+        "200":
+          description: Ok

@@ -1,0 +1,24 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: OAR060 edge params
+paths:
+  /pets:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/SomeRef'
+        - in: query
+          name: noRequiredFlag
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+components:
+  parameters:
+    SomeRef:
+      in: header
+      name: X-Ref
+      required: false
+      schema:
+        type: string

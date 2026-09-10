@@ -1,0 +1,45 @@
+openapi: 3.1.1
+info:
+  title: OAR075 - forma-array de type (JSON Schema 2020-12)
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      parameters:
+        - name: nullAlFinalSinRestricciones
+          in: query
+          schema:
+            type: ["string", "null"]  # Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}
+        - name: nullDelanteSinRestricciones
+          in: query
+          schema:
+            type: ["null", "string"]  # Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}
+        - name: arrayDeUnElemento
+          in: query
+          schema:
+            type: ["string"]  # Noncompliant {{OAR075: String parameters should have minLength, maxLength, pattern (regular expression), or enum restriction that are defined in the properties}}
+        - name: nullAlFinalConMinLength
+          in: query
+          schema:
+            type: ["string", "null"]
+            minLength: 1
+        - name: nullDelanteConEnum
+          in: query
+          schema:
+            type: ["null", "string"]
+            enum: ['a', 'b']
+        - name: soloNull
+          in: query
+          schema:
+            type: ["null"]
+        - name: nullEscalar
+          in: query
+          schema:
+            type: "null"
+        - name: numerico
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        '200':
+          description: ok

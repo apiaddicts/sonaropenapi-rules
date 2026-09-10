@@ -7,6 +7,7 @@ import org.apiaddicts.apitools.dosonarapi.api.v32.OpenApi32Grammar;
 import org.apiaddicts.apitools.dosonarapi.openapi.OpenApiConfiguration;
 import org.apiaddicts.apitools.dosonarapi.openapi.parser.OpenApiParser;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.JsonNode;
+import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.YamlGrammar;
 import org.apiaddicts.apitools.dosonarapi.sslr.yaml.grammar.YamlParser;
 
 import java.net.HttpURLConnection;
@@ -17,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import com.sonar.sslr.api.AstNodeType;
@@ -45,17 +47,21 @@ public class JsonNodeUtils {
     private static String lastFetchedContent = "";
 
     public static JsonNode resolve(JsonNode original) {
-
-        if (original.isRef()) {
-            String ref = original.get("$ref").getTokenValue();
+        JsonNode current = original;
+        Set<String> visitedRefs = new HashSet<>();
+        while (current.isRef()) {
+            String ref = current.get("$ref").getTokenValue();
             if (ref.startsWith("#")) {
-                return original.resolve();
+                if (!visitedRefs.add(ref)) {
+                    return current;
+                }
+                current = current.resolve();
             } else {
                 JsonNode resolved = resolveExternalRef(ref);
-                return resolved != null ? resolved : original;
+                return resolved != null ? resolved : current;
             }
         }
-        return original;
+        return current;
     }
 
     public static boolean isExternalRef (JsonNode original){
@@ -148,6 +154,16 @@ public class JsonNodeUtils {
         return lastFetchedContent;
     }
 
+    public static JsonNode propertyKey(JsonNode object, String propertyName) {
+        if (object == null || !object.isObject()) return null;
+        JsonNode found = null;
+        for (JsonNode property : object.getJsonChildren(YamlGrammar.BLOCK_PROPERTY, YamlGrammar.FLOW_PROPERTY)) {
+            JsonNode key = property.key();
+            if (!key.isMissing() && propertyName.equals(key.getTokenValue())) found = key;
+        }
+        return found;
+    }
+
     public static JsonNode getType(JsonNode schema) {
         return schema.get(TYPE);
     }
@@ -184,8 +200,26 @@ public class JsonNodeUtils {
         return isType(schemaNode, TYPE_BOOLEAN);
     }
 
+    public static String getPrimaryType(JsonNode typeNode) {
+        if (typeNode == null || typeNode.isMissing()) return null;
+        if (typeNode.isArray()) {
+            for (JsonNode element : typeNode.elements()) {
+                String value = element.getTokenValue();
+                if (value != null && !"null".equals(value)) return value;
+            }
+            return null;
+        }
+        return typeNode.getTokenValue();
+    }
+
     public static boolean isType(JsonNode type, String name) {
-        return TYPE_ANY.equals(name) || name.equals(type.getTokenValue());
+        if (TYPE_ANY.equals(name)) return true;
+        if (type == null || type.isMissing()) return false;
+        if (name.equals(type.getTokenValue())) return true;
+        for (JsonNode element : type.elements()) {
+            if (name.equals(element.getTokenValue())) return true;
+        }
+        return false;
     }
 
     public static boolean isOperation(JsonNode node) {

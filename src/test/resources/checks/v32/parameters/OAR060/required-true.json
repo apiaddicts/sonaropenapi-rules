@@ -5,7 +5,7 @@
       "title" : "Swagger Petstore"
     },
     "paths" : {
-      "/status" : {
+      "/pets" : {
         "get" : {
           "parameters" : [ {
             "in" : "query",

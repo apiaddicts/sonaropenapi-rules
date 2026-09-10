@@ -51,6 +51,21 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyValidOpenApiVersion304InV3() {
+        verifyV3("valid-openapi-version-304.yaml");
+    }
+
+    @Test
+    public void verifyValidOpenApiVersion311InV31() {
+        verifyV31("valid-openapi-version-311.yaml");
+    }
+
+    @Test
+    public void verifyValidOpenApiVersion312InV31() {
+        verifyV31("valid-openapi-version-312.yaml");
+    }
+
+    @Test
     public void verifyInvalidOpenApiVersionInV3() {
         verifyV3("invalid-openapi-version");
     }
@@ -137,6 +152,6 @@ public class OAR085OpenAPIVersionCheckTest extends BaseCheckTest {
     @Override
     public void verifyParameters() {
         assertNumberOfParameters(1);
-        assertParameterProperties("valid-versions", "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.1.0,3.2.0", RuleParamType.STRING);
+        assertParameterProperties("valid-versions", "2.0,3.0.0,3.0.1,3.0.2,3.0.3,3.0.4,3.1.0,3.1.1,3.1.2,3.2.0", RuleParamType.STRING);
     }
 }
