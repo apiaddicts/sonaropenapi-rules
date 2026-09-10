@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-09-10
+
+Recopilado de `1.6.0-beta-1` a `1.6.0-beta-5`.
+
+### Added
+
+- OAR060 - QueryParametersOptional - New `path-exclusions` rule property (default `/status`): a comma-separated list of exact, case-sensitive paths the rule must not fire on.
+- OAR116 - PathPattern - New rule: every API path must match a configurable regex `pattern` (default `^/`); unanchored match, dynamic message with the configured pattern.
+- OAR085 - Accept `3.0.4`, `3.1.1`, `3.1.2` in the default valid-versions.
+- OAR022 - OrderbyParameter - New `parameterName` rule property (default `$orderby`), previously hardcoded; now configurable like OAR020/021/028.
+- OAR025 - LimitParameter - Same as OAR022: new `parameterName` rule property (default `$limit`), previously hardcoded.
+
+### Changed
+
+- Bump `sonar-openapi` core to `1.3.0-beta-2`: parses `3.0.4`/`3.1.1`/`3.1.2`, and a document declaring an unsupported `openapi`/`swagger` version is now analysed instead of being silently skipped.
+- `JsonNodeUtils` - `isType`/`getPrimaryType` accept array-form `type` (OpenAPI 3.1).
+- OAR082 - Accept array-form `type`; accept `contentEncoding`/`contentMediaType` as byte/binary.
+- OAR029 / OAR070 / OAR074 / OAR075 / OAR108 / OAR115 - Accept array-form `type`.
+- OAR016 / OAR037 / OAR052 / OAR076 - Accept array-form `type` via `AbstractFormatCheck`.
+- OAR075 - StringParameterIntegrityCheck - Default `parameter_integrity` constraints changed from `minLength,maxLength,enum,format` to `minLength,maxLength,pattern,enum`.
+
+### Fixed
+
+- OAR002 - Rewrote to validate the full `x-wso2-scopes` definition (null/empty container and missing/null/blank or empty-array/object `name`/`key`/`roles`) via new `apq-wso2-scopes-valid`; also detects an attribute or container written with no value (`roles:`), the `~`/`Null`/`NULL` spellings of null, and anchors map-form scope defects on the scope key.
+- OAR044 - MediaTypeCheck - Made the media type regex quantifiers possessive to prevent ReDoS with no change to matching.
+- OAR003 - Resolve a `$ref` on `x-wso2-security` and iterate map-form `x-wso2-scopes` (shared `AbstractWso2ScopesCheck`), so referenced and mapping-keyed scopes are detected.
+- OAR029 - StandardResponseSchemaCheck - Fixed crash (`NoSuchElementException`) when `rootProperty: "*"` and the schema has no properties; root-node resolution now returns safely instead of throwing.
+- OAR108 - SchemaValidatorCheck - Example type detection rewritten to use the YAML token type instead of string pattern-matching, fixing misclassification of quoted numbers; `integer`/`number` and `null` are now treated as compatible with their schema type.
+- OAR075 - StringParameterIntegrityCheck - Fixed any-of integrity check that required all configured constraints (`allMatch`) instead of at least one (`anyMatch`).
+
+
+
 ## [1.6.0-beta-5] - 2026-09-09
 
 ### Added
