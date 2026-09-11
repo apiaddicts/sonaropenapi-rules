@@ -10,14 +10,14 @@ paths:
   /users:
     get:
       responses:
-        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+        200: # Noncompliant {{OAR031: Response must have an example defined}}
           description: OK
           schema:
             type: array
             items:
               $ref: '#/definitions/User'
         400:
-          $ref: >- # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+          $ref: >- # Noncompliant {{OAR031: Response must have an example defined}}
             http://localhost:18089/OAR031.yaml#/components/responses/server_error_response
   /users/{userId}:
     get:
@@ -27,7 +27,7 @@ paths:
           required: true
           type: string
       responses:
-        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+        200: # Noncompliant {{OAR031: Response must have an example defined}}
           description: A single user
           schema:
             $ref: '#/definitions/User'
@@ -41,8 +41,10 @@ definitions:
       name:
         type: string
         example: "John"
+  # `Error` is intentionally never referenced by any path: it exercises the
+  # orphan-schema exclusion (property-level checks only cover reachable schemas).
   Error:
     type: object
     properties:
-      message: # Noncompliant {{OAR031: Properties must have an example defined}}
+      message:
         type: string

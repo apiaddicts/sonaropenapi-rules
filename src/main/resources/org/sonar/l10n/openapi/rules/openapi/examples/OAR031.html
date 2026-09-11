@@ -1,6 +1,6 @@
 <p>The examples can help developers to understand the response data structure and representation.</p>
 <p>Examples are validated as four <b>independent</b> levels: <b>response</b>, <b>request body</b>, <b>parameter</b> and <b>property</b>. The response, request-body and parameter levels require an example declared at the media-type or schema <b>root</b>; examples nested inside individual properties do not satisfy them. <code>204</code> responses are excluded.</p>
-<p>Each level can be enabled or disabled independently with the rule parameters <code>validate-response</code>, <code>validate-request-body</code>, <code>validate-parameter</code> and <code>validate-property</code> (all enabled by default).</p>
+<p>Each level can be enabled or disabled independently with the rule parameters <code>validateResponse</code>, <code>validateRequestBody</code>, <code>validateParameter</code> and <code>validateProperty</code> (all enabled by default).</p>
 <h2>Noncompliant Code Example (OpenAPI 2)</h2>
 <pre>
 swagger: "2.0"
@@ -87,7 +87,7 @@ paths:
   /pets:
     get:
       responses:
-        206: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Responses must have one or more examples defined}}</span>
+        206: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Response must have an example defined}}</span>
           description: Pet list
           content:
             application/json:
@@ -98,14 +98,14 @@ components:
     pet:
       type: object
       properties:
-        name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
+        name: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Property 'name' is missing an example.}}</span>
           type: string
-        type: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
+        type: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Property 'type' is missing an example.}}</span>
           type: string
     pets:
       type: object
       properties:
-        size: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Properties must have an example defined}}</span>
+        size: <span class="error-info" style="color: #FD8E18;"># Noncompliant {{OAR031: Property 'size' is missing an example.}}</span>
           type: integer
         pets:
           type: array

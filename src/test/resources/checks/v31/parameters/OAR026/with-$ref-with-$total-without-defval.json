@@ -16,7 +16,7 @@
           }
         }
       },
-      "total" : { # Noncompliant {{OAR026: The $total parameter default value should be false}}
+      "total" : {
         "in" : "query",
         "name" : "$total",
         "schema": {
