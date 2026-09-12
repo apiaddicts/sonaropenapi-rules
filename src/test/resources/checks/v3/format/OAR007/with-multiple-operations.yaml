@@ -1,0 +1,31 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json: {}
+        '204':
+          description: No Content
+    post:
+      responses:
+        '201': # Noncompliant {{OAR007: Section content is mandatory}}
+          description: Created
+  /owners:
+    put:
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/xml: {}
+        '400': # Noncompliant {{OAR007: Section content is mandatory}}
+          description: Bad Request
+    delete:
+      responses:
+        '204':
+          description: No Content

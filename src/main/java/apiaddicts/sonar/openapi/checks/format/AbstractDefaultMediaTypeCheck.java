@@ -41,6 +41,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
             defaultValue = DEFAULT_MEDIA_TYPE_VALUE)
     public String defaultMediaType = DEFAULT_MEDIA_TYPE_VALUE;
 
+    private String defaultMediaTypeLower;
     private boolean globalSupportsDefaultMimeType = false;
 
     protected AbstractDefaultMediaTypeCheck(String key, String section, String message) {
@@ -60,6 +61,7 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
                 .map(String::trim)
                 .map(String::toLowerCase)
                 .collect(Collectors.toSet());
+        defaultMediaTypeLower = defaultMediaType.toLowerCase();
         globalSupportsDefaultMimeType = (root.getType() instanceof OpenApi2Grammar) && supportsDefaultMimeTypeV2(root);
     }
 
@@ -141,18 +143,21 @@ public abstract class AbstractDefaultMediaTypeCheck extends BaseCheck {
 
         List<String> mimeTypes = consumes.elements().stream()
                 .map(AstNode::getTokenValue)
+                .map(String::toLowerCase)
                 .collect(Collectors.toList());
 
-        return mimeTypes.stream().anyMatch(mediaTypeExceptions::contains) || 
-              mimeTypes.stream().anyMatch(defaultMediaType::equals);
+        return mimeTypes.stream().anyMatch(mediaTypeExceptions::contains) ||
+              mimeTypes.stream().anyMatch(defaultMediaTypeLower::equals);
     }
 
     private boolean supportsDefaultMimeTypeV3(JsonNode content) {
         if (content.isMissing() || content.isNull()) return false;
 
-        Set<String> keys = content.propertyMap().keySet();
+        Set<String> keys = content.propertyMap().keySet().stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toSet());
 
         return keys.stream().anyMatch(mediaTypeExceptions::contains) ||
-              keys.stream().anyMatch(defaultMediaType::equals);
+              keys.stream().anyMatch(defaultMediaTypeLower::equals);
     }
 }

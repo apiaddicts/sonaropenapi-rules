@@ -1,5 +1,5 @@
 {
-    "title": "OAR043 - ParsingError - El archivo no puede ser analizado",
+    "title": "OAR043 - ParsingError - El archivo no puede ser analizado o no supera la validación estructural",
     "type": "BUG",
     "status": "ready",
     "remediation": {

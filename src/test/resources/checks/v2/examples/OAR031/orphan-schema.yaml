@@ -1,0 +1,28 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/pet'
+          examples:
+            application/json:
+              name: Fluffy
+definitions:
+  pet:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "Fluffy"
+  # Never referenced by any path - must not be flagged (orphan-schema exclusion).
+  UnusedSchema:
+    type: object
+    properties:
+      unused_field:
+        type: string

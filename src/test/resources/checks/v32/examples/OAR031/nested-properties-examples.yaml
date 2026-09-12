@@ -6,7 +6,7 @@ paths:
   /profile:
     put:
       summary: Update user profile
-      requestBody: # Noncompliant {{OAR031: Request body must have one or more examples defined}}
+      requestBody: # Noncompliant {{OAR031: Request body must have an example defined}}
         required: true
         content:
           application/json:
@@ -35,5 +35,5 @@ paths:
                       type: string
                       example: "28001"
       responses:
-        '200': # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+        '200': # Noncompliant {{OAR031: Response must have an example defined}}
           description: OK

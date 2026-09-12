@@ -1,0 +1,167 @@
+openapi: "3.0.0"
+info:
+  version: 2.1.0
+  title: Retail Storefront API
+  description: Public-facing REST API for the retail storefront covering product catalog browsing, order placement, account management, and platform administration.
+paths:
+  /catalog/products:
+    get:
+      operationId: get_catalog_products
+      summary: List products
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: CATALOG_SC_READ
+    post:
+      operationId: post_catalog_products
+      summary: Create a product
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: CATALOG_SC_WRITE
+  /catalog/products/{productId}:
+    get:
+      operationId: get_catalog_products_productId
+      summary: Get a product
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: CATALOG_SC_READ
+    put:
+      operationId: put_catalog_products_productId
+      summary: Replace a product
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: CATALOG_SC_WRITE
+    delete:
+      operationId: delete_catalog_products_productId
+      summary: Delete a product
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: CATALOG_SC_WRITE
+  /orders:
+    get:
+      operationId: get_orders
+      summary: List orders
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ORDERS_SC_READ
+    post:
+      operationId: post_orders
+      summary: Place an order
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ORDERS_SC_WRITE
+  /orders/{orderId}:
+    get:
+      operationId: get_orders_orderId
+      summary: Get an order
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ORDERS_SC_READ
+    delete:
+      operationId: delete_orders_orderId
+      summary: Cancel an order
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ORDERS_SC_WRITE
+  /account/profile:
+    get:
+      operationId: get_account_profile
+      summary: Get the caller's profile
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ACCOUNT_SC_READ
+    put:
+      operationId: put_account_profile
+      summary: Update the caller's profile - undeclared scope
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ACCOUNT_SC_WRITE # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+  /admin/users:
+    get:
+      operationId: get_admin_users
+      summary: List platform users - matches key not name
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: admin_all # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    post:
+      operationId: post_admin_users
+      summary: Create a platform user
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ADMIN_SC_ALL
+  /admin/audit-log:
+    get:
+      operationId: get_admin_audit-log
+      summary: Read the audit log
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad request
+      x-scope: ADMIN_SC_ALL
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - name: CATALOG_SC_READ
+        key: catalog_read
+        roles: ROLE_CATALOG_READ
+        description: Allows users to browse the product catalog
+      - name: CATALOG_SC_WRITE
+        key: catalog_write
+        roles: ROLE_CATALOG_WRITE
+        description: Allows users to create or update products
+      - name: ORDERS_SC_READ
+        key: orders_read
+        roles: ROLE_ORDERS_READ
+        description: Allows users to view orders
+      - name: ORDERS_SC_WRITE
+        key: orders_write
+        roles: ROLE_ORDERS_WRITE
+        description: Allows users to place or cancel orders
+      - name: ACCOUNT_SC_READ
+        key: account_read
+        roles: ROLE_ACCOUNT_READ
+        description: Allows users to view their own account
+      - name: ADMIN_SC_ALL
+        key: admin_all
+        roles: ROLE_ADMIN
+        description: Full administrative access

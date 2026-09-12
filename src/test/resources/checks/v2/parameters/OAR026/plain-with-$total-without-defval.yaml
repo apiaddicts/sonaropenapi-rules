@@ -11,7 +11,7 @@ paths:
           type: array
           items:
             type: string
-        - in: query # Noncompliant {{OAR026: The $total parameter default value should be false}}
+        - in: query
           name: $total
           type: boolean
       responses:

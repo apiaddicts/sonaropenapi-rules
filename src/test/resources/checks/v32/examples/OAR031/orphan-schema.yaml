@@ -1,0 +1,32 @@
+openapi: "3.2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pet'
+              example:
+                name: Fluffy
+        204:
+          description: No content
+components:
+  schemas:
+    pet:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Fluffy"
+    # Never referenced by any path - must not be flagged (orphan-schema exclusion).
+    UnusedSchema:
+      type: object
+      properties:
+        unused_field:
+          type: string

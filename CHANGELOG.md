@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0-beta-1] - 2026-09-10
+
+### Fixed
+
+- OAR041 - UndefinedAuthTypeForWso2Scope - Fixed the `x-aut-type` typo in the HTML examples (should be `x-auth-type`) and rewrote the Spanish description, which described an unrelated scope-catalog structure instead of the actual check.
+- OAR043 - ParsingError - Rewrote the English/Spanish HTML docs with real examples, expanded the JSON titles, and removed the orphaned `core/OAR043.*` resources (not loaded by any registered rule group).
+- `tools/IssueDumper.java` - Now recovers from a `ValidationException` during test scanning for `OAR043ParsingErrorCheck`, so schema-invalid fixtures can be cross-checked against Spectral instead of crashing the harness.
+- OAR005 - UndefinedWso2ScopeUse - Resolves `$ref`s on `x-wso2-security`/scopes and accepts map-form `x-wso2-scopes`, plus all null spellings for `x-scope`.
+- OAR009 / OAR010 - DefaultRequestMediaType / DefaultResponseMediaType - Media type comparisons are now case-insensitive, matching Spectral.
+- OAR007 - UndefinedResponseMediaType - Fixed the rule description, which wrongly described request media types (`consumes`) instead of response ones (`produces`).
+- OAR026 - TotalParameterDefaultValue - Rewritten to match Spectral: only checks `GET`/`in: query` `$total` parameters, resolves `$ref`s, and no longer flags a missing `default`.
+- OAR031 - Examples - Property checks now only cover schemas reachable from the path, traverse `allOf`/`oneOf`/`anyOf`, interpolate the actual name in messages, and fix several line-anchoring and OAS2-exemption divergences from Spectral.
+
 ## [1.6.0] - 2026-09-10
 
 Recopilado de `1.6.0-beta-1` a `1.6.0-beta-5`.

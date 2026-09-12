@@ -1,5 +1,5 @@
 {
-    "title": "OAR043 - ParsingError - OpenAPI file cannot be parsed",
+    "title": "OAR043 - ParsingError - OpenAPI file cannot be parsed or fails structural validation",
     "type": "BUG",
     "status": "ready",
     "remediation": {
