@@ -18,10 +18,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
+import com.sonar.sslr.api.Token;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
@@ -44,6 +49,10 @@ public class JsonNodeUtils {
     public static final String TYPE_INTEGER = "integer";
     public static final String TYPE_BOOLEAN = "boolean";
     public static final String TYPE_ANY = "*";
+    public static final String WSO2_SECURITY = "x-wso2-security";
+    public static final String WSO2_APIM = "apim";
+    public static final String WSO2_SCOPES = "x-wso2-scopes";
+    private static final Set<String> NULL_SPELLINGS = ImmutableSet.of("~", "Null", "NULL");
     private static String lastFetchedContent = "";
 
     public static JsonNode resolve(JsonNode original) {
@@ -62,6 +71,31 @@ public class JsonNodeUtils {
             }
         }
         return current;
+    }
+
+    public static JsonNode getWso2ApimNode(JsonNode root) {
+        JsonNode securityNode = root.get(WSO2_SECURITY);
+        if (!securityNode.isMissing()) securityNode = resolve(securityNode);
+        return securityNode.get(WSO2_APIM);
+    }
+
+    public static List<JsonNode> getWso2Scopes(JsonNode scopesNode) {
+        if (scopesNode == null || scopesNode.isMissing() || scopesNode.isNull()) return Collections.emptyList();
+        List<JsonNode> rawScopes = scopesNode.isObject()
+                ? new ArrayList<>(scopesNode.propertyMap().values())
+                : scopesNode.elements();
+        List<JsonNode> scopes = new ArrayList<>(rawScopes.size());
+        for (JsonNode scope : rawScopes) {
+            scopes.add(resolve(scope));
+        }
+        return scopes;
+    }
+
+    public static boolean isNullScalar(JsonNode node) {
+        if (node == null) return true;
+        if (node.isNull()) return true;
+        Token token = node.getToken();
+        return token != null && NULL_SPELLINGS.contains(token.getOriginalValue());
     }
 
     public static boolean isExternalRef (JsonNode original){

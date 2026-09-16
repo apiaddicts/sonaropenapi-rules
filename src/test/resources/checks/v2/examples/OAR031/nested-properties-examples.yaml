@@ -6,7 +6,7 @@ paths:
   /profile:
     put:
       parameters:
-        - name: body # Noncompliant {{OAR031: Parameters must have one or more examples defined}}
+        - name: body # Noncompliant {{OAR031: Parameter 'body' must have an example defined}}
           in: body
           required: true
           schema:
@@ -34,5 +34,5 @@ paths:
                     type: string
                     example: "28001"
       responses:
-        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+        200: # Noncompliant {{OAR031: Response must have an example defined}}
           description: OK

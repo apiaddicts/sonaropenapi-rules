@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+parameters:
+  total:
+    in: query
+    name: $total
+    type: boolean
+    default: true
+paths:
+  /pets:
+    get:
+      responses:
+        206:
+          description: Ok

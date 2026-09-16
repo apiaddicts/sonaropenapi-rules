@@ -8,6 +8,7 @@ import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isObjectType;
 import static apiaddicts.sonar.openapi.utils.JsonNodeUtils.isOperation;
 import com.google.common.collect.ImmutableSet;
 import com.sonar.sslr.api.AstNodeType;
+import java.util.HashSet;
 import java.util.Set;
 import org.apiaddicts.apitools.dosonarapi.api.v2.OpenApi2Grammar;
 import org.apiaddicts.apitools.dosonarapi.api.v3.OpenApi3Grammar;
@@ -26,9 +27,12 @@ public class OAR031ExamplesCheck extends BaseCheck {
     private static final String SCHEMA = "schema";
     private static final String PROPERTIES = "properties";
     private static final String ITEMS = "items";
+    private static final String[] COMBINERS = {"allOf", "oneOf", "anyOf"};
 
     private static final String ERROR_RESPONSE = "OAR031.error-response";
     private static final String ERROR_REQUEST = "OAR031.error-request";
+    private static final String ERROR_PARAMETER = "OAR031.error-parameter";
+    private static final String ERROR_PROPERTY = "OAR031.error-property";
 
     @RuleProperty(
             key = "validateResponse",
@@ -64,6 +68,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     private final ExternalRefHandler handleExternalRef = new ExternalRefHandler();
 
+    private final Set<String> reachableSchemaPointers = new HashSet<>();
+
     @Override
     public Set<AstNodeType> subscribedKinds() {
         return ImmutableSet.of(
@@ -74,6 +80,87 @@ public class OAR031ExamplesCheck extends BaseCheck {
             OpenApi3Grammar.REQUEST_BODY, OpenApi31Grammar.REQUEST_BODY, OpenApi32Grammar.REQUEST_BODY,
             OpenApi2Grammar.PATH, OpenApi3Grammar.PATH, OpenApi31Grammar.PATH, OpenApi32Grammar.PATH
         );
+    }
+
+    @Override
+    protected void visitFile(JsonNode root) {
+        reachableSchemaPointers.clear();
+        JsonNode pathsNode = root.get("paths");
+        if (!pathsNode.isMissing()) {
+            for (JsonNode pathItem : pathsNode.properties()) {
+                for (JsonNode operationProp : pathItem.properties()) {
+                    if (isOperation(operationProp)) {
+                        markOperationSchemasReachable(operationProp);
+                    }
+                }
+            }
+        }
+        super.visitFile(root);
+    }
+
+    private void markOperationSchemasReachable(JsonNode operation) {
+        JsonNode parameters = operation.get("parameters");
+        if (!parameters.isMissing() && parameters.isArray()) {
+            for (JsonNode parameterElement : parameters.elements()) {
+                handleExternalRef.resolve(parameterElement, resolved -> {
+                    if (OpenApi2Grammar.PARAMETER.equals(resolved.getType())) {
+                        JsonNode inNode = resolved.get("in");
+                        if (inNode.isMissing() || !"body".equals(inNode.getTokenValue())) {
+                            return;
+                        }
+                    }
+                    markReachable(resolved.get(SCHEMA));
+                });
+            }
+        }
+
+        JsonNode requestBody = operation.get("requestBody");
+        if (!requestBody.isMissing()) {
+            handleExternalRef.resolve(requestBody, this::markContentSchemas);
+        }
+
+        JsonNode responses = operation.get("responses");
+        if (!responses.isMissing()) {
+            for (JsonNode responseNode : responses.properties()) {
+                if ("204".equals(responseNode.key().getTokenValue())) continue;
+                handleExternalRef.resolve(responseNode, resolved -> {
+                    markReachable(resolved.get(SCHEMA));
+                    markContentSchemas(resolved);
+                });
+            }
+        }
+    }
+
+    private void markContentSchemas(JsonNode node) {
+        JsonNode content = node.get("content");
+        if (!content.isMissing()) {
+            content.propertyMap().values().forEach(mediaType -> markReachable(mediaType.get(SCHEMA)));
+        }
+    }
+
+    private void markReachable(JsonNode schema) {
+        if (schema == null || schema.isMissing()) return;
+        handleExternalRef.resolve(schema, resolved -> {
+            if (resolved.isMissing()) return;
+            if (!reachableSchemaPointers.add(resolved.getPointer())) return;
+
+            JsonNode props = resolved.get(PROPERTIES);
+            if (!props.isMissing() && props.isObject()) {
+                props.propertyMap().values().forEach(this::markReachable);
+            }
+
+            JsonNode items = resolved.get(ITEMS);
+            if (!items.isMissing()) {
+                markReachable(items);
+            }
+
+            for (String combiner : COMBINERS) {
+                JsonNode combinerNode = resolved.get(combiner);
+                if (!combinerNode.isMissing() && combinerNode.isArray()) {
+                    combinerNode.elements().forEach(this::markReachable);
+                }
+            }
+        });
     }
 
     @Override
@@ -101,16 +188,33 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
             JsonNode schema = resolved.get(SCHEMA);
 
-            // Parameter level: the parameter itself, or its schema's ROOT, must declare an
-            // example. Examples buried inside schema properties do NOT satisfy this level.
+            // Parameter level: the parameter itself, its schema's ROOT, or (OAS3) a
+            // content media-type example, must declare an example. Examples buried inside
+            // schema properties do NOT satisfy this level.
             boolean hasExample = !resolved.get(EXAMPLE).isMissing()
                     || !resolved.get(EXAMPLES).isMissing()
-                    || schemaHasRootExample(schema);
+                    || schemaHasRootExample(schema)
+                    || hasContentExample(resolved);
 
             if (validateParameter && !hasExample) {
-                addIssue(KEY, translate("OAR031.error-parameter"), handleExternalRef.getTrueNode(node));
+                JsonNode nameNode = resolved.get("name");
+                String paramName = nameNode.isMissing() ? "" : nameNode.getTokenValue();
+                JsonNode trueNode = handleExternalRef.getTrueNode(node);
+                JsonNode anchor = trueNode.key().isMissing() ? trueNode : trueNode.key();
+                addIssue(KEY, translate(ERROR_PARAMETER, paramName), anchor);
             }
         });
+    }
+
+    // OAS3 parameters may declare an example per media type under `content` instead of
+    // directly on the parameter or its schema root.
+    private boolean hasContentExample(JsonNode resolved) {
+        JsonNode content = resolved.get("content");
+        if (content.isMissing() || !content.isObject()) return false;
+        return content.propertyMap().values().stream().anyMatch(mediaType ->
+                !mediaType.get(EXAMPLE).isMissing()
+                        || !mediaType.get(EXAMPLES).isMissing()
+                        || schemaHasRootExample(mediaType.get(SCHEMA)));
     }
 
     private void visitV2Node(JsonNode node) {
@@ -199,13 +303,22 @@ public class OAR031ExamplesCheck extends BaseCheck {
             }
 
             JsonNode props = resolved.get(PROPERTIES);
-            if (!props.isMissing() && props.isObject()) {
-                return props.propertyMap().values().stream().anyMatch(this::isSchemaCovered);
+            if (!props.isMissing() && props.isObject()
+                    && props.propertyMap().values().stream().anyMatch(this::isSchemaCovered)) {
+                return true;
             }
 
             JsonNode items = resolved.get(ITEMS);
-            if (!items.isMissing()) {
-                return isSchemaCovered(items);
+            if (!items.isMissing() && isSchemaCovered(items)) {
+                return true;
+            }
+
+            for (String combiner : COMBINERS) {
+                JsonNode combinerNode = resolved.get(combiner);
+                if (!combinerNode.isMissing() && combinerNode.isArray()
+                        && combinerNode.elements().stream().anyMatch(this::isSchemaCovered)) {
+                    return true;
+                }
             }
 
             return false;
@@ -214,6 +327,11 @@ public class OAR031ExamplesCheck extends BaseCheck {
 
     private void visitSchemaNode(JsonNode node) {
         if (!validateProperty) return;
+
+        JsonNode resolvedNode = handleExternalRef.resolve(node, r -> r);
+        if (!reachableSchemaPointers.contains(resolvedNode.getPointer())) {
+            return;
+        }
 
         JsonNode parentNode = (JsonNode) node.getParent().getParent();
 
@@ -227,14 +345,9 @@ public class OAR031ExamplesCheck extends BaseCheck {
                 || parentNode.getType().toString().equals("BLOCK_MAPPING")
                 || parentNode.getType().toString().equals("FLOW_MAPPING")) {
 
-            JsonNode schemaParent = (JsonNode) parentNode.getParent().getParent();
-            if (schemaParent != null && !schemaParent.get("allOf").isMissing()) {
-                return;
-            }
-
             JsonNode type = getType(node);
             if (!isObjectType(type) && !type.isMissing() && !isArrayType(type) && node.get(EXAMPLE).isMissing()) {
-                addIssue(KEY, translate("OAR031.error-property"), node.key());
+                addIssue(KEY, translate(ERROR_PROPERTY, node.key().getTokenValue()), node.key());
             }
         }
     }
@@ -247,7 +360,8 @@ public class OAR031ExamplesCheck extends BaseCheck {
             .map(JsonNode::value)
             .map(operation -> operation.get("responses"))
             .filter(responses -> !responses.isMissing())
-            .flatMap(responses -> responses.propertyMap().values().stream())
+            .flatMap(responses -> responses.properties().stream())
+            .filter(responseNode -> !"204".equals(responseNode.key().getTokenValue()))
             .forEach(response -> handleExternalRef.resolve(response, resolved -> {
                 if (resolved.getType().equals(OpenApi2Grammar.RESPONSE)) {
                     visitSchemaNode2(resolved);
@@ -268,16 +382,27 @@ public class OAR031ExamplesCheck extends BaseCheck {
         JsonNode schemaNode = responseNode.value().get(SCHEMA);
         if (schemaNode.isMissing()) return;
 
-        handleExternalRef.resolve(schemaNode, resolvedSchema -> {
-            JsonNode props = resolvedSchema.get(PROPERTIES);
-            if (props.isMissing() || !props.isObject()) return;
+        handleExternalRef.resolve(schemaNode, this::checkSchemaProperties);
+    }
 
+    private Void checkSchemaProperties(JsonNode resolvedSchema) {
+        JsonNode props = resolvedSchema.get(PROPERTIES);
+        if (!props.isMissing() && props.isObject()) {
             props.propertyMap().forEach((key, propertyNode) -> {
                 JsonNode type = getType(propertyNode);
                 if (!type.isMissing() && !isObjectType(type) && !isArrayType(type) && !isSchemaCovered(propertyNode)) {
-                    addIssue(KEY, translate("OAR031.error-property"), handleExternalRef.getTrueNode(propertyNode.key()));
+                    addIssue(KEY, translate(ERROR_PROPERTY, key), handleExternalRef.getTrueNode(propertyNode.key()));
                 }
             });
-        });
+        }
+
+        for (String combiner : COMBINERS) {
+            JsonNode combinerNode = resolvedSchema.get(combiner);
+            if (!combinerNode.isMissing() && combinerNode.isArray()) {
+                combinerNode.elements().forEach(sub -> handleExternalRef.resolve(sub, this::checkSchemaProperties));
+            }
+        }
+
+        return null;
     }
 }

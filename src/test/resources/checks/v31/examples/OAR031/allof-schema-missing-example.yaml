@@ -1,0 +1,32 @@
+openapi: "3.1.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  schemas:
+    BaseEntity:
+      type: object
+      properties:
+        id: # Noncompliant {{OAR031: Property 'id' is missing an example.}}
+          type: integer
+    Pet:
+      allOf:
+        - $ref: '#/components/schemas/BaseEntity'
+      properties:
+        name:
+          type: string
+          example: "Fluffy"
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              example:
+                name: Fluffy
+        204:
+          description: No content

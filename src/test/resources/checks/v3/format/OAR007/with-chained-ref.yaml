@@ -1,0 +1,16 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+components:
+  responses:
+    A:
+      $ref: '#/components/responses/B'
+    B: # Noncompliant {{OAR007: Section content is mandatory}}
+      description: No content defined
+paths:
+  /pets:
+    put:
+      responses:
+        '200':
+          $ref: '#/components/responses/A'

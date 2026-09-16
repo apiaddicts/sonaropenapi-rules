@@ -8,7 +8,7 @@ paths:
       responses:
         204:
           description: No content
-        206: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+        206: # Noncompliant {{OAR031: Response must have an example defined}}
           description: Pet list
           schema:
             $ref: '#/definitions/pets'
@@ -19,7 +19,7 @@ paths:
       parameters:
         - $ref: "#/parameters/id"
       responses:
-        200: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+        200: # Noncompliant {{OAR031: Response must have an example defined}}
           description: One pet
           schema:
             $ref: "#/definitions/pet"
@@ -39,24 +39,24 @@ definitions:
   pet:
     type: object
     properties:
-      name: # Noncompliant {{OAR031: Properties must have an example defined}}
+      name: # Noncompliant {{OAR031: Property 'name' is missing an example.}}
         type: string
-      type: # Noncompliant {{OAR031: Properties must have an example defined}}
+      type: # Noncompliant {{OAR031: Property 'type' is missing an example.}}
         type: string
   pets:
     type: object
     properties:
-      size: # Noncompliant {{OAR031: Properties must have an example defined}}
+      size: # Noncompliant {{OAR031: Property 'size' is missing an example.}}
         type: integer
       pets:
         type: array
         items:
           $ref: '#/definitions/pet'
 responses:
-  server_error_response: # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+  server_error_response: # Noncompliant {{OAR031: Response must have an example defined}}
     description: Default error response
     schema:
       type: object
       properties:
-        error: # Noncompliant {{OAR031: Properties must have an example defined}}
+        error: # Noncompliant {{OAR031: Property 'error' is missing an example.}}
           type: string

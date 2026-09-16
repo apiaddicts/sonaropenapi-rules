@@ -14,7 +14,7 @@
           "items" : {
             "type" : "string"
           }
-        }, { # Noncompliant {{OAR026: The $total parameter default value should be false}}
+        }, {
           "in" : "query",
           "name" : "$total",
           "type" : "boolean"

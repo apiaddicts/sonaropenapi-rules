@@ -1,5 +1,5 @@
 {
-  "title": "OAR041 - UndefinedAuthTypeForWso2Scope - El uso de x-scope require del uso de x-auth-type",
+  "title": "OAR041 - UndefinedAuthTypeForWso2Scope - El uso de x-scope requiere del uso de x-auth-type",
   "type": "VULNERABILITY",
   "status": "ready",
   "remediation": {

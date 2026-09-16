@@ -1,1 +1,53 @@
-<p>This file is not a valid <a href="https://spec.openapis.org/oas/v3.0.3">OpenAPI</a> or <a href="https://spec.openapis.org/oas/v2.0">Swagger</a> definition.</p>
+<p>This file is not a valid <a href="https://spec.openapis.org/oas/v3.0.3">OpenAPI</a> or <a href="https://spec.openapis.org/oas/v2.0">Swagger</a> definition. This includes documents that a strict parser cannot even load (malformed YAML or JSON syntax) as well as documents that load but fail the structural validation of the specification.</p>
+<h2>Noncompliant Code Example (broken YAML indentation)</h2>
+<pre>
+openapi: "3.0.0"
+info:
+  title: Example API
+  version: "1.0.0"
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: OK
+       "400":
+          description: Bad Request
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+openapi: "3.0.0"
+info:
+  title: Example API
+  version: "1.0.0"
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+</pre>
+<h2>Noncompliant Code Example (trailing comma in JSON)</h2>
+<pre>
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Example API",
+    "version": "1.0.0",
+  },
+  "paths": {}
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Example API",
+    "version": "1.0.0"
+  },
+  "paths": {}
+}
+</pre>
