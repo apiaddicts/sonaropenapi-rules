@@ -95,6 +95,16 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
     public void verifyInV2AllOfSchema() {
         verifyV2("allof-schema");
     }
+
+    @Test
+    public void verifyInV2AllOfSchemaMissingExample() {
+        verifyV2("allof-schema-missing-example.yaml");
+    }
+
+    @Test
+    public void verifyInV2OrphanSchema() {
+        verifyV2("orphan-schema.yaml");
+    }
     @Test
     public void verifyInV3AllOfSchema() {
         verifyV3("allof-schema");
@@ -106,6 +116,32 @@ public class OAR031ExamplesCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV32AllOfSchema() {
         verifyV32("allof-schema");
+    }
+
+    @Test
+    public void verifyInV3AllOfSchemaMissingExample() {
+        verifyV3("allof-schema-missing-example.yaml");
+    }
+    @Test
+    public void verifyInV31AllOfSchemaMissingExample() {
+        verifyV31("allof-schema-missing-example.yaml");
+    }
+    @Test
+    public void verifyInV32AllOfSchemaMissingExample() {
+        verifyV32("allof-schema-missing-example.yaml");
+    }
+
+    @Test
+    public void verifyInV3OrphanSchema() {
+        verifyV3("orphan-schema.yaml");
+    }
+    @Test
+    public void verifyInV31OrphanSchema() {
+        verifyV31("orphan-schema.yaml");
+    }
+    @Test
+    public void verifyInV32OrphanSchema() {
+        verifyV32("orphan-schema.yaml");
     }
 
     @Override

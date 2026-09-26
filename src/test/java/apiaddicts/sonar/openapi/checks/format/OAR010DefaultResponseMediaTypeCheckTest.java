@@ -50,6 +50,11 @@ public class OAR010DefaultResponseMediaTypeCheckTest extends BaseCheckTest {
     }
 
     @Test
+    public void verifyInV2WithDefaultMixedCase() {
+        verifyV2("with-default-mixed-case");
+    }
+
+    @Test
     public void verifyInV3WithDefault() {
         verifyV3("with-default-and-$ref");
     }
@@ -125,6 +130,50 @@ public class OAR010DefaultResponseMediaTypeCheckTest extends BaseCheckTest {
     @Test
     public void verifyInV32WithoutAnything() {
         verifyV32("without-anything");
+    }
+
+    @Test
+    public void verifyInV3WithDefaultMixedCase() {
+        verifyV3("with-default-mixed-case");
+    }
+    @Test
+    public void verifyInV31WithDefaultMixedCase() {
+        verifyV31("with-default-mixed-case");
+    }
+    @Test
+    public void verifyInV32WithDefaultMixedCase() {
+        verifyV32("with-default-mixed-case");
+    }
+
+    @Test
+    public void verifyInV3WithWrongDefaultAndRef() {
+        verifyV3("with-wrong-default-and-ref");
+    }
+    @Test
+    public void verifyInV31WithWrongDefaultAndRef() {
+        verifyV31("with-wrong-default-and-ref");
+    }
+    @Test
+    public void verifyInV32WithWrongDefaultAndRef() {
+        verifyV32("with-wrong-default-and-ref");
+    }
+
+    @Test
+    public void verifyInV3With204Response() {
+        verifyV3("with-204-response");
+    }
+    @Test
+    public void verifyInV31With204Response() {
+        verifyV31("with-204-response");
+    }
+    @Test
+    public void verifyInV32With204Response() {
+        verifyV32("with-204-response");
+    }
+
+    @Test
+    public void verifyInV3WithExternalRef() {
+        verifyV3("with-external-ref");
     }
 
     @Override

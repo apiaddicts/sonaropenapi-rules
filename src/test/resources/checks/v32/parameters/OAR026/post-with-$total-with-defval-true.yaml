@@ -1,0 +1,16 @@
+openapi: "3.2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    post:
+      parameters:
+        - in: query
+          name: $total
+          schema:
+            type: boolean
+            default: true
+      responses:
+        201:
+          description: Created

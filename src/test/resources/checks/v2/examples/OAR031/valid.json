@@ -84,7 +84,7 @@
     }
   },
   "responses" : {
-    "server_error_response" : { # Noncompliant {{OAR031: Responses must have one or more examples defined}}
+    "server_error_response" : { # Noncompliant {{OAR031: Response must have an example defined}}
       "description" : "Default error response",
       "schema" : {
         "type" : "object",

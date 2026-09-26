@@ -1,0 +1,72 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/a" : {
+      "post" : {
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        },
+        "x-scope" : "scope_one",
+        "callbacks" : {
+          "onEvent" : {
+            "'{$request.body#/callbackUrl}'" : {
+              "post" : {
+                "responses" : {
+                  "200" : {
+                    "description" : "Ok"
+                  }
+                },
+                "x-scope" : "scope_five", # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+                "callbacks" : {
+                  "onNested" : {
+                    "'{$request.body#/nestedUrl}'" : {
+                      "post" : {
+                        "responses" : {
+                          "200" : {
+                            "description" : "Ok"
+                          }
+                        },
+                        "x-scope" : "scope_six" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "callbacks" : {
+      "sharedCallback" : {
+        "'{$request.body#/callbackUrl}'" : {
+          "post" : {
+            "responses" : {
+              "200" : {
+                "description" : "Ok"
+              }
+            },
+            "x-scope" : "scope_seven" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+          }
+        }
+      }
+    }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ {
+        "name" : "scope_one",
+        "key" : "scope_one",
+        "roles" : "role_one"
+      } ]
+    }
+  }
+}

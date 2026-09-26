@@ -1,0 +1,43 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+      x-scope: read_scope
+    post:
+      responses:
+        200:
+          description: Ok
+      x-scope: read # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    put:
+      responses:
+        200:
+          description: Ok
+      x-scope: write_scope
+    delete:
+      responses:
+        200:
+          description: Ok
+      x-scope: scope_five # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      read:
+        name: read_scope
+        key: read
+        roles: ROLE_READ
+        description: Allows users to read the catalogue
+      write:
+        $ref: "#/x-wso2-definitions/writeScope"
+x-wso2-definitions:
+  writeScope:
+    name: write_scope
+    key: write
+    roles: ROLE_WRITE
+    description: Allows users to write the catalogue

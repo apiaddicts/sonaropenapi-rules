@@ -1,0 +1,37 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        },
+        "x-scope" : "catalogue_read"
+      },
+      "post" : {
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        },
+        "x-scope" : "read" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+      }
+    }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ {
+        "name" : "catalogue_read",
+        "description" : "catalogue_read",
+        "key" : "read",
+        "roles" : "role_one"
+      } ]
+    }
+  }
+}

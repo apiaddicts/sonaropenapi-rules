@@ -1,0 +1,60 @@
+{
+  "openapi" : "3.2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Petstore"
+  },
+  "paths" : {
+    "/pets" : {
+      "$ref" : "#/components/pathItems/PetsPath"
+    }
+  },
+  "webhooks" : {
+    "newPet" : {
+      "post" : {
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          }
+        },
+        "x-scope" : "scope_five" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+      }
+    }
+  },
+  "components" : {
+    "pathItems" : {
+      "PetsPath" : {
+        "x-scope" : "scope_one",
+        "get" : {
+          "responses" : {
+            "200" : {
+              "description" : "Ok"
+            }
+          },
+          "x-scope" : "scope_six" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+        }
+      }
+    },
+    "webhooks" : {
+      "reusableWebhook" : {
+        "post" : {
+          "responses" : {
+            "200" : {
+              "description" : "Ok"
+            }
+          },
+          "x-scope" : "scope_seven" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+        }
+      }
+    }
+  },
+  "x-wso2-security" : {
+    "apim" : {
+      "x-wso2-scopes" : [ {
+        "name" : "scope_one",
+        "key" : "scope_one",
+        "roles" : "role_one"
+      } ]
+    }
+  }
+}

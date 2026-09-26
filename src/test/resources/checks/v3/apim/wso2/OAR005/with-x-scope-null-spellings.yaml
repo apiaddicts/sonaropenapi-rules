@@ -1,0 +1,49 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /a:
+    get:
+      responses:
+        200:
+          description: Ok
+      x-scope: null # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    put:
+      responses:
+        200:
+          description: Ok
+      x-scope: ~ # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    post:
+      responses:
+        200:
+          description: Ok
+      x-scope: Null # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    delete:
+      responses:
+        200:
+          description: Ok
+      x-scope: NULL # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    options:
+      responses:
+        200:
+          description: Ok
+      x-scope: "null"
+    head:
+      responses:
+        200:
+          description: Ok
+      x-scope:
+    trace:
+      responses:
+        200:
+          description: Ok
+      x-scope: "" # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - name: "null"
+        key: quoted_null
+        roles: role_null
+        description: A scope whose name is the literal text null

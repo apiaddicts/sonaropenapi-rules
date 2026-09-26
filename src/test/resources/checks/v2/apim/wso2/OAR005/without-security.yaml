@@ -1,0 +1,15 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        200:
+          description: Ok
+      x-scope: scope_one # Noncompliant {{OAR005: WSO2 scope definition does not exists}}
+    post:
+      responses:
+        200:
+          description: Ok
